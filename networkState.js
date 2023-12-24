@@ -133,26 +133,179 @@ const networkManagerInterfaceXml = '\
 ';
 const NetworkManagerProxy = Gio.DBusProxy.makeProxyWrapper(networkManagerInterfaceXml);
 
-export class NetworkState /*extends EventEmitter*/ {
-    constructor() {
-        //super();
-        console.log('hi');
-        this.proxy = null;
 
+export class NetworkState {
+    constructor() {
+        new NetworkManager('/org/freedesktop/NetworkManager');
+    }
+}
+
+// An abstract class to hold a dbus proxy object. We will make multiple dbus calls based on the results of earlier calls, building a hierarchy.
+class ProxyTree /*extends EventEmitter*/ {
+
+    static emitSignalProxyUpdated = 'dbus-info-updated'; // used for the initial creation, and any subsequent updates
+    static propertiesChanged = 'g-properties-changed';
+    static objectCount = 0;
+
+    constructor(objectPath) {
+        //super();
+        if (this.constructor === ProxyTree) {
+            throw new Error("ProxyTree is an abstract class. Do not instantiate.");
+        }
+        this._id = ProxyTree.objectCount++;
+        this._objectPath = objectPath;
+        this._proxyObj = null;
+        // TODO: we may be able to get away with an array here, but use a map for now
+        this._childProxyTrees = new Map(); // map of object path to object for each related child ProxyTree
+        this._imReady = false; // whether this proxy is ready for use (ignores status of child proxy trees)
+    }
+
+    destroy() {
+    }
+
+    // override the parent connect because we will always use the same signal, and track the handler in the child object
+    // this works because no child ever has mutliple parents and we always use the same signal
+    connectTree(callback) {
+        this._handlerId = super.connect(ProxyTree.emitSignalProxyUpdated, callback);
+        //console.log(`object: ${this._id}; connected handler: ${this._handlerId}`);
+    }
+
+    // override the parent disconnect because we are tracking the handler ID here
+    disconnectTree() {
+        //console.log(`object: ${this._id}; disconnecting handler: ${this._handlerId}`);
+        super.disconnect(this._handlerId);
+    }
+
+    // whether this proxy and it's related "children" are ready for use
+    isReadyToEmit() {
+        return this._imReady && Array.from(this._childProxyTrees.values()).every((child) => child.isReadyToEmit());
+    }
+
+    _ifReadyEmit() {
+        if (this.isReadyToEmit()) {
+            this._emit();
+        }
+    }
+
+    _emit() {
+        console.log("emitting signal:");
+        // TODO: Once I can actually extend EventEmitter, uncomment the next line and it should work
+        //this.emit(ProxyTree.emitSignalProxyUpdated); // emit the "done" signal
+    }
+}
+
+
+class NetworkManager extends ProxyTree {
+    constructor(objectPath) {
+        // example objectPath: /org/freedesktop/NetworkManager (this is always what it is)
+        super(objectPath);
+        console.log('hi');
+        this._getDbusProxyObject();
+    }
+
+    get networkDevices() {
+        console.log("getter");
+        return Array.from(this._childProxyTrees.values())
+    }
+
+    // TODO: This all seems pretty generic. Can it be put in the super class?
+    destroy() {
+        // disconnect any proxy signals
+        this._proxyObj.disconnect(this._proxyObjHandlerId);
+        // handle children
+        Array.from(this._childProxyTrees.values()).forEach(child => {
+            // disconnect any gjs signals
+            child.disconnectTree();
+            // call destroy on children
+            child.destroy();
+        });
+    }
+
+    _getDbusProxyObject() {
         const networkManagerProxy = NetworkManagerProxy(
             Gio.DBus.system,
-            'org.freedesktop.NetworkManager', // name (in the top of the right side, and also on the left)
-            '/org/freedesktop/NetworkManager', // object path (in the larger box on the right)
+            'org.freedesktop.NetworkManager',
+            this._objectPath,
             (proxy, error) => {
                 if (error !== null) {
                     console.error(error);
                     return;
                 }
-                this.proxy = proxy;
-                console.log(`ConnectivityCheckUri: ${this.proxy.ConnectivityCheckUri}`);
+                this._proxyObj = proxy;
+                this._addDevices();
+                // monitor for property changes
+                this._proxyObjHandlerId = this._proxyObj.connect(ProxyTree.propertiesChanged, this._proxyUpdated.bind(this));
+
+                this._imReady = true;
+                this._ifReadyEmit(); // always check here in case there are no children
             },
             null,
             Gio.DBusProxyFlags.NONE
         );
     }
+
+    _proxyUpdated(proxy, changed, invalidated) {
+        // NetworkManager doesn't have any state of its own. Just see if there are new children to add, or old children to remove.
+        // We don't need to emit unless we find a change that we care about.
+        let needToEmit = false;
+
+        // handle updated device list
+        const propertiesChanged = changed.deepUnpack();
+        for (const [name, value] of Object.entries(propertiesChanged)) {
+            if (name === 'Devices') {
+                // compare to previous list. add/remove as necessary. emit when done.
+                // TODO: Once you add the child object, confirm this works correctly, then remove the logging.
+                const oldDevices = this.networkDevices; // this is coming from my children
+                const newDevices = value.recursiveUnpack();
+                console.log(`Devices changed`);
+                console.log(`New Devices: ${newDevices}`);
+                console.log(`Old Devices: ${oldDevices}`);
+                const addedDevices = newDevices.filter(x => !oldDevices.includes(x));
+                const removedDevices = oldDevices.filter(x => !newDevices.includes(x));
+                //console.log("devices to remove: " + removedDevices);
+                //console.log("devices to add: " + addedDevices);
+                removedDevices.forEach(d => {console.log(`Removing device ${d}`); this._removeDevice(d);});
+                addedDevices.forEach(d => {console.log(`Adding device ${d}`); this._addDevice(d);});
+                needToEmit = true;
+            }
+        }
+
+        // IIUC this means that I would need to make another async call to get the updated devices. A better alternative would be to pass the GET_INVALIDATED_PROPERTIES flag during proxy construction. For now, we'll just log an error and leave a TODO
+        for (const name of invalidated) {
+            //console.log(`Property: ${name} invalidated`);
+            if (name === 'Devices') {
+                console.error('Devices is invalidated. This is not supported.')
+                this.networkDevices.forEach(d => this._removeDevice(d));
+                needToEmit = true;
+                // TODO
+            }
+        }
+
+        if (needToEmit) {
+            this._ifReadyEmit();
+        }
+    }
+
+    _addDevices() {
+        const devices = this._proxyObj.Devices; // array of object paths
+        console.log(`Devices: ${devices}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
+        devices.forEach(d => this._addDevice(d));
+        this._ifReadyEmit();
+    }
+
+    _addDevice(device) { // e.g. /org/freedesktop/NetworkManager/Devices/1
+        this._removeDevice(device); // if the device already exists, remove it
+        console.log(`Device: ${device}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
+        // TODO
+        // Instantiate a new class that will make another dbus call
+        // Add to child devices
+        // Connect to listen to emitted signals
+    }
+
+    _removeDevice(deviceString) { // e.g. /org/freedesktop/NetworkManager/Devices/1
+        // clean up old device if applicable
+        // TODO
+    }
+
+
 }
