@@ -133,6 +133,63 @@ const networkManagerInterfaceXml = '\
 ';
 const NetworkManagerProxy = Gio.DBusProxy.makeProxyWrapper(networkManagerInterfaceXml);
 
+const networkManagerDeviceInterfaceXml = '\
+    <node>\
+        <interface name="org.freedesktop.NetworkManager.Device">\
+            <method name="Reapply">\
+                <arg type="a{sa{sv}}" name="connection" direction="in"/>\
+                <arg type="t" name="version_id" direction="in"/>\
+                <arg type="u" name="flags" direction="in"/>\
+            </method>\
+            <method name="GetAppliedConnection">\
+                <arg type="u" name="flags" direction="in"/>\
+                <arg type="a{sa{sv}}" name="connection" direction="out"/>\
+                <arg type="t" name="version_id" direction="out"/>\
+            </method>\
+            <method name="Disconnect"/>\
+            <method name="Delete"/>\
+            <signal name="StateChanged">\
+                <arg type="u" name="new_state"/>\
+                <arg type="u" name="old_state"/>\
+                <arg type="u" name="reason"/>\
+            </signal>\
+            <property type="s" name="Udi" access="read"/>\
+            <property type="s" name="Path" access="read"/>\
+            <property type="s" name="Interface" access="read"/>\
+            <property type="s" name="IpInterface" access="read"/>\
+            <property type="s" name="Driver" access="read"/>\
+            <property type="s" name="DriverVersion" access="read"/>\
+            <property type="s" name="FirmwareVersion" access="read"/>\
+            <property type="u" name="Capabilities" access="read"/>\
+            <property type="u" name="Ip4Address" access="read"/>\
+            <property type="u" name="State" access="read"/>\
+            <property type="(uu)" name="StateReason" access="read"/>\
+            <property type="o" name="ActiveConnection" access="read"/>\
+            <property type="o" name="Ip4Config" access="read"/>\
+            <property type="o" name="Dhcp4Config" access="read"/>\
+            <property type="o" name="Ip6Config" access="read"/>\
+            <property type="o" name="Dhcp6Config" access="read"/>\
+            <property type="b" name="Managed" access="readwrite"/>\
+            <property type="b" name="Autoconnect" access="readwrite"/>\
+            <property type="b" name="FirmwareMissing" access="read"/>\
+            <property type="b" name="NmPluginMissing" access="read"/>\
+            <property type="u" name="DeviceType" access="read"/>\
+            <property type="ao" name="AvailableConnections" access="read"/>\
+            <property type="s" name="PhysicalPortId" access="read"/>\
+            <property type="u" name="Mtu" access="read"/>\
+            <property type="u" name="Metered" access="read"/>\
+            <property type="aa{sv}" name="LldpNeighbors" access="read"/>\
+            <property type="b" name="Real" access="read"/>\
+            <property type="u" name="Ip4Connectivity" access="read"/>\
+            <property type="u" name="Ip6Connectivity" access="read"/>\
+            <property type="u" name="InterfaceFlags" access="read"/>\
+            <property type="s" name="HwAddress" access="read"/>\
+            <property type="ao" name="Ports" access="read"/>\
+        </interface>\
+    </node>\
+';
+const NetworkManagerDeviceProxy = Gio.DBusProxy.makeProxyWrapper(networkManagerDeviceInterfaceXml);
+
 
 export class NetworkState {
     constructor() {
@@ -166,14 +223,16 @@ class ProxyTree /*extends EventEmitter*/ {
     // override the parent connect because we will always use the same signal, and track the handler in the child object
     // this works because no child ever has mutliple parents and we always use the same signal
     connectTree(callback) {
-        this._handlerId = super.connect(ProxyTree.emitSignalProxyUpdated, callback);
+        // TODO: this is part of EventEmitter
+        //this._handlerId = super.connect(ProxyTree.emitSignalProxyUpdated, callback);
         //console.log(`object: ${this._id}; connected handler: ${this._handlerId}`);
     }
 
     // override the parent disconnect because we are tracking the handler ID here
     disconnectTree() {
+        // TODO: this is part of EventEmitter
         //console.log(`object: ${this._id}; disconnecting handler: ${this._handlerId}`);
-        super.disconnect(this._handlerId);
+        //super.disconnect(this._handlerId);
     }
 
     // whether this proxy and it's related "children" are ready for use
@@ -296,16 +355,134 @@ class NetworkManager extends ProxyTree {
     _addDevice(device) { // e.g. /org/freedesktop/NetworkManager/Devices/1
         this._removeDevice(device); // if the device already exists, remove it
         console.log(`Device: ${device}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
-        // TODO
+        // TODO: Use DeviceType to decide whether to continue. We will track wired/ethernet and wireless devices. For wireless, the device type is NM_DEVICE_TYPE_WIFI. For wired/ethernet, the device type is NM_DEVICE_TYPE_ETHERNET.
+        // For wireless, we'll track the the Id property from the associated ActiveConnection. For wired, we'll track the HwAddress property (MAC address).
+        // https://developer-old.gnome.org/NetworkManager/stable/nm-dbus-types.html#NMDeviceType
         // Instantiate a new class that will make another dbus call
+        const deviceProxyTree = new NetworkManagerDevice(device);
         // Add to child devices
+        this._childProxyTrees.set(device, deviceProxyTree);
         // Connect to listen to emitted signals
+        deviceProxyTree.connectTree(() => {
+            console.log(device);
+            console.log("interface: " + deviceProxyTree.deviceInterfaceName); // e.g. ens3
+            this._ifReadyEmit();
+        });
     }
 
     _removeDevice(deviceString) { // e.g. /org/freedesktop/NetworkManager/Devices/1
         // clean up old device if applicable
+        const deviceObj = this._childProxyTrees.get(deviceString);
+        if (deviceObj) {
+            deviceObj.disconnectTree();
+            this._childProxyTrees.delete(deviceString);
+            deviceObj.destroy();
+        }
+    }
+}
+
+class NetworkManagerDevice extends ProxyTree {
+    constructor(objectPath) {
+        // example objectPath: /org/freedesktop/NetworkManager/Devices/1
+        super(objectPath);
+        this._getDbusProxyObject();
+    }
+
+    // TODO: This all seems pretty generic. Can it be put in the super class?
+    destroy() {
+        // disconnect any proxy signals
+        this._proxyObj.disconnect(this._proxyObjHandlerId);
+        // handle children
+        Array.from(this._childProxyTrees.values()).forEach(child => {
+            // disconnect any gjs signals
+            child.disconnectTree();
+            // call destroy on children
+            child.destroy();
+        });
+    }
+
+    _getDbusProxyObject() {
+        const networkManagerDeviceProxy = NetworkManagerDeviceProxy(
+            Gio.DBus.system,
+            'org.freedesktop.NetworkManager',
+            this._objectPath,
+            (proxy, error) => {
+                if (error !== null) {
+                    console.error(error);
+                    return;
+                }
+                this._proxyObj = proxy;
+                this._addConnectionInfo();
+                console.log(`ActiveConnection: ${this._activeConnection}`)
+                // monitor for property changes
+                this._proxyObjHandlerId = this._proxyObj.connect(ProxyTree.propertiesChanged, this._proxyUpdated.bind(this));
+
+                this._imReady = true;
+                this._ifReadyEmit(); // always check here in case there are no children
+            },
+            null,
+            Gio.DBusProxyFlags.NONE
+        );
+    }
+
+    _proxyUpdated(proxy, changed, invalidated) {
+        // NetworkManagerDevice doesn't have any state of its own. Just see if there are new children to add, or old children to remove.
+        // We don't need to emit unless we find a change that we care about.
+        let needToEmit = false;
+
+        // handle ActiveConnection
+        const propertiesChanged = changed.deepUnpack();
+        for (const [name, valueVariant] of Object.entries(propertiesChanged)) {
+            if (name === 'ActiveConnection') {
+                // compare to previous list. add/remove as necessary. emit when done.
+                const value = valueVariant.deepUnpack();
+                const oldValue = this._activeConnection;
+                // TODO: consider some reuse here
+                if ((value === undefined || value === null || value === '/') && !(oldValue === undefined || oldValue === null || oldValue === '/')) { // connection has toggled from active to inactive
+                    console.log("connection toggled from active to inactive");
+                    this._deleteConnection(oldValue); // destroy old child
+                }
+                else if (!(value === undefined || value === null || value === '/') && (oldValue === undefined || oldValue === null || oldValue === '/')) { // connection has toggled from inactive to active
+                    console.log("connection toggled from inactive to active");
+                    this._addConnectionInfo(); // this will add the child
+                }
+                else if (!(value === undefined || value === null || value === '/') && !(oldValue === undefined || oldValue === null || oldValue === '/')) { // connection has changed from one active connection to another
+                    console.log(`connection changed from one active connection (${oldValue}) to another (${value})`);
+                    this._deleteConnection(oldValue); // destroy old child
+                    this._addConnectionInfo(); // this will add the child
+                }
+                else {
+                    console.error(`ERROR: Unexpected transition for ActiveConnection (inactive to inactive). Old: ${oldValue}; New: ${value}`);
+                    this._addConnectionInfo(); // this will add the child
+                }
+                needToEmit = true;
+            }
+        }
+
+        // IIUC this means that I would need to make another async call to get the updated devices. A better alternative would be to pass the GET_INVALIDATED_PROPERTIES flag during proxy construction. For now, we'll just log an error and leave a TODO
+        for (const name of invalidated) {
+            //console.log(`Property: ${name} invalidated`);
+            if (name === 'ActiveConnection') {
+                console.error('ActiveConnection is invalidated. This is not supported.')
+                needToEmit = true;
+                // TODO
+            }
+        }
+
+        if (needToEmit) {
+            this._ifReadyEmit();
+        }
+    }
+
+    _deleteConnection(activeConnection) { // delete the child connection
         // TODO
+    }
+
+    _addConnectionInfo() {
+        // TODO
+
     }
 
 
 }
+
