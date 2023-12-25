@@ -190,6 +190,34 @@ const networkManagerDeviceInterfaceXml = '\
 ';
 const NetworkManagerDeviceProxy = Gio.DBusProxy.makeProxyWrapper(networkManagerDeviceInterfaceXml);
 
+const networkManagerConnectionActiveInterfaceXml = '\
+    <node>\
+        <interface name="org.freedesktop.NetworkManager.Connection.Active">\
+            <signal name="StateChanged">\
+                <arg type="u" name="state"/>\
+                <arg type="u" name="reason"/>\
+            </signal>\
+            <property type="o" name="Connection" access="read"/>\
+            <property type="o" name="SpecificObject" access="read"/>\
+            <property type="s" name="Id" access="read"/>\
+            <property type="s" name="Uuid" access="read"/>\
+            <property type="s" name="Type" access="read"/>\
+            <property type="ao" name="Devices" access="read"/>\
+            <property type="u" name="State" access="read"/>\
+            <property type="u" name="StateFlags" access="read"/>\
+            <property type="b" name="Default" access="read"/>\
+            <property type="o" name="Ip4Config" access="read"/>\
+            <property type="o" name="Dhcp4Config" access="read"/>\
+            <property type="b" name="Default6" access="read"/>\
+            <property type="o" name="Ip6Config" access="read"/>\
+            <property type="o" name="Dhcp6Config" access="read"/>\
+            <property type="b" name="Vpn" access="read"/>\
+            <property type="o" name="Master" access="read"/>\
+        </interface>\
+    </node>\
+';
+const NetworkManagerConnectionActiveProxy = Gio.DBusProxy.makeProxyWrapper(networkManagerConnectionActiveInterfaceXml);
+
 
 export class NetworkState {
     constructor() {
@@ -475,14 +503,91 @@ class NetworkManagerDevice extends ProxyTree {
     }
 
     _deleteConnection(activeConnection) { // delete the child connection
-        // TODO
+        const child = this._childProxyTrees.get(activeConnection);
+        this._childProxyTrees.delete(activeConnection);
+        child.disconnectTree();
+        child.destroy();
     }
 
     _addConnectionInfo() {
-        // TODO
-
+        this._activeConnection = this._proxyObj.ActiveConnection; // e.g. / (if not active), /org/freedesktop/NetworkManager/ActiveConnection/1 (if active)
+        if (this._activeConnection !== undefined && this._activeConnection !== null && this._activeConnection !== "/") { // this connection is active, make another dbus call
+            // TODO: should i just always make this call, even if the connection is not currently active?
+            this.networkManagerConnectionActive = new NetworkManagerConnectionActive(this._activeConnection);
+            this._childProxyTrees.set(this._activeConnection, this.networkManagerConnectionActive);
+            this.networkManagerConnectionActive.connectTree(() => {
+                this._ifReadyEmit();
+            });
+        }
+        this._ifReadyEmit(); // always check here in case there are no children
     }
 
+}
 
+class NetworkManagerConnectionActive extends ProxyTree {
+    constructor(objectPath) {
+        // example objectPath: /org/freedesktop/NetworkManager/ActiveConnection/1
+        super(objectPath);
+        this._getDbusProxyObject();
+    }
+
+    // TODO: This all seems pretty generic. Can it be put in the super class?
+    destroy() {
+        // disconnect any proxy signals
+        this._proxyObj.disconnect(this._proxyObjHandlerId);
+        // we don't have children
+    }
+
+    get activeConnectionId() {
+        return this._proxyObj.Id; // e.g. Wired Connection 1
+    }
+
+    _getDbusProxyObject() {
+        new NetworkManagerConnectionActiveProxy(
+            Gio.DBus.system,
+            'org.freedesktop.NetworkManager',
+            this._objectPath,
+            (sourceObj, error) => {
+                if (error !== null) {
+                    logError(error);
+                    return;
+                }
+                this._proxyObj = sourceObj;
+                console.log(`Connection ID: ${this.activeConnectionId}`)
+
+                // monitor for changes
+                this._proxyObjHandlerId = this._proxyObj.connect(ProxyTree.propertiesChanged, this._proxyUpdated.bind(this));
+
+                this._imReady = true;
+                this._ifReadyEmit();
+            },
+            null,
+            Gio.DBusProxyFlags.NONE
+        );
+    }
+
+    _proxyUpdated(proxy, changed, invalidated) {
+        // The only propertiy I care about has a getter that accesses the proxy directly. No need to do anything here besides emit if necessary.
+        // There are no children to worry about either.
+
+        // check for which property was updated and only emit if we need to
+        const propertiesChanged = changed.deepUnpack();
+        for (const [name, valueVariant] of Object.entries(propertiesChanged)) {
+            if (name === "Id") {
+                // the ID has changed, emit and stop checking for other changes
+                this._ifReadyEmit();
+                return;
+            }
+        }
+        // IIUC this means that I would need to make another async call to get the updated devices. A better alternative would be to pass the GET_INVALIDATED_PROPERTIES flag during proxy construction. For now, we'll just log an error and leave a TODO
+        for (const name of invalidated) {
+            //console.log(`Property: ${name} invalidated`);
+            if (name === 'Id') {
+                console.error('Id is invalidated. This is not supported.')
+                needToEmit = true;
+                // TODO
+            }
+        }
+    }
 }
 
