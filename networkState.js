@@ -521,6 +521,7 @@ class NetworkManagerDevice extends ProxyTree {
     }
 
     _deleteConnection(activeConnection) { // delete the child connection
+        this._activeConnection = this._proxyObj.ActiveConnection; // e.g. / (if not active), /org/freedesktop/NetworkManager/ActiveConnection/1 (if active)
         console.log(`debug 2 - removing connection ${activeConnection}`);
         const child = this._childProxyTrees.get(activeConnection);
         this._childProxyTrees.delete(activeConnection);
