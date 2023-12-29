@@ -332,6 +332,7 @@ class NetworkManager extends ProxyTree {
     }
 
     _proxyUpdated(proxy, changed, invalidated) {
+        console.log('Proxy updated - NetworkManager');
         // NetworkManager doesn't have any state of its own. Just see if there are new children to add, or old children to remove.
         // We don't need to emit unless we find a change that we care about.
         let needToEmit = false;
@@ -341,18 +342,24 @@ class NetworkManager extends ProxyTree {
         for (const [name, value] of Object.entries(propertiesChanged)) {
             if (name === 'Devices') {
                 // compare to previous list. add/remove as necessary. emit when done.
-                // TODO: Once you add the child object, confirm this works correctly, then remove the logging.
-                const oldDevices = this.networkDevices; // this is coming from my children
-                const newDevices = value.recursiveUnpack();
+                const oldDeviceObjectPaths = []; // this is coming from my children
+                this.networkDevices.forEach(d => oldDeviceObjectPaths.push(d._objectPath));
+                const newDeviceObjectPaths = value.recursiveUnpack();
                 console.log(`Devices changed`);
-                console.log(`New Devices: ${newDevices}`);
-                console.log(`Old Devices: ${oldDevices}`);
-                const addedDevices = newDevices.filter(x => !oldDevices.includes(x));
-                const removedDevices = oldDevices.filter(x => !newDevices.includes(x));
-                //console.log("devices to remove: " + removedDevices);
-                //console.log("devices to add: " + addedDevices);
-                removedDevices.forEach(d => {console.log(`Removing device ${d}`); this._removeDevice(d);});
-                addedDevices.forEach(d => {console.log(`Adding device ${d}`); this._addDevice(d);});
+                console.log(`New Devices: ${newDeviceObjectPaths}`);
+                console.log(`Old Devices: ${oldDeviceObjectPaths}`);
+                const addedDeviceObjectPaths = newDeviceObjectPaths.filter(x => !oldDeviceObjectPaths.includes(x));
+                const removedDeviceObjectPaths = oldDeviceObjectPaths.filter(x => !newDeviceObjectPaths.includes(x));
+                console.log("devices to remove: " + removedDeviceObjectPaths);
+                console.log("devices to add: " + addedDeviceObjectPaths);
+                removedDeviceObjectPaths.forEach(d => {
+                    console.log(`Removing device ${d}`);
+                    this._removeDevice(d);
+                });
+                addedDeviceObjectPaths.forEach(d => {
+                    console.log(`Adding device ${d}`);
+                    this._addDevice(d);
+                });
                 needToEmit = true;
             }
         }
@@ -454,6 +461,7 @@ class NetworkManagerDevice extends ProxyTree {
     }
 
     _proxyUpdated(proxy, changed, invalidated) {
+        console.log('Proxy updated - NetworkManagerDevice');
         // NetworkManagerDevice doesn't have any state of its own. Just see if there are new children to add, or old children to remove.
         // We don't need to emit unless we find a change that we care about.
         let needToEmit = false;
@@ -567,13 +575,15 @@ class NetworkManagerConnectionActive extends ProxyTree {
     }
 
     _proxyUpdated(proxy, changed, invalidated) {
+        console.log('Proxy updated - NetworkManagerConnectionActive');
         // The only propertiy I care about has a getter that accesses the proxy directly. No need to do anything here besides emit if necessary.
         // There are no children to worry about either.
 
         // check for which property was updated and only emit if we need to
         const propertiesChanged = changed.deepUnpack();
-        for (const [name, valueVariant] of Object.entries(propertiesChanged)) {
+        for (const [name, value] of Object.entries(propertiesChanged)) {
             if (name === "Id") {
+                console.log(`ID updated to ${this._proxyObj.Id}`);
                 // the ID has changed, emit and stop checking for other changes
                 this._ifReadyEmit();
                 return;
