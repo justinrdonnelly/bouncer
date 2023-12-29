@@ -297,6 +297,7 @@ class NetworkManager extends ProxyTree {
 
     // TODO: This all seems pretty generic. Can it be put in the super class?
     destroy() {
+        console.log(`debug 1 - Destroying device with object path: ${this._objectPath}`);
         // disconnect any proxy signals
         this._proxyObj.disconnect(this._proxyObjHandlerId);
         // handle children
@@ -332,7 +333,7 @@ class NetworkManager extends ProxyTree {
     }
 
     _proxyUpdated(proxy, changed, invalidated) {
-        console.log('Proxy updated - NetworkManager');
+        console.log('debug 1 - Proxy updated - NetworkManager');
         // NetworkManager doesn't have any state of its own. Just see if there are new children to add, or old children to remove.
         // We don't need to emit unless we find a change that we care about.
         let needToEmit = false;
@@ -340,24 +341,27 @@ class NetworkManager extends ProxyTree {
         // handle updated device list
         const propertiesChanged = changed.deepUnpack();
         for (const [name, value] of Object.entries(propertiesChanged)) {
+            console.log('debug 3 - something changed - NetworkManager');
+            console.log(`debug 3 - name: ${name}`);
+            console.log(`debug 3 - value: ${value.recursiveUnpack()}`);
             if (name === 'Devices') {
                 // compare to previous list. add/remove as necessary. emit when done.
                 const oldDeviceObjectPaths = []; // this is coming from my children
                 this.networkDevices.forEach(d => oldDeviceObjectPaths.push(d._objectPath));
                 const newDeviceObjectPaths = value.recursiveUnpack();
-                console.log(`Devices changed`);
-                console.log(`New Devices: ${newDeviceObjectPaths}`);
-                console.log(`Old Devices: ${oldDeviceObjectPaths}`);
+                console.log(`debug 2 - Devices changed`);
+                console.log(`debug 2 - New Devices: ${newDeviceObjectPaths}`);
+                console.log(`debug 2 - Old Devices: ${oldDeviceObjectPaths}`);
                 const addedDeviceObjectPaths = newDeviceObjectPaths.filter(x => !oldDeviceObjectPaths.includes(x));
                 const removedDeviceObjectPaths = oldDeviceObjectPaths.filter(x => !newDeviceObjectPaths.includes(x));
-                console.log("devices to remove: " + removedDeviceObjectPaths);
-                console.log("devices to add: " + addedDeviceObjectPaths);
+                console.log("debug 2 - devices to remove: " + removedDeviceObjectPaths);
+                console.log("debug 2 - devices to add: " + addedDeviceObjectPaths);
                 removedDeviceObjectPaths.forEach(d => {
-                    console.log(`Removing device ${d}`);
+                    console.log(`debug 2 - Removing device ${d}`);
                     this._removeDevice(d);
                 });
                 addedDeviceObjectPaths.forEach(d => {
-                    console.log(`Adding device ${d}`);
+                    console.log(`debug 2 - Adding device ${d}`);
                     this._addDevice(d);
                 });
                 needToEmit = true;
@@ -382,14 +386,14 @@ class NetworkManager extends ProxyTree {
 
     _addDevices() {
         const devices = this._proxyObj.Devices; // array of object paths
-        console.log(`Devices: ${devices}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
+        //console.log(`Devices: ${devices}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
         devices.forEach(d => this._addDevice(d));
         this._ifReadyEmit();
     }
 
     _addDevice(device) { // e.g. /org/freedesktop/NetworkManager/Devices/1
         this._removeDevice(device); // if the device already exists, remove it
-        console.log(`Device: ${device}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
+        //console.log(`Device: ${device}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
         // TODO: Use DeviceType to decide whether to continue. We will track wired/ethernet and wireless devices. For wireless, the device type is NM_DEVICE_TYPE_WIFI. For wired/ethernet, the device type is NM_DEVICE_TYPE_ETHERNET.
         // For wireless, we'll track the the Id property from the associated ActiveConnection. For wired, we'll track the HwAddress property (MAC address).
         // https://developer-old.gnome.org/NetworkManager/stable/nm-dbus-types.html#NMDeviceType
@@ -399,8 +403,8 @@ class NetworkManager extends ProxyTree {
         this._childProxyTrees.set(device, deviceProxyTree);
         // Connect to listen to emitted signals
         deviceProxyTree.connectTree(() => {
-            console.log(device);
-            console.log("interface: " + deviceProxyTree.deviceInterfaceName); // e.g. ens3
+            //console.log(device);
+            //console.log("interface: " + deviceProxyTree.deviceInterfaceName); // e.g. ens3
             this._ifReadyEmit();
         });
     }
@@ -425,6 +429,7 @@ class NetworkManagerDevice extends ProxyTree {
 
     // TODO: This all seems pretty generic. Can it be put in the super class?
     destroy() {
+        console.log(`debug 1 - Destroying device with object path: ${this._objectPath}`);
         // disconnect any proxy signals
         this._proxyObj.disconnect(this._proxyObjHandlerId);
         // handle children
@@ -461,7 +466,7 @@ class NetworkManagerDevice extends ProxyTree {
     }
 
     _proxyUpdated(proxy, changed, invalidated) {
-        console.log('Proxy updated - NetworkManagerDevice');
+        console.log('debug 1 - Proxy updated - NetworkManagerDevice');
         // NetworkManagerDevice doesn't have any state of its own. Just see if there are new children to add, or old children to remove.
         // We don't need to emit unless we find a change that we care about.
         let needToEmit = false;
@@ -469,21 +474,26 @@ class NetworkManagerDevice extends ProxyTree {
         // handle ActiveConnection
         const propertiesChanged = changed.deepUnpack();
         for (const [name, valueVariant] of Object.entries(propertiesChanged)) {
+            console.log('debug 3 - something changed - NetworkManagerDevice');
+            console.log(`debug 3 - name: ${name}`);
+            console.log(`debug 3 - valueVariant: ${valueVariant.recursiveUnpack()}`);
             if (name === 'ActiveConnection') {
                 // compare to previous list. add/remove as necessary. emit when done.
                 const value = valueVariant.deepUnpack();
                 const oldValue = this._activeConnection;
+                console.log(`debug 2 - NetworkManagerDevice - old ActiveConnection: ${oldValue}`);
+                console.log(`debug 2 - NetworkManagerDevice - new ActiveConnection: ${value}`);
                 // TODO: consider some reuse here
                 if ((value === undefined || value === null || value === '/') && !(oldValue === undefined || oldValue === null || oldValue === '/')) { // connection has toggled from active to inactive
-                    console.log("connection toggled from active to inactive");
+                    console.log("debug 2 - connection toggled from active to inactive");
                     this._deleteConnection(oldValue); // destroy old child
                 }
                 else if (!(value === undefined || value === null || value === '/') && (oldValue === undefined || oldValue === null || oldValue === '/')) { // connection has toggled from inactive to active
-                    console.log("connection toggled from inactive to active");
+                    console.log("debug 2 - connection toggled from inactive to active");
                     this._addConnectionInfo(); // this will add the child
                 }
                 else if (!(value === undefined || value === null || value === '/') && !(oldValue === undefined || oldValue === null || oldValue === '/')) { // connection has changed from one active connection to another
-                    console.log(`connection changed from one active connection (${oldValue}) to another (${value})`);
+                    console.log(`debug 2 - connection changed from one active connection (${oldValue}) to another (${value})`);
                     this._deleteConnection(oldValue); // destroy old child
                     this._addConnectionInfo(); // this will add the child
                 }
@@ -511,6 +521,7 @@ class NetworkManagerDevice extends ProxyTree {
     }
 
     _deleteConnection(activeConnection) { // delete the child connection
+        console.log(`debug 2 - removing connection ${activeConnection}`);
         const child = this._childProxyTrees.get(activeConnection);
         this._childProxyTrees.delete(activeConnection);
         child.disconnectTree();
@@ -519,6 +530,7 @@ class NetworkManagerDevice extends ProxyTree {
 
     _addConnectionInfo() {
         this._activeConnection = this._proxyObj.ActiveConnection; // e.g. / (if not active), /org/freedesktop/NetworkManager/ActiveConnection/1 (if active)
+        console.log(`debug 2 - adding connection ${this._activeConnection}`);
         if (this._activeConnection !== undefined && this._activeConnection !== null && this._activeConnection !== "/") { // this connection is active, make another dbus call
             // TODO: should i just always make this call, even if the connection is not currently active?
             this.networkManagerConnectionActive = new NetworkManagerConnectionActive(this._activeConnection);
@@ -541,6 +553,7 @@ class NetworkManagerConnectionActive extends ProxyTree {
 
     // TODO: This all seems pretty generic. Can it be put in the super class?
     destroy() {
+        console.log(`debug 1 - Destroying device with object path: ${this._objectPath}`);
         // disconnect any proxy signals
         this._proxyObj.disconnect(this._proxyObjHandlerId);
         // we don't have children
@@ -575,15 +588,18 @@ class NetworkManagerConnectionActive extends ProxyTree {
     }
 
     _proxyUpdated(proxy, changed, invalidated) {
-        console.log('Proxy updated - NetworkManagerConnectionActive');
+        console.log('debug 1 - Proxy updated - NetworkManagerConnectionActive');
         // The only propertiy I care about has a getter that accesses the proxy directly. No need to do anything here besides emit if necessary.
         // There are no children to worry about either.
 
         // check for which property was updated and only emit if we need to
         const propertiesChanged = changed.deepUnpack();
         for (const [name, value] of Object.entries(propertiesChanged)) {
+            console.log('debug 3 - something changed - NetworkManagerConnectionActive');
+            console.log(`debug 3 - name: ${name}`);
+            console.log(`debug 3 - value: ${value.recursiveUnpack()}`);
             if (name === "Id") {
-                console.log(`ID updated to ${this._proxyObj.Id}`);
+                console.log(`debug 2 - ID updated to ${this._proxyObj.Id}`);
                 // the ID has changed, emit and stop checking for other changes
                 this._ifReadyEmit();
                 return;
