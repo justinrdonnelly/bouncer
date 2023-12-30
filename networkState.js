@@ -394,9 +394,6 @@ class NetworkManager extends ProxyTree {
     _addDevice(device) { // e.g. /org/freedesktop/NetworkManager/Devices/1
         this._removeDevice(device); // if the device already exists, remove it
         console.log(`Device: ${device}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
-        // TODO: Use DeviceType to decide whether to continue. We will track wired/ethernet and wireless devices. For wireless, the device type is NM_DEVICE_TYPE_WIFI. For wired/ethernet, the device type is NM_DEVICE_TYPE_ETHERNET.
-        // For wireless, we'll track the the Id property from the associated ActiveConnection. For wired, we'll track the HwAddress property (MAC address).
-        // https://developer-old.gnome.org/NetworkManager/stable/nm-dbus-types.html#NMDeviceType
         // Instantiate a new class that will make another dbus call
         const deviceProxyTree = new NetworkManagerDevice(device);
         // Add to child devices
@@ -451,6 +448,9 @@ class NetworkManagerDevice extends ProxyTree {
                     console.error(error);
                     return;
                 }
+                // TODO: Use DeviceType to decide whether to continue. We will track wired/ethernet and wireless devices. For wireless, the device type is NM_DEVICE_TYPE_WIFI. For wired/ethernet, the device type is NM_DEVICE_TYPE_ETHERNET.
+                // For wireless, we'll track the the Id property from the associated ActiveConnection. For wired, we'll track the HwAddress property (MAC address).
+                // https://developer-old.gnome.org/NetworkManager/stable/nm-dbus-types.html#NMDeviceType
                 this._proxyObj = proxy;
                 this._addConnectionInfo();
                 console.log(`ActiveConnection: ${this._activeConnection}`)
