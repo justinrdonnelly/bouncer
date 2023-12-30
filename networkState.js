@@ -535,9 +535,9 @@ class NetworkManagerDevice extends ProxyTree {
         console.log(`debug 2 - adding connection ${this._activeConnection}`);
         if (this._activeConnection !== undefined && this._activeConnection !== null && this._activeConnection !== "/") { // this connection is active, make another dbus call
             // TODO: should i just always make this call, even if the connection is not currently active?
-            this.networkManagerConnectionActive = new NetworkManagerConnectionActive(this._activeConnection);
-            this._childProxyTrees.set(this._activeConnection, this.networkManagerConnectionActive);
-            this.networkManagerConnectionActive.connectTree(() => {
+            const networkManagerConnectionActive = new NetworkManagerConnectionActive(this._activeConnection);
+            this._childProxyTrees.set(this._activeConnection, networkManagerConnectionActive);
+            networkManagerConnectionActive.connectTree(() => {
                 this._ifReadyEmit();
             });
         }
