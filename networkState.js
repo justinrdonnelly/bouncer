@@ -487,9 +487,11 @@ class NetworkManagerDevice extends ProxyTree {
                 if ((value === undefined || value === null || value === '/') && !(oldValue === undefined || oldValue === null || oldValue === '/')) { // connection has toggled from active to inactive
                     console.log("debug 2 - connection toggled from active to inactive");
                     this._deleteConnection(oldValue); // destroy old child
+                    this._addConnectionInfo(); // this will add the child ('/' in this case)
                 }
                 else if (!(value === undefined || value === null || value === '/') && (oldValue === undefined || oldValue === null || oldValue === '/')) { // connection has toggled from inactive to active
                     console.log("debug 2 - connection toggled from inactive to active");
+                    // If the connection was inactive ('/'), there was no child. Don't call _deleteConnection.
                     this._addConnectionInfo(); // this will add the child
                 }
                 // In my testing, this didn't actually happen. The connection was removed with 1 proxy update, then a new connection added with another.
@@ -522,7 +524,6 @@ class NetworkManagerDevice extends ProxyTree {
     }
 
     _deleteConnection(activeConnection) { // delete the child connection
-        this._activeConnection = this._proxyObj.ActiveConnection; // e.g. / (if not active), /org/freedesktop/NetworkManager/ActiveConnection/1 (if active)
         console.log(`debug 2 - removing connection ${activeConnection}`);
         const child = this._childProxyTrees.get(activeConnection);
         this._childProxyTrees.delete(activeConnection);
