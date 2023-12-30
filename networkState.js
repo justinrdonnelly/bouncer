@@ -395,13 +395,13 @@ class NetworkManager extends ProxyTree {
         this._removeDevice(device); // if the device already exists, remove it
         console.log(`Device: ${device}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
         // Instantiate a new class that will make another dbus call
-        const deviceProxyTree = new NetworkManagerDevice(device);
+        const networkManagerDevice = new NetworkManagerDevice(device);
         // Add to child devices
-        this._childProxyTrees.set(device, deviceProxyTree);
+        this._childProxyTrees.set(device, networkManagerDevice);
         // Connect to listen to emitted signals
-        deviceProxyTree.connectTree(() => {
+        networkManagerDevice.connectTree(() => {
             //console.log(device);
-            //console.log("interface: " + deviceProxyTree.deviceInterfaceName); // e.g. ens3
+            //console.log("interface: " + networkManagerDevice.deviceInterfaceName); // e.g. ens3
             this._ifReadyEmit();
         });
     }
