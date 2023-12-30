@@ -297,7 +297,7 @@ class NetworkManager extends ProxyTree {
 
     // TODO: This all seems pretty generic. Can it be put in the super class?
     destroy() {
-        console.log(`debug 1 - Destroying device with object path: ${this._objectPath}`);
+        console.log(`debug 1 - Destroying NetworkManager with object path: ${this._objectPath}`);
         // disconnect any proxy signals
         this._proxyObj.disconnect(this._proxyObjHandlerId);
         // handle children
@@ -393,7 +393,7 @@ class NetworkManager extends ProxyTree {
 
     _addDevice(device) { // e.g. /org/freedesktop/NetworkManager/Devices/1
         this._removeDevice(device); // if the device already exists, remove it
-        //console.log(`Device: ${device}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
+        console.log(`Device: ${device}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
         // TODO: Use DeviceType to decide whether to continue. We will track wired/ethernet and wireless devices. For wireless, the device type is NM_DEVICE_TYPE_WIFI. For wired/ethernet, the device type is NM_DEVICE_TYPE_ETHERNET.
         // For wireless, we'll track the the Id property from the associated ActiveConnection. For wired, we'll track the HwAddress property (MAC address).
         // https://developer-old.gnome.org/NetworkManager/stable/nm-dbus-types.html#NMDeviceType
@@ -429,7 +429,7 @@ class NetworkManagerDevice extends ProxyTree {
 
     // TODO: This all seems pretty generic. Can it be put in the super class?
     destroy() {
-        console.log(`debug 1 - Destroying device with object path: ${this._objectPath}`);
+        console.log(`debug 1 - Destroying Devices with object path: ${this._objectPath}`);
         // disconnect any proxy signals
         this._proxyObj.disconnect(this._proxyObjHandlerId);
         // handle children
@@ -492,6 +492,7 @@ class NetworkManagerDevice extends ProxyTree {
                     console.log("debug 2 - connection toggled from inactive to active");
                     this._addConnectionInfo(); // this will add the child
                 }
+                // In my testing, this didn't actually happen. The connection was removed with 1 proxy update, then a new connection added with another.
                 else if (!(value === undefined || value === null || value === '/') && !(oldValue === undefined || oldValue === null || oldValue === '/')) { // connection has changed from one active connection to another
                     console.log(`debug 2 - connection changed from one active connection (${oldValue}) to another (${value})`);
                     this._deleteConnection(oldValue); // destroy old child
@@ -554,7 +555,7 @@ class NetworkManagerConnectionActive extends ProxyTree {
 
     // TODO: This all seems pretty generic. Can it be put in the super class?
     destroy() {
-        console.log(`debug 1 - Destroying device with object path: ${this._objectPath}`);
+        console.log(`debug 1 - Destroying ActiveConnection with object path: ${this._objectPath}`);
         // disconnect any proxy signals
         this._proxyObj.disconnect(this._proxyObjHandlerId);
         // we don't have children
