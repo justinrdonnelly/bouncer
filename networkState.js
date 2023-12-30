@@ -568,7 +568,7 @@ class NetworkManagerConnectionActive extends ProxyTree {
     }
 
     _getDbusProxyObject() {
-        new NetworkManagerConnectionActiveProxy(
+        const networkManagerConnectionActiveProxy = NetworkManagerConnectionActiveProxy(
             Gio.DBus.system,
             'org.freedesktop.NetworkManager',
             this._objectPath,
