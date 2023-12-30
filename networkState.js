@@ -340,8 +340,7 @@ class NetworkManager extends ProxyTree {
         let needToEmit = false;
 
         // handle updated device list
-        const propertiesChanged = changed.deepUnpack();
-        for (const [name, value] of Object.entries(propertiesChanged)) {
+        for (const [name, value] of Object.entries(changed.deepUnpack())) {
             console.log('debug 3 - something changed - NetworkManager');
             console.log(`debug 3 - name: ${name}`);
             console.log(`debug 3 - value: ${value.recursiveUnpack()}`);
@@ -473,8 +472,7 @@ class NetworkManagerDevice extends ProxyTree {
         let needToEmit = false;
 
         // handle ActiveConnection
-        const propertiesChanged = changed.deepUnpack();
-        for (const [name, valueVariant] of Object.entries(propertiesChanged)) {
+        for (const [name, valueVariant] of Object.entries(changed.deepUnpack())) {
             console.log('debug 3 - something changed - NetworkManagerDevice');
             console.log(`debug 3 - name: ${name}`);
             console.log(`debug 3 - valueVariant: ${valueVariant.recursiveUnpack()}`);
@@ -597,8 +595,7 @@ class NetworkManagerConnectionActive extends ProxyTree {
         // There are no children to worry about either.
 
         // check for which property was updated and only emit if we need to
-        const propertiesChanged = changed.deepUnpack();
-        for (const [name, value] of Object.entries(propertiesChanged)) {
+        for (const [name, value] of Object.entries(changed.deepUnpack())) {
             console.log('debug 3 - something changed - NetworkManagerConnectionActive');
             console.log(`debug 3 - name: ${name}`);
             console.log(`debug 3 - value: ${value.recursiveUnpack()}`);
