@@ -323,7 +323,7 @@ class NetworkManager extends ProxyTree {
                 this._proxyObj = proxy;
                 this._addDevices();
                 // monitor for property changes
-                this._proxyObjHandlerId = this._proxyObj.connect(ProxyTree.propertiesChanged, this._proxyUpdated.bind(this));
+                this._proxyObjHandlerId = networkManagerProxy.connect(ProxyTree.propertiesChanged, this._proxyUpdated.bind(this));
 
                 this._imReady = true;
                 this._ifReadyEmit(); // always check here in case there are no children
@@ -456,7 +456,7 @@ class NetworkManagerDevice extends ProxyTree {
                 this._addConnectionInfo();
                 console.log(`ActiveConnection: ${this._activeConnection}`)
                 // monitor for property changes
-                this._proxyObjHandlerId = this._proxyObj.connect(ProxyTree.propertiesChanged, this._proxyUpdated.bind(this));
+                this._proxyObjHandlerId = networkManagerDeviceProxy.connect(ProxyTree.propertiesChanged, this._proxyUpdated.bind(this));
 
                 this._imReady = true;
                 this._ifReadyEmit(); // always check here in case there are no children
@@ -581,7 +581,7 @@ class NetworkManagerConnectionActive extends ProxyTree {
                 console.log(`Connection ID: ${this.activeConnectionId}`)
 
                 // monitor for changes
-                this._proxyObjHandlerId = this._proxyObj.connect(ProxyTree.propertiesChanged, this._proxyUpdated.bind(this));
+                this._proxyObjHandlerId = networkManagerConnectionActiveProxy.connect(ProxyTree.propertiesChanged, this._proxyUpdated.bind(this));
 
                 this._imReady = true;
                 this._ifReadyEmit();
