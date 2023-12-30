@@ -221,7 +221,8 @@ const NetworkManagerConnectionActiveProxy = Gio.DBusProxy.makeProxyWrapper(netwo
 
 export class NetworkState {
     constructor() {
-        new NetworkManager('/org/freedesktop/NetworkManager');
+        // Keep a reference to NetworkManager instance to prevent GC
+        this.networkManager = new NetworkManager('/org/freedesktop/NetworkManager');
     }
 }
 
