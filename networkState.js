@@ -287,13 +287,11 @@ class NetworkManager extends ProxyTree {
     constructor(objectPath) {
         // example objectPath: /org/freedesktop/NetworkManager (this is always what it is)
         super(objectPath);
-        console.log('hi');
         this._getDbusProxyObject();
     }
 
     get networkDevices() {
-        console.log("getter");
-        return Array.from(this._childProxyTrees.values())
+        return Array.from(this._childProxyTrees.values());
     }
 
     // TODO: This all seems pretty generic. Can it be put in the super class?
@@ -534,7 +532,6 @@ class NetworkManagerDevice extends ProxyTree {
         this._activeConnection = this._proxyObj.ActiveConnection; // e.g. / (if not active), /org/freedesktop/NetworkManager/ActiveConnection/1 (if active)
         console.log(`debug 2 - adding connection ${this._activeConnection}`);
         if (this._activeConnection !== undefined && this._activeConnection !== null && this._activeConnection !== "/") { // this connection is active, make another dbus call
-            // TODO: should i just always make this call, even if the connection is not currently active?
             const networkManagerConnectionActive = new NetworkManagerConnectionActive(this._activeConnection);
             this._childProxyTrees.set(this._activeConnection, networkManagerConnectionActive);
             networkManagerConnectionActive.connectTree(() => {
