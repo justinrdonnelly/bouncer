@@ -229,6 +229,7 @@ export class NetworkState {
 // An abstract class to hold a dbus proxy object. We will make multiple dbus calls based on the results of earlier calls, building a hierarchy.
 class ProxyTree /*extends EventEmitter*/ {
 
+    static wellKnownName  = 'org.freedesktop.NetworkManager';
     static emitSignalProxyUpdated = 'dbus-info-updated'; // used for the initial creation, and any subsequent updates
     static propertiesChanged = 'g-properties-changed';
     static objectCount = 0;
@@ -311,7 +312,7 @@ class NetworkManager extends ProxyTree {
     _getDbusProxyObject() {
         const networkManagerProxy = NetworkManagerProxy(
             Gio.DBus.system,
-            'org.freedesktop.NetworkManager',
+            ProxyTree.wellKnownName,
             this._objectPath,
             (proxy, error) => {
                 if (error !== null) {
@@ -450,7 +451,7 @@ class NetworkManagerDevice extends ProxyTree {
     _getDbusProxyObject() {
         const networkManagerDeviceProxy = NetworkManagerDeviceProxy(
             Gio.DBus.system,
-            'org.freedesktop.NetworkManager',
+            ProxyTree.wellKnownName,
             this._objectPath,
             (proxy, error) => {
                 if (error !== null) {
@@ -576,7 +577,7 @@ class NetworkManagerConnectionActive extends ProxyTree {
     _getDbusProxyObject() {
         const networkManagerConnectionActiveProxy = NetworkManagerConnectionActiveProxy(
             Gio.DBus.system,
-            'org.freedesktop.NetworkManager',
+            ProxyTree.wellKnownName,
             this._objectPath,
             (sourceObj, error) => {
                 if (error !== null) {
