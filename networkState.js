@@ -416,6 +416,10 @@ class NetworkManager extends ProxyTree {
 }
 
 class NetworkManagerDevice extends ProxyTree {
+
+    // from https://developer-old.gnome.org/NetworkManager/stable/nm-dbus-types.html#NMDeviceType
+    static NM_DEVICE_TYPE_WIFI = 2;
+
     constructor(objectPath) {
         // example objectPath: /org/freedesktop/NetworkManager/Devices/1
         super(objectPath);
@@ -426,7 +430,9 @@ class NetworkManagerDevice extends ProxyTree {
     destroy() {
         console.log(`debug 1 - Destroying Devices with object path: ${this._objectPath}`);
         // disconnect any proxy signals
-        this._proxyObj.disconnect(this._proxyObjHandlerId);
+        if (this._proxyObj) { // Need to confirm existence since we don't always keep the proxy
+            this._proxyObj.disconnect(this._proxyObjHandlerId);
+        }
         // handle children
         Array.from(this._childProxyTrees.values()).forEach(child => {
             // disconnect any gjs signals
@@ -446,14 +452,14 @@ class NetworkManagerDevice extends ProxyTree {
                     console.error(error);
                     return;
                 }
-                // TODO: Use DeviceType to decide whether to continue. We will track wired/ethernet and wireless devices. For wireless, the device type is NM_DEVICE_TYPE_WIFI. For wired/ethernet, the device type is NM_DEVICE_TYPE_ETHERNET.
-                // For wireless, we'll track the the Id property from the associated ActiveConnection. For wired, we'll track the HwAddress property (MAC address).
-                // https://developer-old.gnome.org/NetworkManager/stable/nm-dbus-types.html#NMDeviceType
-                this._proxyObj = proxy;
-                this._addConnectionInfo();
-                console.log(`ActiveConnection: ${this._activeConnection}`)
-                // monitor for property changes
-                this._proxyObjHandlerId = networkManagerDeviceProxy.connect(ProxyTree.propertiesChanged, this._proxyUpdated.bind(this));
+                if (proxy.DeviceType === NetworkManagerDevice.NM_DEVICE_TYPE_WIFI) {
+                    // Use DeviceType to decide whether to continue. We will only track wireless devices. For wireless, the device type is NM_DEVICE_TYPE_WIFI (2).
+                    this._proxyObj = proxy;
+                    this._addConnectionInfo();
+                    console.log(`ActiveConnection: ${this._activeConnection}`)
+                    // monitor for property changes
+                    this._proxyObjHandlerId = networkManagerDeviceProxy.connect(ProxyTree.propertiesChanged, this._proxyUpdated.bind(this));
+                }
 
                 this._imReady = true;
                 this._ifReadyEmit(); // always check here in case there are no children
