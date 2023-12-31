@@ -426,6 +426,11 @@ class NetworkManagerDevice extends ProxyTree {
         this._getDbusProxyObject();
     }
 
+    // this is a map, but there should only ever be 1 entry
+    get connections() {
+        return Array.from(this._childProxyTrees.values());
+    }
+
     // TODO: This all seems pretty generic. Can it be put in the super class?
     destroy() {
         console.log(`debug 1 - Destroying Devices with object path: ${this._objectPath}`);
