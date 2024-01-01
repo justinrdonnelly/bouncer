@@ -267,6 +267,7 @@ class ProxyTree /*extends EventEmitter*/ {
 
     // whether this proxy and it's related "children" are ready for use
     isReadyToEmit() {
+        // TODO: Does this need to be in the superclass? We should only need to emit when an active connection changes. Test in a real extension.
         return this._imReady && Array.from(this._childProxyTrees.values()).every((child) => child.isReadyToEmit());
     }
 
@@ -325,6 +326,7 @@ class NetworkManager extends ProxyTree {
                 this._proxyObjHandlerId = networkManagerProxy.connect(ProxyTree.propertiesChanged, this._proxyUpdated.bind(this));
 
                 this._imReady = true;
+                // TODO: Don't emit here? We should only need to emit when an active connection changes. Test in a real extension.
                 this._ifReadyEmit(); // always check here in case there are no children
             },
             null,
@@ -336,6 +338,7 @@ class NetworkManager extends ProxyTree {
         console.log('debug 1 - Proxy updated - NetworkManager');
         // NetworkManager doesn't have any state of its own. Just see if there are new children to add, or old children to remove.
         // We don't need to emit unless we find a change that we care about.
+        // TODO: Don't emit here? We should only need to emit when an active connection changes. Test in a real extension.
         let needToEmit = false;
 
         // handle updated device list
@@ -387,6 +390,7 @@ class NetworkManager extends ProxyTree {
         const devices = this._proxyObj.Devices; // array of object paths
         //console.log(`Devices: ${devices}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
         devices.forEach(d => this._addDevice(d));
+        // TODO: Don't emit here? We should only need to emit when an active connection changes. Test in a real extension.
         this._ifReadyEmit();
     }
 
@@ -468,6 +472,7 @@ class NetworkManagerDevice extends ProxyTree {
                 }
 
                 this._imReady = true;
+                // TODO: Don't emit here? We should only need to emit when an active connection changes. Test in a real extension.
                 this._ifReadyEmit(); // always check here in case there are no children
             },
             null,
@@ -479,6 +484,7 @@ class NetworkManagerDevice extends ProxyTree {
         console.log('debug 1 - Proxy updated - NetworkManagerDevice');
         // NetworkManagerDevice doesn't have any state of its own. Just see if there are new children to add, or old children to remove.
         // We don't need to emit unless we find a change that we care about.
+        // TODO: Don't emit here? We should only need to emit when an active connection changes. Test in a real extension.
         let needToEmit = false;
 
         // handle ActiveConnection
@@ -550,6 +556,7 @@ class NetworkManagerDevice extends ProxyTree {
                 this._ifReadyEmit();
             });
         }
+        // TODO: Don't emit here? We should only need to emit when an active connection changes. Test in a real extension.
         this._ifReadyEmit(); // always check here in case there are no children
     }
 
