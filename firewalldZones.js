@@ -42,15 +42,33 @@ export class FirewalldZones {
     }
 
     static async getDefaultZone() {
+        const parameters = null;
+
+        // I can't seem to make this call without a callback (was hoping it would return a promise)
         return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                try {
-                    resolve('foo');
-                    //throw new Error('DOH');
-                } catch (e) {
-                    reject(e.toString());
+            Gio.DBus.system.call(
+                'org.fedoraproject.FirewallD1', // name
+                '/org/fedoraproject/FirewallD1', // object path
+                'org.fedoraproject.FirewallD1', // interface
+                'getDefaultZone', // method
+                parameters,
+                null, //reply type
+                Gio.DBusCallFlags.NONE, // might want ALLOW_INTERACTIVE_AUTHORIZATION - https://gjs-docs.gnome.org/gio20/gio.dbuscallflags
+                -1, // timeout
+                null, // cancellable
+                (connection, res) => {
+                    try {
+                        const reply = connection.call_finish(res);
+                        const value = reply.get_child_value(0);
+                        const zone = value.recursiveUnpack();
+                        resolve(zone);
+                    } catch (e) {
+                        if (e instanceof Gio.DBusError)
+                            Gio.DBusError.strip_remote_error(e);
+                        reject(e);
+                    }
                 }
-            }, "1000");
+            );
         });
     }
 
