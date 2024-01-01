@@ -15,6 +15,7 @@ async function getZoneInformation(networkInterface) {
         console.log(`zoneOfInterface: ${zoneOfInterface}`);
     } catch (error) {
         console.log('error');
+        console.log(error);
         // TODO: Is it worth checking to see if firewalld is running? It can help give a more useful error message.
     }
 }
