@@ -4,7 +4,6 @@ import {NetworkManagerZoneForConnection} from './networkManagerZoneForConnection
 async function getZone(objectPath) {
     try {
         const zone = await NetworkManagerZoneForConnection.getZone(objectPath)
-        console.log('promise!');
         console.log(`zone: ${zone}`);
     } catch (error) {
         console.log('error - outermost catch');
@@ -17,7 +16,6 @@ async function updateZone(objectPath) {
     let newZone;
     try {
         zone = await NetworkManagerZoneForConnection.getZone(objectPath)
-        console.log('promise!');
         console.log(`zone before: ${zone}`);
     } catch (error) {
         console.log('error - outermost catch');
@@ -28,16 +26,10 @@ async function updateZone(objectPath) {
     } else {
         newZone = 'trusted'
     }
-    newZone = 'public';
+    // newZone = 'public';
     try { // TODO: I don't think I should need this. Just use 1 bigger try.
         await NetworkManagerZoneForConnection.setZone(objectPath, newZone);
-    } catch (error) {
-        console.log('error - outermost catch');
-        console.log(error);
-    }
-    try { // TODO: I don't think I should need this. Just use 1 bigger try.
         zone = await NetworkManagerZoneForConnection.getZone(objectPath)
-        console.log('promise!');
         console.log(`zone after: ${zone}`);
     } catch (error) {
         console.log('error - outermost catch');
@@ -48,7 +40,7 @@ async function updateZone(objectPath) {
 // Settings/5 is the NM configuration settings for the wireless connection I am using for testing.
 // Normally, this object path would have to come from networkState.js
 
-//getZone('/org/freedesktop/NetworkManager/Settings/5');
+// getZone('/org/freedesktop/NetworkManager/Settings/5');
 updateZone('/org/freedesktop/NetworkManager/Settings/5');
 
 const loop = GLib.MainLoop.new(null, false);
