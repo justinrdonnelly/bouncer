@@ -117,7 +117,26 @@ export class NetworkManagerZoneForConnection {
     }
 
     static createGvariantTuple(dbusResult, newZone) {
-        return dbusResult;
-    }
+        // return dbusResult;
+        // console.log(dbusResult.print(true));
+        const unTupledDbusResult = dbusResult.get_child_value(0);
+        // console.log(unTupledDbusResult.print(true));
+        // console.log(unTupledDbusResult.print(true));
 
+
+        const unpackedDbusResult = unTupledDbusResult.deepUnpack();
+        console.log('Justin');
+        console.log(unpackedDbusResult['connection']['zone']);
+        console.log(unpackedDbusResult['connection']['zone'].unpack());
+        const newZoneVariant = GLib.Variant.new_string(newZone);
+        console.log(newZoneVariant);
+        console.log(newZoneVariant.unpack());
+        unpackedDbusResult['connection']['zone'] = newZoneVariant;
+        const packedDbusResult = new GLib.Variant('(a{sa{sv}})', [unpackedDbusResult]);
+        return packedDbusResult;
+
+        // from d-feet, the "pretty" type is: Dict of {String, Dict of {String, Variant}}
+        // properties: a{sa{sv}} - but you'll have to make it a tuple: (a{sa{sv}})
+        // connection: a{sv}
+    }
 }
