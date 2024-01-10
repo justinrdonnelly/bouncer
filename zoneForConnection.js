@@ -2,15 +2,19 @@ import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
 
 export class ZoneForConnection {
+
+    static wellKnownName  = 'org.freedesktop.NetworkManager';
+    static iface  = 'org.freedesktop.NetworkManager.Settings.Connection';
+
     static async _getZoneDbusCall(objectPath) {
         const parameters = null;
 
         // I can't seem to make this call without a callback (was hoping it would return a promise)
         return new Promise((resolve, reject) => {
             Gio.DBus.system.call(
-                'org.freedesktop.NetworkManager', // name
-                objectPath, // object path
-                'org.freedesktop.NetworkManager.Settings.Connection', // interface
+                ZoneForConnection.wellKnownName,
+                objectPath,
+                ZoneForConnection.iface,
                 'GetSettings', // method
                 parameters,
                 null, //reply type
@@ -47,9 +51,9 @@ export class ZoneForConnection {
         // replace zone
         return new Promise((resolve, reject) => {
             Gio.DBus.system.call(
-                'org.freedesktop.NetworkManager', // name
-                objectPath, // object path
-                'org.freedesktop.NetworkManager.Settings.Connection', // interface
+                ZoneForConnection.wellKnownName,
+                objectPath,
+                ZoneForConnection.iface,
                 'Update', // method
                 parameters,
                 null, //reply type
