@@ -226,8 +226,16 @@ export class NetworkState {
     }
 }
 
+/**
+ * We model the state of NetworkManager using a tree. Each level in the tree corresponds to a dbus call (handled via a
+ * GJS dbus proxy object). The root of the tree corresponds to the whole of NetworkManager. The properties include a
+ * list of `Devices` object paths. Those devices make up the 2nd level of the tree. Device properties include an
+ * `ActiveConnection` object path. The `ActiveConnection` is the 3rd level of the tree, and contains the `Id`. This is
+ * the connection name, in which we are interested.
+ */
+
 // An abstract class to hold a dbus proxy object. We will make multiple dbus calls based on the results of earlier calls, building a hierarchy.
-class ProxyTree /*extends EventEmitter*/ {
+class NetworkManagerStateItem /*extends EventEmitter*/ {
 
     static wellKnownName  = 'org.freedesktop.NetworkManager';
     static emitSignalProxyUpdated = 'dbus-info-updated'; // used for the initial creation, and any subsequent updates
@@ -236,15 +244,15 @@ class ProxyTree /*extends EventEmitter*/ {
 
     constructor(objectPath) {
         //super();
-        if (this.constructor === ProxyTree) {
-            throw new Error("ProxyTree is an abstract class. Do not instantiate.");
+        if (this.constructor === NetworkManagerStateItem) {
+            throw new Error("NetworkManagerStateItem is an abstract class. Do not instantiate.");
         }
-        this._id = ProxyTree.objectCount++;
+        this._id = NetworkManagerStateItem.objectCount++;
         this._objectPath = objectPath;
         this._proxyObj = null;
         // TODO: we may be able to get away with an array here, but use a map for now
-        this._childProxyTrees = new Map(); // map of object path to object for each related child ProxyTree
-        this._imReady = false; // whether this proxy is ready for use (ignores status of child proxy trees)
+        this._childNetworkManagerStateItems = new Map(); // map of object path to object for each related child NetworkManagerStateItem
+        this._imReady = false; // whether this proxy is ready for use (ignores status of child proxy NetworkManagerStateItems)
     }
 
     destroy() {
@@ -252,14 +260,14 @@ class ProxyTree /*extends EventEmitter*/ {
 
     // override the parent connect because we will always use the same signal, and track the handler in the child object
     // this works because no child ever has mutliple parents and we always use the same signal
-    connectTree(callback) {
+    connectItem(callback) {
         // TODO: this is part of EventEmitter
-        //this._handlerId = super.connect(ProxyTree.emitSignalProxyUpdated, callback);
+        //this._handlerId = super.connect(NetworkManagerStateItem.emitSignalProxyUpdated, callback);
         //console.log(`object: ${this._id}; connected handler: ${this._handlerId}`);
     }
 
     // override the parent disconnect because we are tracking the handler ID here
-    disconnectTree() {
+    disconnectItem() {
         // TODO: this is part of EventEmitter
         //console.log(`object: ${this._id}; disconnecting handler: ${this._handlerId}`);
         //super.disconnect(this._handlerId);
@@ -268,7 +276,7 @@ class ProxyTree /*extends EventEmitter*/ {
     // whether this proxy and it's related "children" are ready for use
     isReadyToEmit() {
         // TODO: Does this need to be in the superclass? We should only need to emit when an active connection changes. Test in a real extension.
-        return this._imReady && Array.from(this._childProxyTrees.values()).every((child) => child.isReadyToEmit());
+        return this._imReady && Array.from(this._childNetworkManagerStateItems.values()).every((child) => child.isReadyToEmit());
     }
 
     _ifReadyEmit() {
@@ -280,12 +288,12 @@ class ProxyTree /*extends EventEmitter*/ {
     _emit() {
         console.log("emitting signal:");
         // TODO: Once I can actually extend EventEmitter, uncomment the next line and it should work
-        //this.emit(ProxyTree.emitSignalProxyUpdated); // emit the "done" signal
+        //this.emit(NetworkManagerStateItem.emitSignalProxyUpdated); // emit the "done" signal
     }
 }
 
 
-class NetworkManager extends ProxyTree {
+class NetworkManager extends NetworkManagerStateItem {
     constructor(objectPath) {
         // example objectPath: /org/freedesktop/NetworkManager (this is always what it is)
         super(objectPath);
@@ -293,7 +301,7 @@ class NetworkManager extends ProxyTree {
     }
 
     get networkDevices() {
-        return Array.from(this._childProxyTrees.values());
+        return Array.from(this._childNetworkManagerStateItems.values());
     }
 
     // TODO: This all seems pretty generic. Can it be put in the super class?
@@ -302,9 +310,9 @@ class NetworkManager extends ProxyTree {
         // disconnect any proxy signals
         this._proxyObj.disconnect(this._proxyObjHandlerId);
         // handle children
-        Array.from(this._childProxyTrees.values()).forEach(child => {
+        Array.from(this._childNetworkManagerStateItems.values()).forEach(child => {
             // disconnect any gjs signals
-            child.disconnectTree();
+            child.disconnectItem();
             // call destroy on children
             child.destroy();
         });
@@ -313,7 +321,7 @@ class NetworkManager extends ProxyTree {
     _getDbusProxyObject() {
         const networkManagerProxy = NetworkManagerProxy(
             Gio.DBus.system,
-            ProxyTree.wellKnownName,
+            NetworkManagerStateItem.wellKnownName,
             this._objectPath,
             (proxy, error) => {
                 if (error !== null) {
@@ -323,7 +331,7 @@ class NetworkManager extends ProxyTree {
                 this._proxyObj = proxy;
                 this._addDevices();
                 // monitor for property changes
-                this._proxyObjHandlerId = networkManagerProxy.connect(ProxyTree.propertiesChanged, this._proxyUpdated.bind(this));
+                this._proxyObjHandlerId = networkManagerProxy.connect(NetworkManagerStateItem.propertiesChanged, this._proxyUpdated.bind(this));
 
                 this._imReady = true;
                 // TODO: Don't emit here? We should only need to emit when an active connection changes. Test in a real extension.
@@ -400,9 +408,9 @@ class NetworkManager extends ProxyTree {
         // Instantiate a new class that will make another dbus call
         const networkManagerDevice = new NetworkManagerDevice(device);
         // Add to child devices
-        this._childProxyTrees.set(device, networkManagerDevice);
+        this._childNetworkManagerStateItems.set(device, networkManagerDevice);
         // Connect to listen to emitted signals
-        networkManagerDevice.connectTree(() => {
+        networkManagerDevice.connectItem(() => {
             //console.log(device);
             //console.log("interface: " + networkManagerDevice.deviceInterfaceName); // e.g. ens3
             this._ifReadyEmit();
@@ -411,16 +419,16 @@ class NetworkManager extends ProxyTree {
 
     _removeDevice(deviceString) { // e.g. /org/freedesktop/NetworkManager/Devices/1
         // clean up old device if applicable
-        const deviceObj = this._childProxyTrees.get(deviceString);
+        const deviceObj = this._childNetworkManagerStateItems.get(deviceString);
         if (deviceObj) {
-            deviceObj.disconnectTree();
-            this._childProxyTrees.delete(deviceString);
+            deviceObj.disconnectItem();
+            this._childNetworkManagerStateItems.delete(deviceString);
             deviceObj.destroy();
         }
     }
 }
 
-class NetworkManagerDevice extends ProxyTree {
+class NetworkManagerDevice extends NetworkManagerStateItem {
 
     // from https://developer-old.gnome.org/NetworkManager/stable/nm-dbus-types.html#NMDeviceType
     static NM_DEVICE_TYPE_WIFI = 2;
@@ -433,7 +441,7 @@ class NetworkManagerDevice extends ProxyTree {
 
     // this is a map, but there should only ever be 1 entry
     get connections() {
-        return Array.from(this._childProxyTrees.values());
+        return Array.from(this._childNetworkManagerStateItems.values());
     }
 
     // TODO: This all seems pretty generic. Can it be put in the super class?
@@ -444,9 +452,9 @@ class NetworkManagerDevice extends ProxyTree {
             this._proxyObj.disconnect(this._proxyObjHandlerId);
         }
         // handle children
-        Array.from(this._childProxyTrees.values()).forEach(child => {
+        Array.from(this._childNetworkManagerStateItems.values()).forEach(child => {
             // disconnect any gjs signals
-            child.disconnectTree();
+            child.disconnectItem();
             // call destroy on children
             child.destroy();
         });
@@ -455,7 +463,7 @@ class NetworkManagerDevice extends ProxyTree {
     _getDbusProxyObject() {
         const networkManagerDeviceProxy = NetworkManagerDeviceProxy(
             Gio.DBus.system,
-            ProxyTree.wellKnownName,
+            NetworkManagerStateItem.wellKnownName,
             this._objectPath,
             (proxy, error) => {
                 if (error !== null) {
@@ -468,7 +476,7 @@ class NetworkManagerDevice extends ProxyTree {
                     this._addConnectionInfo();
                     console.log(`ActiveConnection: ${this._activeConnection}`)
                     // monitor for property changes
-                    this._proxyObjHandlerId = networkManagerDeviceProxy.connect(ProxyTree.propertiesChanged, this._proxyUpdated.bind(this));
+                    this._proxyObjHandlerId = networkManagerDeviceProxy.connect(NetworkManagerStateItem.propertiesChanged, this._proxyUpdated.bind(this));
                 }
 
                 this._imReady = true;
@@ -540,9 +548,9 @@ class NetworkManagerDevice extends ProxyTree {
 
     _deleteConnection(activeConnection) { // delete the child connection
         console.log(`debug 2 - removing connection ${activeConnection}`);
-        const child = this._childProxyTrees.get(activeConnection);
-        this._childProxyTrees.delete(activeConnection);
-        child.disconnectTree();
+        const child = this._childNetworkManagerStateItems.get(activeConnection);
+        this._childNetworkManagerStateItems.delete(activeConnection);
+        child.disconnectItem();
         child.destroy();
     }
 
@@ -551,8 +559,8 @@ class NetworkManagerDevice extends ProxyTree {
         console.log(`debug 2 - adding connection ${this._activeConnection}`);
         if (this._activeConnection !== undefined && this._activeConnection !== null && this._activeConnection !== "/") { // this connection is active, make another dbus call
             const networkManagerConnectionActive = new NetworkManagerConnectionActive(this._activeConnection);
-            this._childProxyTrees.set(this._activeConnection, networkManagerConnectionActive);
-            networkManagerConnectionActive.connectTree(() => {
+            this._childNetworkManagerStateItems.set(this._activeConnection, networkManagerConnectionActive);
+            networkManagerConnectionActive.connectItem(() => {
                 this._ifReadyEmit();
             });
         }
@@ -562,7 +570,7 @@ class NetworkManagerDevice extends ProxyTree {
 
 }
 
-class NetworkManagerConnectionActive extends ProxyTree {
+class NetworkManagerConnectionActive extends NetworkManagerStateItem {
     constructor(objectPath) {
         // example objectPath: /org/freedesktop/NetworkManager/ActiveConnection/1
         super(objectPath);
@@ -584,7 +592,7 @@ class NetworkManagerConnectionActive extends ProxyTree {
     _getDbusProxyObject() {
         const networkManagerConnectionActiveProxy = NetworkManagerConnectionActiveProxy(
             Gio.DBus.system,
-            ProxyTree.wellKnownName,
+            NetworkManagerStateItem.wellKnownName,
             this._objectPath,
             (sourceObj, error) => {
                 if (error !== null) {
@@ -595,7 +603,7 @@ class NetworkManagerConnectionActive extends ProxyTree {
                 console.log(`Connection ID: ${this.activeConnectionId}`)
 
                 // monitor for changes
-                this._proxyObjHandlerId = networkManagerConnectionActiveProxy.connect(ProxyTree.propertiesChanged, this._proxyUpdated.bind(this));
+                this._proxyObjHandlerId = networkManagerConnectionActiveProxy.connect(NetworkManagerStateItem.propertiesChanged, this._proxyUpdated.bind(this));
 
                 this._imReady = true;
                 this._ifReadyEmit();
