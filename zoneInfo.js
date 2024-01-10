@@ -9,7 +9,7 @@ import Gio from 'gi://Gio';
 
 // We have 3 different methods to call under 2 different dbus interfaces. We won't bother with a proxy.
 
-export class FirewalldZones {
+export class ZoneInfo {
     static async getZones() {
         const parameters = null;
 

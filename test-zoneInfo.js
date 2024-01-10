@@ -1,13 +1,13 @@
 import GLib from 'gi://GLib';
-import {FirewalldZones} from './firewalldZones.js';
+import {ZoneInfo} from './zoneInfo.js';
 
 async function getZoneInformation(networkInterface) {
     try {
         // Any firewalld dbus failures are considered fatal
         const [zones, defaultZone, zoneOfInterface] = await Promise.all([
-            FirewalldZones.getZones(),
-            FirewalldZones.getDefaultZone(),
-            FirewalldZones.getZoneOfInterface(networkInterface),
+            ZoneInfo.getZones(),
+            ZoneInfo.getDefaultZone(),
+            ZoneInfo.getZoneOfInterface(networkInterface),
         ]);
         console.log('promises!');
         console.log(`zones: ${zones}`);

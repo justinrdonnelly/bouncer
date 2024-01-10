@@ -1,7 +1,7 @@
 import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
 
-export class NetworkManagerZoneForConnection {
+export class ZoneForConnection {
     static async _getZoneDbusCall(objectPath) {
         const parameters = null;
 
@@ -33,7 +33,7 @@ export class NetworkManagerZoneForConnection {
     }
 
     static async getZone(objectPath) {
-        const dbusResult = await NetworkManagerZoneForConnection._getZoneDbusCall(objectPath);
+        const dbusResult = await ZoneForConnection._getZoneDbusCall(objectPath);
         const zone = dbusResult.get_child_value(0).recursiveUnpack()['connection']['zone'];
         // console.log(`zone (inside): ${zone}`);
         return zone;
@@ -41,9 +41,9 @@ export class NetworkManagerZoneForConnection {
 
     static async setZone(objectPath, zone) {
         // get existing settings
-        let dbusResult = await NetworkManagerZoneForConnection._getZoneDbusCall(objectPath);
+        let dbusResult = await ZoneForConnection._getZoneDbusCall(objectPath);
         // create a new variant with the correct zone
-        const parameters = NetworkManagerZoneForConnection.createGvariantTuple(dbusResult, zone);
+        const parameters = ZoneForConnection.createGvariantTuple(dbusResult, zone);
         // replace zone
         return new Promise((resolve, reject) => {
             Gio.DBus.system.call(
