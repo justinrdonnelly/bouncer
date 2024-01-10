@@ -318,6 +318,13 @@ class NetworkManager extends NetworkManagerStateItem {
         });
     }
 
+    /**
+     * We don't use async/await for 2 main reasons:
+     * 1. It doesn't really buy anything in terms of readability.
+     * 2. We end up binding to 'g-properties-changed' **before** the callback, which results in a flood of useless
+     * notifications about the proxy being updated when it is first returned. We could work around this by storing
+     * networkManagerProxy as a property, but... see point #1.
+     */
     _getDbusProxyObject() {
         const networkManagerProxy = NetworkManagerProxy(
             Gio.DBus.system,
@@ -460,6 +467,13 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
         });
     }
 
+    /**
+     * We don't use async/await for 2 main reasons:
+     * 1. It doesn't really buy anything in terms of readability.
+     * 2. We end up binding to 'g-properties-changed' **before** the callback, which results in a flood of useless
+     * notifications about the proxy being updated when it is first returned. We could work around this by storing
+     * networkManagerProxy as a property, but... see point #1.
+     */
     _getDbusProxyObject() {
         const networkManagerDeviceProxy = NetworkManagerDeviceProxy(
             Gio.DBus.system,
@@ -589,6 +603,13 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
         return this._proxyObj.Id; // e.g. Wired Connection 1
     }
 
+    /**
+     * We don't use async/await for 2 main reasons:
+     * 1. It doesn't really buy anything in terms of readability.
+     * 2. We end up binding to 'g-properties-changed' **before** the callback, which results in a flood of useless
+     * notifications about the proxy being updated when it is first returned. We could work around this by storing
+     * networkManagerProxy as a property, but... see point #1.
+     */
     _getDbusProxyObject() {
         const networkManagerConnectionActiveProxy = NetworkManagerConnectionActiveProxy(
             Gio.DBus.system,
