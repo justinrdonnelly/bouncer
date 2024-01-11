@@ -220,6 +220,9 @@ const NetworkManagerConnectionActiveProxy = Gio.DBusProxy.makeProxyWrapper(netwo
 
 
 export class NetworkState {
+
+    networkManager;
+
     constructor() {
         // Keep a reference to NetworkManager instance to prevent GC
         this.networkManager = new NetworkManager('/org/freedesktop/NetworkManager');
@@ -242,6 +245,15 @@ class NetworkManagerStateItem /*extends EventEmitter*/ {
     static propertiesChanged = 'g-properties-changed';
     static objectCount = 0;
 
+    _id;
+    _objectPath;
+    _proxyObj = null;
+    // TODO: we may be able to get away with an array here, but use a map for now
+    _childNetworkManagerStateItems = new Map(); // map of object path to object for each related child NetworkManagerStateItem
+    _imReady = false; // whether this proxy is ready for use (ignores status of child proxy NetworkManagerStateItems)
+    _handlerId;
+    _proxyObjHandlerId;
+
     constructor(objectPath) {
         //super();
         if (this.constructor === NetworkManagerStateItem) {
@@ -249,10 +261,6 @@ class NetworkManagerStateItem /*extends EventEmitter*/ {
         }
         this._id = NetworkManagerStateItem.objectCount++;
         this._objectPath = objectPath;
-        this._proxyObj = null;
-        // TODO: we may be able to get away with an array here, but use a map for now
-        this._childNetworkManagerStateItems = new Map(); // map of object path to object for each related child NetworkManagerStateItem
-        this._imReady = false; // whether this proxy is ready for use (ignores status of child proxy NetworkManagerStateItems)
     }
 
     destroy() {
@@ -294,6 +302,7 @@ class NetworkManagerStateItem /*extends EventEmitter*/ {
 
 
 class NetworkManager extends NetworkManagerStateItem {
+
     constructor(objectPath) {
         // example objectPath: /org/freedesktop/NetworkManager (this is always what it is)
         super(objectPath);
@@ -439,6 +448,7 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
 
     // from https://developer-old.gnome.org/NetworkManager/stable/nm-dbus-types.html#NMDeviceType
     static NM_DEVICE_TYPE_WIFI = 2;
+    _activeConnection;
 
     constructor(objectPath) {
         // example objectPath: /org/freedesktop/NetworkManager/Devices/1
