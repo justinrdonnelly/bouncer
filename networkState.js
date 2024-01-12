@@ -248,7 +248,6 @@ class NetworkManagerStateItem /*extends EventEmitter*/ {
     _id;
     _objectPath;
     _proxyObj = null;
-    // TODO: we may be able to get away with an array here, but use a map for now
     _childNetworkManagerStateItems = new Map(); // map of object path to object for each related child NetworkManagerStateItem
     _imReady = false; // whether this proxy is ready for use (ignores status of child proxy NetworkManagerStateItems)
     _handlerId;
@@ -372,8 +371,7 @@ class NetworkManager extends NetworkManagerStateItem {
             console.log(`debug 3 - value: ${value.recursiveUnpack()}`);
             if (name === 'Devices') {
                 // compare to previous list. add/remove as necessary. emit when done.
-                const oldDeviceObjectPaths = []; // this is coming from my children
-                this.networkDevices.forEach(d => oldDeviceObjectPaths.push(d._objectPath));
+                const oldDeviceObjectPaths = Array.from(this._childNetworkManagerStateItems.keys());
                 const newDeviceObjectPaths = value.recursiveUnpack();
                 console.log(`debug 2 - Devices changed`);
                 console.log(`debug 2 - New Devices: ${newDeviceObjectPaths}`);
