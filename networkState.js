@@ -395,14 +395,16 @@ class NetworkManager extends NetworkManagerStateItem {
             }
         }
 
-        // IIUC this means that I would need to make another async call to get the updated devices. A better alternative would be to pass the GET_INVALIDATED_PROPERTIES flag during proxy construction. For now, we'll just log an error and leave a TODO
+        // IIUC this means that I would need to make another async call to get the updated devices. A better
+        // alternative would be to pass the GET_INVALIDATED_PROPERTIES flag during proxy construction. For now, this is
+        // considered a fatal error. Log it, and destroy as much as you can.
+        // see: https://gjs.guide/guides/gio/dbus.html#low-level-proxies
         for (const name of invalidated) {
             //console.log(`Property: ${name} invalidated`);
             if (name === 'Devices') {
-                console.error('Devices is invalidated. This is not supported.')
-                this.networkDevices.forEach(d => this.#removeDevice(d));
-                needToEmit = true;
-                // TODO
+                console.error('Devices is invalidated. This is not supported.');
+                this.destroy();
+                return;
             }
         }
 
@@ -540,13 +542,16 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
             }
         }
 
-        // IIUC this means that I would need to make another async call to get the updated devices. A better alternative would be to pass the GET_INVALIDATED_PROPERTIES flag during proxy construction. For now, we'll just log an error and leave a TODO
+        // IIUC this means that I would need to make another async call to get the updated devices. A better
+        // alternative would be to pass the GET_INVALIDATED_PROPERTIES flag during proxy construction. For now, this is
+        // considered a fatal error. Log it, and destroy as much as you can.
+        // see: https://gjs.guide/guides/gio/dbus.html#low-level-proxies
         for (const name of invalidated) {
             //console.log(`Property: ${name} invalidated`);
             if (name === 'ActiveConnection') {
-                console.error('ActiveConnection is invalidated. This is not supported.')
-                needToEmit = true;
-                // TODO
+                console.error('ActiveConnection is invalidated. This is not supported.');
+                this.destroy();
+                return;
             }
         }
 
@@ -638,13 +643,16 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
                 return;
             }
         }
-        // IIUC this means that I would need to make another async call to get the updated devices. A better alternative would be to pass the GET_INVALIDATED_PROPERTIES flag during proxy construction. For now, we'll just log an error and leave a TODO
+        // IIUC this means that I would need to make another async call to get the updated devices. A better
+        // alternative would be to pass the GET_INVALIDATED_PROPERTIES flag during proxy construction. For now, this is
+        // considered a fatal error. Log it, and destroy as much as you can.
+        // see: https://gjs.guide/guides/gio/dbus.html#low-level-proxies
         for (const name of invalidated) {
             //console.log(`Property: ${name} invalidated`);
             if (name === 'Id') {
-                console.error('Id is invalidated. This is not supported.')
-                needToEmit = true;
-                // TODO
+                console.error('Id is invalidated. This is not supported.');
+                this.destroy();
+                return;
             }
         }
     }
