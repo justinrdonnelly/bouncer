@@ -11,8 +11,8 @@ import Gio from 'gi://Gio';
 
 export class ZoneInfo {
 
-    static wellKnownName  = 'org.fedoraproject.FirewallD1';
-    static objectPath  = '/org/fedoraproject/FirewallD1';
+    static #wellKnownName  = 'org.fedoraproject.FirewallD1';
+    static #objectPath  = '/org/fedoraproject/FirewallD1';
 
     static async getZones() {
         const parameters = null;
@@ -20,8 +20,8 @@ export class ZoneInfo {
         // I can't seem to make this call without a callback (was hoping it would return a promise)
         return new Promise((resolve, reject) => {
             Gio.DBus.system.call(
-                ZoneInfo.wellKnownName,
-                ZoneInfo.objectPath,
+                ZoneInfo.#wellKnownName,
+                ZoneInfo.#objectPath,
                 'org.fedoraproject.FirewallD1.zone', // interface
                 'getZones', // method
                 parameters,
@@ -51,8 +51,8 @@ export class ZoneInfo {
         // I can't seem to make this call without a callback (was hoping it would return a promise)
         return new Promise((resolve, reject) => {
             Gio.DBus.system.call(
-                ZoneInfo.wellKnownName,
-                ZoneInfo.objectPath,
+                ZoneInfo.#wellKnownName,
+                ZoneInfo.#objectPath,
                 'org.fedoraproject.FirewallD1', // interface
                 'getDefaultZone', // method
                 parameters,
@@ -84,7 +84,7 @@ export class ZoneInfo {
         // I can't seem to make this call without a callback (was hoping it would return a promise)
         return new Promise((resolve, reject) => {
             Gio.DBus.system.call(
-                ZoneInfo.wellKnownName,
+                ZoneInfo.#wellKnownName,
                 ZoneInfo.objectPath,
                 'org.fedoraproject.FirewallD1.zone', // interface
                 'getZoneOfInterface', // method
