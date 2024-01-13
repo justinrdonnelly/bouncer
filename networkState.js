@@ -453,6 +453,10 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
     static NM_DEVICE_TYPE_WIFI = 2;
     #activeConnection;
 
+    static #isConnectionActive(connectionValue) {
+        return !(connectionValue === undefined || connectionValue === null || connectionValue === '/');
+    }
+
     constructor(objectPath) {
         // example objectPath: /org/freedesktop/NetworkManager/Devices/1
         super(objectPath);
@@ -517,19 +521,20 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
                 const oldValue = this.#activeConnection;
                 console.log(`debug 2 - NetworkManagerDevice - old ActiveConnection: ${oldValue}`);
                 console.log(`debug 2 - NetworkManagerDevice - new ActiveConnection: ${value}`);
-                // TODO: consider some reuse here
-                if ((value === undefined || value === null || value === '/') && !(oldValue === undefined || oldValue === null || oldValue === '/')) { // connection has toggled from active to inactive
+                if (NetworkManagerDevice.#isConnectionActive(oldValue) && !NetworkManagerDevice.#isConnectionActive(value)) { // connection has toggled from active to inactive
                     console.log("debug 2 - connection toggled from active to inactive");
                     this.#deleteConnection(oldValue); // destroy old child
                     this.#addConnectionInfo(); // this will add the child ('/' in this case)
                 }
-                else if (!(value === undefined || value === null || value === '/') && (oldValue === undefined || oldValue === null || oldValue === '/')) { // connection has toggled from inactive to active
+                else if (!NetworkManagerDevice.#isConnectionActive(oldValue) && NetworkManagerDevice.#isConnectionActive(value)) { // connection has toggled from inactive to active
                     console.log("debug 2 - connection toggled from inactive to active");
-                    // If the connection was inactive ('/'), there was no child. Don't call #deleteConnection.
+                    // The connection was inactive ('/'), so there was no child. Don't call #deleteConnection. This
+                    // asymmetry is OK. The add above woudln't actually put the connection into the child map. It would
+                    // just set this.#activeConnection
                     this.#addConnectionInfo(); // this will add the child
                 }
                 // In my testing, this didn't actually happen. The connection was removed with 1 proxy update, then a new connection added with another.
-                else if (!(value === undefined || value === null || value === '/') && !(oldValue === undefined || oldValue === null || oldValue === '/')) { // connection has changed from one active connection to another
+                else if (NetworkManagerDevice.#isConnectionActive(oldValue) && NetworkManagerDevice.#isConnectionActive(value)) { // connection has changed from one active connection to another
                     console.log(`debug 2 - connection changed from one active connection (${oldValue}) to another (${value})`);
                     this.#deleteConnection(oldValue); // destroy old child
                     this.#addConnectionInfo(); // this will add the child
@@ -571,7 +576,7 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
     #addConnectionInfo() {
         this.#activeConnection = this._proxyObj.ActiveConnection; // e.g. / (if not active), /org/freedesktop/NetworkManager/ActiveConnection/1 (if active)
         console.log(`debug 2 - adding connection ${this.#activeConnection}`);
-        if (this.#activeConnection !== undefined && this.#activeConnection !== null && this.#activeConnection !== "/") { // this connection is active, make another dbus call
+        if (NetworkManagerDevice.#isConnectionActive(this.#activeConnection)) { // this connection is active, make another dbus call
             const networkManagerConnectionActive = new NetworkManagerConnectionActive(this.#activeConnection);
             this._childNetworkManagerStateItems.set(this.#activeConnection, networkManagerConnectionActive);
             networkManagerConnectionActive.connectItem(() => {
