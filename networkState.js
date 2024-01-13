@@ -600,6 +600,10 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
         return this._proxyObj.Id; // e.g. Wired Connection 1
     }
 
+    get activeConnectionSettings() {
+        return this._proxyObj.Connection; // e.g. /org/freedesktop/NetworkManager/Settings/5
+    }
+
     /**
      * We don't use async/await for 2 main reasons:
      * 1. It doesn't really buy anything in terms of readability.
@@ -618,7 +622,8 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
                     return;
                 }
                 this._proxyObj = sourceObj;
-                console.log(`Connection ID: ${this.activeConnectionId}`)
+                console.log(`Connection ID: ${this.activeConnectionId}`);
+                console.log(`Settings: ${this.activeConnectionSettings}`);
 
                 // monitor for changes
                 this._proxyObjHandlerId = networkManagerConnectionActiveProxy.connect(NetworkManagerStateItem._propertiesChanged, this.#proxyUpdated.bind(this));
