@@ -267,6 +267,18 @@ class NetworkManagerStateItem /*extends EventEmitter*/ {
     }
 
     destroy() {
+        console.log(`debug 1 - Destroying ${this.constructor.name} with object path: ${this._objectPath}`);
+        // disconnect any proxy signals
+        if (this._proxyObj) { // Need to confirm existence since we don't always keep the proxy
+            this._proxyObj.disconnect(this._proxyObjHandlerId);
+        }
+        // handle children
+        Array.from(this._childNetworkManagerStateItems.values()).forEach(child => {
+            // disconnect any gjs signals
+            child.disconnectItem();
+            // call destroy on children
+            child.destroy();
+        });
     }
 
     // override the parent connect because we will always use the same signal, and track the handler in the child object
@@ -315,20 +327,6 @@ class NetworkManager extends NetworkManagerStateItem {
 
     get networkDevices() {
         return Array.from(this._childNetworkManagerStateItems.values());
-    }
-
-    // TODO: This all seems pretty generic. Can it be put in the super class?
-    destroy() {
-        console.log(`debug 1 - Destroying NetworkManager with object path: ${this._objectPath}`);
-        // disconnect any proxy signals
-        this._proxyObj.disconnect(this._proxyObjHandlerId);
-        // handle children
-        Array.from(this._childNetworkManagerStateItems.values()).forEach(child => {
-            // disconnect any gjs signals
-            child.disconnectItem();
-            // call destroy on children
-            child.destroy();
-        });
     }
 
     /**
@@ -464,22 +462,6 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
         return Array.from(this._childNetworkManagerStateItems.values());
     }
 
-    // TODO: This all seems pretty generic. Can it be put in the super class?
-    destroy() {
-        console.log(`debug 1 - Destroying Devices with object path: ${this._objectPath}`);
-        // disconnect any proxy signals
-        if (this._proxyObj) { // Need to confirm existence since we don't always keep the proxy
-            this._proxyObj.disconnect(this._proxyObjHandlerId);
-        }
-        // handle children
-        Array.from(this._childNetworkManagerStateItems.values()).forEach(child => {
-            // disconnect any gjs signals
-            child.disconnectItem();
-            // call destroy on children
-            child.destroy();
-        });
-    }
-
     /**
      * We don't use async/await for 2 main reasons:
      * 1. It doesn't really buy anything in terms of readability.
@@ -602,14 +584,6 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
         // example objectPath: /org/freedesktop/NetworkManager/ActiveConnection/1
         super(objectPath);
         this.#getDbusProxyObject();
-    }
-
-    // TODO: This all seems pretty generic. Can it be put in the super class?
-    destroy() {
-        console.log(`debug 1 - Destroying ActiveConnection with object path: ${this._objectPath}`);
-        // disconnect any proxy signals
-        this._proxyObj.disconnect(this._proxyObjHandlerId);
-        // we don't have children
     }
 
     get activeConnectionId() {
