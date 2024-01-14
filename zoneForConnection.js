@@ -39,11 +39,12 @@ export class ZoneForConnection {
     static async getZone(objectPath) {
         const dbusResult = await ZoneForConnection.#getZoneDbusCall(objectPath);
         const zone = dbusResult.get_child_value(0).recursiveUnpack()['connection']['zone'];
-        // console.log(`zone (inside): ${zone}`);
+        console.log(`Current device zone: ${zone}`);
         return zone;
     }
 
     static async setZone(objectPath, zone) {
+        console.log(`Setting device zone to: ${zone}`);
         // get existing settings
         let dbusResult = await ZoneForConnection.#getZoneDbusCall(objectPath);
         // create a new variant with the correct zone

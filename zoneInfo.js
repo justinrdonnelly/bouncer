@@ -34,6 +34,7 @@ export class ZoneInfo {
                         const reply = connection.call_finish(res);
                         const value = reply.get_child_value(0);
                         const zones = value.recursiveUnpack();
+                        console.log(`All zones: ${zones}`);
                         resolve(zones);
                     } catch (e) {
                         if (e instanceof Gio.DBusError)
@@ -65,6 +66,7 @@ export class ZoneInfo {
                         const reply = connection.call_finish(res);
                         const value = reply.get_child_value(0);
                         const zone = value.recursiveUnpack();
+                        console.log(`Default zone: ${zone}`);
                         resolve(zone);
                     } catch (e) {
                         if (e instanceof Gio.DBusError)
@@ -98,6 +100,7 @@ export class ZoneInfo {
                         const reply = connection.call_finish(res);
                         const value = reply.get_child_value(0);
                         const zone = value.recursiveUnpack();
+                        console.log(`Zone of interface: ${zone}`);
                         resolve(zone);
                     } catch (e) {
                         if (e instanceof Gio.DBusError)
