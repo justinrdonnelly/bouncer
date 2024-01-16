@@ -247,14 +247,13 @@ class NetworkManagerStateItem extends NetworkManagerStateItemSuper {
 
     // conceptually, the variables below are 'protected'
     static _wellKnownName  = 'org.freedesktop.NetworkManager';
-    static _emitSignalProxyUpdated = 'dbus-info-updated'; // used for the initial creation, and any subsequent updates
+    static _emitSignalProxyUpdated = 'connection-updated';
     static _propertiesChanged = 'g-properties-changed';
 
     // conceptually, the variables below are 'protected'
     _objectPath;
     _proxyObj = null;
     _childNetworkManagerStateItems = new Map(); // map of object path to object for each related child NetworkManagerStateItem
-    _imReady = false; // whether this proxy is ready for use (ignores status of child proxy NetworkManagerStateItems)
     _handlerId;
     _proxyObjHandlerId;
 
@@ -283,35 +282,23 @@ class NetworkManagerStateItem extends NetworkManagerStateItemSuper {
         });
     }
 
-    // override the parent connect because we will always use the same signal, and track the handler in the child object
-    // this works because no child ever has mutliple parents and we always use the same signal
+    // Use this instead of `EventEmitter.connect` because we will always use the same signal, and track the handler in
+    // the child object. This is safe because no child ever has mutliple parents (ie listeners) and we always use the
+    // same signal.
     connectItem(callback) {
         console.debug(`debug 1 - object: ${this._id}; connected handler: ${this._handlerId}`);
         this._handlerId = super.connect(NetworkManagerStateItem._emitSignalProxyUpdated, callback);
     }
 
-    // override the parent disconnect because we are tracking the handler ID here
     disconnectItem() {
         console.debug(`debug 1 - object: ${this._id}; disconnecting handler: ${this._handlerId}`);
         super.disconnect(this._handlerId);
     }
 
-    // whether this proxy and it's related "children" are ready for use
-    isReadyToEmit() {
-        // TODO: Does this need to be in the superclass? We should only need to emit when an active connection changes. Test in a real extension.
-        return this._imReady && Array.from(this._childNetworkManagerStateItems.values()).every((child) => child.isReadyToEmit());
-    }
-
     // conceptually, the methods below are 'protected'
-    _ifReadyEmit() {
-        if (this.isReadyToEmit()) {
-            this._emit();
-        }
-    }
-
     _emit() {
         console.log('emitting signal:');
-        this.emit(NetworkManagerStateItem._emitSignalProxyUpdated); // emit the "done" signal
+        this.emit(NetworkManagerStateItem._emitSignalProxyUpdated);
     }
 }
 
@@ -352,10 +339,6 @@ class NetworkManager extends NetworkManagerStateItem {
                 this.#addDevices();
                 // monitor for property changes
                 this._proxyObjHandlerId = networkManagerProxy.connect(NetworkManagerStateItem._propertiesChanged, this.#proxyUpdated.bind(this));
-
-                this._imReady = true;
-                // TODO: Don't emit here? We should only need to emit when an active connection changes. Test in a real extension.
-                this._ifReadyEmit(); // always check here in case there are no children
             },
             null,
             Gio.DBusProxyFlags.NONE
@@ -365,17 +348,13 @@ class NetworkManager extends NetworkManagerStateItem {
     #proxyUpdated(proxy, changed, invalidated) {
         console.debug('debug 1 - Proxy updated - NetworkManager');
         // NetworkManager doesn't have any state of its own. Just see if there are new children to add, or old children to remove.
-        // We don't need to emit unless we find a change that we care about.
-        // TODO: Don't emit here? We should only need to emit when an active connection changes. Test in a real extension.
-        let needToEmit = false;
-
         // handle updated device list
         for (const [name, value] of Object.entries(changed.deepUnpack())) {
             console.debug('debug 3 - something changed - NetworkManager');
             console.debug(`debug 3 - name: ${name}`);
             console.debug(`debug 3 - value: ${value.recursiveUnpack()}`);
             if (name === 'Devices') {
-                // compare to previous list. add/remove as necessary. emit when done.
+                // Compare to previous list. Add/remove as necessary.
                 const oldDeviceObjectPaths = Array.from(this._childNetworkManagerStateItems.keys());
                 const newDeviceObjectPaths = value.recursiveUnpack();
                 console.debug(`debug 2 - Devices changed`);
@@ -393,7 +372,6 @@ class NetworkManager extends NetworkManagerStateItem {
                     console.debug(`debug 2 - Adding device ${d}`);
                     this.#addDevice(d);
                 });
-                needToEmit = true;
             }
         }
 
@@ -408,18 +386,12 @@ class NetworkManager extends NetworkManagerStateItem {
                 return;
             }
         }
-
-        if (needToEmit) {
-            this._ifReadyEmit();
-        }
     }
 
     #addDevices() {
         const devices = this._proxyObj.Devices; // array of object paths
         console.debug(`debug 1 - Adding devices: ${devices}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
         devices.forEach(d => this.#addDevice(d));
-        // TODO: Don't emit here? We should only need to emit when an active connection changes. Test in a real extension.
-        this._ifReadyEmit();
     }
 
     #addDevice(device) { // e.g. /org/freedesktop/NetworkManager/Devices/1
@@ -429,9 +401,9 @@ class NetworkManager extends NetworkManagerStateItem {
         const networkManagerDevice = new NetworkManagerDevice(device);
         // Add to child devices
         this._childNetworkManagerStateItems.set(device, networkManagerDevice);
-        // Connect to listen to emitted signals
+        // Listen for emitted signals and relay them
         networkManagerDevice.connectItem(() => {
-            this._ifReadyEmit();
+            this._emit();
         });
     }
 
@@ -497,10 +469,6 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
                     // monitor for property changes
                     this._proxyObjHandlerId = networkManagerDeviceProxy.connect(NetworkManagerStateItem._propertiesChanged, this.#proxyUpdated.bind(this));
                 }
-
-                this._imReady = true;
-                // TODO: Don't emit here? We should only need to emit when an active connection changes. Test in a real extension.
-                this._ifReadyEmit(); // always check here in case there are no children
             },
             null,
             Gio.DBusProxyFlags.NONE
@@ -510,9 +478,6 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
     #proxyUpdated(proxy, changed, invalidated) {
         console.debug('debug 1 - Proxy updated - NetworkManagerDevice');
         // NetworkManagerDevice doesn't have any state of its own. Just see if there are new children to add, or old children to remove.
-        // We don't need to emit unless we find a change that we care about.
-        // TODO: Don't emit here? We should only need to emit when an active connection changes. Test in a real extension.
-        let needToEmit = false;
 
         // handle ActiveConnection
         for (const [name, valueVariant] of Object.entries(changed.deepUnpack())) {
@@ -520,7 +485,7 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
             console.debug(`debug 3 - name: ${name}`);
             console.debug(`debug 3 - valueVariant: ${valueVariant.recursiveUnpack()}`);
             if (name === 'ActiveConnection') {
-                // compare to previous list. add/remove as necessary. emit when done.
+                // Compare to previous list. Add/remove as necessary.
                 const value = valueVariant.deepUnpack();
                 const oldValue = this.#activeConnection;
                 console.debug(`debug 2 - NetworkManagerDevice - old ActiveConnection: ${oldValue}`);
@@ -547,7 +512,6 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
                     console.error(`ERROR: Unexpected transition for ActiveConnection (inactive to inactive). Old: ${oldValue}; New: ${value}`);
                     this.#addConnectionInfo(); // this will add the child
                 }
-                needToEmit = true;
             }
         }
 
@@ -561,10 +525,6 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
                 this.destroy();
                 return;
             }
-        }
-
-        if (needToEmit) {
-            this._ifReadyEmit();
         }
     }
 
@@ -582,12 +542,11 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
         if (NetworkManagerDevice.#isConnectionActive(this.#activeConnection)) { // this connection is active, make another dbus call
             const networkManagerConnectionActive = new NetworkManagerConnectionActive(this.#activeConnection);
             this._childNetworkManagerStateItems.set(this.#activeConnection, networkManagerConnectionActive);
+            // Listen for emitted signals and relay them
             networkManagerConnectionActive.connectItem(() => {
-                this._ifReadyEmit();
+                this._emit();
             });
         }
-        // TODO: Don't emit here? We should only need to emit when an active connection changes. Test in a real extension.
-        this._ifReadyEmit(); // always check here in case there are no children
     }
 
 }
@@ -633,9 +592,7 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
 
                 // monitor for changes
                 this._proxyObjHandlerId = networkManagerConnectionActiveProxy.connect(NetworkManagerStateItem._propertiesChanged, this.#proxyUpdated.bind(this));
-
-                this._imReady = true;
-                this._ifReadyEmit();
+                this._emit();
             },
             null,
             Gio.DBusProxyFlags.NONE
@@ -652,10 +609,11 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
             console.debug('debug 3 - something changed - NetworkManagerConnectionActive');
             console.debug(`debug 3 - name: ${name}`);
             console.debug(`debug 3 - value: ${value.recursiveUnpack()}`);
+            // Assume the Connection is never updated without the Id also being updated.
             if (name === "Id") {
                 console.debug(`debug 2 - ID updated to ${this._proxyObj.Id}`);
                 // the ID has changed, emit and stop checking for other changes
-                this._ifReadyEmit();
+                this._emit();
                 return;
             }
         }
