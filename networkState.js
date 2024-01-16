@@ -241,10 +241,6 @@ export class NetworkState {
 // An abstract class to hold a dbus proxy object. We will make multiple dbus calls based on the results of earlier calls, building a hierarchy.
 class NetworkManagerStateItem extends NetworkManagerStateItemSuper {
 
-    // TODO: These can be helpful for debugging, but should eventually be removed
-    static #objectCount = 0;
-    _id;
-
     // conceptually, the variables below are 'protected'
     static _wellKnownName  = 'org.freedesktop.NetworkManager';
     static _emitSignalProxyUpdated = 'connection-updated';
@@ -262,7 +258,6 @@ class NetworkManagerStateItem extends NetworkManagerStateItemSuper {
         if (this.constructor === NetworkManagerStateItem) {
             throw new Error("NetworkManagerStateItem is an abstract class. Do not instantiate.");
         }
-        this._id = NetworkManagerStateItem.#objectCount++;
         this._objectPath = objectPath;
         console.debug(`debug 1 - Instantiating ${this.constructor.name} with object path: ${this._objectPath}`);
     }
@@ -286,13 +281,13 @@ class NetworkManagerStateItem extends NetworkManagerStateItemSuper {
     // the child object. This is safe because no child ever has mutliple parents (ie listeners) and we always use the
     // same signal.
     connectItem(callback) {
-        console.debug(`debug 1 - object: ${this._id}; connected handler: ${this._handlerId}`);
-        this._handlerId = super.connect(NetworkManagerStateItem._emitSignalProxyUpdated, callback);
+        this._handlerId = this.connect(NetworkManagerStateItem._emitSignalProxyUpdated, callback);
+        console.debug(`debug 1 - connected handler: ${this._handlerId}`);
     }
 
     disconnectItem() {
-        console.debug(`debug 1 - object: ${this._id}; disconnecting handler: ${this._handlerId}`);
-        super.disconnect(this._handlerId);
+        console.debug(`debug 1 - disconnecting handler: ${this._handlerId}`);
+        this.disconnect(this._handlerId);
     }
 
     // conceptually, the methods below are 'protected'
