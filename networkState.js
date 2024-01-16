@@ -327,7 +327,7 @@ class NetworkManager extends NetworkManagerStateItem {
     }
 
     get networkDevices() {
-        return Array.from(this._childNetworkManagerStateItems.values());
+        return Array.from(this._childNetworkManagerStateItems.values()).filter((device) => device.isWifiDevice);
     }
 
     /**
@@ -454,6 +454,7 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
     // from https://developer-old.gnome.org/NetworkManager/stable/nm-dbus-types.html#NMDeviceType
     static NM_DEVICE_TYPE_WIFI = 2;
     #activeConnection;
+    isWifiDevice = false;
 
     static #isConnectionActive(connectionValue) {
         return !(connectionValue === undefined || connectionValue === null || connectionValue === '/');
@@ -466,8 +467,8 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
     }
 
     // this is a map, but there should only ever be 1 entry
-    get connections() {
-        return Array.from(this._childNetworkManagerStateItems.values());
+    get connection() {
+        return Array.from(this._childNetworkManagerStateItems.values())[0];
     }
 
     /**
@@ -491,6 +492,7 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
                     return;
                 }
                 if (proxy.DeviceType === NetworkManagerDevice.NM_DEVICE_TYPE_WIFI) {
+                    this.isWifiDevice = true;
                     // Use DeviceType to decide whether to continue. We will only track wireless devices. For wireless, the device type is NM_DEVICE_TYPE_WIFI (2).
                     this._proxyObj = proxy;
                     this.#addConnectionInfo();
