@@ -1,6 +1,10 @@
 import GLib from 'gi://GLib';
 import {ZoneInfo} from './zoneInfo.js';
 
+/**
+ *
+ * @param {string} networkInterface - The name of the interface.
+ */
 async function getZoneInformation(networkInterface) {
     try {
         // Any firewalld dbus failures are considered fatal

@@ -10,11 +10,10 @@ import Gio from 'gi://Gio';
 // We have 3 different methods to call under 2 different dbus interfaces. We won't bother with a proxy.
 
 export class ZoneInfo {
-
     static #wellKnownName  = 'org.fedoraproject.FirewallD1';
     static #objectPath  = '/org/fedoraproject/FirewallD1';
 
-    static async getZones() {
+    static getZones() {
         const parameters = null;
 
         // I can't seem to make this call without a callback (was hoping it would return a promise)
@@ -25,7 +24,7 @@ export class ZoneInfo {
                 'org.fedoraproject.FirewallD1.zone', // interface
                 'getZones', // method
                 parameters,
-                null, //reply type
+                null, // reply type
                 Gio.DBusCallFlags.NONE, // might want ALLOW_INTERACTIVE_AUTHORIZATION - https://gjs-docs.gnome.org/gio20/gio.dbuscallflags
                 -1, // timeout
                 null, // cancellable
@@ -46,7 +45,7 @@ export class ZoneInfo {
         });
     }
 
-    static async getDefaultZone() {
+    static getDefaultZone() {
         const parameters = null;
 
         // I can't seem to make this call without a callback (was hoping it would return a promise)
@@ -57,7 +56,7 @@ export class ZoneInfo {
                 'org.fedoraproject.FirewallD1', // interface
                 'getDefaultZone', // method
                 parameters,
-                null, //reply type
+                null, // reply type
                 Gio.DBusCallFlags.NONE, // might want ALLOW_INTERACTIVE_AUTHORIZATION - https://gjs-docs.gnome.org/gio20/gio.dbuscallflags
                 -1, // timeout
                 null, // cancellable
@@ -78,7 +77,7 @@ export class ZoneInfo {
         });
     }
 
-    static async getZoneOfInterface(networkInterface) {
+    static getZoneOfInterface(networkInterface) {
         const parameters = new GLib.Variant('(s)', [
             networkInterface,
         ]);
@@ -91,7 +90,7 @@ export class ZoneInfo {
                 'org.fedoraproject.FirewallD1.zone', // interface
                 'getZoneOfInterface', // method
                 parameters,
-                null, //reply type
+                null, // reply type
                 Gio.DBusCallFlags.NONE, // might want ALLOW_INTERACTIVE_AUTHORIZATION - https://gjs-docs.gnome.org/gio20/gio.dbuscallflags
                 -1, // timeout
                 null, // cancellable
@@ -111,5 +110,4 @@ export class ZoneInfo {
             );
         });
     }
-
 }

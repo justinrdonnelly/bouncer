@@ -1,9 +1,14 @@
 import GLib from 'gi://GLib';
 import {ZoneForConnection} from './zoneForConnection.js';
 
+/**
+ *
+ * @param {string} objectPath - The object path of the configuration/settings to update.
+ */
+// eslint-disable-next-line no-unused-vars
 async function getZone(objectPath) {
     try {
-        const zone = await ZoneForConnection.getZone(objectPath)
+        const zone = await ZoneForConnection.getZone(objectPath);
         console.log(`zone: ${zone}`);
     } catch (error) {
         console.log('error - outermost catch');
@@ -11,25 +16,30 @@ async function getZone(objectPath) {
     }
 }
 
+/**
+ *
+ * @param {string} objectPath - The object path of the configuration/settings to update.
+ */
+// eslint-disable-next-line no-unused-vars
 async function updateZone(objectPath) {
     let zone;
     let newZone;
     try {
-        zone = await ZoneForConnection.getZone(objectPath)
+        zone = await ZoneForConnection.getZone(objectPath);
         console.log(`zone before: ${zone}`);
     } catch (error) {
         console.log('error - outermost catch');
         console.log(error);
     }
-    if (zone === 'trusted') {
-        newZone = 'public'
-    } else {
-        newZone = 'trusted'
-    }
+    if (zone === 'trusted')
+        newZone = 'public';
+    else
+        newZone = 'trusted';
+
     // newZone = 'public';
     try { // TODO: I don't think I should need this. Just use 1 bigger try.
         await ZoneForConnection.setZone(objectPath, newZone);
-        zone = await ZoneForConnection.getZone(objectPath)
+        zone = await ZoneForConnection.getZone(objectPath);
         console.log(`zone after: ${zone}`);
     } catch (error) {
         console.log('error - outermost catch');

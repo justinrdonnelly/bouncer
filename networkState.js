@@ -1,6 +1,6 @@
 import Gio from 'gi://Gio';
 import {NetworkManagerStateItemSuper} from './networkManagerStateItemSuperTest.js';
-//import {NetworkManagerStateItemSuper} from './networkManagerStateItemSuperShell.js';
+// import {NetworkManagerStateItemSuper} from './networkManagerStateItemSuperShell.js';
 
 // TODO: how to sort imports?
 
@@ -221,7 +221,6 @@ const NetworkManagerConnectionActiveProxy = Gio.DBusProxy.makeProxyWrapper(netwo
 
 
 export class NetworkState {
-
     networkManager;
 
     constructor() {
@@ -240,7 +239,6 @@ export class NetworkState {
 
 // An abstract class to hold a dbus proxy object. We will make multiple dbus calls based on the results of earlier calls, building a hierarchy.
 class NetworkManagerStateItem extends NetworkManagerStateItemSuper {
-
     // conceptually, the variables below are 'protected'
     static _wellKnownName  = 'org.freedesktop.NetworkManager';
     static _emitSignalProxyUpdated = 'connection-updated';
@@ -255,9 +253,8 @@ class NetworkManagerStateItem extends NetworkManagerStateItemSuper {
 
     constructor(objectPath) {
         super();
-        if (this.constructor === NetworkManagerStateItem) {
-            throw new Error("NetworkManagerStateItem is an abstract class. Do not instantiate.");
-        }
+        if (this.constructor === NetworkManagerStateItem)
+            throw new Error('NetworkManagerStateItem is an abstract class. Do not instantiate.');
         this._objectPath = objectPath;
         console.debug(`debug 1 - Instantiating ${this.constructor.name} with object path: ${this._objectPath}`);
     }
@@ -299,7 +296,6 @@ class NetworkManagerStateItem extends NetworkManagerStateItemSuper {
 
 
 class NetworkManager extends NetworkManagerStateItem {
-
     constructor(objectPath) {
         // example objectPath: /org/freedesktop/NetworkManager (this is always what it is)
         super(objectPath);
@@ -307,7 +303,7 @@ class NetworkManager extends NetworkManagerStateItem {
     }
 
     get networkDevices() {
-        return Array.from(this._childNetworkManagerStateItems.values()).filter((device) => device.isWifiDevice);
+        return Array.from(this._childNetworkManagerStateItems.values()).filter(device => device.isWifiDevice);
     }
 
     /**
@@ -324,9 +320,9 @@ class NetworkManager extends NetworkManagerStateItem {
             this._objectPath,
             (proxy, error) => {
                 if (error !== null) {
-                    if (error instanceof Gio.DBusError) {
+                    if (error instanceof Gio.DBusError)
                         Gio.DBusError.strip_remote_error(error);
-                    }
+
                     console.error(error);
                     return;
                 }
@@ -352,7 +348,7 @@ class NetworkManager extends NetworkManagerStateItem {
                 // Compare to previous list. Add/remove as necessary.
                 const oldDeviceObjectPaths = Array.from(this._childNetworkManagerStateItems.keys());
                 const newDeviceObjectPaths = value.recursiveUnpack();
-                console.debug(`debug 2 - Devices changed`);
+                console.debug('debug 2 - Devices changed');
                 console.debug(`debug 2 - New Devices: ${newDeviceObjectPaths}`);
                 console.debug(`debug 2 - Old Devices: ${oldDeviceObjectPaths}`);
                 const addedDeviceObjectPaths = newDeviceObjectPaths.filter(x => !oldDeviceObjectPaths.includes(x));
@@ -415,7 +411,6 @@ class NetworkManager extends NetworkManagerStateItem {
 }
 
 class NetworkManagerDevice extends NetworkManagerStateItem {
-
     // from https://developer-old.gnome.org/NetworkManager/stable/nm-dbus-types.html#NMDeviceType
     static NM_DEVICE_TYPE_WIFI = 2;
     #activeConnection;
@@ -450,9 +445,9 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
             this._objectPath,
             (proxy, error) => {
                 if (error !== null) {
-                    if (error instanceof Gio.DBusError) {
+                    if (error instanceof Gio.DBusError)
                         Gio.DBusError.strip_remote_error(error);
-                    }
+
                     console.error(error);
                     return;
                 }
@@ -485,25 +480,25 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
                 const oldValue = this.#activeConnection;
                 console.debug(`debug 2 - NetworkManagerDevice - old ActiveConnection: ${oldValue}`);
                 console.debug(`debug 2 - NetworkManagerDevice - new ActiveConnection: ${value}`);
-                if (NetworkManagerDevice.#isConnectionActive(oldValue) && !NetworkManagerDevice.#isConnectionActive(value)) { // connection has toggled from active to inactive
+                if (NetworkManagerDevice.#isConnectionActive(oldValue) && !NetworkManagerDevice.#isConnectionActive(value)) {
+                    // connection has toggled from active to inactive
                     console.debug('debug 2 - connection toggled from active to inactive');
                     this.#deleteConnection(oldValue); // destroy old child
                     this.#addConnectionInfo(); // this will add the child ('/' in this case)
-                }
-                else if (!NetworkManagerDevice.#isConnectionActive(oldValue) && NetworkManagerDevice.#isConnectionActive(value)) { // connection has toggled from inactive to active
+                } else if (!NetworkManagerDevice.#isConnectionActive(oldValue) && NetworkManagerDevice.#isConnectionActive(value)) {
+                    // connection has toggled from inactive to active
                     console.debug('debug 2 - connection toggled from inactive to active');
                     // The connection was inactive ('/'), so there was no child. Don't call #deleteConnection. This
                     // asymmetry is OK. The add above woudln't actually put the connection into the child map. It would
                     // just set this.#activeConnection
                     this.#addConnectionInfo(); // this will add the child
-                }
-                // In my testing, this didn't actually happen. The connection was removed with 1 proxy update, then a new connection added with another.
-                else if (NetworkManagerDevice.#isConnectionActive(oldValue) && NetworkManagerDevice.#isConnectionActive(value)) { // connection has changed from one active connection to another
+                } else if (NetworkManagerDevice.#isConnectionActive(oldValue) && NetworkManagerDevice.#isConnectionActive(value)) {
+                    // connection has changed from one active connection to another
+                    // In my testing, this didn't actually happen. The connection was removed with 1 proxy update, then a new connection added with another.
                     console.debug(`debug 2 - connection changed from one active connection (${oldValue}) to another (${value})`);
                     this.#deleteConnection(oldValue); // destroy old child
                     this.#addConnectionInfo(); // this will add the child
-                }
-                else {
+                } else {
                     console.error(`ERROR: Unexpected transition for ActiveConnection (inactive to inactive). Old: ${oldValue}; New: ${value}`);
                     this.#addConnectionInfo(); // this will add the child
                 }
@@ -543,7 +538,6 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
             });
         }
     }
-
 }
 
 class NetworkManagerConnectionActive extends NetworkManagerStateItem {
@@ -575,9 +569,9 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
             this._objectPath,
             (sourceObj, error) => {
                 if (error !== null) {
-                    if (error instanceof Gio.DBusError) {
+                    if (error instanceof Gio.DBusError)
                         Gio.DBusError.strip_remote_error(error);
-                    }
+
                     console.error(error);
                     return;
                 }
@@ -605,7 +599,7 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
             console.debug(`debug 3 - name: ${name}`);
             console.debug(`debug 3 - value: ${value.recursiveUnpack()}`);
             // Assume the Connection is never updated without the Id also being updated.
-            if (name === "Id") {
+            if (name === 'Id') {
                 console.debug(`debug 2 - ID updated to ${this._proxyObj.Id}`);
                 // the ID has changed, emit and stop checking for other changes
                 this._emit();

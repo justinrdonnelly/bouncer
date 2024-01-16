@@ -18,6 +18,6 @@ export default class ZoneDefenseExtension extends Extension {
             // console.log(`Connection: ${device.connection}`);
             console.log(`Connection ID: ${device.connection.activeConnectionId}`);
             console.log(`Settings object path: ${device.connection.activeConnectionSettings}`);
-            });
+        });
     }
 }

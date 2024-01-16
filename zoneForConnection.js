@@ -2,11 +2,10 @@ import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
 
 export class ZoneForConnection {
-
     static #wellKnownName  = 'org.freedesktop.NetworkManager';
     static #iface  = 'org.freedesktop.NetworkManager.Settings.Connection';
 
-    static async #getZoneDbusCall(objectPath) {
+    static #getZoneDbusCall(objectPath) {
         const parameters = null;
 
         // I can't seem to make this call without a callback (was hoping it would return a promise)
@@ -17,7 +16,7 @@ export class ZoneForConnection {
                 ZoneForConnection.#iface,
                 'GetSettings', // method
                 parameters,
-                null, //reply type
+                null, // reply type
                 Gio.DBusCallFlags.NONE, // might want ALLOW_INTERACTIVE_AUTHORIZATION - https://gjs-docs.gnome.org/gio20/gio.dbuscallflags
                 -1, // timeout
                 null, // cancellable
@@ -25,7 +24,7 @@ export class ZoneForConnection {
                     try {
                         // throw new Error('hi'); // for testing error handling
                         const reply = connection.call_finish(res);
-                        resolve(reply)
+                        resolve(reply);
                     } catch (e) {
                         if (e instanceof Gio.DBusError)
                             Gio.DBusError.strip_remote_error(e);
@@ -57,7 +56,7 @@ export class ZoneForConnection {
                 ZoneForConnection.#iface,
                 'Update', // method
                 parameters,
-                null, //reply type
+                null, // reply type
                 Gio.DBusCallFlags.NONE, // might want ALLOW_INTERACTIVE_AUTHORIZATION - https://gjs-docs.gnome.org/gio20/gio.dbuscallflags
                 -1, // timeout
                 null, // cancellable
