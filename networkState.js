@@ -1,6 +1,7 @@
 import Gio from 'gi://Gio';
+import {NetworkManagerStateItemSuper} from './networkManagerStateItemSuperTest.js';
+//import {NetworkManagerStateItemSuper} from './networkManagerStateItemSuperShell.js';
 
-//import EventEmitter from 'resource:///org/gnome/shell/misc/signals.js'; // works only in GSEs?
 // TODO: how to sort imports?
 
 // NOTE: You can ONLY HAVE ONE interface (the rest that were returned from the introspection were removed)
@@ -238,7 +239,7 @@ export class NetworkState {
  */
 
 // An abstract class to hold a dbus proxy object. We will make multiple dbus calls based on the results of earlier calls, building a hierarchy.
-class NetworkManagerStateItem /*extends EventEmitter*/ {
+class NetworkManagerStateItem extends NetworkManagerStateItemSuper {
 
     // TODO: These can be helpful for debugging, but should eventually be removed
     static #objectCount = 0;
@@ -258,7 +259,7 @@ class NetworkManagerStateItem /*extends EventEmitter*/ {
     _proxyObjHandlerId;
 
     constructor(objectPath) {
-        //super();
+        super();
         if (this.constructor === NetworkManagerStateItem) {
             throw new Error("NetworkManagerStateItem is an abstract class. Do not instantiate.");
         }
@@ -285,16 +286,14 @@ class NetworkManagerStateItem /*extends EventEmitter*/ {
     // override the parent connect because we will always use the same signal, and track the handler in the child object
     // this works because no child ever has mutliple parents and we always use the same signal
     connectItem(callback) {
-        // TODO: this is part of EventEmitter
-        //this._handlerId = super.connect(NetworkManagerStateItem._emitSignalProxyUpdated, callback);
-        //console.debug(`object: ${this._id}; connected handler: ${this._handlerId}`);
+        console.debug(`debug 1 - object: ${this._id}; connected handler: ${this._handlerId}`);
+        this._handlerId = super.connect(NetworkManagerStateItem._emitSignalProxyUpdated, callback);
     }
 
     // override the parent disconnect because we are tracking the handler ID here
     disconnectItem() {
-        // TODO: this is part of EventEmitter
-        //console.debug(`object: ${this._id}; disconnecting handler: ${this._handlerId}`);
-        //super.disconnect(this._handlerId);
+        console.debug(`debug 1 - object: ${this._id}; disconnecting handler: ${this._handlerId}`);
+        super.disconnect(this._handlerId);
     }
 
     // whether this proxy and it's related "children" are ready for use
@@ -312,8 +311,7 @@ class NetworkManagerStateItem /*extends EventEmitter*/ {
 
     _emit() {
         console.log('emitting signal:');
-        // TODO: Once I can actually extend EventEmitter, uncomment the next line and it should work
-        //this.emit(NetworkManagerStateItem._emitSignalProxyUpdated); // emit the "done" signal
+        this.emit(NetworkManagerStateItem._emitSignalProxyUpdated); // emit the "done" signal
     }
 }
 
