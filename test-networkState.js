@@ -16,6 +16,7 @@ setTimeout(() => {
 
 // simulate disabling the extension
 setTimeout(() => {
+    networkState.networkManager.unwatchBus();
     networkState.networkManager.destroy();
 }, 2000);
 

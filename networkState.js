@@ -264,6 +264,7 @@ class NetworkManagerStateItem extends NetworkManagerStateItemSuper {
         // disconnect any proxy signals
         if (this._proxyObj) { // Need to confirm existence since we don't always keep the proxy
             this._proxyObj.disconnect(this._proxyObjHandlerId);
+            this._proxyObj = null;
         }
         // handle children
         Array.from(this._childNetworkManagerStateItems.values()).forEach(child => {
@@ -296,14 +297,26 @@ class NetworkManagerStateItem extends NetworkManagerStateItemSuper {
 
 
 class NetworkManager extends NetworkManagerStateItem {
+    #busWatchId;
+
     constructor(objectPath) {
         // example objectPath: /org/freedesktop/NetworkManager (this is always what it is)
         super(objectPath);
-        this.#getDbusProxyObject();
+        this.#busWatchId = Gio.bus_watch_name(
+            Gio.BusType.SYSTEM,
+            NetworkManagerStateItem._wellKnownName,
+            Gio.BusNameWatcherFlags.NONE,
+            () => this.#getDbusProxyObject(),
+            () => this.destroy()
+        );
     }
 
     get networkDevices() {
         return Array.from(this._childNetworkManagerStateItems.values()).filter(device => device.isWifiDevice);
+    }
+
+    unwatchBus() {
+        Gio.bus_unwatch_name(this.#busWatchId);
     }
 
     /**

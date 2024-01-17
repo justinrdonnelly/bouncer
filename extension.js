@@ -4,11 +4,13 @@ import {NetworkState} from './networkState.js';
 export default class ZoneDefenseExtension extends Extension {
     enable() {
         this._networkState = new NetworkState();
-        this._handlerId = this._networkState.networkManager.connectItem(this.interfaceChanged.bind(this));
+        this._networkState.networkManager.connectItem(this.interfaceChanged.bind(this));
     }
 
     disable() {
+        this._networkState.networkManager.unwatchBus();
         this._networkState.networkManager.destroy();
+        this._networkState.networkManager.disconnectItem();
     }
 
     interfaceChanged() {
