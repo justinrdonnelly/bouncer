@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=zone-defense
+Exec=com.github.justinrdonnelly.ZoneDefense
+Icon=com.github.justinrdonnelly.ZoneDefense
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true

@@ -1,0 +1,6 @@
+data/com.github.justinrdonnelly.ZoneDefense.desktop.in
+data/com.github.justinrdonnelly.ZoneDefense.metainfo.xml.in
+data/com.github.justinrdonnelly.ZoneDefense.gschema.xml
+src/main.js
+src/window.js
+src/window.ui
