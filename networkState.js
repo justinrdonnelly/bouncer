@@ -1,6 +1,5 @@
 import Gio from 'gi://Gio';
 import {NetworkManagerStateItemSuper} from './networkManagerStateItemSuperTest.js';
-// import {NetworkManagerStateItemSuper} from './networkManagerStateItemSuperShell.js';
 
 // TODO: how to sort imports?
 
