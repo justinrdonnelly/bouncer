@@ -16,6 +16,8 @@ import Adw from 'gi://Adw?version=1';
 
 import { ZoneDefenseWindow } from './window.js';
 
+import { NetworkState } from './networkState.js';
+
 pkg.initGettext();
 pkg.initFormat();
 
@@ -24,6 +26,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
         constructor() {
             super({application_id: 'com.github.justinrdonnelly.ZoneDefense', flags: Gio.ApplicationFlags.DEFAULT_FLAGS});
 
+            const networkState = new NetworkState();
             const quit_action = new Gio.SimpleAction({name: 'quit'});
                 quit_action.connect('activate', action => {
                 this.quit();
