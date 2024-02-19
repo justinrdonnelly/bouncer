@@ -1,5 +1,5 @@
 import GLib from 'gi://GLib';
-import {ZoneInfo} from './zoneInfo.js';
+import {ZoneInfo} from './src/zoneInfo.js';
 
 /**
  *

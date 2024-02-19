@@ -1,5 +1,5 @@
 import GLib from 'gi://GLib';
-import {NetworkState} from './networkState.js';
+import {NetworkState} from './src/networkState.js';
 
 const networkState = new NetworkState();
 

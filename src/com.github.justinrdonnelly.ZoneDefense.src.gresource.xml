@@ -3,5 +3,9 @@
   <gresource prefix="/com/github/justinrdonnelly/ZoneDefense/js">
     <file>main.js</file>
     <file>window.js</file>
+    <file>networkState.js</file>
+    <file>networkManagerStateItemSuperTest.js</file>
+    <file>zoneInfo.js</file>
+    <file>zoneForConnection.js</file>
   </gresource>
 </gresources>
