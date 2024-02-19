@@ -66,5 +66,6 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
 export function main(argv) {
     const application = new ZoneDefenseApplication();
+    application.hold();
     return application.runAsync(argv);
 }
