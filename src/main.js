@@ -27,7 +27,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
         constructor() {
             super({application_id: 'com.github.justinrdonnelly.ZoneDefense', flags: Gio.ApplicationFlags.DEFAULT_FLAGS});
 
-            const networkState = new NetworkState();
+            this.networkState = new NetworkState();
             const quit_action = new Gio.SimpleAction({name: 'quit'});
                 quit_action.connect('activate', action => {
                 this.quit();
@@ -56,10 +56,10 @@ export const ZoneDefenseApplication = GObject.registerClass(
             // handle signals
             const gsourceSigint = GLib.unix_signal_source_new(2);
             const gsourceSigterm = GLib.unix_signal_source_new(15);
-            gsourceSigint.set_callback(() => {console.log('hello from SIGINT (2)');});
-            gsourceSigterm.set_callback(() => {console.log('hello from SIGTERM (15)');});
-            const sourceIdSigint = gsourceSigint.attach(null);
-            const sourceIdSigterm = gsourceSigterm.attach(null);
+            gsourceSigint.set_callback(() => {this.quit(2);});
+            gsourceSigterm.set_callback(() => {this.quit(15);});
+            this.sourceIdSigint = gsourceSigint.attach(null);
+            this.sourceIdSigterm = gsourceSigterm.attach(null);
         } // end constructor
 
         vfunc_activate() {
@@ -70,6 +70,17 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
             active_window.present();
         }
+
+        quit(signal) {
+            console.log(`quitting due to signal ${signal}!`);
+            GLib.Source.remove(this.sourceIdSigint);
+            GLib.Source.remove(this.sourceIdSigterm);
+            this.networkState.destroy()
+            this.networkState = null;
+            console.log('here');
+            super.quit(); // this ends up calling vfunc_shutdown()
+        }
+
     }
 );
 
