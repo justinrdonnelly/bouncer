@@ -9,6 +9,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
+import GLib from 'gi://GLib';
 import GObject from 'gi://GObject';
 import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk?version=4.0';
@@ -51,6 +52,14 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 aboutWindow.present();
             });
             this.add_action(show_about_action);
+
+            // handle signals
+            const gsourceSigint = GLib.unix_signal_source_new(2);
+            const gsourceSigterm = GLib.unix_signal_source_new(15);
+            gsourceSigint.set_callback(() => {console.log('hello from SIGINT (2)');});
+            gsourceSigterm.set_callback(() => {console.log('hello from SIGTERM (15)');});
+            const sourceIdSigint = gsourceSigint.attach(null);
+            const sourceIdSigterm = gsourceSigterm.attach(null);
         } // end constructor
 
         vfunc_activate() {
