@@ -226,6 +226,10 @@ export class NetworkState {
         // Keep a reference to NetworkManager instance to prevent GC
         this.networkManager = new NetworkManager('/org/freedesktop/NetworkManager');
     }
+
+    destroy() {
+        this.networkManager.destroy();
+    }
 }
 
 /**
@@ -306,8 +310,13 @@ class NetworkManager extends NetworkManagerStateItem {
             NetworkManagerStateItem._wellKnownName,
             Gio.BusNameWatcherFlags.NONE,
             () => this.#getDbusProxyObject(),
-            () => this.destroy()
+            () => super.destroy() // DO NOT CALL this.destroy. We want to continue watching the bus.
         );
+    }
+
+    destroy() {
+        this.unwatchBus();
+        super.destroy();
     }
 
     get networkDevices() {

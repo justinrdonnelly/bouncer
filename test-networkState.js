@@ -16,8 +16,7 @@ setTimeout(() => {
 
 // simulate disabling the extension
 setTimeout(() => {
-    networkState.networkManager.unwatchBus();
-    networkState.networkManager.destroy();
+    networkState.destroy();
 }, 2000);
 
 const loop = GLib.MainLoop.new(null, false);
