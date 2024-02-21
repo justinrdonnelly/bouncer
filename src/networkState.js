@@ -1,6 +1,5 @@
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
-import {NetworkManagerStateItemSuper} from './networkManagerStateItemSuperTest.js';
 
 // TODO: how to sort imports?
 
@@ -242,10 +241,9 @@ export class NetworkState {
  */
 
 // An abstract class to hold a dbus proxy object. We will make multiple dbus calls based on the results of earlier calls, building a hierarchy.
-class NetworkManagerStateItem extends NetworkManagerStateItemSuper {
+class NetworkManagerStateItem {
     // conceptually, the variables below are 'protected'
     static _wellKnownName  = 'org.freedesktop.NetworkManager';
-    static _emitSignalProxyUpdated = 'connection-updated';
     static _propertiesChanged = 'g-properties-changed';
 
     // conceptually, the variables below are 'protected'
@@ -257,7 +255,6 @@ class NetworkManagerStateItem extends NetworkManagerStateItemSuper {
     _proxyObjHandlerId;
 
     constructor(objectPath, networkChangedAction) {
-        super();
         if (this.constructor === NetworkManagerStateItem)
             throw new Error('NetworkManagerStateItem is an abstract class. Do not instantiate.');
         this._objectPath = objectPath;
@@ -274,31 +271,11 @@ class NetworkManagerStateItem extends NetworkManagerStateItemSuper {
         }
         // handle children
         Array.from(this._childNetworkManagerStateItems.values()).forEach(child => {
-            // disconnect any gjs signals
-            child.disconnectItem();
             // call destroy on children
             child.destroy();
         });
     }
 
-    // Use this instead of `EventEmitter.connect` because we will always use the same signal, and track the handler in
-    // the child object. This is safe because no child ever has mutliple parents (ie listeners) and we always use the
-    // same signal.
-    connectItem(callback) {
-        this._handlerId = this.connect(NetworkManagerStateItem._emitSignalProxyUpdated, callback);
-        console.debug(`debug 1 - connected handler: ${this._handlerId}`);
-    }
-
-    disconnectItem() {
-        console.debug(`debug 1 - disconnecting handler: ${this._handlerId}`);
-        this.disconnect(this._handlerId);
-    }
-
-    // conceptually, the methods below are 'protected'
-    _emit() {
-        console.log('emitting signal:');
-        this.emit(NetworkManagerStateItem._emitSignalProxyUpdated);
-    }
 }
 
 
@@ -416,10 +393,6 @@ class NetworkManager extends NetworkManagerStateItem {
         const networkManagerDevice = new NetworkManagerDevice(device, this._networkChangedAction);
         // Add to child devices
         this._childNetworkManagerStateItems.set(device, networkManagerDevice);
-        // Listen for emitted signals and relay them
-        networkManagerDevice.connectItem(() => {
-            this._emit();
-        });
     }
 
     #removeDevice(deviceObjectPath) { // e.g. /org/freedesktop/NetworkManager/Devices/1
@@ -427,7 +400,6 @@ class NetworkManager extends NetworkManagerStateItem {
         console.debug(`debug 1 - Removing device: ${deviceObjectPath}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
         const deviceObj = this._childNetworkManagerStateItems.get(deviceObjectPath);
         if (deviceObj) {
-            deviceObj.disconnectItem();
             this._childNetworkManagerStateItems.delete(deviceObjectPath);
             deviceObj.destroy();
         }
@@ -546,7 +518,6 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
         console.debug(`debug 1 - Removing connection ${activeConnection}`);
         const child = this._childNetworkManagerStateItems.get(activeConnection);
         this._childNetworkManagerStateItems.delete(activeConnection);
-        child.disconnectItem();
         child.destroy();
     }
 
@@ -556,10 +527,6 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
         if (NetworkManagerDevice.#isConnectionActive(this.#activeConnection)) { // this connection is active, make another dbus call
             const networkManagerConnectionActive = new NetworkManagerConnectionActive(this.#activeConnection, this._networkChangedAction);
             this._childNetworkManagerStateItems.set(this.#activeConnection, networkManagerConnectionActive);
-            // Listen for emitted signals and relay them
-            networkManagerConnectionActive.connectItem(() => {
-                this._emit();
-            });
         }
     }
 }
@@ -605,7 +572,6 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
 
                 // monitor for changes
                 this._proxyObjHandlerId = networkManagerConnectionActiveProxy.connect(NetworkManagerStateItem._propertiesChanged, this.#proxyUpdated.bind(this));
-                this._emit();
                 this._networkChangedAction.activate(GLib.Variant.new_string(this._proxyObj.Id));
             },
             null,
@@ -615,10 +581,10 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
 
     #proxyUpdated(proxy, changed, invalidated) {
         console.debug('debug 1 - Proxy updated - NetworkManagerConnectionActive');
-        // The only propertiy I care about has a getter that accesses the proxy directly. No need to do anything here besides emit if necessary.
+        // The only property I care about has a getter that accesses the proxy directly. No need to do anything here besides signal if necessary.
         // There are no children to worry about either.
 
-        // check for which property was updated and only emit if we need to
+        // check for which property was updated and only signal if we need to
         for (const [name, value] of Object.entries(changed.deepUnpack())) {
             console.debug('debug 3 - something changed - NetworkManagerConnectionActive');
             console.debug(`debug 3 - name: ${name}`);
@@ -626,8 +592,7 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
             // Assume the Connection is never updated without the Id also being updated.
             if (name === 'Id') {
                 console.debug(`debug 2 - ID updated to ${this._proxyObj.Id}`);
-                // the ID has changed, emit and stop checking for other changes
-                this._emit();
+                // the ID has changed, signal and stop checking for other changes
                 this._networkChangedAction.activate(GLib.Variant.new_string(this._proxyObj.Id));
                 return;
             }
