@@ -1,4 +1,5 @@
 import Gio from 'gi://Gio';
+import GLib from 'gi://GLib';
 import {NetworkManagerStateItemSuper} from './networkManagerStateItemSuperTest.js';
 
 // TODO: how to sort imports?
@@ -222,9 +223,9 @@ const NetworkManagerConnectionActiveProxy = Gio.DBusProxy.makeProxyWrapper(netwo
 export class NetworkState {
     networkManager;
 
-    constructor() {
+    constructor(networkChangedAction) {
         // Keep a reference to NetworkManager instance to prevent GC
-        this.networkManager = new NetworkManager('/org/freedesktop/NetworkManager');
+        this.networkManager = new NetworkManager('/org/freedesktop/NetworkManager', networkChangedAction);
     }
 
     destroy() {
@@ -249,16 +250,18 @@ class NetworkManagerStateItem extends NetworkManagerStateItemSuper {
 
     // conceptually, the variables below are 'protected'
     _objectPath;
+    _networkChangedAction;
     _proxyObj = null;
     _childNetworkManagerStateItems = new Map(); // map of object path to object for each related child NetworkManagerStateItem
     _handlerId;
     _proxyObjHandlerId;
 
-    constructor(objectPath) {
+    constructor(objectPath, networkChangedAction) {
         super();
         if (this.constructor === NetworkManagerStateItem)
             throw new Error('NetworkManagerStateItem is an abstract class. Do not instantiate.');
         this._objectPath = objectPath;
+        this._networkChangedAction = networkChangedAction;
         console.debug(`debug 1 - Instantiating ${this.constructor.name} with object path: ${this._objectPath}`);
     }
 
@@ -302,9 +305,9 @@ class NetworkManagerStateItem extends NetworkManagerStateItemSuper {
 class NetworkManager extends NetworkManagerStateItem {
     #busWatchId;
 
-    constructor(objectPath) {
+    constructor(objectPath, networkChangedAction) {
         // example objectPath: /org/freedesktop/NetworkManager (this is always what it is)
-        super(objectPath);
+        super(objectPath, networkChangedAction);
         this.#busWatchId = Gio.bus_watch_name(
             Gio.BusType.SYSTEM,
             NetworkManagerStateItem._wellKnownName,
@@ -410,7 +413,7 @@ class NetworkManager extends NetworkManagerStateItem {
         this.#removeDevice(device); // if the device already exists, remove it
         console.debug(`debug 1 - Adding device: ${device}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
         // Instantiate a new class that will make another dbus call
-        const networkManagerDevice = new NetworkManagerDevice(device);
+        const networkManagerDevice = new NetworkManagerDevice(device, this._networkChangedAction);
         // Add to child devices
         this._childNetworkManagerStateItems.set(device, networkManagerDevice);
         // Listen for emitted signals and relay them
@@ -441,9 +444,9 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
         return !(connectionValue === undefined || connectionValue === null || connectionValue === '/');
     }
 
-    constructor(objectPath) {
+    constructor(objectPath, networkChangedAction) {
         // example objectPath: /org/freedesktop/NetworkManager/Devices/1
-        super(objectPath);
+        super(objectPath, networkChangedAction);
         this.#getDbusProxyObject();
     }
 
@@ -551,7 +554,7 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
         this.#activeConnection = this._proxyObj.ActiveConnection; // e.g. / (if not active), /org/freedesktop/NetworkManager/ActiveConnection/1 (if active)
         console.debug(`debug 1 - Adding connection ${this.#activeConnection}`);
         if (NetworkManagerDevice.#isConnectionActive(this.#activeConnection)) { // this connection is active, make another dbus call
-            const networkManagerConnectionActive = new NetworkManagerConnectionActive(this.#activeConnection);
+            const networkManagerConnectionActive = new NetworkManagerConnectionActive(this.#activeConnection, this._networkChangedAction);
             this._childNetworkManagerStateItems.set(this.#activeConnection, networkManagerConnectionActive);
             // Listen for emitted signals and relay them
             networkManagerConnectionActive.connectItem(() => {
@@ -562,9 +565,9 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
 }
 
 class NetworkManagerConnectionActive extends NetworkManagerStateItem {
-    constructor(objectPath) {
+    constructor(objectPath, networkChangedAction) {
         // example objectPath: /org/freedesktop/NetworkManager/ActiveConnection/1
-        super(objectPath);
+        super(objectPath, networkChangedAction);
         this.#getDbusProxyObject();
     }
 
@@ -603,6 +606,7 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
                 // monitor for changes
                 this._proxyObjHandlerId = networkManagerConnectionActiveProxy.connect(NetworkManagerStateItem._propertiesChanged, this.#proxyUpdated.bind(this));
                 this._emit();
+                this._networkChangedAction.activate(GLib.Variant.new_string(this._proxyObj.Id));
             },
             null,
             Gio.DBusProxyFlags.NONE
@@ -624,6 +628,7 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
                 console.debug(`debug 2 - ID updated to ${this._proxyObj.Id}`);
                 // the ID has changed, emit and stop checking for other changes
                 this._emit();
+                this._networkChangedAction.activate(GLib.Variant.new_string(this._proxyObj.Id));
                 return;
             }
         }

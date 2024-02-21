@@ -27,7 +27,6 @@ export const ZoneDefenseApplication = GObject.registerClass(
         constructor() {
             super({application_id: 'com.github.justinrdonnelly.ZoneDefense', flags: Gio.ApplicationFlags.DEFAULT_FLAGS});
 
-            this.networkState = new NetworkState();
             const quit_action = new Gio.SimpleAction({name: 'quit'});
                 quit_action.connect('activate', action => {
                 this.quit();
@@ -52,6 +51,17 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 aboutWindow.present();
             });
             this.add_action(show_about_action);
+
+            const networkChangedAction = new Gio.SimpleAction({
+                name: 'networkChangedAction',
+                parameter_type: new GLib.VariantType('s'),
+            });
+
+            networkChangedAction.connect('activate', (action, parameter) => {
+                console.log(`${action.name} activated: ${parameter.unpack()}`);
+            });
+
+            this.networkState = new NetworkState(networkChangedAction);
 
             // handle signals
             const gsourceSigint = GLib.unix_signal_source_new(2);
