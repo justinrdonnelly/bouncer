@@ -525,16 +525,21 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
         this.#activeConnection = this._proxyObj.ActiveConnection; // e.g. / (if not active), /org/freedesktop/NetworkManager/ActiveConnection/1 (if active)
         console.debug(`debug 1 - Adding connection ${this.#activeConnection}`);
         if (NetworkManagerDevice.#isConnectionActive(this.#activeConnection)) { // this connection is active, make another dbus call
-            const networkManagerConnectionActive = new NetworkManagerConnectionActive(this.#activeConnection, this._networkChangedAction);
+            // Use Interface instead of IpInterface. IpInterface can sometimes be blank even when there is an active connection. This is not what I expected, but OK.
+            // See https://people.freedesktop.org/~lkundrak/nm-docs/gdbus-org.freedesktop.NetworkManager.Device.html
+            const networkManagerConnectionActive = new NetworkManagerConnectionActive(this.#activeConnection, this._networkChangedAction, this._proxyObj.Interface);
             this._childNetworkManagerStateItems.set(this.#activeConnection, networkManagerConnectionActive);
         }
     }
 }
 
 class NetworkManagerConnectionActive extends NetworkManagerStateItem {
-    constructor(objectPath, networkChangedAction) {
+    #iface;
+
+    constructor(objectPath, networkChangedAction, iface) {
         // example objectPath: /org/freedesktop/NetworkManager/ActiveConnection/1
         super(objectPath, networkChangedAction);
+        this.#iface = iface;
         this.#getDbusProxyObject();
     }
 
@@ -572,7 +577,7 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
 
                 // monitor for changes
                 this._proxyObjHandlerId = networkManagerConnectionActiveProxy.connect(NetworkManagerStateItem._propertiesChanged, this.#proxyUpdated.bind(this));
-                this._networkChangedAction.activate(GLib.Variant.new_string(this._proxyObj.Id));
+                this._networkChangedAction.activate(GLib.Variant.new_array(new GLib.VariantType('s'), [GLib.Variant.new_string(this.#iface), GLib.Variant.new_string(this._proxyObj.Id)]));
             },
             null,
             Gio.DBusProxyFlags.NONE
@@ -593,7 +598,8 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
             if (name === 'Id') {
                 console.debug(`debug 2 - ID updated to ${this._proxyObj.Id}`);
                 // the ID has changed, signal and stop checking for other changes
-                this._networkChangedAction.activate(GLib.Variant.new_string(this._proxyObj.Id));
+                //this._networkChangedAction.activate(GLib.Variant.new_string(this._proxyObj.Id), GLib.Variant.new_string(this._proxyObj.Id));
+                this._networkChangedAction.activate(GLib.Variant.new_array(new GLib.VariantType('s'), [GLib.Variant.new_string(this.#iface), GLib.Variant.new_string(this._proxyObj.Id)]));
                 return;
             }
         }

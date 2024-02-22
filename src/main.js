@@ -54,11 +54,11 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
             const networkChangedAction = new Gio.SimpleAction({
                 name: 'networkChangedAction',
-                parameter_type: new GLib.VariantType('s'),
+                parameter_type: new GLib.VariantType('as'),
             });
 
             networkChangedAction.connect('activate', (action, parameter) => {
-                console.log(`${action.name} activated: ${parameter.unpack()}`);
+                console.log(`${action.name} activated: ${parameter.deepUnpack()}`);
             });
 
             this.networkState = new NetworkState(networkChangedAction);
