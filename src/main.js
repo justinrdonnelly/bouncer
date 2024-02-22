@@ -59,6 +59,10 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
             networkChangedAction.connect('activate', (action, parameter) => {
                 console.log(`${action.name} activated: ${parameter.deepUnpack()}`);
+                const parameters = parameter.deepUnpack();
+                const iface = parameters[0];
+                const connectionId = parameters[1];
+                this.createWindow(iface, connectionId);
             });
 
             this.networkState = new NetworkState(networkChangedAction);
@@ -72,7 +76,10 @@ export const ZoneDefenseApplication = GObject.registerClass(
             this.sourceIdSigterm = gsourceSigterm.attach(null);
         } // end constructor
 
-        vfunc_activate() {
+        vfunc_activate() {} // We get a warning if this method does not exist.
+
+        createWindow(iface, connectionId) {
+            console.log(`iface: ${iface}; connectionId: ${connectionId}`);
             let {active_window} = this;
 
             if (!active_window)
