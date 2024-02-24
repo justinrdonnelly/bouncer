@@ -3,8 +3,8 @@
   <requires lib="gtk" version="4.0"/>
   <requires lib="Adw" version="1.0"/>
   <template class="ZoneDefenseWindow" parent="AdwApplicationWindow">
-    <property name="default-width">600</property>
-    <property name="default-height">300</property>
+    <property name="default-width">700</property>
+    <property name="default-height">350</property>
     <property name="content">
       <object class="AdwToolbarView">
         <child type="top">
@@ -20,12 +20,146 @@
           </object>
         </child>
         <property name="content">
-          <object class="GtkLabel" id="label">
-            <property name="label">Hello, World!</property>
-            <style>
-              <class name="title-1"/>
-            </style>
-          </object>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+
+            <!-- icon -->
+            <child>
+              <object class="GtkImage">
+                <property name="valign">GTK_ALIGN_START</property>
+                <property name="margin-start">12</property>
+                <property name="margin-end">12</property>
+                <property name="icon-name">network-wireless-symbolic</property>
+                <property name="pixel-size">64</property>
+              </object>
+            </child> <!-- end icon -->
+
+            <!-- right side of window -->
+            <child>
+            <object class="GtkBox">
+              <property name="orientation">vertical</property>
+              <property name="margin-start">12</property>
+              <property name="margin-end">12</property>
+
+                <!-- text labels -->
+                <child>
+                  <object class="GtkLabel" id="label2">
+                    <property name="use_markup">True</property> <!-- https://docs.gtk.org/Pango/pango_markup.html -->
+                    <property name="xalign">0</property>
+                    <property name="label">&lt;span size="x-small"&gt;You are connected to: starbucks&lt;/span&gt;</property>
+                    <style>
+                      <class name="title-1"/>
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label3">
+                    <property name="use_markup">True</property> <!-- https://docs.gtk.org/Pango/pango_markup.html -->
+                    <property name="xalign">0</property>
+                    <property name="label">&lt;span size="x-small"&gt;What type of network is this?&lt;/span&gt;</property>
+                    <style>
+                      <class name="title-1"/>
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label4">
+                    <property name="use_markup">True</property> <!-- https://docs.gtk.org/Pango/pango_markup.html -->
+                    <property name="xalign">0</property>
+                    <property name="label">&lt;span size="x-small"&gt;Some common choices are: home, public, work&lt;/span&gt;</property>
+                    <style>
+                      <class name="title-1"/>
+                    </style>
+                  </object> <!-- end GtkLabel -->
+                </child>
+
+                <!-- dropdown -->
+                <child>
+                  <object class="AdwPreferencesGroup"> <!-- It seems I need AdwPreferencesGroup in order to use AdwComboRow -->
+                    <property name="margin-top">12</property>
+                    <property name="margin-bottom">12</property>
+                    <property name="halign">GTK_ALIGN_START</property> <!-- make the dropdown not span the entire box -->
+                    <child>
+                      <object class="AdwComboRow">
+                        <property name="title" translatable="yes">Zone</property>
+                        <property name="width_request">250</property>
+                        <property name="model">
+                          <object class="GtkStringList">
+                            <items>
+                              <item translatable="yes">home</item>
+                              <item translatable="yes">public</item>
+                              <item translatable="yes">work</item>
+                            </items>
+                          </object>
+                        </property>
+                      </object> <!-- end AdwComboRow -->
+                    </child>
+                  </object> <!-- end group -->
+                </child>
+
+                <!-- Choose button/label -->
+                <child>
+                  <object class="GtkBox">
+                    <property name="orientation">horizontal</property>
+                    <property name="margin-top">4</property>
+                    <property name="margin-bottom">4</property>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="width-request">100</property>
+                        <property name="label">Choose</property>
+                        <property name="halign">center</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label5">
+                        <property name="margin-start">12</property>
+                        <property name="margin-end">12</property>
+                        <property name="use_markup">True</property> <!-- https://docs.gtk.org/Pango/pango_markup.html -->
+                        <property name="xalign">0</property>
+                        <property name="wrap">True</property>
+                        <property name="width-chars">30</property> <!-- min width -->
+                        <property name="label">&lt;span size="xx-small"&gt;The selected firewall zone will be used every time you connect to this network.&lt;/span&gt;</property>
+                        <style>
+                          <class name="title-1"/>
+                        </style>
+                      </object> <!-- end GtkLabel -->
+                    </child>
+                  </object>
+                </child>
+
+                <!-- Exit button/label -->
+                <child>
+                  <object class="GtkBox">
+                    <property name="orientation">horizontal</property>
+                    <property name="margin-top">4</property>
+                    <property name="margin-bottom">12</property> <!-- add some extra margin since this is on the bottom of the window -->
+                    <child>
+                      <object class="GtkButton">
+                        <property name="width-request">100</property>
+                        <property name="label">Exit</property>
+                        <property name="halign">center</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label6">
+                        <property name="margin-start">12</property>
+                        <property name="margin-end">12</property>
+                        <property name="use_markup">True</property> <!-- https://docs.gtk.org/Pango/pango_markup.html -->
+                        <property name="xalign">0</property>
+                        <property name="wrap">True</property>
+                        <property name="width-chars">30</property> <!-- min width -->
+                        <property name="label">&lt;span size="xx-small"&gt;No change will be made. You will see this window again the next time you connect to this network.&lt;/span&gt;</property>
+                        <style>
+                          <class name="title-1"/>
+                        </style>
+                      </object> <!-- end GtkLabel -->
+                    </child>
+                  </object>
+                </child>
+
+              </object> <!-- end vertical GtkBox -->
+            </child>
+          </object> <!-- end horizontal GtkBox -->
         </property>
       </object>
     </property>
