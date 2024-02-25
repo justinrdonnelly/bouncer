@@ -4,7 +4,7 @@
   <requires lib="Adw" version="1.0"/>
   <template class="ZoneDefenseWindow" parent="AdwApplicationWindow">
     <property name="default-width">700</property>
-    <property name="default-height">350</property>
+    <property name="default-height">400</property>
     <property name="content">
       <object class="AdwToolbarView">
         <child type="top">
@@ -76,9 +76,11 @@
                 <!-- dropdown -->
                 <child>
                   <object class="AdwPreferencesGroup"> <!-- It seems I need AdwPreferencesGroup in order to use AdwComboRow -->
-                    <property name="margin-top">12</property>
-                    <property name="margin-bottom">12</property>
+                    <property name="margin-top">24</property>
+                    <property name="margin-bottom">24</property>
                     <property name="halign">GTK_ALIGN_START</property> <!-- make the dropdown not span the entire box -->
+                    <property name="title" translatable="yes">Firewall Zone</property>
+                    <property name="description" translatable="yes">Choose the firewall zone for this connection.</property>
                     <child>
                       <object class="AdwComboRow">
                         <property name="title" translatable="yes">Zone</property>
