@@ -43,10 +43,10 @@
 
                 <!-- text labels -->
                 <child>
-                  <object class="GtkLabel" id="label2">
+                  <object class="GtkLabel" id="networkLabel">
                     <property name="use_markup">True</property> <!-- https://docs.gtk.org/Pango/pango_markup.html -->
                     <property name="xalign">0</property>
-                    <property name="label">&lt;span size="x-small"&gt;You are connected to: starbucks&lt;/span&gt;</property>
+                    <property name="label" bind-source="ZoneDefenseWindow" bind-property="example-property"/>
                     <style>
                       <class name="title-1"/>
                     </style>
