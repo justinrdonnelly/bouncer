@@ -110,6 +110,7 @@
                         <property name="width-request">100</property>
                         <property name="label">Choose</property>
                         <property name="halign">center</property>
+                        <signal name="clicked" handler="chooseButtonClicked"/>
                       </object>
                     </child>
                     <child>
@@ -140,6 +141,7 @@
                         <property name="width-request">100</property>
                         <property name="label">Exit</property>
                         <property name="halign">center</property>
+                        <signal name="clicked" handler="exitButtonClicked"/>
                       </object>
                     </child>
                     <child>

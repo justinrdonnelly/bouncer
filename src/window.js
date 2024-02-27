@@ -22,5 +22,11 @@ export const ZoneDefenseWindow = GObject.registerClass({
         super({ application });
         this._networkLabel.label = `<span size="x-small">You are connected to: ${connectionId}</span>`;
     }
+    chooseButtonClicked(_button) {
+        console.log('Choose button clicked!');
+    }
+    exitButtonClicked(_button) {
+        console.log('Exit button clicked!');
+    }
 });
 
