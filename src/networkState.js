@@ -1,8 +1,6 @@
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 
-// TODO: how to sort imports?
-
 // NOTE: You can ONLY HAVE ONE interface (the rest that were returned from the introspection were removed)
 const networkManagerInterfaceXml = '\
     <node>\

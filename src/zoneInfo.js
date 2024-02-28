@@ -1,5 +1,6 @@
-import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
+import GLib from 'gi://GLib';
+
 /*
  * I need to make 3 method calls:
  * 1. List all zones - getZones()
