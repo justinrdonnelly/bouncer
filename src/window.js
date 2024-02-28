@@ -16,14 +16,19 @@ import Adw from 'gi://Adw';
 export const ZoneDefenseWindow = GObject.registerClass({
     GTypeName: 'ZoneDefenseWindow',
     Template: 'resource:///com/github/justinrdonnelly/ZoneDefense/window.ui',
-    InternalChildren: ['networkLabel'],
+    InternalChildren: ['networkLabel', 'zoneDropDown', 'zoneList'],
 }, class ZoneDefenseWindow extends Adw.ApplicationWindow {
-    constructor(application, connectionId) {
+    constructor(application, connectionId, zones) {
         super({ application });
         this._networkLabel.label = `<span size="x-small">You are connected to: ${connectionId}</span>`;
+        zones.forEach(zone => this._zoneList.append(zone));
     }
     chooseButtonClicked(_button) {
         console.log('Choose button clicked!');
+        const selectedItemNumber = this._zoneDropDown.get_selected();
+        const selectedItemValue = this._zoneDropDown.get_selected_item().get_string();
+        console.log(`zone number: ${selectedItemNumber} selected!`);
+        console.log(`zone value: ${selectedItemValue} selected!`);
     }
     exitButtonClicked(_button) {
         console.log('Exit button clicked!');

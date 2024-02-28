@@ -82,17 +82,11 @@
                     <property name="title" translatable="yes">Firewall Zone</property>
                     <property name="description" translatable="yes">Choose the firewall zone for this connection.</property>
                     <child>
-                      <object class="AdwComboRow">
+                      <object class="AdwComboRow" id="zoneDropDown">
                         <property name="title" translatable="yes">Zone</property>
                         <property name="width_request">250</property>
                         <property name="model">
-                          <object class="GtkStringList">
-                            <items>
-                              <item translatable="yes">home</item>
-                              <item translatable="yes">public</item>
-                              <item translatable="yes">work</item>
-                            </items>
-                          </object>
+                          <object class="GtkStringList" id="zoneList"/>
                         </property>
                       </object> <!-- end AdwComboRow -->
                     </child>

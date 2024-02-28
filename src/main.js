@@ -83,7 +83,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
             let {active_window} = this;
 
             if (!active_window)
-                active_window = new ZoneDefenseWindow(this, connectionId);
+                active_window = new ZoneDefenseWindow(this, connectionId, ['home', 'public', 'work']);
 
             active_window.present();
         }
