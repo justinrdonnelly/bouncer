@@ -17,6 +17,7 @@ import Gtk from 'gi://Gtk?version=4.0';
 
 import { NetworkState } from './networkState.js';
 import { ZoneDefenseWindow } from './window.js';
+import { ZoneInfo } from './zoneInfo.js';
 
 pkg.initGettext();
 pkg.initFormat();
@@ -56,12 +57,29 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 parameter_type: new GLib.VariantType('as'),
             });
 
-            networkChangedAction.connect('activate', (action, parameter) => {
+            networkChangedAction.connect('activate', async (action, parameter) => {
                 console.log(`${action.name} activated: ${parameter.deepUnpack()}`);
                 const parameters = parameter.deepUnpack();
-                const iface = parameters[0];
+                const networkInterface = parameters[0];
                 const connectionId = parameters[1];
-                this.createWindow(iface, connectionId);
+
+                try {
+                    // Any firewalld dbus failures are considered fatal
+                    const [zones, defaultZone, zoneOfInterface] = await Promise.all([
+                        ZoneInfo.getZones(),
+                        ZoneInfo.getDefaultZone(),
+                        ZoneInfo.getZoneOfInterface(networkInterface),
+                    ]);
+                    // console.log('promises!');
+                    // console.log(`zones: ${zones}`);
+                    // console.log(`defaultZone: ${defaultZone}`);
+                    // console.log(`zoneOfInterface: ${zoneOfInterface}`);
+                    // TODO: work the default zone and currently selected zone into this
+                    this.createWindow(networkInterface, connectionId, zones);
+                } catch (error) {
+                    console.error(error);
+                    // TODO: Is it worth checking to see if firewalld is running? It can help give a more useful error message.
+                }
             });
 
             this.networkState = new NetworkState(networkChangedAction);
@@ -77,12 +95,12 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
         vfunc_activate() {} // We get a warning if this method does not exist.
 
-        createWindow(iface, connectionId) {
-            console.log(`iface: ${iface}; connectionId: ${connectionId}`);
+        createWindow(networkInterface, connectionId, zones) {
+            // console.log(`networkInterface: ${networkInterface}; connectionId: ${connectionId}`);
             let {active_window} = this;
 
             if (!active_window)
-                active_window = new ZoneDefenseWindow(this, connectionId, ['home', 'public', 'work']);
+                active_window = new ZoneDefenseWindow(this, connectionId, zones);
 
             active_window.present();
         }
@@ -96,7 +114,6 @@ export const ZoneDefenseApplication = GObject.registerClass(
             console.log('here');
             super.quit(); // this ends up calling vfunc_shutdown()
         }
-
     }
 );
 
