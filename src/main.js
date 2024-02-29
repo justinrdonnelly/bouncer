@@ -54,28 +54,24 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
             const networkChangedAction = new Gio.SimpleAction({
                 name: 'networkChangedAction',
-                parameter_type: new GLib.VariantType('as'),
+                parameter_type: new GLib.VariantType('s'),
             });
 
             networkChangedAction.connect('activate', async (action, parameter) => {
                 console.log(`${action.name} activated: ${parameter.deepUnpack()}`);
-                const parameters = parameter.deepUnpack();
-                const networkInterface = parameters[0];
-                const connectionId = parameters[1];
+                const connectionId = parameter.deepUnpack();
 
                 try {
                     // Any firewalld dbus failures are considered fatal
-                    const [zones, defaultZone, zoneOfInterface] = await Promise.all([
+                    const [zones, defaultZone] = await Promise.all([
                         ZoneInfo.getZones(),
                         ZoneInfo.getDefaultZone(),
-                        ZoneInfo.getZoneOfInterface(networkInterface),
                     ]);
                     // console.log('promises!');
                     // console.log(`zones: ${zones}`);
                     // console.log(`defaultZone: ${defaultZone}`);
-                    // console.log(`zoneOfInterface: ${zoneOfInterface}`);
                     // TODO: work the default zone and currently selected zone into this
-                    this.createWindow(networkInterface, connectionId, zones);
+                    this.createWindow(connectionId, zones);
                 } catch (error) {
                     console.error(error);
                     // TODO: Is it worth checking to see if firewalld is running? It can help give a more useful error message.
@@ -95,8 +91,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
         vfunc_activate() {} // We get a warning if this method does not exist.
 
-        createWindow(networkInterface, connectionId, zones) {
-            // console.log(`networkInterface: ${networkInterface}; connectionId: ${connectionId}`);
+        createWindow(connectionId, zones) {
             let {active_window} = this;
 
             if (!active_window)
