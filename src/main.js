@@ -17,6 +17,7 @@ import Gtk from 'gi://Gtk?version=4.0';
 
 import { NetworkState } from './networkState.js';
 import { ZoneDefenseWindow } from './window.js';
+import { ZoneForConnection } from './zoneForConnection.js';
 import { ZoneInfo } from './zoneInfo.js';
 
 pkg.initGettext();
@@ -54,24 +55,30 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
             const networkChangedAction = new Gio.SimpleAction({
                 name: 'networkChangedAction',
-                parameter_type: new GLib.VariantType('s'),
+                parameter_type: new GLib.VariantType('as'),
             });
 
             networkChangedAction.connect('activate', async (action, parameter) => {
                 console.log(`${action.name} activated: ${parameter.deepUnpack()}`);
-                const connectionId = parameter.deepUnpack();
+                const parameters = parameter.deepUnpack();
+                const connectionId = parameters[0];
+                const activeConnectionSettings = parameters[1];
+                console.log(`connectionId: ${connectionId}`);
+                console.log(`activeConnectionSettings: ${activeConnectionSettings}`);
 
                 try {
                     // Any firewalld dbus failures are considered fatal
-                    const [zones, defaultZone] = await Promise.all([
+                    const [zones, defaultZone, zoneOfConnection] = await Promise.all([
                         ZoneInfo.getZones(),
                         ZoneInfo.getDefaultZone(),
+                        ZoneForConnection.getZone(activeConnectionSettings),
                     ]);
                     // console.log('promises!');
                     // console.log(`zones: ${zones}`);
                     // console.log(`defaultZone: ${defaultZone}`);
+                    // console.log(`zoneOfConnection: ${zoneOfConnection}`);
                     // TODO: work the default zone and currently selected zone into this
-                    this.createWindow(connectionId, zones);
+                    this.createWindow(connectionId, zoneOfConnection, zones);
                 } catch (error) {
                     console.error(error);
                     // TODO: Is it worth checking to see if firewalld is running? It can help give a more useful error message.
@@ -91,7 +98,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
         vfunc_activate() {} // We get a warning if this method does not exist.
 
-        createWindow(connectionId, zones) {
+        createWindow(connectionId, zoneOfConnection, zones) {
             let {active_window} = this;
 
             if (!active_window)

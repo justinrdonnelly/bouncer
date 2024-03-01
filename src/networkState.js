@@ -536,12 +536,8 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
         this.#getDbusProxyObject();
     }
 
-    get activeConnectionId() {
-        return this._proxyObj.Id; // e.g. Wired Connection 1
-    }
-
-    get activeConnectionSettings() {
-        return this._proxyObj.Connection; // e.g. /org/freedesktop/NetworkManager/Settings/5
+    #activate() {
+        this._networkChangedAction.activate(GLib.Variant.new_array(new GLib.VariantType('s'), [GLib.Variant.new_string(this._proxyObj.Id), GLib.Variant.new_string(this._proxyObj.Connection)]));
     }
 
     /**
@@ -565,12 +561,12 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
                     return;
                 }
                 this._proxyObj = sourceObj;
-                console.log(`Wireless connection ID: ${this.activeConnectionId}`);
-                console.log(`Settings object path: ${this.activeConnectionSettings}`);
+                console.log(`Wireless connection ID: ${this._proxyObj.Id}`); // e.g. Wired Connection 1
+                console.log(`Settings object path: ${this._proxyObj.Connection}`); // e.g. /org/freedesktop/NetworkManager/Settings/5
 
                 // monitor for changes
                 this._proxyObjHandlerId = networkManagerConnectionActiveProxy.connect(NetworkManagerStateItem._propertiesChanged, this.#proxyUpdated.bind(this));
-                this._networkChangedAction.activate(GLib.Variant.new_string(this._proxyObj.Id));
+                this.#activate();
             },
             null,
             Gio.DBusProxyFlags.NONE
@@ -591,7 +587,7 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
             if (name === 'Id') {
                 console.debug(`debug 2 - ID updated to ${this._proxyObj.Id}`);
                 // the ID has changed, signal and stop checking for other changes
-                this._networkChangedAction.activate(GLib.Variant.new_string(this._proxyObj.Id));
+                this.#activate();
                 return;
             }
         }
