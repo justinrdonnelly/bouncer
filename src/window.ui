@@ -122,6 +122,9 @@
                         <property name="width-request">100</property>
                         <property name="label">Choose</property>
                         <property name="halign">center</property>
+                        <style>
+                          <class name="suggested-action"/>
+                        </style>
                         <signal name="clicked" handler="chooseButtonClicked"/>
                       </object>
                     </child>
