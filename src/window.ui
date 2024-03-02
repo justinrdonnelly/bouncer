@@ -44,32 +44,20 @@
                 <!-- text labels -->
                 <child>
                   <object class="GtkLabel" id="networkLabel">
-                    <property name="use_markup">True</property> <!-- https://docs.gtk.org/Pango/pango_markup.html -->
                     <property name="xalign">0</property>
                     <property name="label"/> <!-- placeholder for a value from the application -->
-                    <style>
-                      <class name="title-1"/>
-                    </style>
                   </object>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label3">
-                    <property name="use_markup">True</property> <!-- https://docs.gtk.org/Pango/pango_markup.html -->
                     <property name="xalign">0</property>
-                    <property name="label">&lt;span size="x-small"&gt;What type of network is this?&lt;/span&gt;</property>
-                    <style>
-                      <class name="title-1"/>
-                    </style>
+                    <property name="label">What type of network is this?</property>
                   </object>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label4">
-                    <property name="use_markup">True</property> <!-- https://docs.gtk.org/Pango/pango_markup.html -->
                     <property name="xalign">0</property>
-                    <property name="label">&lt;span size="x-small"&gt;Some common choices are: home, public, work&lt;/span&gt;</property>
-                    <style>
-                      <class name="title-1"/>
-                    </style>
+                    <property name="label">Some common choices are: home, public, work</property>
                   </object> <!-- end GtkLabel -->
                 </child>
 
@@ -111,14 +99,10 @@
                       <object class="GtkLabel" id="label5">
                         <property name="margin-start">12</property>
                         <property name="margin-end">12</property>
-                        <property name="use_markup">True</property> <!-- https://docs.gtk.org/Pango/pango_markup.html -->
                         <property name="xalign">0</property>
                         <property name="wrap">True</property>
                         <property name="width-chars">30</property> <!-- min width -->
-                        <property name="label">&lt;span size="xx-small"&gt;The selected firewall zone will be used every time you connect to this network.&lt;/span&gt;</property>
-                        <style>
-                          <class name="title-1"/>
-                        </style>
+                        <property name="label">The selected firewall zone will be used every time you connect to this network.</property>
                       </object> <!-- end GtkLabel -->
                     </child>
                   </object>
@@ -142,14 +126,10 @@
                       <object class="GtkLabel" id="label6">
                         <property name="margin-start">12</property>
                         <property name="margin-end">12</property>
-                        <property name="use_markup">True</property> <!-- https://docs.gtk.org/Pango/pango_markup.html -->
                         <property name="xalign">0</property>
                         <property name="wrap">True</property>
                         <property name="width-chars">30</property> <!-- min width -->
-                        <property name="label">&lt;span size="xx-small"&gt;No change will be made. You will see this window again the next time you connect to this network.&lt;/span&gt;</property>
-                        <style>
-                          <class name="title-1"/>
-                        </style>
+                        <property name="label">No change will be made. You will see this window again the next time you connect to this network.</property>
                       </object> <!-- end GtkLabel -->
                     </child>
                   </object>

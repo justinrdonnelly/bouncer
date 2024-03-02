@@ -20,7 +20,7 @@ export const ZoneDefenseWindow = GObject.registerClass({
 }, class ZoneDefenseWindow extends Adw.ApplicationWindow {
     constructor(application, connectionId, zones) {
         super({ application });
-        this._networkLabel.label = `<span size="x-small">You are connected to: ${connectionId}</span>`;
+        this._networkLabel.label = `You are connected to: ${connectionId}`;
         zones.forEach(zone => this._zoneList.append(zone));
     }
     chooseButtonClicked(_button) {
