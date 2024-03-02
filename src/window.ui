@@ -3,7 +3,7 @@
   <requires lib="gtk" version="4.0"/>
   <requires lib="Adw" version="1.0"/>
   <template class="ZoneDefenseWindow" parent="AdwApplicationWindow">
-    <property name="default-width">700</property>
+    <property name="default-width">600</property>
     <property name="default-height">400</property>
     <property name="content">
       <object class="AdwToolbarView">
@@ -36,29 +36,59 @@
 
             <!-- right side of window -->
             <child>
-            <object class="GtkBox">
-              <property name="orientation">vertical</property>
-              <property name="margin-start">12</property>
-              <property name="margin-end">12</property>
+              <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <property name="margin-start">12</property>
+                <property name="margin-end">12</property>
 
-                <!-- text labels -->
-                <child>
-                  <object class="GtkLabel" id="networkLabel">
-                    <property name="xalign">0</property>
-                    <property name="label"/> <!-- placeholder for a value from the application -->
-                  </object>
-                </child>
+                <!-- text label -->
                 <child>
                   <object class="GtkLabel" id="label3">
                     <property name="xalign">0</property>
-                    <property name="label">What type of network is this?</property>
+                    <property name="margin-top">6</property>
+                    <property name="margin-bottom">6</property>
+                    <property name="label">You have connected to a new network. Please choose a firewall zone. What type of network is this?</property>
+                    <property name="wrap">True</property>
                   </object>
                 </child>
+
+                <!-- Properties (eg connection) -->
                 <child>
-                  <object class="GtkLabel" id="label4">
-                    <property name="xalign">0</property>
-                    <property name="label">Some common choices are: home, public, work</property>
-                  </object> <!-- end GtkLabel -->
+                  <object class="GtkListBox">
+                    <property name="selection-mode">none</property>
+                    <property name="width-request">300</property>
+                    <property name="halign">GTK_ALIGN_START</property> <!-- make the list box not span the entire box -->
+                    <style>
+                      <class name="boxed-list"/>
+                    </style>
+                    <child>
+                      <object class="AdwActionRow" id="network">
+                        <property name="title" translatable="yes">Network</property>
+                        <property name="subtitle-selectable" translatable="yes">True</property>
+                        <style>
+                          <class name="property"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwActionRow" id="defaultZone">
+                        <property name="title" translatable="yes">Default Zone</property>
+                        <property name="subtitle-selectable" translatable="yes">True</property>
+                        <style>
+                          <class name="property"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwActionRow" id="currentZone">
+                        <property name="title" translatable="yes">Current Zone</property>
+                        <property name="subtitle-selectable" translatable="yes">True</property>
+                        <style>
+                          <class name="property"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
                 </child>
 
                 <!-- dropdown -->
@@ -72,7 +102,7 @@
                     <child>
                       <object class="AdwComboRow" id="zoneDropDown">
                         <property name="title" translatable="yes">Zone</property>
-                        <property name="width_request">250</property>
+                        <property name="width_request">300</property>
                         <property name="model">
                           <object class="GtkStringList" id="zoneList"/>
                         </property>

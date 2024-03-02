@@ -16,11 +16,19 @@ import Gtk from 'gi://Gtk';
 export const ZoneDefenseWindow = GObject.registerClass({
     GTypeName: 'ZoneDefenseWindow',
     Template: 'resource:///com/github/justinrdonnelly/ZoneDefense/window.ui',
-    InternalChildren: ['networkLabel', 'zoneDropDown', 'zoneList'],
+    InternalChildren: ['currentZone', 'defaultZone', 'network', 'zoneDropDown', 'zoneList'],
 }, class ZoneDefenseWindow extends Adw.ApplicationWindow {
-    constructor(application, connectionId, zones) {
+    constructor(application, connectionId, defaultZone, currentZone, zones) {
         super({ application });
-        this._networkLabel.label = `You are connected to: ${connectionId}`;
+        // console.log('window.js');
+        // console.log(`application: ${application}`);
+        // console.log(`connectionId: ${connectionId}`);
+        // console.log(`zones: ${zones}`);
+        // console.log(`defaultZone: ${defaultZone}`);
+        // console.log(`currentZone: ${currentZone}`);
+        this._currentZone.subtitle = currentZone || '[DEFAULT]';
+        this._defaultZone.subtitle = defaultZone;
+        this._network.subtitle = connectionId;
         zones.forEach(zone => this._zoneList.append(zone));
     }
     chooseButtonClicked(_button) {

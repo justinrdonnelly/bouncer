@@ -68,7 +68,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
                 try {
                     // Any firewalld dbus failures are considered fatal
-                    const [zones, defaultZone, zoneOfConnection] = await Promise.all([
+                    const [zones, defaultZone, currentZone] = await Promise.all([
                         ZoneInfo.getZones(),
                         ZoneInfo.getDefaultZone(),
                         ZoneForConnection.getZone(activeConnectionSettings),
@@ -76,9 +76,8 @@ export const ZoneDefenseApplication = GObject.registerClass(
                     // console.log('promises!');
                     // console.log(`zones: ${zones}`);
                     // console.log(`defaultZone: ${defaultZone}`);
-                    // console.log(`zoneOfConnection: ${zoneOfConnection}`);
-                    // TODO: work the default zone and currently selected zone into this
-                    this.createWindow(connectionId, zoneOfConnection, zones);
+                    // console.log(`currentZone: ${currentZone}`);
+                    this.createWindow(connectionId, defaultZone, currentZone, zones);
                 } catch (error) {
                     console.error(error);
                     // TODO: Is it worth checking to see if firewalld is running? It can help give a more useful error message.
@@ -98,11 +97,11 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
         vfunc_activate() {} // We get a warning if this method does not exist.
 
-        createWindow(connectionId, zoneOfConnection, zones) {
+        createWindow(connectionId, defaultZone, currentZone, zones) {
             let {active_window} = this;
 
             if (!active_window)
-                active_window = new ZoneDefenseWindow(this, connectionId, zones);
+                active_window = new ZoneDefenseWindow(this, connectionId, defaultZone, currentZone, zones);
 
             active_window.present();
         }
