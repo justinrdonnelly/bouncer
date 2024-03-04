@@ -37,7 +37,9 @@ export class ZoneForConnection {
 
     static async getZone(objectPath) {
         const dbusResult = await ZoneForConnection.#getZoneDbusCall(objectPath);
-        const zone = dbusResult.get_child_value(0).recursiveUnpack()['connection']['zone'];
+        let zone = dbusResult.get_child_value(0).recursiveUnpack()['connection']['zone'];
+        if (zone === undefined) // convert undefined to null
+            zone = null;
         console.log(`Current device zone: ${zone}`);
         return zone;
     }

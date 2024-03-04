@@ -18,19 +18,59 @@ export const ZoneDefenseWindow = GObject.registerClass({
     Template: 'resource:///com/github/justinrdonnelly/ZoneDefense/window.ui',
     InternalChildren: ['currentZone', 'defaultZone', 'network', 'zoneDropDown', 'zoneList'],
 }, class ZoneDefenseWindow extends Adw.ApplicationWindow {
-    constructor(application, connectionId, defaultZone, currentZone, zones) {
+    static _simpleZoneList = ['public', 'home', 'work'];
+
+    constructor(application, connectionId, defaultZone, currentZone, allZones) {
         super({ application });
         // console.log('window.js');
         // console.log(`application: ${application}`);
         // console.log(`connectionId: ${connectionId}`);
-        // console.log(`zones: ${zones}`);
+        // console.log(`allZones: ${allZones}`);
         // console.log(`defaultZone: ${defaultZone}`);
         // console.log(`currentZone: ${currentZone}`);
         this._currentZone.subtitle = currentZone || '[DEFAULT]';
         this._defaultZone.subtitle = defaultZone;
         this._network.subtitle = connectionId;
+        const zones = this.generateZoneList(allZones, defaultZone, currentZone);
+        this._zoneList.append('[DEFAULT]'); // show the default first in the list
         zones.forEach(zone => this._zoneList.append(zone));
     }
+
+    // By default, we want to keep things simple for the user. See table for behavior. Later we may make this configurable.
+    /**
+    *        Simple zones all exist
+    *       /    Default zone in _simpleZoneList
+    *      /    /    Current zone in _simpleZoneList
+    *     /    /    /
+    * | SZE | DS | CS | Result                     |
+    * | --- | -- | -- | -------------------------- |
+    * |   F |  F |  F | All zones                  |
+    * |   F |  F |  T | All zones                  |
+    * |   F |  T |  F | All zones                  |
+    * |   F |  T |  T | All zones                  |
+    * |   T |  F |  F | Simple + Default + Current |
+    * |   T |  F |  T | Simple + Default           |
+    * |   T |  T |  F | Simple + Current           |
+    * |   T |  T |  T | Simple                     |
+    */
+    generateZoneList(allZones, defaultZone, currentZone) {
+        const simpleZonesExist = ZoneDefenseWindow._simpleZoneList.every(z => allZones.includes(z));
+        if (!simpleZonesExist)
+            return allZones;
+        const zones = [...ZoneDefenseWindow._simpleZoneList];
+        // console.log(zones);
+        const defaultZoneSimple = ZoneDefenseWindow._simpleZoneList.includes(defaultZone);
+        const currentZoneSimple = ZoneDefenseWindow._simpleZoneList.includes(currentZone);
+        // console.log(`default simple: ${defaultZoneSimple}`);
+        // console.log(`current simple: ${currentZoneSimple}`);
+        if (!defaultZoneSimple)
+            zones.push(defaultZone);
+        console.log(`currentZone: ${currentZone}`);
+        if (currentZone && !currentZoneSimple)
+            zones.push(currentZone);
+        return zones.sort();
+    }
+
     chooseButtonClicked(_button) {
         console.log('Choose button clicked!');
         const selectedItemNumber = this._zoneDropDown.get_selected();
@@ -38,6 +78,7 @@ export const ZoneDefenseWindow = GObject.registerClass({
         console.log(`zone number: ${selectedItemNumber} selected!`);
         console.log(`zone value: ${selectedItemValue} selected!`);
     }
+
     exitButtonClicked(_button) {
         console.log('Exit button clicked!');
     }
