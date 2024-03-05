@@ -479,11 +479,13 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
                     console.debug('debug 2 - connection toggled from active to inactive');
                     this.#deleteConnection(oldValue); // destroy old child
                     this.#addConnectionInfo(); // this will add the child ('/' in this case)
+                    // Activate here because we won't have a child that can activate. It has been destroyed. Use empty string to indicate no connection.
+                    this._networkChangedAction.activate(GLib.Variant.new_array(new GLib.VariantType('s'), [GLib.Variant.new_string(''), GLib.Variant.new_string('')]));
                 } else if (!NetworkManagerDevice.#isConnectionActive(oldValue) && NetworkManagerDevice.#isConnectionActive(value)) {
                     // connection has toggled from inactive to active
                     console.debug('debug 2 - connection toggled from inactive to active');
                     // The connection was inactive ('/'), so there was no child. Don't call #deleteConnection. This
-                    // asymmetry is OK. The add above woudln't actually put the connection into the child map. It would
+                    // asymmetry is OK. The add above wouldn't actually put the connection into the child map. It would
                     // just set this.#activeConnection
                     this.#addConnectionInfo(); // this will add the child
                 } else if (NetworkManagerDevice.#isConnectionActive(oldValue) && NetworkManagerDevice.#isConnectionActive(value)) {

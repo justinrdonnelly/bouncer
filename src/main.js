@@ -65,6 +65,9 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 const activeConnectionSettings = parameters[1];
                 console.log(`connectionId: ${connectionId}`);
                 console.log(`activeConnectionSettings: ${activeConnectionSettings}`);
+                // bail out if there is no connection
+                if (connectionId === '')
+                    return;
 
                 try {
                     // Any firewalld dbus failures are considered fatal
