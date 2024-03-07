@@ -19,6 +19,7 @@ export const ZoneDefenseWindow = GObject.registerClass({
     InternalChildren: ['currentZone', 'defaultZone', 'network', 'zoneDropDown', 'zoneList'],
 }, class ZoneDefenseWindow extends Adw.ApplicationWindow {
     static _simpleZoneList = ['public', 'home', 'work'];
+    connectionId;
 
     constructor(application, connectionId, defaultZone, currentZone, allZones) {
         super({ application });
@@ -28,6 +29,7 @@ export const ZoneDefenseWindow = GObject.registerClass({
         // console.log(`allZones: ${allZones}`);
         // console.log(`defaultZone: ${defaultZone}`);
         // console.log(`currentZone: ${currentZone}`);
+        this.connectionId = connectionId;
         this._currentZone.subtitle = currentZone || '[DEFAULT]';
         this._defaultZone.subtitle = defaultZone;
         this._network.subtitle = connectionId;

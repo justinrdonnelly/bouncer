@@ -65,6 +65,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 const activeConnectionSettings = parameters[1];
                 console.log(`connectionId: ${connectionId}`);
                 console.log(`activeConnectionSettings: ${activeConnectionSettings}`);
+                this.closeWindowIfConnectionChanged(connectionId);
                 // bail out if there is no connection
                 if (connectionId === '')
                     return;
@@ -103,10 +104,18 @@ export const ZoneDefenseApplication = GObject.registerClass(
         createWindow(connectionId, defaultZone, currentZone, zones) {
             let {active_window} = this;
 
+            // active_window should always be null. Either this is the first creation, or we should have already called
+            // closeWindowIfConnectionChanged.
             if (!active_window)
                 active_window = new ZoneDefenseWindow(this, connectionId, defaultZone, currentZone, zones);
 
             active_window.present();
+        }
+
+        closeWindowIfConnectionChanged(connectionId) {
+            let {active_window} = this;
+            if (active_window?.connectionId !== connectionId)
+                active_window?.close();
         }
 
         quit(signal) {
