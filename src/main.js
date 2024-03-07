@@ -25,6 +25,7 @@ pkg.initFormat();
 
 export const ZoneDefenseApplication = GObject.registerClass(
     class ZoneDefenseApplication extends Adw.Application {
+        #sourceIds = [];
         constructor() {
             super({application_id: 'com.github.justinrdonnelly.ZoneDefense', flags: Gio.ApplicationFlags.DEFAULT_FLAGS});
 
@@ -91,12 +92,12 @@ export const ZoneDefenseApplication = GObject.registerClass(
             this.networkState = new NetworkState(networkChangedAction);
 
             // handle signals
-            const gsourceSigint = GLib.unix_signal_source_new(2);
-            const gsourceSigterm = GLib.unix_signal_source_new(15);
-            gsourceSigint.set_callback(() => {this.quit(2);});
-            gsourceSigterm.set_callback(() => {this.quit(15);});
-            this.sourceIdSigint = gsourceSigint.attach(null);
-            this.sourceIdSigterm = gsourceSigterm.attach(null);
+            const signals = [2, 15];
+            signals.forEach((signal) => {
+                const gsourceSignal = GLib.unix_signal_source_new(signal);
+                gsourceSignal.set_callback(() => {this.quit(signal);});
+                this.#sourceIds.push(gsourceSignal.attach(null));
+            });
         } // end constructor
 
         vfunc_activate() {} // We get a warning if this method does not exist.
@@ -120,8 +121,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
         quit(signal) {
             console.log(`quitting due to signal ${signal}!`);
-            GLib.Source.remove(this.sourceIdSigint);
-            GLib.Source.remove(this.sourceIdSigterm);
+            this.#sourceIds.forEach((id) => GLib.Source.remove(id));
             this.networkState.destroy()
             this.networkState = null;
             console.log('here');
