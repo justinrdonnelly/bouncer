@@ -19,9 +19,12 @@ export const ZoneDefenseWindow = GObject.registerClass({
     InternalChildren: ['currentZone', 'defaultZone', 'network', 'zoneDropDown', 'zoneList'],
 }, class ZoneDefenseWindow extends Adw.ApplicationWindow {
     static _simpleZoneList = ['public', 'home', 'work'];
+    static _defaultZoneLabel = '[DEFAULT]';
     connectionId;
+    _application;
+    _activeConnectionSettings;
 
-    constructor(application, connectionId, defaultZone, currentZone, allZones) {
+    constructor(application, connectionId, defaultZone, currentZone, allZones, activeConnectionSettings) {
         super({ application });
         // console.log('window.js');
         // console.log(`application: ${application}`);
@@ -30,11 +33,13 @@ export const ZoneDefenseWindow = GObject.registerClass({
         // console.log(`defaultZone: ${defaultZone}`);
         // console.log(`currentZone: ${currentZone}`);
         this.connectionId = connectionId;
-        this._currentZone.subtitle = currentZone || '[DEFAULT]';
+        this._application = application;
+        this._activeConnectionSettings = activeConnectionSettings;
+        this._currentZone.subtitle = currentZone || ZoneDefenseWindow._defaultZoneLabel;
         this._defaultZone.subtitle = defaultZone;
         this._network.subtitle = connectionId;
         const zones = this.generateZoneList(allZones, defaultZone, currentZone);
-        this._zoneList.append('[DEFAULT]'); // show the default first in the list
+        this._zoneList.append(ZoneDefenseWindow._defaultZoneLabel); // show the default first in the list
         zones.forEach(zone => this._zoneList.append(zone));
     }
 
@@ -73,16 +78,28 @@ export const ZoneDefenseWindow = GObject.registerClass({
         return zones.sort();
     }
 
-    chooseButtonClicked(_button) {
+    async chooseButtonClicked(_button) {
         console.log('Choose button clicked!');
         const selectedItemNumber = this._zoneDropDown.get_selected();
-        const selectedItemValue = this._zoneDropDown.get_selected_item().get_string();
+        let selectedItemValue = this._zoneDropDown.get_selected_item().get_string();
         console.log(`zone number: ${selectedItemNumber} selected!`);
         console.log(`zone value: ${selectedItemValue} selected!`);
+        if (selectedItemValue === ZoneDefenseWindow._defaultZoneLabel)
+            selectedItemValue = ''; // default zone is represented by an empty string
+        try {
+            // TODO: Should I be using signals/actions here instead of using a reference to main and calling a method? I need to know about errors.
+            await this._application.updateZone(this._activeConnectionSettings, selectedItemValue);
+            this.close();
+        } catch (error) { // TODO: handle error (maybe show something on the window?)
+            console.log('error');
+            console.log(error);
+        }
+
     }
 
     exitButtonClicked(_button) {
         console.log('Exit button clicked!');
+        this.close();
     }
 });
 

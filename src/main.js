@@ -82,7 +82,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
                     // console.log(`zones: ${zones}`);
                     // console.log(`defaultZone: ${defaultZone}`);
                     // console.log(`currentZone: ${currentZone}`);
-                    this.createWindow(connectionId, defaultZone, currentZone, zones);
+                    this.createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings);
                 } catch (error) {
                     console.error(error);
                     // TODO: Is it worth checking to see if firewalld is running? It can help give a more useful error message.
@@ -102,13 +102,13 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
         vfunc_activate() {} // We get a warning if this method does not exist.
 
-        createWindow(connectionId, defaultZone, currentZone, zones) {
+        createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings) {
             let {active_window} = this;
 
             // active_window should always be null. Either this is the first creation, or we should have already called
             // closeWindowIfConnectionChanged.
             if (!active_window)
-                active_window = new ZoneDefenseWindow(this, connectionId, defaultZone, currentZone, zones);
+                active_window = new ZoneDefenseWindow(this, connectionId, defaultZone, currentZone, zones, activeConnectionSettings);
 
             active_window.present();
         }
@@ -117,6 +117,11 @@ export const ZoneDefenseApplication = GObject.registerClass(
             let {active_window} = this;
             if (active_window?.connectionId !== connectionId)
                 active_window?.close();
+        }
+
+        async updateZone(activeConnectionSettings, zone) {
+            console.log(`Updating zone to: ${zone}`);
+            await ZoneForConnection.setZone(activeConnectionSettings, zone);
         }
 
         quit(signal) {
