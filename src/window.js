@@ -85,7 +85,7 @@ export const ZoneDefenseWindow = GObject.registerClass({
         console.log(`zone number: ${selectedItemNumber} selected!`);
         console.log(`zone value: ${selectedItemValue} selected!`);
         if (selectedItemValue === ZoneDefenseWindow._defaultZoneLabel)
-            selectedItemValue = ''; // default zone is represented by an empty string
+            selectedItemValue = null; // default zone is represented by null
         try {
             // TODO: Should I be using signals/actions here instead of using a reference to main and calling a method? I need to know about errors.
             await this._application.updateZone(this._activeConnectionSettings, selectedItemValue);

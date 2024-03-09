@@ -78,10 +78,13 @@ export class ZoneForConnection {
     }
 
     static #createGvariantTuple(dbusResult, newZone) {
-        const newZoneVariant = GLib.Variant.new_string(newZone);
         const unTupledDbusResult = dbusResult.get_child_value(0);
         const unpackedDbusResult = unTupledDbusResult.deepUnpack();
-        unpackedDbusResult['connection']['zone'] = newZoneVariant;
+        if (newZone !== null) {
+            const newZoneVariant = GLib.Variant.new_string(newZone);
+            unpackedDbusResult['connection']['zone'] = newZoneVariant;
+        } else
+            delete unpackedDbusResult['connection']['zone']
         const packedDbusResult = new GLib.Variant('(a{sa{sv}})', [unpackedDbusResult]);
         return packedDbusResult;
 
