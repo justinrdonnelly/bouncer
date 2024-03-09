@@ -1,6 +1,6 @@
 /* main.js
  *
- * Copyright 2024 Justin
+ * Copyright 2024 Justin Donnelly
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -42,12 +42,12 @@ export const ZoneDefenseApplication = GObject.registerClass(
                     transient_for: this.active_window,
                     application_name: 'zone-defense',
                     application_icon: 'com.github.justinrdonnelly.ZoneDefense',
-                    developer_name: 'Justin',
+                    developer_name: 'Justin Donnelly',
                     version: '0.1.0',
                     developers: [
-                        'Justin'
+                        'Justin Donnelly'
                     ],
-                    copyright: '© 2024 Justin'
+                    copyright: '© 2024 Justin Donnelly'
                 };
                 const aboutWindow = new Adw.AboutWindow(aboutParams);
                 aboutWindow.present();
