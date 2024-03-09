@@ -38,9 +38,18 @@ export const ZoneDefenseWindow = GObject.registerClass({
         this._currentZone.subtitle = currentZone || ZoneDefenseWindow._defaultZoneLabel;
         this._defaultZone.subtitle = defaultZone;
         this._network.subtitle = connectionId;
+
+        let selected = null;
         const zones = this.generateZoneList(allZones, defaultZone, currentZone);
         this._zoneList.append(ZoneDefenseWindow._defaultZoneLabel); // show the default first in the list
-        zones.forEach(zone => this._zoneList.append(zone));
+        if (currentZone === null)
+            selected = 0;
+        zones.forEach((zone, idx) => {
+            this._zoneList.append(zone);
+            if (zone === currentZone)
+                selected = idx + 1; // index 0 is the default zone, and was added before we started the loop
+        });
+        this._zoneDropDown.set_selected(selected);
     }
 
     // By default, we want to keep things simple for the user. See table for behavior. Later we may make this configurable.
