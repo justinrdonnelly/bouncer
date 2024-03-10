@@ -22,7 +22,6 @@ export class SeenNetworks {
         const destination = GLib.build_filenamev([dataDir, 'zone-defense', 'seenNetworks.json']);
         this.#destinationFile = Gio.File.new_for_path(destination);
         this.#seenNetworks = this.createSeenNetworksPromise();
-        this.updateConfig(); // TODO: This obviously won't stay here in the constructor
     }
 
     get seenNetworks() { // TODO: we can probably just make this property public
@@ -30,18 +29,24 @@ export class SeenNetworks {
     }
 
     async createSeenNetworksPromise() {
-        const [contents, etag] = await this.#destinationFile.load_contents_async(null);
-        // console.log('here');
-        // console.log('etag');
-        // console.log(etag);
-        // console.log('contents');
-        // console.log(contents);
-        const decoder = new TextDecoder('utf-8');
-        return decoder.decode(contents);
-        // TODO: handle the case where the data file doesn't yet exist
+        try {
+            const [contents, etag] = await this.#destinationFile.load_contents_async(null);
+            // console.log('here');
+            // console.log('etag');
+            // console.log(etag);
+            // console.log('contents');
+            // console.log(contents);
+            const decoder = new TextDecoder('utf-8');
+            const decoded = decoder.decode(contents);
+            console.log(`contents: ${decoded}`);
+            return JSON.parse(decoded);
+        } catch (e) {
+            console.warn(`Error reading file: ${this.#destinationFile.get_path()} (possibly file does not yet exist). Defaulting to empty list`);
+            return new Promise((resolve) => { resolve([]) });
+        }
     }
 
-    updateConfig() {
+    updateConfig(networks) { // TODO: make async
         try {
             // const [contents, etag] = await this.#destinationFile.load_contents_async(null);
             // console.log('here');
@@ -57,12 +62,7 @@ export class SeenNetworks {
             // const contents = sourceFile.read(null, 10);
             // console.log(contents);
 
-            const lastUsedFile = {
-                fileName: "/file/path/is/here",
-                fileDescription: "this is a description of the file"
-            };
-
-            const dataJSON = JSON.stringify(lastUsedFile);
+            const dataJSON = JSON.stringify(networks);
             if (GLib.mkdir_with_parents(this.#destinationFile.get_parent().get_path(), 0o700) === 0) { // gnome-control-center uses 700 (USER_DIR_MODE), so we'll do that too
                 let [success, tag] = this.#destinationFile.replace_contents(dataJSON, null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
 
@@ -85,8 +85,12 @@ export class SeenNetworks {
         }
     }
 
-    set addNetworkToSeen(network) {
-        return; // TODO
+    async addNetworkToSeen(network) {
+        const networks = await this.#seenNetworks;
+        console.log(`adding ${network} to seen`);
+        networks.push(network); // this also adds to #seenNetworks
+        console.log(`networks after adding: ${networks}`);
+        this.updateConfig(networks);
     }
 
     promisify() {
