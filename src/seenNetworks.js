@@ -13,61 +13,105 @@ import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
 
 export class SeenNetworks {
-    #seenNetworks;
+    #seenNetworks; // this is a promise
+    #destinationFile;
 
     constructor() {
+        this.promisify();
         const dataDir = GLib.get_user_config_dir();
         const destination = GLib.build_filenamev([dataDir, 'zone-defense', 'seenNetworks.json']);
-        const destinationFile = Gio.File.new_for_path(destination);
+        this.#destinationFile = Gio.File.new_for_path(destination);
+        this.#seenNetworks = this.createSeenNetworksPromise();
+        this.updateConfig(); // TODO: This obviously won't stay here in the constructor
+    }
 
-        const [success, contents] = destinationFile.load_contents(null);
-        console.log('success');
-        console.log(success);
-        console.log('contents');
-        console.log(contents);
-        const decoder = new TextDecoder('utf-8');
-        const contentsString = decoder.decode(contents);
-        console.log(contentsString);
+    get seenNetworks() { // TODO: we can probably just make this property public
+        return this.#seenNetworks;
+    }
 
-        // const sourceFile = destinationFile.read(null);
-        // const contents = sourceFile.read(null, 10);
+    async createSeenNetworksPromise() {
+        const [contents, etag] = await this.#destinationFile.load_contents_async(null);
+        // console.log('here');
+        // console.log('etag');
+        // console.log(etag);
+        // console.log('contents');
         // console.log(contents);
+        const decoder = new TextDecoder('utf-8');
+        return decoder.decode(contents);
+        // TODO: handle the case where the data file doesn't yet exist
+    }
 
-        const lastUsedFile = {
-            fileName: "/file/path/is/here",
-            fileDescription: "this is a description of the file"
-        };
+    updateConfig() {
+        try {
+            // const [contents, etag] = await this.#destinationFile.load_contents_async(null);
+            // console.log('here');
+            // console.log('etag');
+            // console.log(etag);
+            // console.log('contents');
+            // console.log(contents);
+            // const decoder = new TextDecoder('utf-8');
+            // this.#seenNetworks = decoder.decode(contents);
+            // console.log(this.#seenNetworks);
 
-        const dataJSON = JSON.stringify(lastUsedFile);
+            // const sourceFile = this.#destinationFile.read(null);
+            // const contents = sourceFile.read(null, 10);
+            // console.log(contents);
 
-        if (GLib.mkdir_with_parents(destinationFile.get_parent().get_path(), 0o700) === 0) { // gnome-control-center uses 700 (USER_DIR_MODE), so we'll do that too
-            let [success, tag] = destinationFile.replace_contents(dataJSON, null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
+            const lastUsedFile = {
+                fileName: "/file/path/is/here",
+                fileDescription: "this is a description of the file"
+            };
 
-            if (success) {
-                /* it worked! */
-                console.log('success');
-                console.log(tag);
+            const dataJSON = JSON.stringify(lastUsedFile);
+            if (GLib.mkdir_with_parents(this.#destinationFile.get_parent().get_path(), 0o700) === 0) { // gnome-control-center uses 700 (USER_DIR_MODE), so we'll do that too
+                let [success, tag] = this.#destinationFile.replace_contents(dataJSON, null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
+
+                if (success) {
+                    /* it worked! */
+                    console.log('success saving data file');
+                    console.log(tag);
+                } else {
+                    console.log('error saving data file');
+                    /* it failed */
+                }
             } else {
-                console.log('error saving data file');
-                /* it failed */
+                console.log('error creating data directory');
+                /* error */
             }
-        } else {
-            console.log('error creating data directory');
-            /* error */
+            // this.#seenNetworks = []; // TODO: get actual values here
+        } catch (e) {
+            console.log('error caught');
+            console.log(e);
         }
-        // this.#seenNetworks = []; // TODO: get actual values here
-    }
-
-    get seenNetworks() {
-        return [];
-    }
-
-    set seenNetworks(seenNetworks) { // TODO: Do I really want this method to exist?
-        return;
     }
 
     set addNetworkToSeen(network) {
-        return;
+        return; // TODO
     }
 
+    promisify() {
+        // https://gjs.guide/guides/gio/file-operations.html#file-operations
+        Gio._promisify(Gio.File.prototype, 'copy_async');
+        Gio._promisify(Gio.File.prototype, 'create_async');
+        Gio._promisify(Gio.File.prototype, 'delete_async');
+        Gio._promisify(Gio.File.prototype, 'enumerate_children_async');
+        Gio._promisify(Gio.File.prototype, 'load_contents_async');
+        Gio._promisify(Gio.File.prototype, 'make_directory_async');
+        Gio._promisify(Gio.File.prototype, 'move_async');
+        Gio._promisify(Gio.File.prototype, 'open_readwrite_async');
+        Gio._promisify(Gio.File.prototype, 'query_info_async');
+        Gio._promisify(Gio.File.prototype, 'replace_contents_async');
+        Gio._promisify(Gio.File.prototype, 'replace_contents_bytes_async',
+            'replace_contents_finish');
+        Gio._promisify(Gio.File.prototype, 'trash_async');
+
+        /* Gio.FileEnumerator */
+        Gio._promisify(Gio.FileEnumerator.prototype, 'next_files_async');
+
+        /* Gio.InputStream */
+        Gio._promisify(Gio.InputStream.prototype, 'read_bytes_async');
+
+        /* Gio.OutputStream */
+        Gio._promisify(Gio.OutputStream.prototype, 'write_bytes_async');
+    }
 }

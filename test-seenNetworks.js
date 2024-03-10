@@ -13,7 +13,21 @@ import GLib from 'gi://GLib';
 import {SeenNetworks} from './src/seenNetworks.js';
 
 const seenNetworks = new SeenNetworks();
+console.log(seenNetworks.seenNetworks); // Is this: 1. A promise; 2. undefined; 3. The real value - Answer: A promise
+logSeenNetworks();
 
+
+
+async function logSeenNetworks() {
+    console.log('in logSeenNetworks');
+    try {
+        const networks = await seenNetworks.seenNetworks
+        console.log(networks); // Is this: 1. A promise; 2. undefined; 3. The real value - Answer: The real value
+    } catch (e) {
+        console.log('error in test');
+        console.log(e);
+    }
+}
 
 
 const loop = GLib.MainLoop.new(null, false);
