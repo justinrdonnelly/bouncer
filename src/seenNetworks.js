@@ -13,7 +13,7 @@ import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
 
 export class SeenNetworks {
-    #seenNetworks; // this is a promise
+    #seenNetworks; // this is a promise that resolves to an array
     #destinationFile;
 
     constructor() {
@@ -22,10 +22,6 @@ export class SeenNetworks {
         const destination = GLib.build_filenamev([dataDir, 'zone-defense', 'seenNetworks.json']);
         this.#destinationFile = Gio.File.new_for_path(destination);
         this.#seenNetworks = this.#createSeenNetworksPromise();
-    }
-
-    get seenNetworks() { // TODO: we can probably just make this property public
-        return this.#seenNetworks;
     }
 
     async #createSeenNetworksPromise() {
@@ -44,6 +40,13 @@ export class SeenNetworks {
             console.warn(`Error reading file: ${this.#destinationFile.get_path()} (possibly file does not yet exist). Defaulting to empty list`);
             return new Promise((resolve) => { resolve([]) });
         }
+    }
+
+    async isNetworkNew(network) {
+        const networks = await this.#seenNetworks;
+        console.log(`networks: ${networks}`);
+        console.log(`checking for network ${network} in networks`);
+        return !networks.includes(network);
     }
 
     async #updateConfig(networks) {
