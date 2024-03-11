@@ -17,18 +17,18 @@ export class SeenNetworks {
     #destinationFile;
 
     constructor() {
-        this.promisify();
+        this.#promisify();
         const dataDir = GLib.get_user_config_dir();
         const destination = GLib.build_filenamev([dataDir, 'zone-defense', 'seenNetworks.json']);
         this.#destinationFile = Gio.File.new_for_path(destination);
-        this.#seenNetworks = this.createSeenNetworksPromise();
+        this.#seenNetworks = this.#createSeenNetworksPromise();
     }
 
     get seenNetworks() { // TODO: we can probably just make this property public
         return this.#seenNetworks;
     }
 
-    async createSeenNetworksPromise() {
+    async #createSeenNetworksPromise() {
         try {
             const [contents, etag] = await this.#destinationFile.load_contents_async(null);
             // console.log('here');
@@ -46,7 +46,7 @@ export class SeenNetworks {
         }
     }
 
-    async updateConfig(networks) {
+    async #updateConfig(networks) {
         try {
             const dataJSON = JSON.stringify(networks);
             const encoder = new TextEncoder('utf-8');
@@ -78,10 +78,10 @@ export class SeenNetworks {
         console.log(`adding ${network} to seen`);
         networks.push(network); // this also adds to #seenNetworks
         console.log(`networks after adding: ${networks}`);
-        this.updateConfig(networks);
+        this.#updateConfig(networks);
     }
 
-    promisify() {
+    #promisify() {
         // https://gjs.guide/guides/gio/file-operations.html#file-operations
         Gio._promisify(Gio.File.prototype, 'copy_async');
         Gio._promisify(Gio.File.prototype, 'create_async');
