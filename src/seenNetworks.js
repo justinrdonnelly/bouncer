@@ -46,30 +46,19 @@ export class SeenNetworks {
         }
     }
 
-    updateConfig(networks) { // TODO: make async
+    async updateConfig(networks) {
         try {
-            // const [contents, etag] = await this.#destinationFile.load_contents_async(null);
-            // console.log('here');
-            // console.log('etag');
-            // console.log(etag);
-            // console.log('contents');
-            // console.log(contents);
-            // const decoder = new TextDecoder('utf-8');
-            // this.#seenNetworks = decoder.decode(contents);
-            // console.log(this.#seenNetworks);
-
-            // const sourceFile = this.#destinationFile.read(null);
-            // const contents = sourceFile.read(null, 10);
-            // console.log(contents);
-
             const dataJSON = JSON.stringify(networks);
+            const encoder = new TextEncoder('utf-8');
+            const encodedData = encoder.encode(dataJSON);
             if (GLib.mkdir_with_parents(this.#destinationFile.get_parent().get_path(), 0o700) === 0) { // gnome-control-center uses 700 (USER_DIR_MODE), so we'll do that too
-                let [success, tag] = this.#destinationFile.replace_contents(dataJSON, null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
+                // Since we `await` the results, we do not need to use `replace_contents_bytes_async`
+                let success = await this.#destinationFile.replace_contents_async(encodedData, null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
 
                 if (success) {
                     /* it worked! */
                     console.log('success saving data file');
-                    console.log(tag);
+                    console.log(success);
                 } else {
                     console.log('error saving data file');
                     /* it failed */
@@ -78,7 +67,6 @@ export class SeenNetworks {
                 console.log('error creating data directory');
                 /* error */
             }
-            // this.#seenNetworks = []; // TODO: get actual values here
         } catch (e) {
             console.log('error caught');
             console.log(e);
