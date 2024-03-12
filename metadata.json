@@ -1,9 +1,0 @@
-{
-  "name": "Zone Defense",
-  "description": "When a user connects to a new WiFi connection, open a dialog allowing the user to set the firewalld zone.",
-  "uuid": "zone-defense@justinrdonnelly.gmail.com",
-  "url": "https://github.com/justinrdonnelly/zone-defense",
-  "shell-version": [
-    "45"
-  ]
-}
