@@ -97,7 +97,7 @@ export const ZoneDefenseWindow = GObject.registerClass({
             selectedItemValue = null; // default zone is represented by null
         try {
             // TODO: Should I be using signals/actions here instead of using a reference to main and calling a method? I need to know about errors.
-            await this._application.updateZone(this._activeConnectionSettings, selectedItemValue);
+            await this._application.chooseClicked(this.connectionId, this._activeConnectionSettings, selectedItemValue);
             this.close();
         } catch (error) { // TODO: handle error (maybe show something on the window?)
             console.log('error');

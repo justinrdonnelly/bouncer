@@ -16,6 +16,7 @@ import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk?version=4.0';
 
 import { NetworkState } from './networkState.js';
+import { SeenNetworks } from './seenNetworks.js';
 import { ZoneDefenseWindow } from './window.js';
 import { ZoneForConnection } from './zoneForConnection.js';
 import { ZoneInfo } from './zoneInfo.js';
@@ -26,9 +27,12 @@ pkg.initFormat();
 export const ZoneDefenseApplication = GObject.registerClass(
     class ZoneDefenseApplication extends Adw.Application {
         #sourceIds = [];
+        #seenNetworks;
+
         constructor() {
             super({application_id: 'com.github.justinrdonnelly.ZoneDefense', flags: Gio.ApplicationFlags.DEFAULT_FLAGS});
 
+            this.#seenNetworks = new SeenNetworks();
             const quit_action = new Gio.SimpleAction({name: 'quit'});
                 quit_action.connect('activate', action => {
                 this.quit();
@@ -69,6 +73,10 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 this.closeWindowIfConnectionChanged(connectionId);
                 // bail out if there is no connection
                 if (connectionId === '')
+                    return;
+
+                const isNetworkNew = await this.#seenNetworks.isNetworkNew(connectionId);
+                if (!isNetworkNew) // The network is not new. Don't open the window.
                     return;
 
                 try {
@@ -119,8 +127,12 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 active_window?.close();
         }
 
-        async updateZone(activeConnectionSettings, zone) {
+        async chooseClicked(connectionId, activeConnectionSettings, zone) {
             console.log(`Updating zone to: ${zone}`);
+            // Even though these are both async, do NOT execute them concurrently. Update seen networks before updating
+            // the zone. If the connection ID hasn't been added to the list of seen networks when the zone is changed,
+            // the window will open again!
+            await this.#seenNetworks.addNetworkToSeen(connectionId);
             await ZoneForConnection.setZone(activeConnectionSettings, zone);
         }
 
