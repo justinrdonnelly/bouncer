@@ -48,12 +48,12 @@
                     <property name="xalign">0</property>
                     <property name="margin-top">6</property>
                     <property name="margin-bottom">6</property>
-                    <property name="label">You have connected to a new network. Please choose a firewall zone. What type of network is this?</property>
+                    <property name="label">You have connected to a new Wi-Fi network. Please choose a firewall zone. What type of network is this?</property>
                     <property name="wrap">True</property>
                   </object>
                 </child>
 
-                <!-- Properties (eg connection) -->
+                <!-- Properties (connectionId, defaultZone, currentZone) -->
                 <child>
                   <object class="GtkListBox">
                     <property name="selection-mode">none</property>
@@ -63,7 +63,7 @@
                       <class name="boxed-list"/>
                     </style>
                     <child>
-                      <object class="AdwActionRow" id="network">
+                      <object class="AdwActionRow" id="connectionId">
                         <property name="title" translatable="yes">Network</property>
                         <property name="subtitle-selectable" translatable="yes">True</property>
                         <style>
@@ -99,7 +99,7 @@
                     <property name="margin-bottom">24</property>
                     <property name="halign">GTK_ALIGN_START</property> <!-- make the dropdown not span the entire box -->
                     <property name="title" translatable="yes">Firewall Zone</property>
-                    <property name="description" translatable="yes">Choose the firewall zone for this connection.</property>
+                    <property name="description" translatable="yes">Choose the firewall zone for this network.</property>
                     <child>
                       <object class="AdwComboRow" id="zoneDropDown">
                         <property name="title" translatable="yes">Zone</property>

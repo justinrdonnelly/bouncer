@@ -16,7 +16,7 @@ import Gtk from 'gi://Gtk';
 export const ZoneDefenseWindow = GObject.registerClass({
     GTypeName: 'ZoneDefenseWindow',
     Template: 'resource:///com/github/justinrdonnelly/ZoneDefense/window.ui',
-    InternalChildren: ['currentZone', 'defaultZone', 'network', 'zoneDropDown', 'zoneList'],
+    InternalChildren: ['currentZone', 'defaultZone', 'connectionId', 'zoneDropDown', 'zoneList'],
 }, class ZoneDefenseWindow extends Adw.ApplicationWindow {
     static _simpleZoneList = ['public', 'home', 'work'];
     static _defaultZoneLabel = '[DEFAULT]';
@@ -37,7 +37,7 @@ export const ZoneDefenseWindow = GObject.registerClass({
         this._activeConnectionSettings = activeConnectionSettings;
         this._currentZone.subtitle = currentZone || ZoneDefenseWindow._defaultZoneLabel;
         this._defaultZone.subtitle = defaultZone;
-        this._network.subtitle = connectionId;
+        this._connectionId.subtitle = connectionId;
 
         let selected = null;
         const zones = this.generateZoneList(allZones, defaultZone, currentZone);

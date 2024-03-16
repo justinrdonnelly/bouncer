@@ -16,7 +16,7 @@ import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk?version=4.0';
 
 import { NetworkState } from './networkState.js';
-import { SeenNetworks } from './seenNetworks.js';
+import { ConnectionIdsSeen } from './connectionIdsSeen.js';
 import { ZoneDefenseWindow } from './window.js';
 import { ZoneForConnection } from './zoneForConnection.js';
 import { ZoneInfo } from './zoneInfo.js';
@@ -27,12 +27,12 @@ pkg.initFormat();
 export const ZoneDefenseApplication = GObject.registerClass(
     class ZoneDefenseApplication extends Adw.Application {
         #sourceIds = [];
-        #seenNetworks;
+        #connectionIdsSeen;
 
         constructor() {
             super({application_id: 'com.github.justinrdonnelly.ZoneDefense', flags: Gio.ApplicationFlags.DEFAULT_FLAGS});
 
-            this.#seenNetworks = new SeenNetworks();
+            this.#connectionIdsSeen = new ConnectionIdsSeen();
             const quit_action = new Gio.SimpleAction({name: 'quit'});
                 quit_action.connect('activate', action => {
                 this.quit();
@@ -58,12 +58,12 @@ export const ZoneDefenseApplication = GObject.registerClass(
             });
             this.add_action(show_about_action);
 
-            const networkChangedAction = new Gio.SimpleAction({
-                name: 'networkChangedAction',
+            const connectionChangedAction = new Gio.SimpleAction({
+                name: 'connectionChangedAction',
                 parameter_type: new GLib.VariantType('as'),
             });
 
-            networkChangedAction.connect('activate', async (action, parameter) => {
+            connectionChangedAction.connect('activate', async (action, parameter) => {
                 console.log(`${action.name} activated: ${parameter.deepUnpack()}`);
                 const parameters = parameter.deepUnpack();
                 const connectionId = parameters[0];
@@ -75,8 +75,8 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 if (connectionId === '')
                     return;
 
-                const isNetworkNew = await this.#seenNetworks.isNetworkNew(connectionId);
-                if (!isNetworkNew) // The network is not new. Don't open the window.
+                const isConnectionNew = await this.#connectionIdsSeen.isConnectionNew(connectionId);
+                if (!isConnectionNew) // The connection is not new. Don't open the window.
                     return;
 
                 try {
@@ -97,7 +97,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 }
             });
 
-            this.networkState = new NetworkState(networkChangedAction);
+            this.networkState = new NetworkState(connectionChangedAction);
 
             // handle signals
             const signals = [2, 15];
@@ -129,10 +129,10 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
         async chooseClicked(connectionId, activeConnectionSettings, zone) {
             console.log(`Updating zone to: ${zone}`);
-            // Even though these are both async, do NOT execute them concurrently. Update seen networks before updating
-            // the zone. If the connection ID hasn't been added to the list of seen networks when the zone is changed,
+            // Even though these are both async, do NOT execute them concurrently. Update seen connections before updating
+            // the zone. If the connection ID hasn't been added to the list of seen connections when the zone is changed,
             // the window will open again!
-            await this.#seenNetworks.addNetworkToSeen(connectionId);
+            await this.#connectionIdsSeen.addConnectionIdToSeen(connectionId);
             await ZoneForConnection.setZone(activeConnectionSettings, zone);
         }
 

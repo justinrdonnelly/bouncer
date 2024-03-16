@@ -1,4 +1,4 @@
-/* seenNetworks.js
+/* connectionIdsSeen.js
  *
  * Copyright 2024 Justin Donnelly
  *
@@ -12,19 +12,19 @@
 import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
 
-export class SeenNetworks {
-    #seenNetworks; // this is a promise that resolves to an array
+export class ConnectionIdsSeen {
+    #connectionIdsSeen; // this is a promise that resolves to an array
     #destinationFile;
 
     constructor() {
         this.#promisify();
         const dataDir = GLib.get_user_config_dir();
-        const destination = GLib.build_filenamev([dataDir, 'zone-defense', 'seenNetworks.json']);
+        const destination = GLib.build_filenamev([dataDir, 'zone-defense', 'connection-ids-seen.json']);
         this.#destinationFile = Gio.File.new_for_path(destination);
-        this.#seenNetworks = this.#createSeenNetworksPromise();
+        this.#connectionIdsSeen = this.#createConnectionIdsSeenPromise();
     }
 
-    async #createSeenNetworksPromise() {
+    async #createConnectionIdsSeenPromise() {
         try {
             const [contents, etag] = await this.#destinationFile.load_contents_async(null);
             // console.log('here');
@@ -42,16 +42,16 @@ export class SeenNetworks {
         }
     }
 
-    async isNetworkNew(network) {
-        const networks = await this.#seenNetworks;
-        console.log(`networks: ${networks}`);
-        console.log(`checking for network ${network} in networks`);
-        return !networks.includes(network);
+    async isConnectionNew(connectionId) {
+        const connectionIds = await this.#connectionIdsSeen;
+        console.log(`connectionIds: ${connectionIds}`);
+        console.log(`checking for connectionId ${connectionId} in connectionIds`);
+        return !connectionIds.includes(connectionId);
     }
 
-    async #updateConfig(networks) {
+    async #updateConfig(connectionIds) {
         try {
-            const dataJSON = JSON.stringify(networks);
+            const dataJSON = JSON.stringify(connectionIds);
             const encoder = new TextEncoder('utf-8');
             const encodedData = encoder.encode(dataJSON);
             if (GLib.mkdir_with_parents(this.#destinationFile.get_parent().get_path(), 0o700) === 0) { // gnome-control-center uses 700 (USER_DIR_MODE), so we'll do that too
@@ -76,12 +76,12 @@ export class SeenNetworks {
         }
     }
 
-    async addNetworkToSeen(network) {
-        const networks = await this.#seenNetworks;
-        console.log(`adding ${network} to seen`);
-        networks.push(network); // this also adds to #seenNetworks
-        console.log(`networks after adding: ${networks}`);
-        this.#updateConfig(networks);
+    async addConnectionIdToSeen(connectionId) {
+        const connectionIds = await this.#connectionIdsSeen;
+        console.log(`adding ${connectionId} to seen`);
+        connectionIds.push(connectionId); // this also adds to #connectionIdsSeen
+        console.log(`connectionIds after adding: ${connectionIds}`);
+        this.#updateConfig(connectionIds);
     }
 
     #promisify() {

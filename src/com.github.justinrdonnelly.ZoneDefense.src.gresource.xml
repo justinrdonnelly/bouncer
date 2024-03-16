@@ -4,7 +4,7 @@
     <file>main.js</file>
     <file>window.js</file>
     <file>networkState.js</file>
-    <file>seenNetworks.js</file>
+    <file>connectionIdsSeen.js</file>
     <file>zoneInfo.js</file>
     <file>zoneForConnection.js</file>
   </gresource>

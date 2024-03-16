@@ -231,9 +231,9 @@ const NetworkManagerConnectionActiveProxy = Gio.DBusProxy.makeProxyWrapper(netwo
 export class NetworkState {
     networkManager;
 
-    constructor(networkChangedAction) {
+    constructor(connectionChangedAction) {
         // Keep a reference to NetworkManager instance to prevent GC
-        this.networkManager = new NetworkManager('/org/freedesktop/NetworkManager', networkChangedAction);
+        this.networkManager = new NetworkManager('/org/freedesktop/NetworkManager', connectionChangedAction);
     }
 
     destroy() {
@@ -257,17 +257,17 @@ class NetworkManagerStateItem {
 
     // conceptually, the variables below are 'protected'
     _objectPath;
-    _networkChangedAction;
+    _connectionChangedAction;
     _proxyObj = null;
     _childNetworkManagerStateItems = new Map(); // map of object path to object for each related child NetworkManagerStateItem
     _handlerId;
     _proxyObjHandlerId;
 
-    constructor(objectPath, networkChangedAction) {
+    constructor(objectPath, connectionChangedAction) {
         if (this.constructor === NetworkManagerStateItem)
             throw new Error('NetworkManagerStateItem is an abstract class. Do not instantiate.');
         this._objectPath = objectPath;
-        this._networkChangedAction = networkChangedAction;
+        this._connectionChangedAction = connectionChangedAction;
         console.debug(`debug 1 - Instantiating ${this.constructor.name} with object path: ${this._objectPath}`);
     }
 
@@ -291,9 +291,9 @@ class NetworkManagerStateItem {
 class NetworkManager extends NetworkManagerStateItem {
     #busWatchId;
 
-    constructor(objectPath, networkChangedAction) {
+    constructor(objectPath, connectionChangedAction) {
         // example objectPath: /org/freedesktop/NetworkManager (this is always what it is)
-        super(objectPath, networkChangedAction);
+        super(objectPath, connectionChangedAction);
         this.#busWatchId = Gio.bus_watch_name(
             Gio.BusType.SYSTEM,
             NetworkManagerStateItem._wellKnownName,
@@ -399,7 +399,7 @@ class NetworkManager extends NetworkManagerStateItem {
         this.#removeDevice(device); // if the device already exists, remove it
         console.debug(`debug 1 - Adding device: ${device}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
         // Instantiate a new class that will make another dbus call
-        const networkManagerDevice = new NetworkManagerDevice(device, this._networkChangedAction);
+        const networkManagerDevice = new NetworkManagerDevice(device, this._connectionChangedAction);
         // Add to child devices
         this._childNetworkManagerStateItems.set(device, networkManagerDevice);
     }
@@ -425,9 +425,9 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
         return !(connectionValue === undefined || connectionValue === null || connectionValue === '/');
     }
 
-    constructor(objectPath, networkChangedAction) {
+    constructor(objectPath, connectionChangedAction) {
         // example objectPath: /org/freedesktop/NetworkManager/Devices/1
-        super(objectPath, networkChangedAction);
+        super(objectPath, connectionChangedAction);
         this.#getDbusProxyObject();
     }
 
@@ -491,7 +491,7 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
                     this.#deleteConnection(oldValue); // destroy old child
                     this.#addConnectionInfo(); // this will add the child ('/' in this case)
                     // Activate here because we won't have a child that can activate. It has been destroyed. Use empty string to indicate no connection.
-                    this._networkChangedAction.activate(GLib.Variant.new_array(new GLib.VariantType('s'), [GLib.Variant.new_string(''), GLib.Variant.new_string('')]));
+                    this._connectionChangedAction.activate(GLib.Variant.new_array(new GLib.VariantType('s'), [GLib.Variant.new_string(''), GLib.Variant.new_string('')]));
                 } else if (!NetworkManagerDevice.#isConnectionActive(oldValue) && NetworkManagerDevice.#isConnectionActive(value)) {
                     // connection has toggled from inactive to active
                     console.debug('debug 2 - connection toggled from inactive to active');
@@ -536,21 +536,21 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
         this.#activeConnection = this._proxyObj.ActiveConnection; // e.g. / (if not active), /org/freedesktop/NetworkManager/ActiveConnection/1 (if active)
         console.debug(`debug 1 - Adding connection ${this.#activeConnection}`);
         if (NetworkManagerDevice.#isConnectionActive(this.#activeConnection)) { // this connection is active, make another dbus call
-            const networkManagerConnectionActive = new NetworkManagerConnectionActive(this.#activeConnection, this._networkChangedAction);
+            const networkManagerConnectionActive = new NetworkManagerConnectionActive(this.#activeConnection, this._connectionChangedAction);
             this._childNetworkManagerStateItems.set(this.#activeConnection, networkManagerConnectionActive);
         }
     }
 }
 
 class NetworkManagerConnectionActive extends NetworkManagerStateItem {
-    constructor(objectPath, networkChangedAction) {
+    constructor(objectPath, connectionChangedAction) {
         // example objectPath: /org/freedesktop/NetworkManager/ActiveConnection/1
-        super(objectPath, networkChangedAction);
+        super(objectPath, connectionChangedAction);
         this.#getDbusProxyObject();
     }
 
     #activate() {
-        this._networkChangedAction.activate(GLib.Variant.new_array(new GLib.VariantType('s'), [GLib.Variant.new_string(this._proxyObj.Id), GLib.Variant.new_string(this._proxyObj.Connection)]));
+        this._connectionChangedAction.activate(GLib.Variant.new_array(new GLib.VariantType('s'), [GLib.Variant.new_string(this._proxyObj.Id), GLib.Variant.new_string(this._proxyObj.Connection)]));
     }
 
     /**
