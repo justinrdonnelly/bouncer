@@ -10,7 +10,7 @@
  */
 
 import GLib from 'gi://GLib';
-import {ZoneForConnection} from './src/zoneForConnection.js';
+import {ZoneForConnection} from '../src/zoneForConnection.js';
 
 /**
  *

@@ -10,7 +10,7 @@
  */
 
 import GLib from 'gi://GLib';
-import {ZoneInfo} from './src/zoneInfo.js';
+import {ZoneInfo} from '../src/zoneInfo.js';
 
 /**
  *

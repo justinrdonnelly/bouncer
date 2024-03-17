@@ -10,7 +10,7 @@
  */
 
 import GLib from 'gi://GLib';
-import {NetworkState} from './src/networkState.js';
+import {NetworkState} from '../src/networkState.js';
 
 const networkState = new NetworkState();
 

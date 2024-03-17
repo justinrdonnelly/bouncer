@@ -10,7 +10,7 @@
  */
 
 import GLib from 'gi://GLib';
-import {SeenNetworks} from './src/seenNetworks.js';
+import {SeenNetworks} from '../src/seenNetworks.js';
 
 const seenNetworks = new SeenNetworks();
 test();
