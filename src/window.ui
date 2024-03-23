@@ -112,12 +112,39 @@
                   </object> <!-- end group -->
                 </child>
 
-                <!-- Choose button/label -->
+                <!-- Exit button/label -->
                 <child>
                   <object class="GtkBox">
                     <property name="orientation">horizontal</property>
                     <property name="margin-top">4</property>
                     <property name="margin-bottom">4</property>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="width-request">100</property>
+                        <property name="label">Exit</property>
+                        <property name="halign">center</property>
+                        <signal name="clicked" handler="exitButtonClicked"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label5">
+                        <property name="margin-start">12</property>
+                        <property name="margin-end">12</property>
+                        <property name="xalign">0</property>
+                        <property name="wrap">True</property>
+                        <property name="width-chars">30</property> <!-- min width -->
+                        <property name="label">No change will be made. You will see this window again the next time you connect to this network.</property>
+                      </object> <!-- end GtkLabel -->
+                    </child>
+                  </object>
+                </child>
+
+                <!-- Choose button/label -->
+                <child>
+                  <object class="GtkBox">
+                    <property name="orientation">horizontal</property>
+                    <property name="margin-top">4</property>
+                    <property name="margin-bottom">12</property> <!-- add some extra margin since this is on the bottom of the window -->
                     <child>
                       <object class="GtkButton">
                         <property name="width-request">100</property>
@@ -130,40 +157,13 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label5">
-                        <property name="margin-start">12</property>
-                        <property name="margin-end">12</property>
-                        <property name="xalign">0</property>
-                        <property name="wrap">True</property>
-                        <property name="width-chars">30</property> <!-- min width -->
-                        <property name="label">The selected firewall zone will be used every time you connect to this network.</property>
-                      </object> <!-- end GtkLabel -->
-                    </child>
-                  </object>
-                </child>
-
-                <!-- Exit button/label -->
-                <child>
-                  <object class="GtkBox">
-                    <property name="orientation">horizontal</property>
-                    <property name="margin-top">4</property>
-                    <property name="margin-bottom">12</property> <!-- add some extra margin since this is on the bottom of the window -->
-                    <child>
-                      <object class="GtkButton">
-                        <property name="width-request">100</property>
-                        <property name="label">Exit</property>
-                        <property name="halign">center</property>
-                        <signal name="clicked" handler="exitButtonClicked"/>
-                      </object>
-                    </child>
-                    <child>
                       <object class="GtkLabel" id="label6">
                         <property name="margin-start">12</property>
                         <property name="margin-end">12</property>
                         <property name="xalign">0</property>
                         <property name="wrap">True</property>
                         <property name="width-chars">30</property> <!-- min width -->
-                        <property name="label">No change will be made. You will see this window again the next time you connect to this network.</property>
+                        <property name="label">The selected firewall zone will be used every time you connect to this network.</property>
                       </object> <!-- end GtkLabel -->
                     </child>
                   </object>
