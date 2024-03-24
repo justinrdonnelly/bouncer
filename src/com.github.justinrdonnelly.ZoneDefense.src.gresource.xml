@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/com/github/justinrdonnelly/ZoneDefense/js">
+    <file>networkManagerDbusInterfaces/networkManagerConnectionActiveProxy.js</file>
+    <file>networkManagerDbusInterfaces/networkManagerDeviceProxy.js</file>
+    <file>networkManagerDbusInterfaces/networkManagerProxy.js</file>
     <file>connectionIdsSeen.js</file>
     <file>main.js</file>
     <file>networkState.js</file>
