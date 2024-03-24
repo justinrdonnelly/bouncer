@@ -38,7 +38,6 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 this.quit();
             });
             this.add_action(quit_action);
-            this.set_accels_for_action('app.quit', ['<primary>q']);
 
             const show_about_action = new Gio.SimpleAction({name: 'about'});
             show_about_action.connect('activate', action => {
