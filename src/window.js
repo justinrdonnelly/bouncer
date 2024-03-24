@@ -50,6 +50,7 @@ export const ZoneDefenseWindow = GObject.registerClass({
                 selected = idx + 1; // index 0 is the default zone, and was added before we started the loop
         });
         this._zoneDropDown.set_selected(selected);
+        this._zoneDropDown.grab_focus();
     }
 
     // By default, we want to keep things simple for the user. See table for behavior. Later we may make this configurable.
