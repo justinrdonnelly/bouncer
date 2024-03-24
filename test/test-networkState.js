@@ -10,25 +10,30 @@
  */
 
 import GLib from 'gi://GLib';
-import {NetworkState} from '../src/networkState.js';
+import Gio from 'gi://Gio';
 
-const networkState = new NetworkState();
+import { NetworkState } from '../src/networkState.js';
 
-setTimeout(() => {
-    // console.log(`networkManager: ${networkState.networkManager}`);
-    // console.log(`networkDevices: ${networkState.networkManager.networkDevices}`);
-    const devices = networkState.networkManager.networkDevices;
-    devices.forEach(device => {
-        // console.log(`Connection: ${device.connection}`);
-        console.log(`Connection ID: ${device.connection.activeConnectionId}`);
-        console.log(`Settings object path: ${device.connection.activeConnectionSettings}`);
-    });
-}, 1000);
+const connectionChangedAction = new Gio.SimpleAction({
+    name: 'connectionChangedAction',
+    parameter_type: new GLib.VariantType('as'),
+});
 
-// simulate disabling the extension
+connectionChangedAction.connect('activate', (action, parameter) => {
+    // console.log(`${action.name} activated: ${parameter.deepUnpack()}`);
+    const parameters = parameter.deepUnpack();
+    const connectionId = parameters[0];
+    const activeConnectionSettings = parameters[1];
+    console.log(`connectionId: ${connectionId}`);
+    console.log(`activeConnectionSettings: ${activeConnectionSettings}`);
+});
+
+const networkState = new NetworkState(connectionChangedAction);
+const loop = GLib.MainLoop.new(null, false);
+
 setTimeout(() => {
     networkState.destroy();
-}, 2000);
+    loop.quit();
+}, 1000);
 
-const loop = GLib.MainLoop.new(null, false);
 loop.run();
