@@ -9,7 +9,7 @@
     <property name="content">
       <object class="AdwToolbarView">
         <child type="top">
-          <object class="AdwHeaderBar" id="header_bar">
+          <object class="AdwHeaderBar">
             <child type="end">
               <object class="GtkMenuButton">
                 <property name="primary">True</property>
@@ -44,7 +44,7 @@
 
                 <!-- text label -->
                 <child>
-                  <object class="GtkLabel" id="label3">
+                  <object class="GtkLabel">
                     <property name="xalign">0</property>
                     <property name="margin-top">6</property>
                     <property name="margin-bottom">6</property>
@@ -127,7 +127,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label5">
+                      <object class="GtkLabel">
                         <property name="margin-start">12</property>
                         <property name="margin-end">12</property>
                         <property name="xalign">0</property>
@@ -157,7 +157,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label6">
+                      <object class="GtkLabel">
                         <property name="margin-start">12</property>
                         <property name="margin-end">12</property>
                         <property name="xalign">0</property>
