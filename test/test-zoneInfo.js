@@ -10,7 +10,8 @@
  */
 
 import GLib from 'gi://GLib';
-import {ZoneInfo} from '../src/zoneInfo.js';
+
+import { ZoneInfo } from '../src/zoneInfo.js';
 
 /**
  *
@@ -19,23 +20,25 @@ import {ZoneInfo} from '../src/zoneInfo.js';
 async function getZoneInformation(networkInterface) {
     try {
         // Any firewalld dbus failures are considered fatal
-        const [zones, defaultZone, zoneOfInterface] = await Promise.all([
+        const [zones, defaultZone] = await Promise.all([
             ZoneInfo.getZones(),
             ZoneInfo.getDefaultZone(),
-            ZoneInfo.getZoneOfInterface(networkInterface),
         ]);
         console.log('promises!');
         console.log(`zones: ${zones}`);
         console.log(`defaultZone: ${defaultZone}`);
-        console.log(`zoneOfInterface: ${zoneOfInterface}`);
     } catch (error) {
         console.log('error');
         console.log(error);
-        // TODO: Is it worth checking to see if firewalld is running? It can help give a more useful error message.
     }
 }
 
 getZoneInformation('wlp5s0');
 
 const loop = GLib.MainLoop.new(null, false);
+
+setTimeout(() => {
+    loop.quit();
+}, 1000);
+
 loop.run();
