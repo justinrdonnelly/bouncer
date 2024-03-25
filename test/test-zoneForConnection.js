@@ -10,7 +10,8 @@
  */
 
 import GLib from 'gi://GLib';
-import {ZoneForConnection} from '../src/zoneForConnection.js';
+
+import { ZoneForConnection } from '../src/zoneForConnection.js';
 
 /**
  *
@@ -38,17 +39,10 @@ async function updateZone(objectPath) {
     try {
         zone = await ZoneForConnection.getZone(objectPath);
         console.log(`zone before: ${zone}`);
-    } catch (error) {
-        console.log('error - outermost catch');
-        console.log(error);
-    }
     if (zone === 'trusted')
         newZone = 'public';
     else
         newZone = 'trusted';
-
-    // newZone = 'public';
-    try { // TODO: I don't think I should need this. Just use 1 bigger try.
         await ZoneForConnection.setZone(objectPath, newZone);
         zone = await ZoneForConnection.getZone(objectPath);
         console.log(`zone after: ${zone}`);
@@ -65,4 +59,9 @@ async function updateZone(objectPath) {
 updateZone('/org/freedesktop/NetworkManager/Settings/5');
 
 const loop = GLib.MainLoop.new(null, false);
+
+setTimeout(() => {
+    loop.quit();
+}, 1000);
+
 loop.run();

@@ -10,7 +10,8 @@
  */
 
 import GLib from 'gi://GLib';
-import {ConnectionIdsSeen} from '../src/connectionIdsSeen.js';
+
+import { ConnectionIdsSeen } from '../src/connectionIdsSeen.js';
 
 const connectionIdsSeen = new ConnectionIdsSeen();
 test();
@@ -30,6 +31,10 @@ async function test() {
     }
 }
 
-
 const loop = GLib.MainLoop.new(null, false);
+
+setTimeout(() => {
+    loop.quit();
+}, 1000);
+
 loop.run();
