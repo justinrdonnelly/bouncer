@@ -33,6 +33,13 @@ export const ZoneDefenseApplication = GObject.registerClass(
             super({application_id: 'com.github.justinrdonnelly.ZoneDefense', flags: Gio.ApplicationFlags.DEFAULT_FLAGS});
 
             this.#connectionIdsSeen = new ConnectionIdsSeen();
+            this.#connectionIdsSeen.init().catch((e) => {
+                // Bail out here... There's nothing we can reasonably do without knowing if a network has been seen.
+                console.error(`Fatal error: ${e.message}`);
+                // TODO: It'd be nice to generate a notification in this case.
+                this.quit(null);
+            });
+
             const quit_action = new Gio.SimpleAction({name: 'quit'});
                 quit_action.connect('activate', action => {
                 this.quit();
@@ -74,7 +81,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 if (connectionId === '')
                     return;
 
-                const isConnectionNew = await this.#connectionIdsSeen.isConnectionNew(connectionId);
+                const isConnectionNew = this.#connectionIdsSeen.isConnectionNew(connectionId);
                 if (!isConnectionNew) // The connection is not new. Don't open the window.
                     return;
 
@@ -131,16 +138,16 @@ export const ZoneDefenseApplication = GObject.registerClass(
             // Even though these are both async, do NOT execute them concurrently. Update seen connections before updating
             // the zone. If the connection ID hasn't been added to the list of seen connections when the zone is changed,
             // the window will open again!
-            await this.#connectionIdsSeen.addConnectionIdToSeen(connectionId);
+            this.#connectionIdsSeen.addConnectionIdToSeen(connectionId);
             await ZoneForConnection.setZone(activeConnectionSettings, zone);
         }
 
         quit(signal) {
-            console.log(`quitting due to signal ${signal}!`);
+            if (signal !== null)
+                console.log(`quitting due to signal ${signal}!`);
             this.#sourceIds.forEach((id) => GLib.Source.remove(id));
             this.networkState.destroy()
             this.networkState = null;
-            console.log('here');
             super.quit(); // this ends up calling vfunc_shutdown()
         }
     }

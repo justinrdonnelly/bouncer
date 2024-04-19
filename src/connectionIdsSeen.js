@@ -13,40 +13,43 @@ import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
 
 export class ConnectionIdsSeen {
-    #connectionIdsSeen; // this is a promise that resolves to an array
+    #connectionIdsSeen;
+    #destination;
     #destinationFile;
 
     constructor() {
         this.#promisify();
-        const dataDir = GLib.get_user_config_dir();
-        const destination = GLib.build_filenamev([dataDir, 'zone-defense', 'connection-ids-seen.json']);
-        this.#destinationFile = Gio.File.new_for_path(destination);
-        this.#connectionIdsSeen = this.#createConnectionIdsSeenPromise();
+        const dataDir = GLib.get_user_data_dir();
+        this.#destination = GLib.build_filenamev([dataDir, 'zone-defense', 'connection-ids-seen.json']);
+        this.#destinationFile = Gio.File.new_for_path(this.#destination);
     }
 
-    async #createConnectionIdsSeenPromise() {
+    // Always call init immediately after constructor.
+    async init() {
+        this.#connectionIdsSeen = await this.#createConnectionIdsSeen();
+    }
+
+    async #createConnectionIdsSeen() {
         try {
             const [contents, etag] = await this.#destinationFile.load_contents_async(null);
-            // console.log('here');
-            // console.log('etag');
-            // console.log(etag);
-            // console.log('contents');
-            // console.log(contents);
             const decoder = new TextDecoder('utf-8');
             const decoded = decoder.decode(contents);
-            console.log(`contents: ${decoded}`);
             return JSON.parse(decoded);
         } catch (e) {
-            console.warn(`Error reading file: ${this.#destinationFile.get_path()} (possibly file does not yet exist). Defaulting to empty list`);
-            return new Promise((resolve) => { resolve([]) });
+            if (e.message.includes('No such file or directory')) { // file does not yet exist, that's OK
+                console.log(`${this.#destination} does not exist. Treat as empty and create it later.`);
+                return [];
+            }
+            else
+                throw e;
         }
     }
 
-    async isConnectionNew(connectionId) {
-        const connectionIds = await this.#connectionIdsSeen;
-        console.log(`connectionIds: ${connectionIds}`);
-        console.log(`checking for connectionId ${connectionId} in connectionIds`);
-        return !connectionIds.includes(connectionId);
+    isConnectionNew(connectionId) {
+        console.log(`Checking to see if connection ${connectionId} is new.`);
+        const isNew = !this.#connectionIdsSeen.includes(connectionId);
+        console.log(`Connection ${connectionId} is ${isNew ? '' : 'not '}new.`);
+        return isNew;
     }
 
     async #updateConfig(connectionIds) {
@@ -71,42 +74,40 @@ export class ConnectionIdsSeen {
                 /* error */
             }
         } catch (e) {
+            // This happens when: 1. no write permission on file
             console.log('error caught');
             console.log(e);
         }
     }
 
-    async addConnectionIdToSeen(connectionId) {
-        const connectionIds = await this.#connectionIdsSeen;
-        console.log(`adding ${connectionId} to seen`);
-        connectionIds.push(connectionId); // this also adds to #connectionIdsSeen
-        console.log(`connectionIds after adding: ${connectionIds}`);
-        this.#updateConfig(connectionIds);
+    addConnectionIdToSeen(connectionId) {
+        this.#connectionIdsSeen.push(connectionId);
+        this.#updateConfig(this.#connectionIdsSeen);
     }
 
     #promisify() {
         // https://gjs.guide/guides/gio/file-operations.html#file-operations
-        Gio._promisify(Gio.File.prototype, 'copy_async');
-        Gio._promisify(Gio.File.prototype, 'create_async');
-        Gio._promisify(Gio.File.prototype, 'delete_async');
-        Gio._promisify(Gio.File.prototype, 'enumerate_children_async');
+        // Gio._promisify(Gio.File.prototype, 'copy_async');
+        // Gio._promisify(Gio.File.prototype, 'create_async');
+        // Gio._promisify(Gio.File.prototype, 'delete_async');
+        // Gio._promisify(Gio.File.prototype, 'enumerate_children_async');
         Gio._promisify(Gio.File.prototype, 'load_contents_async');
-        Gio._promisify(Gio.File.prototype, 'make_directory_async');
-        Gio._promisify(Gio.File.prototype, 'move_async');
-        Gio._promisify(Gio.File.prototype, 'open_readwrite_async');
-        Gio._promisify(Gio.File.prototype, 'query_info_async');
+        // Gio._promisify(Gio.File.prototype, 'make_directory_async');
+        // Gio._promisify(Gio.File.prototype, 'move_async');
+        // Gio._promisify(Gio.File.prototype, 'open_readwrite_async');
+        // Gio._promisify(Gio.File.prototype, 'query_info_async');
         Gio._promisify(Gio.File.prototype, 'replace_contents_async');
-        Gio._promisify(Gio.File.prototype, 'replace_contents_bytes_async',
-            'replace_contents_finish');
-        Gio._promisify(Gio.File.prototype, 'trash_async');
+        // Gio._promisify(Gio.File.prototype, 'replace_contents_bytes_async',
+        //     'replace_contents_finish');
+        // Gio._promisify(Gio.File.prototype, 'trash_async');
 
         /* Gio.FileEnumerator */
         Gio._promisify(Gio.FileEnumerator.prototype, 'next_files_async');
 
         /* Gio.InputStream */
-        Gio._promisify(Gio.InputStream.prototype, 'read_bytes_async');
+        // Gio._promisify(Gio.InputStream.prototype, 'read_bytes_async');
 
         /* Gio.OutputStream */
-        Gio._promisify(Gio.OutputStream.prototype, 'write_bytes_async');
+        // Gio._promisify(Gio.OutputStream.prototype, 'write_bytes_async');
     }
 }
