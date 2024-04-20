@@ -13,19 +13,25 @@ import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
 
 export class ConnectionIdsSeen {
+    static #dataDirectoryPermissions = 0o700; // gnome-control-center uses 700 (USER_DIR_MODE), so we'll do that too
     #connectionIdsSeen;
     #destination;
     #destinationFile;
+    #destinationDirectory;
 
     constructor() {
         this.#promisify();
         const dataDir = GLib.get_user_data_dir();
         this.#destination = GLib.build_filenamev([dataDir, 'zone-defense', 'connection-ids-seen.json']);
         this.#destinationFile = Gio.File.new_for_path(this.#destination);
+        this.#destinationDirectory = this.#destinationFile.get_parent().get_path();
     }
 
     // Always call init immediately after constructor.
     async init() {
+        if (GLib.mkdir_with_parents(this.#destinationDirectory, ConnectionIdsSeen.#dataDirectoryPermissions) !== 0)
+            // mkdir failed
+            throw new Error(`Cannot create directory ${this.#destinationDirectory}`);
         this.#connectionIdsSeen = await this.#createConnectionIdsSeen();
     }
 
@@ -57,26 +63,21 @@ export class ConnectionIdsSeen {
             const dataJSON = JSON.stringify(connectionIds);
             const encoder = new TextEncoder('utf-8');
             const encodedData = encoder.encode(dataJSON);
-            if (GLib.mkdir_with_parents(this.#destinationFile.get_parent().get_path(), 0o700) === 0) { // gnome-control-center uses 700 (USER_DIR_MODE), so we'll do that too
+            // We already tried to create this directory earlier, so this should only matter if a user somehow deleted it.
+            if (GLib.mkdir_with_parents(this.#destinationDirectory, ConnectionIdsSeen.#dataDirectoryPermissions) === 0) {
                 // Since we `await` the results, we do not need to use `replace_contents_bytes_async`
                 let success = await this.#destinationFile.replace_contents_async(encodedData, null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
-
-                if (success) {
-                    /* it worked! */
-                    console.log('success saving data file');
-                    console.log(success);
-                } else {
-                    console.log('error saving data file');
-                    /* it failed */
+                if (!success) {
+                    throw new Error(`Error saving data file ${this.#destinationFile}.`);
                 }
             } else {
-                console.log('error creating data directory');
-                /* error */
+                throw new Error(`Error creating directory ${this.#destinationDirectory}.`);
             }
         } catch (e) {
-            // This happens when: 1. no write permission on file
-            console.log('error caught');
-            console.log(e);
+            // Besides the `throw`s above, this happens when there is no write permission on file. At this point the
+            // user has already selected a zone for the connection. Just log this error.
+            console.error(e.message);
+            console.error(`Once you restart Zone Defense, you will again be prompted to choose a firewall zone for connection ${connectionIds.slice(-1)}`);
         }
     }
 
