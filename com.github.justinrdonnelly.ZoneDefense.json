@@ -1,7 +1,7 @@
 {
     "id" : "com.github.justinrdonnelly.ZoneDefense",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "45",
+    "runtime-version" : "46",
     "sdk" : "org.gnome.Sdk",
     "sdk-extensions" : [
         "org.freedesktop.Sdk.Extension.node18",
@@ -18,7 +18,8 @@
         "--system-talk-name=org.fedoraproject.FirewallD1"
     ],
     "build-options" : {
-        "append-path" : "/usr/lib/sdk/typescript/bin:/usr/lib/sdk/node18/bin"
+        "append-path" : "/usr/lib/sdk/typescript/bin:/usr/lib/sdk/node18/bin",
+        "env" : {        }
     },
     "cleanup" : [
         "/include",
@@ -42,6 +43,9 @@
                     "url" : "file:///mnt/share/nfs/code/my-code/zone-defense",
                     "branch" : "main"
                 }
+            ],
+            "config-opts" : [
+                "--libdir=lib"
             ]
         }
     ]

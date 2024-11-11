@@ -12,6 +12,7 @@
 import Adw from 'gi://Adw?version=1';
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
+import GLibUnix from 'gi://GLibUnix';
 import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk?version=4.0';
 
@@ -108,7 +109,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
             // handle signals
             const signals = [2, 15];
             signals.forEach((signal) => {
-                const gsourceSignal = GLib.unix_signal_source_new(signal);
+                const gsourceSignal = GLibUnix.signal_source_new(signal);
                 gsourceSignal.set_callback(() => {this.quit(signal);});
                 this.#sourceIds.push(gsourceSignal.attach(null));
             });
