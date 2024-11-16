@@ -17,15 +17,16 @@ import { NetworkManagerDeviceProxy } from './networkManagerDbusInterfaces/networ
 import { NetworkManagerProxy } from './networkManagerDbusInterfaces/networkManagerProxy.js';
 
 export class NetworkState {
-    networkManager;
+    #networkManager;
 
     constructor(connectionChangedAction) {
         // Keep a reference to NetworkManager instance to prevent GC
-        this.networkManager = new NetworkManager('/org/freedesktop/NetworkManager', connectionChangedAction);
+        this.#networkManager = new NetworkManager('/org/freedesktop/NetworkManager', connectionChangedAction);
     }
 
     destroy() {
-        this.networkManager.destroy();
+        this.#networkManager.destroy();
+        this.#networkManager = null;
     }
 }
 
@@ -62,10 +63,9 @@ class NetworkManagerStateItem {
     destroy() {
         console.debug(`debug 1 - Destroying ${this.constructor.name} with object path: ${this._objectPath}`);
         // disconnect any proxy signals
-        if (this._proxyObj) { // Need to confirm existence since we don't always keep the proxy
-            this._proxyObj.disconnect(this._proxyObjHandlerId);
-            this._proxyObj = null;
-        }
+        // Use optional chaining to confirm existence since we don't always keep the proxy
+        this._proxyObj?.disconnect(this._proxyObjHandlerId);
+        this._proxyObj = null;
         // handle children
         Array.from(this._childNetworkManagerStateItems.values()).forEach(child => {
             // call destroy on children
@@ -87,7 +87,10 @@ class NetworkManager extends NetworkManagerStateItem {
             NetworkManagerStateItem._wellKnownName,
             Gio.BusNameWatcherFlags.NONE,
             () => this.#getDbusProxyObject(),
-            () => super.destroy() // DO NOT CALL this.destroy. We want to continue watching the bus.
+            // When NetworkManager is no longer on dbus (eg, it has shut down), clean up all the child elements. This
+            // functionality is all in `super.destroy`. DO NOT CALL `this.destroy` because we want to continue watching
+            // the bus.
+            () => super.destroy()
         );
     }
 
@@ -205,7 +208,7 @@ class NetworkManager extends NetworkManagerStateItem {
 
 class NetworkManagerDevice extends NetworkManagerStateItem {
     // from https://developer-old.gnome.org/NetworkManager/stable/nm-dbus-types.html#NMDeviceType
-    static NM_DEVICE_TYPE_WIFI = 2;
+    static #NM_DEVICE_TYPE_WIFI = 2;
     #activeConnection;
     isWifiDevice = false;
 
@@ -244,9 +247,10 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
                     console.error(error);
                     return;
                 }
-                if (proxy.DeviceType === NetworkManagerDevice.NM_DEVICE_TYPE_WIFI) {
+                // Use DeviceType to decide whether to continue. We will only track wireless devices. For wireless, the
+                // device type is NM_DEVICE_TYPE_WIFI (2).
+                if (proxy.DeviceType === NetworkManagerDevice.#NM_DEVICE_TYPE_WIFI) {
                     this.isWifiDevice = true;
-                    // Use DeviceType to decide whether to continue. We will only track wireless devices. For wireless, the device type is NM_DEVICE_TYPE_WIFI (2).
                     this._proxyObj = proxy;
                     this.#addConnectionInfo();
                     // monitor for property changes
@@ -392,6 +396,7 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
                 return;
             }
         }
+
         // IIUC this means that I would need to make another async call to get the updated devices. A better
         // alternative would be to pass the GET_INVALIDATED_PROPERTIES flag during proxy construction. For now, this is
         // considered a fatal error. Log it, and destroy as much as you can.
