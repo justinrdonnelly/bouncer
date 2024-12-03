@@ -30,7 +30,7 @@ export class NetworkState {
     }
 }
 
-/**
+/*
  * We model the state of NetworkManager using a tree. Each level in the tree corresponds to a dbus call (handled via a
  * GJS dbus proxy object). The root of the tree corresponds to the whole of NetworkManager. The properties include a
  * list of `Devices` object paths. Those devices make up the 2nd level of the tree. Device properties include an
@@ -38,7 +38,8 @@ export class NetworkState {
  * the connection name, in which we are interested.
  */
 
-// An abstract class to hold a dbus proxy object. We will make multiple dbus calls based on the results of earlier calls, building a hierarchy.
+// An abstract class to hold a dbus proxy object. We will make multiple dbus calls based on the results of earlier
+// calls, building a hierarchy.
 class NetworkManagerStateItem {
     // conceptually, the variables below are 'protected'
     static _wellKnownName  = 'org.freedesktop.NetworkManager';
@@ -72,7 +73,6 @@ class NetworkManagerStateItem {
             child.destroy();
         });
     }
-
 }
 
 
@@ -121,10 +121,12 @@ class NetworkManager extends NetworkManagerStateItem {
             this._objectPath,
             (proxy, error) => {
                 if (error !== null) {
+                    // error is [GLib.Error](https://docs.gtk.org/glib/struct.Error.html)
                     if (error instanceof Gio.DBusError)
                         Gio.DBusError.strip_remote_error(error);
-
-                    console.error(error);
+                    // TODO: Get this error up to the caller (main.js). Probably need to use a signal.
+                    console.error('Error getting NetworkManager D-Bus proxy object.');
+                    console.error(error.message);
                     return;
                 }
                 this._proxyObj = proxy;
@@ -137,6 +139,7 @@ class NetworkManager extends NetworkManagerStateItem {
         );
     }
 
+    // eslint-disable-next-line no-unused-vars
     #proxyUpdated(proxy, changed, invalidated) {
         console.debug('debug 1 - Proxy updated - NetworkManager');
         // NetworkManager doesn't have any state of its own. Just see if there are new children to add, or old children to remove.
@@ -173,6 +176,7 @@ class NetworkManager extends NetworkManagerStateItem {
         // see: https://gjs.guide/guides/gio/dbus.html#low-level-proxies
         for (const name of invalidated) {
             if (name === 'Devices') {
+                // TODO: Get this error up to the caller (main.js). Probably need to use a signal.
                 console.error('Devices is invalidated. This is not supported.');
                 this.destroy();
                 return;
@@ -241,10 +245,12 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
             this._objectPath,
             (proxy, error) => {
                 if (error !== null) {
+                    // error is [GLib.Error](https://docs.gtk.org/glib/struct.Error.html)
                     if (error instanceof Gio.DBusError)
                         Gio.DBusError.strip_remote_error(error);
-
-                    console.error(error);
+                    // TODO: Get this error up to the caller (main.js). Probably need to use a signal.
+                    console.error('Error getting NetworkManagerDevice D-Bus proxy object.');
+                    console.error(error.message);
                     return;
                 }
                 // Use DeviceType to decide whether to continue. We will only track wireless devices. For wireless, the
@@ -262,6 +268,7 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
         );
     }
 
+    // eslint-disable-next-line no-unused-vars
     #proxyUpdated(proxy, changed, invalidated) {
         console.debug('debug 1 - Proxy updated - NetworkManagerDevice');
         // NetworkManagerDevice doesn't have any state of its own. Just see if there are new children to add, or old children to remove.
@@ -298,7 +305,9 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
                     this.#deleteConnection(oldValue); // destroy old child
                     this.#addConnectionInfo(); // this will add the child
                 } else {
-                    console.error(`ERROR: Unexpected transition for ActiveConnection (inactive to inactive). Old: ${oldValue}; New: ${value}`);
+                    console.error(`Unexpected transition for ActiveConnection (inactive to inactive). Old: ${oldValue}; New: ${value}`);
+                    // Although this is unexpected, it's not actually a big deal.
+                    // As above, don't call #deleteConnection on an old inactive value.
                     this.#addConnectionInfo(); // this will add the child
                 }
             }
@@ -310,6 +319,7 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
         // see: https://gjs.guide/guides/gio/dbus.html#low-level-proxies
         for (const name of invalidated) {
             if (name === 'ActiveConnection') {
+                // TODO: Get this error up to the caller (main.js). Probably need to use a signal.
                 console.error('ActiveConnection is invalidated. This is not supported.');
                 this.destroy();
                 return;
@@ -359,15 +369,17 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
             this._objectPath,
             (sourceObj, error) => {
                 if (error !== null) {
+                    // error is [GLib.Error](https://docs.gtk.org/glib/struct.Error.html)
                     if (error instanceof Gio.DBusError)
                         Gio.DBusError.strip_remote_error(error);
-
-                    console.error(error);
+                    // TODO: Get this error up to the caller (main.js). Probably need to use a signal.
+                    console.error('Error getting NetworkManagerConnectionActive D-Bus proxy object.');
+                    console.error(error.message);
                     return;
                 }
                 this._proxyObj = sourceObj;
-                console.log(`Wireless connection ID: ${this._proxyObj.Id}`); // e.g. Wired Connection 1
-                console.log(`Settings object path: ${this._proxyObj.Connection}`); // e.g. /org/freedesktop/NetworkManager/Settings/5
+                console.debug(`Wireless connection ID: ${this._proxyObj.Id}`); // e.g. Wired Connection 1
+                console.debug(`Settings object path: ${this._proxyObj.Connection}`); // e.g. /org/freedesktop/NetworkManager/Settings/5
 
                 // monitor for changes
                 this._proxyObjHandlerId = networkManagerConnectionActiveProxy.connect(NetworkManagerStateItem._propertiesChanged, this.#proxyUpdated.bind(this));
@@ -378,6 +390,7 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
         );
     }
 
+    // eslint-disable-next-line no-unused-vars
     #proxyUpdated(proxy, changed, invalidated) {
         console.debug('debug 1 - Proxy updated - NetworkManagerConnectionActive');
         // The only property I care about has a getter that accesses the proxy directly. No need to do anything here besides signal if necessary.
@@ -403,6 +416,7 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
         // see: https://gjs.guide/guides/gio/dbus.html#low-level-proxies
         for (const name of invalidated) {
             if (name === 'Id') {
+                // TODO: Get this error up to the caller (main.js). Probably need to use a signal.
                 console.error('Id is invalidated. This is not supported.');
                 this.destroy();
                 return;

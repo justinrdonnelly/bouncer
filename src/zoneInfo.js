@@ -10,13 +10,6 @@
  */
 
 import Gio from 'gi://Gio';
-import GLib from 'gi://GLib';
-
-/*
- * I need to make 2 method calls:
- * 1. List all zones - getZones()
- * 2. Get default zone - getDefaultZone()
- */
 
 // We have 2 different methods to call under different dbus interfaces. We won't bother with a proxy.
 

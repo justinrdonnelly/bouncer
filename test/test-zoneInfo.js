@@ -13,11 +13,7 @@ import GLib from 'gi://GLib';
 
 import { ZoneInfo } from '../src/zoneInfo.js';
 
-/**
- *
- * @param {string} networkInterface - The name of the interface.
- */
-async function getZoneInformation(networkInterface) {
+async function getZoneInformation() {
     try {
         // Any firewalld dbus failures are considered fatal
         const [zones, defaultZone] = await Promise.all([
@@ -27,13 +23,13 @@ async function getZoneInformation(networkInterface) {
         console.log('promises!');
         console.log(`zones: ${zones}`);
         console.log(`defaultZone: ${defaultZone}`);
-    } catch (error) {
+    } catch (e) {
         console.log('error');
-        console.log(error);
+        console.log(e);
     }
 }
 
-getZoneInformation('wlp5s0');
+getZoneInformation();
 
 const loop = GLib.MainLoop.new(null, false);
 

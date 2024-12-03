@@ -16,7 +16,7 @@ export class ZoneForConnection {
     static #wellKnownName  = 'org.freedesktop.NetworkManager';
     static #iface  = 'org.freedesktop.NetworkManager.Settings.Connection';
 
-    static #getZoneDbusCall(objectPath) {
+    static #getSettings(objectPath) {
         const parameters = null;
 
         // I can't seem to make this call without a callback (was hoping it would return a promise)
@@ -35,6 +35,7 @@ export class ZoneForConnection {
                     try {
                         // throw new Error('hi'); // for testing error handling
                         const reply = connection.call_finish(res);
+                        console.debug(`Retrieved connection settings: ${JSON.stringify(reply.get_child_value(0).recursiveUnpack())}`)
                         resolve(reply);
                     } catch (e) {
                         if (e instanceof Gio.DBusError)
@@ -47,20 +48,19 @@ export class ZoneForConnection {
     }
 
     static async getZone(objectPath) {
-        const dbusResult = await ZoneForConnection.#getZoneDbusCall(objectPath);
-        let zone = dbusResult.get_child_value(0).recursiveUnpack()['connection']['zone'];
+        const settings = await ZoneForConnection.#getSettings(objectPath);
+        let zone = settings.get_child_value(0).recursiveUnpack()['connection']['zone'];
         if (zone === undefined) // convert undefined to null
             zone = null;
-        console.log(`Current device zone: ${zone}`);
+        console.log(`Current zone: ${zone}`);
         return zone;
     }
 
     static async setZone(objectPath, zone) {
-        console.log(`Setting device zone to: ${zone}`);
         // get existing settings
-        let dbusResult = await ZoneForConnection.#getZoneDbusCall(objectPath);
+        let settings = await ZoneForConnection.#getSettings(objectPath);
         // create a new variant with the correct zone
-        const parameters = ZoneForConnection.#createGvariantTuple(dbusResult, zone);
+        const parameters = ZoneForConnection.#createGvariantTuple(settings, zone);
         // replace zone
         return new Promise((resolve, reject) => {
             Gio.DBus.system.call(
@@ -77,6 +77,7 @@ export class ZoneForConnection {
                     try {
                         // throw new Error('hi'); // for testing error handling
                         connection.call_finish(res); // you need to make this call in order to get errors to reject
+                        console.log(`Successfully set zone to ${zone}.`);
                         resolve();
                     } catch (e) {
                         if (e instanceof Gio.DBusError)

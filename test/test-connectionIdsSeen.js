@@ -19,11 +19,11 @@ test();
 async function test() {
     try {
         const connectionId = 'Starbucks';
-        let connectionIdIsNew = await connectionIdsSeen.isConnectionNew(connectionId);
+        let connectionIdIsNew = connectionIdsSeen.isConnectionNew(connectionId);
         console.log(`new: ${connectionIdIsNew}`);
         console.log(`adding connectionId: ${connectionId}`);
-        await connectionIdsSeen.addConnectionIdToSeen(connectionId);
-        connectionIdIsNew = await connectionIdsSeen.isConnectionNew(connectionId);
+        connectionIdsSeen.addConnectionIdToSeen(connectionId);
+        connectionIdIsNew = connectionIdsSeen.isConnectionNew(connectionId);
         console.log(`new: ${connectionIdIsNew}`);
     } catch (e) {
         console.log('error in test');

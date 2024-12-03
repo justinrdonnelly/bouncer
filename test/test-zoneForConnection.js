@@ -22,9 +22,9 @@ async function getZone(objectPath) {
     try {
         const zone = await ZoneForConnection.getZone(objectPath);
         console.log(`zone: ${zone}`);
-    } catch (error) {
+    } catch (e) {
         console.log('error - outermost catch');
-        console.log(error);
+        console.log(e);
     }
 }
 
@@ -46,9 +46,9 @@ async function updateZone(objectPath) {
         await ZoneForConnection.setZone(objectPath, newZone);
         zone = await ZoneForConnection.getZone(objectPath);
         console.log(`zone after: ${zone}`);
-    } catch (error) {
+    } catch (e) {
         console.log('error - outermost catch');
-        console.log(error);
+        console.log(e);
     }
 }
 

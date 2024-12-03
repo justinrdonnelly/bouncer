@@ -14,7 +14,6 @@ import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 import GLibUnix from 'gi://GLibUnix';
 import GObject from 'gi://GObject';
-import Gtk from 'gi://Gtk?version=4.0';
 
 import { NetworkState } from './networkState.js';
 import { ConnectionIdsSeen } from './connectionIdsSeen.js';
@@ -33,21 +32,25 @@ export const ZoneDefenseApplication = GObject.registerClass(
         constructor() {
             super({application_id: 'com.github.justinrdonnelly.ZoneDefense', flags: Gio.ApplicationFlags.DEFAULT_FLAGS});
 
+            console.log("Welcome to Zone Defense! Starting up.");
             this.#connectionIdsSeen = new ConnectionIdsSeen();
             this.#connectionIdsSeen.init().catch((e) => {
                 // Bail out here... There's nothing we can reasonably do without knowing if a network has been seen.
-                console.error(`Fatal error: ${e.message}`);
+                console.error('Unable to initialize ConnectionIdsSeen.');
+                console.error(e.message);
                 // TODO: It'd be nice to generate a notification in this case.
                 this.quit(null);
             });
 
             const quit_action = new Gio.SimpleAction({name: 'quit'});
+                // eslint-disable-next-line no-unused-vars
                 quit_action.connect('activate', action => {
                 this.quit();
             });
             this.add_action(quit_action);
 
             const show_about_action = new Gio.SimpleAction({name: 'about'});
+            // eslint-disable-next-line no-unused-vars
             show_about_action.connect('activate', action => {
                 let aboutParams = {
                     transient_for: this.active_window,
@@ -71,36 +74,33 @@ export const ZoneDefenseApplication = GObject.registerClass(
             });
 
             connectionChangedAction.connect('activate', async (action, parameter) => {
-                console.log(`${action.name} activated: ${parameter.deepUnpack()}`);
-                const parameters = parameter.deepUnpack();
-                const connectionId = parameters[0];
-                const activeConnectionSettings = parameters[1];
-                console.log(`connectionId: ${connectionId}`);
-                console.log(`activeConnectionSettings: ${activeConnectionSettings}`);
-                this.closeWindowIfConnectionChanged(connectionId);
-                // bail out if there is no connection
-                if (connectionId === '')
-                    return;
-
-                const isConnectionNew = this.#connectionIdsSeen.isConnectionNew(connectionId);
-                if (!isConnectionNew) // The connection is not new. Don't open the window.
-                    return;
-
                 try {
-                    // Any firewalld dbus failures are considered fatal
+                    console.log(`${action.name} parameters: ${parameter.deepUnpack()}`);
+                    const parameters = parameter.deepUnpack();
+                    const connectionId = parameters[0];
+                    const activeConnectionSettings = parameters[1];
+                    this.closeWindowIfConnectionChanged(connectionId);
+                    // bail out if there is no connection
+                    if (connectionId === '')
+                        return;
+
+                    const isConnectionNew = this.#connectionIdsSeen.isConnectionNew(connectionId);
+                    if (!isConnectionNew) // The connection is not new. Don't open the window.
+                        return;
+
                     const [zones, defaultZone, currentZone] = await Promise.all([
                         ZoneInfo.getZones(),
                         ZoneInfo.getDefaultZone(),
                         ZoneForConnection.getZone(activeConnectionSettings),
                     ]);
-                    // console.log('promises!');
-                    // console.log(`zones: ${zones}`);
-                    // console.log(`defaultZone: ${defaultZone}`);
-                    // console.log(`currentZone: ${currentZone}`);
                     this.createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings);
-                } catch (error) {
-                    console.error(error);
+                } catch (e) {
+                    // We've hit an exception in the callback where we'd consider opening the window. Bail out and
+                    // hope for better luck next time (unlikely).
+                    console.error('Unable to get zone information.');
+                    console.error(e.message);
                     // TODO: Is it worth checking to see if firewalld is running? It can help give a more useful error message.
+                    // TODO: handle error (maybe show a modal or notification?)
                 }
             });
 
@@ -115,7 +115,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
             });
         } // end constructor
 
-        vfunc_activate() {} // We get a warning if this method does not exist.
+        vfunc_activate() {} // Required because Adw.Application extends GApplication.
 
         createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings) {
             let {active_window} = this;
@@ -135,10 +135,11 @@ export const ZoneDefenseApplication = GObject.registerClass(
         }
 
         async chooseClicked(connectionId, activeConnectionSettings, zone) {
-            console.log(`Updating zone to: ${zone}`);
+            console.log(`For connection ID ${connectionId}, setting zone to ${zone ?? ZoneDefenseWindow.defaultZoneLabel}`);
             // Even though these are both async, do NOT execute them concurrently. Update seen connections before updating
             // the zone. If the connection ID hasn't been added to the list of seen connections when the zone is changed,
             // the window will open again!
+            // Don't try/catch here. We'll let the exception propagate.
             this.#connectionIdsSeen.addConnectionIdToSeen(connectionId);
             await ZoneForConnection.setZone(activeConnectionSettings, zone);
         }
