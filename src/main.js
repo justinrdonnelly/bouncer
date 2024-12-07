@@ -34,14 +34,8 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
             console.log("Welcome to Zone Defense! Starting up.");
             this.#connectionIdsSeen = new ConnectionIdsSeen();
-            this.#connectionIdsSeen.init().catch((e) => {
-                // Bail out here... There's nothing we can reasonably do without knowing if a network has been seen.
-                console.error('Unable to initialize ConnectionIdsSeen.');
-                console.error(e.message);
-                // TODO: It'd be nice to generate a notification in this case.
-                this.quit(null);
-            });
 
+            // quit action
             const quit_action = new Gio.SimpleAction({name: 'quit'});
                 // eslint-disable-next-line no-unused-vars
                 quit_action.connect('activate', action => {
@@ -49,6 +43,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
             });
             this.add_action(quit_action);
 
+            // about action
             const show_about_action = new Gio.SimpleAction({name: 'about'});
             // eslint-disable-next-line no-unused-vars
             show_about_action.connect('activate', action => {
@@ -68,44 +63,6 @@ export const ZoneDefenseApplication = GObject.registerClass(
             });
             this.add_action(show_about_action);
 
-            const connectionChangedAction = new Gio.SimpleAction({
-                name: 'connectionChangedAction',
-                parameter_type: new GLib.VariantType('as'),
-            });
-
-            connectionChangedAction.connect('activate', async (action, parameter) => {
-                try {
-                    console.log(`${action.name} parameters: ${parameter.deepUnpack()}`);
-                    const parameters = parameter.deepUnpack();
-                    const connectionId = parameters[0];
-                    const activeConnectionSettings = parameters[1];
-                    this.closeWindowIfConnectionChanged(connectionId);
-                    // bail out if there is no connection
-                    if (connectionId === '')
-                        return;
-
-                    const isConnectionNew = this.#connectionIdsSeen.isConnectionNew(connectionId);
-                    if (!isConnectionNew) // The connection is not new. Don't open the window.
-                        return;
-
-                    const [zones, defaultZone, currentZone] = await Promise.all([
-                        ZoneInfo.getZones(),
-                        ZoneInfo.getDefaultZone(),
-                        ZoneForConnection.getZone(activeConnectionSettings),
-                    ]);
-                    this.createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings);
-                } catch (e) {
-                    // We've hit an exception in the callback where we'd consider opening the window. Bail out and
-                    // hope for better luck next time (unlikely).
-                    console.error('Unable to get zone information.');
-                    console.error(e.message);
-                    // TODO: Is it worth checking to see if firewalld is running? It can help give a more useful error message.
-                    // TODO: handle error (maybe show a modal or notification?)
-                }
-            });
-
-            this.networkState = new NetworkState(connectionChangedAction);
-
             // handle signals
             const signals = [2, 15];
             signals.forEach((signal) => {
@@ -113,7 +70,75 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 gsourceSignal.set_callback(() => {this.quit(signal);});
                 this.#sourceIds.push(gsourceSignal.attach(null));
             });
+
+            // fire and forget
+            this.init()
+              .catch(e => {
+                console.error('Unhandled error in main init. This is a bug!');
+                console.error(e);
+              });
         } // end constructor
+
+        // The init method will instantiate NetworkState and listen for its signals. We do this outside the constructor
+        // so we can be async.
+        async init() {
+            try {
+            await this.#connectionIdsSeen.init();
+            } catch (e) {
+                // Bail out here... There's nothing we can reasonably do without knowing if a network has been seen.
+                console.error('Unable to initialize ConnectionIdsSeen.');
+                console.error(e.message);
+                // TODO: It'd be nice to generate a notification in this case.
+                this.quit(null);
+            }
+
+            // Create the `connectionChangedAction` action and pass it to NetworkState.
+            try {
+                const connectionChangedAction = new Gio.SimpleAction({
+                    name: 'connectionChangedAction',
+                    parameter_type: new GLib.VariantType('as'),
+                });
+
+                connectionChangedAction.connect('activate', async (action, parameter) => {
+                    try {
+                        const parameters = parameter.deepUnpack();
+                        console.log(`${action.name} parameters: ${parameters}`);
+                        const connectionId = parameters[0];
+                        const activeConnectionSettings = parameters[1];
+                        this.closeWindowIfConnectionChanged(connectionId);
+                        // bail out if there is no connection
+                        if (connectionId === '')
+                            return;
+
+                        const isConnectionNew = this.#connectionIdsSeen.isConnectionNew(connectionId);
+                        if (!isConnectionNew) // The connection is not new. Don't open the window.
+                            return;
+
+                        const [zones, defaultZone, currentZone] = await Promise.all([
+                            ZoneInfo.getZones(),
+                            ZoneInfo.getDefaultZone(),
+                            ZoneForConnection.getZone(activeConnectionSettings),
+                        ]);
+                        this.createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings);
+                    } catch (e) {
+                        // We've hit an exception in the callback where we'd consider opening the window. Bail out and
+                        // hope for better luck next time (unlikely).
+                        console.error('Unable to get zone information.');
+                        console.error(e.message);
+                        // TODO: Is it worth checking to see if firewalld is running? It can help give a more useful error message.
+                        // TODO: handle error (maybe show a modal or notification?)
+                    }
+                });
+
+                this.networkState = new NetworkState(connectionChangedAction);
+            } catch (e) {
+                // Bail out here... There's nothing we can do without NetworkState.
+                console.error('Unable to initialize NetworkState.');
+                console.error(e.message);
+                // TODO: It'd be nice to generate a notification in this case.
+                this.quit(null);
+            }
+        } // end init
 
         vfunc_activate() {} // Required because Adw.Application extends GApplication.
 
@@ -148,7 +173,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
             if (signal !== null)
                 console.log(`quitting due to signal ${signal}!`);
             this.#sourceIds.forEach((id) => GLib.Source.remove(id));
-            this.networkState.destroy()
+            this.networkState?.destroy()
             this.networkState = null;
             super.quit(); // this ends up calling vfunc_shutdown()
         }

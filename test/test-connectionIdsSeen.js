@@ -13,11 +13,15 @@ import GLib from 'gi://GLib';
 
 import { ConnectionIdsSeen } from '../src/connectionIdsSeen.js';
 
+// When testing locally, the file will be saved in: $HOME/.local/share/zone-defense/connection-ids-seen.json
+
 const connectionIdsSeen = new ConnectionIdsSeen();
+
 test();
 
 async function test() {
     try {
+        await connectionIdsSeen.init();
         const connectionId = 'Starbucks';
         let connectionIdIsNew = connectionIdsSeen.isConnectionNew(connectionId);
         console.log(`new: ${connectionIdIsNew}`);
@@ -26,8 +30,8 @@ async function test() {
         connectionIdIsNew = connectionIdsSeen.isConnectionNew(connectionId);
         console.log(`new: ${connectionIdIsNew}`);
     } catch (e) {
-        console.log('error in test');
-        console.log(e);
+        console.error('error in test');
+        console.error(e);
     }
 }
 
