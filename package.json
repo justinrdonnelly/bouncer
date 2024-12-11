@@ -1,0 +1,10 @@
+{
+  "name": "zone-defense",
+  "main": "src/main.js",
+  "type": "module",
+  "author": "Justin Donnelly",
+  "license": "MPL-2.0",
+  "devDependencies": {
+    "eslint": "^8.57.1"
+  }
+}

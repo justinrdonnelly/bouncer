@@ -16,26 +16,16 @@ import { NetworkManagerConnectionActiveProxy } from './networkManagerDbusInterfa
 import { NetworkManagerDeviceProxy } from './networkManagerDbusInterfaces/networkManagerDeviceProxy.js';
 import { NetworkManagerProxy } from './networkManagerDbusInterfaces/networkManagerProxy.js';
 
-export class NetworkState {
-    #networkManager;
-
-    constructor(connectionChangedAction) {
-        // Keep a reference to NetworkManager instance to prevent GC
-        this.#networkManager = new NetworkManager('/org/freedesktop/NetworkManager', connectionChangedAction);
-    }
-
-    destroy() {
-        this.#networkManager.destroy();
-        this.#networkManager = null;
-    }
-}
-
 /*
  * We model the state of NetworkManager using a tree. Each level in the tree corresponds to a dbus call (handled via a
  * GJS dbus proxy object). The root of the tree corresponds to the whole of NetworkManager. The properties include a
  * list of `Devices` object paths. Those devices make up the 2nd level of the tree. Device properties include an
  * `ActiveConnection` object path. The `ActiveConnection` is the 3rd level of the tree, and contains the `Id`. This is
  * the connection name, in which we are interested.
+ *
+ * These classes (except for the abstract NetworkManagerStateItem) are ordered (as far as which are used first) from
+ * bottom to top. We do this to keep the linter happy. We could disable linting on those lines, but I prefer not to
+ * chance masking real errors. I trust that you can read from bottom to top.
  */
 
 // An abstract class to hold a dbus proxy object. We will make multiple dbus calls based on the results of earlier
@@ -75,36 +65,15 @@ class NetworkManagerStateItem {
     }
 }
 
-
-class NetworkManager extends NetworkManagerStateItem {
-    #busWatchId;
-
+class NetworkManagerConnectionActive extends NetworkManagerStateItem {
     constructor(objectPath, connectionChangedAction) {
-        // example objectPath: /org/freedesktop/NetworkManager (this is always what it is)
+        // example objectPath: /org/freedesktop/NetworkManager/ActiveConnection/1
         super(objectPath, connectionChangedAction);
-        this.#busWatchId = Gio.bus_watch_name(
-            Gio.BusType.SYSTEM,
-            NetworkManagerStateItem._wellKnownName,
-            Gio.BusNameWatcherFlags.NONE,
-            () => this.#getDbusProxyObject(),
-            // When NetworkManager is no longer on dbus (eg, it has shut down), clean up all the child elements. This
-            // functionality is all in `super.destroy`. DO NOT CALL `this.destroy` because we want to continue watching
-            // the bus.
-            () => super.destroy()
-        );
+        this.#getDbusProxyObject();
     }
 
-    destroy() {
-        this.unwatchBus();
-        super.destroy();
-    }
-
-    get networkDevices() {
-        return Array.from(this._childNetworkManagerStateItems.values()).filter(device => device.isWifiDevice);
-    }
-
-    unwatchBus() {
-        Gio.bus_unwatch_name(this.#busWatchId);
+    #activate() {
+        this._connectionChangedAction.activate(GLib.Variant.new_array(new GLib.VariantType('s'), [GLib.Variant.new_string(this._proxyObj.Id), GLib.Variant.new_string(this._proxyObj.Connection)]));
     }
 
     /**
@@ -115,24 +84,27 @@ class NetworkManager extends NetworkManagerStateItem {
      * networkManagerProxy as a property, but... see point #1.
      */
     #getDbusProxyObject() {
-        const networkManagerProxy = NetworkManagerProxy(
+        const networkManagerConnectionActiveProxy = NetworkManagerConnectionActiveProxy(
             Gio.DBus.system,
             NetworkManagerStateItem._wellKnownName,
             this._objectPath,
-            (proxy, error) => {
+            (sourceObj, error) => {
                 if (error !== null) {
                     // error is [GLib.Error](https://docs.gtk.org/glib/struct.Error.html)
                     if (error instanceof Gio.DBusError)
                         Gio.DBusError.strip_remote_error(error);
                     // TODO: Get this error up to the caller (main.js). Probably need to use a signal.
-                    console.error('Error getting NetworkManager D-Bus proxy object.');
+                    console.error('Error getting NetworkManagerConnectionActive D-Bus proxy object.');
                     console.error(error.message);
                     return;
                 }
-                this._proxyObj = proxy;
-                this.#addDevices();
-                // monitor for property changes
-                this._proxyObjHandlerId = networkManagerProxy.connect(NetworkManagerStateItem._propertiesChanged, this.#proxyUpdated.bind(this));
+                this._proxyObj = sourceObj;
+                console.debug(`Wireless connection ID: ${this._proxyObj.Id}`); // e.g. Wired Connection 1
+                console.debug(`Settings object path: ${this._proxyObj.Connection}`); // e.g. /org/freedesktop/NetworkManager/Settings/5
+
+                // monitor for changes
+                this._proxyObjHandlerId = networkManagerConnectionActiveProxy.connect(NetworkManagerStateItem._propertiesChanged, this.#proxyUpdated.bind(this));
+                this.#activate();
             },
             null,
             Gio.DBusProxyFlags.NONE
@@ -141,32 +113,21 @@ class NetworkManager extends NetworkManagerStateItem {
 
     // eslint-disable-next-line no-unused-vars
     #proxyUpdated(proxy, changed, invalidated) {
-        console.debug('debug 1 - Proxy updated - NetworkManager');
-        // NetworkManager doesn't have any state of its own. Just see if there are new children to add, or old children to remove.
-        // handle updated device list
+        console.debug('debug 1 - Proxy updated - NetworkManagerConnectionActive');
+        // The only property I care about has a getter that accesses the proxy directly. No need to do anything here besides signal if necessary.
+        // There are no children to worry about either.
+
+        // check for which property was updated and only signal if we need to
         for (const [name, value] of Object.entries(changed.deepUnpack())) {
-            console.debug('debug 3 - something changed - NetworkManager');
+            console.debug('debug 3 - something changed - NetworkManagerConnectionActive');
             console.debug(`debug 3 - name: ${name}`);
             console.debug(`debug 3 - value: ${value.recursiveUnpack()}`);
-            if (name === 'Devices') {
-                // Compare to previous list. Add/remove as necessary.
-                const oldDeviceObjectPaths = Array.from(this._childNetworkManagerStateItems.keys());
-                const newDeviceObjectPaths = value.recursiveUnpack();
-                console.debug('debug 2 - Devices changed');
-                console.debug(`debug 2 - New Devices: ${newDeviceObjectPaths}`);
-                console.debug(`debug 2 - Old Devices: ${oldDeviceObjectPaths}`);
-                const addedDeviceObjectPaths = newDeviceObjectPaths.filter(x => !oldDeviceObjectPaths.includes(x));
-                const removedDeviceObjectPaths = oldDeviceObjectPaths.filter(x => !newDeviceObjectPaths.includes(x));
-                console.debug(`debug 2 - devices to remove: ${removedDeviceObjectPaths}`);
-                console.debug(`debug 2 - devices to add: ${addedDeviceObjectPaths}`);
-                removedDeviceObjectPaths.forEach(d => {
-                    console.debug(`debug 2 - Removing device ${d}`);
-                    this.#removeDevice(d);
-                });
-                addedDeviceObjectPaths.forEach(d => {
-                    console.debug(`debug 2 - Adding device ${d}`);
-                    this.#addDevice(d);
-                });
+            // Assume the Connection is never updated without the Id also being updated.
+            if (name === 'Id') {
+                console.debug(`debug 2 - ID updated to ${this._proxyObj.Id}`);
+                // the ID has changed, signal and stop checking for other changes
+                this.#activate();
+                return;
             }
         }
 
@@ -175,37 +136,12 @@ class NetworkManager extends NetworkManagerStateItem {
         // considered a fatal error. Log it, and destroy as much as you can.
         // see: https://gjs.guide/guides/gio/dbus.html#low-level-proxies
         for (const name of invalidated) {
-            if (name === 'Devices') {
+            if (name === 'Id') {
                 // TODO: Get this error up to the caller (main.js). Probably need to use a signal.
-                console.error('Devices is invalidated. This is not supported.');
+                console.error('Id is invalidated. This is not supported.');
                 this.destroy();
                 return;
             }
-        }
-    }
-
-    #addDevices() {
-        const devices = this._proxyObj.Devices; // array of object paths
-        console.debug(`debug 1 - Adding devices: ${devices}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
-        devices.forEach(d => this.#addDevice(d));
-    }
-
-    #addDevice(device) { // e.g. /org/freedesktop/NetworkManager/Devices/1
-        this.#removeDevice(device); // if the device already exists, remove it
-        console.debug(`debug 1 - Adding device: ${device}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
-        // Instantiate a new class that will make another dbus call
-        const networkManagerDevice = new NetworkManagerDevice(device, this._connectionChangedAction);
-        // Add to child devices
-        this._childNetworkManagerStateItems.set(device, networkManagerDevice);
-    }
-
-    #removeDevice(deviceObjectPath) { // e.g. /org/freedesktop/NetworkManager/Devices/1
-        // clean up old device if applicable
-        console.debug(`debug 1 - Removing device: ${deviceObjectPath}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
-        const deviceObj = this._childNetworkManagerStateItems.get(deviceObjectPath);
-        if (deviceObj) {
-            this._childNetworkManagerStateItems.delete(deviceObjectPath);
-            deviceObj.destroy();
         }
     }
 }
@@ -344,15 +280,35 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
     }
 }
 
-class NetworkManagerConnectionActive extends NetworkManagerStateItem {
+class NetworkManager extends NetworkManagerStateItem {
+    #busWatchId;
+
     constructor(objectPath, connectionChangedAction) {
-        // example objectPath: /org/freedesktop/NetworkManager/ActiveConnection/1
+        // example objectPath: /org/freedesktop/NetworkManager (this is always what it is)
         super(objectPath, connectionChangedAction);
-        this.#getDbusProxyObject();
+        this.#busWatchId = Gio.bus_watch_name(
+            Gio.BusType.SYSTEM,
+            NetworkManagerStateItem._wellKnownName,
+            Gio.BusNameWatcherFlags.NONE,
+            () => this.#getDbusProxyObject(),
+            // When NetworkManager is no longer on dbus (eg, it has shut down), clean up all the child elements. This
+            // functionality is all in `super.destroy`. DO NOT CALL `this.destroy` because we want to continue watching
+            // the bus.
+            () => super.destroy()
+        );
     }
 
-    #activate() {
-        this._connectionChangedAction.activate(GLib.Variant.new_array(new GLib.VariantType('s'), [GLib.Variant.new_string(this._proxyObj.Id), GLib.Variant.new_string(this._proxyObj.Connection)]));
+    destroy() {
+        this.unwatchBus();
+        super.destroy();
+    }
+
+    get networkDevices() {
+        return Array.from(this._childNetworkManagerStateItems.values()).filter(device => device.isWifiDevice);
+    }
+
+    unwatchBus() {
+        Gio.bus_unwatch_name(this.#busWatchId);
     }
 
     /**
@@ -363,27 +319,24 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
      * networkManagerProxy as a property, but... see point #1.
      */
     #getDbusProxyObject() {
-        const networkManagerConnectionActiveProxy = NetworkManagerConnectionActiveProxy(
+        const networkManagerProxy = NetworkManagerProxy(
             Gio.DBus.system,
             NetworkManagerStateItem._wellKnownName,
             this._objectPath,
-            (sourceObj, error) => {
+            (proxy, error) => {
                 if (error !== null) {
                     // error is [GLib.Error](https://docs.gtk.org/glib/struct.Error.html)
                     if (error instanceof Gio.DBusError)
                         Gio.DBusError.strip_remote_error(error);
                     // TODO: Get this error up to the caller (main.js). Probably need to use a signal.
-                    console.error('Error getting NetworkManagerConnectionActive D-Bus proxy object.');
+                    console.error('Error getting NetworkManager D-Bus proxy object.');
                     console.error(error.message);
                     return;
                 }
-                this._proxyObj = sourceObj;
-                console.debug(`Wireless connection ID: ${this._proxyObj.Id}`); // e.g. Wired Connection 1
-                console.debug(`Settings object path: ${this._proxyObj.Connection}`); // e.g. /org/freedesktop/NetworkManager/Settings/5
-
-                // monitor for changes
-                this._proxyObjHandlerId = networkManagerConnectionActiveProxy.connect(NetworkManagerStateItem._propertiesChanged, this.#proxyUpdated.bind(this));
-                this.#activate();
+                this._proxyObj = proxy;
+                this.#addDevices();
+                // monitor for property changes
+                this._proxyObjHandlerId = networkManagerProxy.connect(NetworkManagerStateItem._propertiesChanged, this.#proxyUpdated.bind(this));
             },
             null,
             Gio.DBusProxyFlags.NONE
@@ -392,21 +345,32 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
 
     // eslint-disable-next-line no-unused-vars
     #proxyUpdated(proxy, changed, invalidated) {
-        console.debug('debug 1 - Proxy updated - NetworkManagerConnectionActive');
-        // The only property I care about has a getter that accesses the proxy directly. No need to do anything here besides signal if necessary.
-        // There are no children to worry about either.
-
-        // check for which property was updated and only signal if we need to
+        console.debug('debug 1 - Proxy updated - NetworkManager');
+        // NetworkManager doesn't have any state of its own. Just see if there are new children to add, or old children to remove.
+        // handle updated device list
         for (const [name, value] of Object.entries(changed.deepUnpack())) {
-            console.debug('debug 3 - something changed - NetworkManagerConnectionActive');
+            console.debug('debug 3 - something changed - NetworkManager');
             console.debug(`debug 3 - name: ${name}`);
             console.debug(`debug 3 - value: ${value.recursiveUnpack()}`);
-            // Assume the Connection is never updated without the Id also being updated.
-            if (name === 'Id') {
-                console.debug(`debug 2 - ID updated to ${this._proxyObj.Id}`);
-                // the ID has changed, signal and stop checking for other changes
-                this.#activate();
-                return;
+            if (name === 'Devices') {
+                // Compare to previous list. Add/remove as necessary.
+                const oldDeviceObjectPaths = Array.from(this._childNetworkManagerStateItems.keys());
+                const newDeviceObjectPaths = value.recursiveUnpack();
+                console.debug('debug 2 - Devices changed');
+                console.debug(`debug 2 - New Devices: ${newDeviceObjectPaths}`);
+                console.debug(`debug 2 - Old Devices: ${oldDeviceObjectPaths}`);
+                const addedDeviceObjectPaths = newDeviceObjectPaths.filter(x => !oldDeviceObjectPaths.includes(x));
+                const removedDeviceObjectPaths = oldDeviceObjectPaths.filter(x => !newDeviceObjectPaths.includes(x));
+                console.debug(`debug 2 - devices to remove: ${removedDeviceObjectPaths}`);
+                console.debug(`debug 2 - devices to add: ${addedDeviceObjectPaths}`);
+                removedDeviceObjectPaths.forEach(d => {
+                    console.debug(`debug 2 - Removing device ${d}`);
+                    this.#removeDevice(d);
+                });
+                addedDeviceObjectPaths.forEach(d => {
+                    console.debug(`debug 2 - Adding device ${d}`);
+                    this.#addDevice(d);
+                });
             }
         }
 
@@ -415,12 +379,52 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
         // considered a fatal error. Log it, and destroy as much as you can.
         // see: https://gjs.guide/guides/gio/dbus.html#low-level-proxies
         for (const name of invalidated) {
-            if (name === 'Id') {
+            if (name === 'Devices') {
                 // TODO: Get this error up to the caller (main.js). Probably need to use a signal.
-                console.error('Id is invalidated. This is not supported.');
+                console.error('Devices is invalidated. This is not supported.');
                 this.destroy();
                 return;
             }
         }
     }
+
+    #addDevices() {
+        const devices = this._proxyObj.Devices; // array of object paths
+        console.debug(`debug 1 - Adding devices: ${devices}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
+        devices.forEach(d => this.#addDevice(d));
+    }
+
+    #addDevice(device) { // e.g. /org/freedesktop/NetworkManager/Devices/1
+        this.#removeDevice(device); // if the device already exists, remove it
+        console.debug(`debug 1 - Adding device: ${device}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
+        // Instantiate a new class that will make another dbus call
+        const networkManagerDevice = new NetworkManagerDevice(device, this._connectionChangedAction);
+        // Add to child devices
+        this._childNetworkManagerStateItems.set(device, networkManagerDevice);
+    }
+
+    #removeDevice(deviceObjectPath) { // e.g. /org/freedesktop/NetworkManager/Devices/1
+        // clean up old device if applicable
+        console.debug(`debug 1 - Removing device: ${deviceObjectPath}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
+        const deviceObj = this._childNetworkManagerStateItems.get(deviceObjectPath);
+        if (deviceObj) {
+            this._childNetworkManagerStateItems.delete(deviceObjectPath);
+            deviceObj.destroy();
+        }
+    }
 }
+
+export class NetworkState {
+    #networkManager;
+
+    constructor(connectionChangedAction) {
+        // Keep a reference to NetworkManager instance to prevent GC
+        this.#networkManager = new NetworkManager('/org/freedesktop/NetworkManager', connectionChangedAction);
+    }
+
+    destroy() {
+        this.#networkManager.destroy();
+        this.#networkManager = null;
+    }
+}
+
