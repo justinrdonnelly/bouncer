@@ -33,33 +33,34 @@ export const ZoneDefenseApplication = GObject.registerClass(
         #connectionIdsSeen;
 
         constructor() {
-            super({application_id: 'com.github.justinrdonnelly.ZoneDefense', flags: Gio.ApplicationFlags.DEFAULT_FLAGS});
+            super({
+                application_id: 'com.github.justinrdonnelly.ZoneDefense',
+                flags: Gio.ApplicationFlags.DEFAULT_FLAGS,
+            });
 
-            console.log("Welcome to Zone Defense! Starting up.");
+            console.log('Welcome to Zone Defense! Starting up.');
             this.#connectionIdsSeen = new ConnectionIdsSeen();
 
             // quit action
-            const quit_action = new Gio.SimpleAction({name: 'quit'});
-                // eslint-disable-next-line no-unused-vars
-                quit_action.connect('activate', action => {
+            const quit_action = new Gio.SimpleAction({ name: 'quit' });
+            // eslint-disable-next-line no-unused-vars
+            quit_action.connect('activate', (action) => {
                 this.quit();
             });
             this.add_action(quit_action);
 
             // about action
-            const show_about_action = new Gio.SimpleAction({name: 'about'});
+            const show_about_action = new Gio.SimpleAction({ name: 'about' });
             // eslint-disable-next-line no-unused-vars
-            show_about_action.connect('activate', action => {
+            show_about_action.connect('activate', (action) => {
                 let aboutParams = {
                     transient_for: this.active_window,
                     application_name: 'zone-defense',
                     application_icon: 'com.github.justinrdonnelly.ZoneDefense',
                     developer_name: 'Justin Donnelly',
                     version: '0.1.0',
-                    developers: [
-                        'Justin Donnelly'
-                    ],
-                    copyright: '© 2024 Justin Donnelly'
+                    developers: ['Justin Donnelly'],
+                    copyright: '© 2024 Justin Donnelly',
                 };
                 const aboutWindow = new Adw.AboutWindow(aboutParams);
                 aboutWindow.present();
@@ -70,7 +71,9 @@ export const ZoneDefenseApplication = GObject.registerClass(
             const signals = [2, 15];
             signals.forEach((signal) => {
                 const gsourceSignal = GLibUnix.signal_source_new(signal);
-                gsourceSignal.set_callback(() => {this.quit(signal);});
+                gsourceSignal.set_callback(() => {
+                    this.quit(signal);
+                });
                 this.#sourceIds.push(gsourceSignal.attach(null));
             });
 
@@ -86,7 +89,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
         // so we can be async.
         async init() {
             try {
-            await this.#connectionIdsSeen.init();
+                await this.#connectionIdsSeen.init();
             } catch (e) {
                 // Bail out here... There's nothing we can reasonably do without knowing if a network has been seen.
                 console.error('Unable to initialize ConnectionIdsSeen.');
@@ -114,7 +117,8 @@ export const ZoneDefenseApplication = GObject.registerClass(
                             return;
 
                         const isConnectionNew = this.#connectionIdsSeen.isConnectionNew(connectionId);
-                        if (!isConnectionNew) // The connection is not new. Don't open the window.
+                        if (!isConnectionNew)
+                            // The connection is not new. Don't open the window.
                             return;
 
                         const [zones, defaultZone, currentZone] = await Promise.all([
@@ -146,18 +150,25 @@ export const ZoneDefenseApplication = GObject.registerClass(
         vfunc_activate() {} // Required because Adw.Application extends GApplication.
 
         createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings) {
-            let {active_window} = this;
+            let { active_window } = this;
 
             // active_window should always be null. Either this is the first creation, or we should have already called
             // closeWindowIfConnectionChanged.
             if (!active_window)
-                active_window = new ZoneDefenseWindow(this, connectionId, defaultZone, currentZone, zones, activeConnectionSettings);
+                active_window = new ZoneDefenseWindow(
+                    this,
+                    connectionId,
+                    defaultZone,
+                    currentZone,
+                    zones,
+                    activeConnectionSettings
+                );
 
             active_window.present();
         }
 
         closeWindowIfConnectionChanged(connectionId) {
-            let {active_window} = this;
+            let { active_window } = this;
             if (active_window?.connectionId !== connectionId)
                 active_window?.close();
         }
@@ -176,7 +187,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
             if (signal !== null)
                 console.log(`quitting due to signal ${signal}!`);
             this.#sourceIds.forEach((id) => GLib.Source.remove(id));
-            this.networkState?.destroy()
+            this.networkState?.destroy();
             this.networkState = null;
             super.quit(); // this ends up calling vfunc_shutdown()
         }

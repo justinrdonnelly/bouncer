@@ -45,7 +45,8 @@ export class ConnectionIdsSeen {
             const decoded = decoder.decode(contents);
             return JSON.parse(decoded);
         } catch (e) {
-            if (e.message.includes('No such file or directory')) { // file does not yet exist, that's OK
+            if (e.message.includes('No such file or directory')) {
+                // file does not yet exist, that's OK
                 console.log(`File ${this.#destination} does not exist. Treat as empty and create it later.`);
                 return [];
             }
@@ -69,7 +70,13 @@ export class ConnectionIdsSeen {
             // We already tried to create this directory earlier, so this should only matter if a user somehow deleted it.
             if (GLib.mkdir_with_parents(this.#destinationDirectory, ConnectionIdsSeen.#dataDirectoryPermissions) === 0) {
                 // Since we `await` the results, we do not need to use `replace_contents_bytes_async`
-                let success = await this.#destinationFile.replace_contents_async(encodedData, null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
+                let success = await this.#destinationFile.replace_contents_async(
+                    encodedData,
+                    null,
+                    false,
+                    Gio.FileCreateFlags.REPLACE_DESTINATION,
+                    null
+                );
                 if (!success) {
                     throw new Error(`Error saving data file ${this.#destinationFile}.`);
                 }

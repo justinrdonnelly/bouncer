@@ -12,7 +12,8 @@
 import Gio from 'gi://Gio';
 
 // NOTE: You can ONLY HAVE ONE interface (the rest that were returned from the introspection were removed)
-const networkManagerDeviceInterfaceXml = '\
+const networkManagerDeviceInterfaceXml =
+    '\
     <node>\
         <interface name="org.freedesktop.NetworkManager.Device">\
             <method name="Reapply">\
@@ -66,6 +67,5 @@ const networkManagerDeviceInterfaceXml = '\
             <property type="ao" name="Ports" access="read"/>\
         </interface>\
     </node>\
-';
+    ';
 export const NetworkManagerDeviceProxy = Gio.DBusProxy.makeProxyWrapper(networkManagerDeviceInterfaceXml);
-

@@ -14,8 +14,8 @@ import Gio from 'gi://Gio';
 // We have 2 different methods to call under different dbus interfaces. We won't bother with a proxy.
 
 export class ZoneInfo {
-    static #wellKnownName  = 'org.fedoraproject.FirewallD1';
-    static #objectPath  = '/org/fedoraproject/FirewallD1';
+    static #wellKnownName = 'org.fedoraproject.FirewallD1';
+    static #objectPath = '/org/fedoraproject/FirewallD1';
 
     static getZones() {
         const parameters = null;

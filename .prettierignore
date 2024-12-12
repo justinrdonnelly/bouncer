@@ -1,0 +1,5 @@
+builddir/
+.eslintrc.yml
+.github/workflows/eslint.yml
+eslint.config.js
+package.json

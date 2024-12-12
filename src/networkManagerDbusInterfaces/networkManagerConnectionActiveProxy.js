@@ -12,7 +12,8 @@
 import Gio from 'gi://Gio';
 
 // NOTE: You can ONLY HAVE ONE interface (the rest that were returned from the introspection were removed)
-const networkManagerConnectionActiveInterfaceXml = '\
+const networkManagerConnectionActiveInterfaceXml =
+    '\
     <node>\
         <interface name="org.freedesktop.NetworkManager.Connection.Active">\
             <signal name="StateChanged">\
@@ -37,6 +38,7 @@ const networkManagerConnectionActiveInterfaceXml = '\
             <property type="o" name="Master" access="read"/>\
         </interface>\
     </node>\
-';
-export const NetworkManagerConnectionActiveProxy = Gio.DBusProxy.makeProxyWrapper(networkManagerConnectionActiveInterfaceXml);
-
+    ';
+export const NetworkManagerConnectionActiveProxy = Gio.DBusProxy.makeProxyWrapper(
+    networkManagerConnectionActiveInterfaceXml
+);

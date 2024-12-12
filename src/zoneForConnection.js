@@ -13,8 +13,8 @@ import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 
 export class ZoneForConnection {
-    static #wellKnownName  = 'org.freedesktop.NetworkManager';
-    static #iface  = 'org.freedesktop.NetworkManager.Settings.Connection';
+    static #wellKnownName = 'org.freedesktop.NetworkManager';
+    static #iface = 'org.freedesktop.NetworkManager.Settings.Connection';
 
     static #getSettings(objectPath) {
         const parameters = null;
@@ -35,7 +35,7 @@ export class ZoneForConnection {
                     try {
                         // throw new Error('hi'); // for testing error handling
                         const reply = connection.call_finish(res);
-                        console.debug(`Retrieved connection settings: ${JSON.stringify(reply.get_child_value(0).recursiveUnpack())}`)
+                        console.debug(`Retrieved connection settings: ${JSON.stringify(reply.get_child_value(0).recursiveUnpack())}`);
                         resolve(reply);
                     } catch (e) {
                         if (e instanceof Gio.DBusError)
@@ -50,7 +50,8 @@ export class ZoneForConnection {
     static async getZone(objectPath) {
         const settings = await ZoneForConnection.#getSettings(objectPath);
         let zone = settings.get_child_value(0).recursiveUnpack()['connection']['zone'];
-        if (zone === undefined) // convert undefined to null
+        if (zone === undefined)
+            // convert undefined to null
             zone = null;
         console.log(`Current zone: ${zone}`);
         return zone;
@@ -96,7 +97,7 @@ export class ZoneForConnection {
             const newZoneVariant = GLib.Variant.new_string(newZone);
             unpackedDbusResult['connection']['zone'] = newZoneVariant;
         } else
-            delete unpackedDbusResult['connection']['zone']
+            delete unpackedDbusResult['connection']['zone'];
         const packedDbusResult = new GLib.Variant('(a{sa{sv}})', [unpackedDbusResult]);
         return packedDbusResult;
 

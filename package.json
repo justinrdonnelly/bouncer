@@ -5,6 +5,7 @@
   "author": "Justin Donnelly",
   "license": "MPL-2.0",
   "devDependencies": {
-    "eslint": "^8.57.1"
+    "eslint": "^8.57.1",
+    "prettier": "^3.4.2"
   }
 }

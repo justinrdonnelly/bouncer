@@ -39,10 +39,10 @@ async function updateZone(objectPath) {
     try {
         zone = await ZoneForConnection.getZone(objectPath);
         console.log(`zone before: ${zone}`);
-    if (zone === 'trusted')
-        newZone = 'public';
-    else
-        newZone = 'trusted';
+        if (zone === 'trusted')
+            newZone = 'public';
+        else
+            newZone = 'trusted';
         await ZoneForConnection.setZone(objectPath, newZone);
         zone = await ZoneForConnection.getZone(objectPath);
         console.log(`zone after: ${zone}`);
