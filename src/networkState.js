@@ -12,7 +12,8 @@
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 
-import { NetworkManagerConnectionActiveProxy } from './networkManagerDbusInterfaces/networkManagerConnectionActiveProxy.js';
+import { NetworkManagerConnectionActiveProxy } from
+    './networkManagerDbusInterfaces/networkManagerConnectionActiveProxy.js';
 import { NetworkManagerDeviceProxy } from './networkManagerDbusInterfaces/networkManagerDeviceProxy.js';
 import { NetworkManagerProxy } from './networkManagerDbusInterfaces/networkManagerProxy.js';
 
@@ -39,7 +40,8 @@ class NetworkManagerStateItem {
     _objectPath;
     _connectionChangedAction;
     _proxyObj = null;
-    _childNetworkManagerStateItems = new Map(); // map of object path to object for each related child NetworkManagerStateItem
+    // map of object path to object for each related child NetworkManagerStateItem
+    _childNetworkManagerStateItems = new Map();
     _handlerId;
     _proxyObjHandlerId;
 
@@ -105,7 +107,8 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
                 }
                 this._proxyObj = sourceObj;
                 console.debug(`Wireless connection ID: ${this._proxyObj.Id}`); // e.g. Wired Connection 1
-                console.debug(`Settings object path: ${this._proxyObj.Connection}`); // e.g. /org/freedesktop/NetworkManager/Settings/5
+                // e.g. /org/freedesktop/NetworkManager/Settings/5
+                console.debug(`Settings object path: ${this._proxyObj.Connection}`);
 
                 // monitor for changes
                 this._proxyObjHandlerId = networkManagerConnectionActiveProxy.connect(
@@ -122,8 +125,8 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
     // eslint-disable-next-line no-unused-vars
     #proxyUpdated(proxy, changed, invalidated) {
         console.debug('debug 1 - Proxy updated - NetworkManagerConnectionActive');
-        // The only property I care about has a getter that accesses the proxy directly. No need to do anything here besides signal if necessary.
-        // There are no children to worry about either.
+        // The only property I care about has a getter that accesses the proxy directly. No need to do anything here
+        // besides signal if necessary. There are no children to worry about either.
 
         // check for which property was updated and only signal if we need to
         for (const [name, value] of Object.entries(changed.deepUnpack())) {
@@ -218,7 +221,8 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
     // eslint-disable-next-line no-unused-vars
     #proxyUpdated(proxy, changed, invalidated) {
         console.debug('debug 1 - Proxy updated - NetworkManagerDevice');
-        // NetworkManagerDevice doesn't have any state of its own. Just see if there are new children to add, or old children to remove.
+        // NetworkManagerDevice doesn't have any state of its own. Just see if there are new children to add, or old
+        // children to remove.
 
         // handle ActiveConnection
         for (const [name, valueVariant] of Object.entries(changed.deepUnpack())) {
@@ -231,33 +235,40 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
                 const oldValue = this.#activeConnection;
                 console.debug(`debug 2 - NetworkManagerDevice - old ActiveConnection: ${oldValue}`);
                 console.debug(`debug 2 - NetworkManagerDevice - new ActiveConnection: ${value}`);
-                if (NetworkManagerDevice.#isConnectionActive(oldValue) && !NetworkManagerDevice.#isConnectionActive(value)) {
+                if (NetworkManagerDevice.#isConnectionActive(oldValue) &&
+                    !NetworkManagerDevice.#isConnectionActive(value)) {
                     // connection has toggled from active to inactive
                     console.debug('debug 2 - connection toggled from active to inactive');
                     this.#deleteConnection(oldValue); // destroy old child
                     this.#addConnectionInfo(); // this will add the child ('/' in this case)
-                    // Activate here because we won't have a child that can activate. It has been destroyed. Use empty string to indicate no connection.
+                    // Activate here because we won't have a child that can activate. It has been destroyed. Use empty
+                    // string to indicate no connection.
                     this._connectionChangedAction.activate(
                         GLib.Variant.new_array(new GLib.VariantType('s'), [
                             GLib.Variant.new_string(''),
                             GLib.Variant.new_string(''),
                         ])
                     );
-                } else if (!NetworkManagerDevice.#isConnectionActive(oldValue) && NetworkManagerDevice.#isConnectionActive(value)) {
+                } else if (!NetworkManagerDevice.#isConnectionActive(oldValue) &&
+                    NetworkManagerDevice.#isConnectionActive(value)) {
                     // connection has toggled from inactive to active
                     console.debug('debug 2 - connection toggled from inactive to active');
                     // The connection was inactive ('/'), so there was no child. Don't call #deleteConnection. This
                     // asymmetry is OK. The add above wouldn't actually put the connection into the child map. It would
                     // just set this.#activeConnection
                     this.#addConnectionInfo(); // this will add the child
-                } else if (NetworkManagerDevice.#isConnectionActive(oldValue) && NetworkManagerDevice.#isConnectionActive(value)) {
+                } else if (NetworkManagerDevice.#isConnectionActive(oldValue) &&
+                    NetworkManagerDevice.#isConnectionActive(value)) {
                     // connection has changed from one active connection to another
-                    // In my testing, this didn't actually happen. The connection was removed with 1 proxy update, then a new connection added with another.
-                    console.debug(`debug 2 - connection changed from one active connection (${oldValue}) to another (${value})`);
+                    // In my testing, this didn't actually happen. The connection was removed with 1 proxy update, then
+                    // a new connection added with another.
+                    console.debug(`debug 2 - connection changed from one active connection (${oldValue}) to another ` +
+                        `(${value})`);
                     this.#deleteConnection(oldValue); // destroy old child
                     this.#addConnectionInfo(); // this will add the child
                 } else {
-                    console.error(`Unexpected transition for ActiveConnection (inactive to inactive). Old: ${oldValue}; New: ${value}`);
+                    console.error('Unexpected transition for ActiveConnection (inactive to inactive). Old: ' +
+                        `${oldValue}; New: ${value}`);
                     // Although this is unexpected, it's not actually a big deal.
                     // As above, don't call #deleteConnection on an old inactive value.
                     this.#addConnectionInfo(); // this will add the child
@@ -288,7 +299,8 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
     }
 
     #addConnectionInfo() {
-        this.#activeConnection = this._proxyObj.ActiveConnection; // e.g. / (if not active), /org/freedesktop/NetworkManager/ActiveConnection/1 (if active)
+        // e.g. / (if not active), /org/freedesktop/NetworkManager/ActiveConnection/1 (if active)
+        this.#activeConnection = this._proxyObj.ActiveConnection;
         console.debug(`debug 1 - Adding connection ${this.#activeConnection}`);
         if (NetworkManagerDevice.#isConnectionActive(this.#activeConnection)) {
             // this connection is active, make another dbus call
@@ -370,7 +382,8 @@ class NetworkManager extends NetworkManagerStateItem {
     // eslint-disable-next-line no-unused-vars
     #proxyUpdated(proxy, changed, invalidated) {
         console.debug('debug 1 - Proxy updated - NetworkManager');
-        // NetworkManager doesn't have any state of its own. Just see if there are new children to add, or old children to remove.
+        // NetworkManager doesn't have any state of its own. Just see if there are new children to add, or old children
+        // to remove.
         // handle updated device list
         for (const [name, value] of Object.entries(changed.deepUnpack())) {
             console.debug('debug 3 - something changed - NetworkManager');
@@ -429,7 +442,8 @@ class NetworkManager extends NetworkManagerStateItem {
 
     #removeDevice(deviceObjectPath) { // e.g. /org/freedesktop/NetworkManager/Devices/1
         // clean up old device if applicable
-        console.debug(`debug 1 - Removing device: ${deviceObjectPath}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
+        // e.g. /org/freedesktop/NetworkManager/Devices/1
+        console.debug(`debug 1 - Removing device: ${deviceObjectPath}`);
         const deviceObj = this._childNetworkManagerStateItems.get(deviceObjectPath);
         if (deviceObj) {
             this._childNetworkManagerStateItems.delete(deviceObjectPath);

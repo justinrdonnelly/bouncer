@@ -29,7 +29,8 @@ export class ZoneInfo {
                 'getZones', // method
                 parameters,
                 null, // reply type
-                Gio.DBusCallFlags.NONE, // might want ALLOW_INTERACTIVE_AUTHORIZATION - https://gjs-docs.gnome.org/gio20/gio.dbuscallflags
+                // might want ALLOW_INTERACTIVE_AUTHORIZATION - https://gjs-docs.gnome.org/gio20/gio.dbuscallflags
+                Gio.DBusCallFlags.NONE,
                 -1, // timeout
                 null, // cancellable
                 (connection, res) => {
@@ -61,7 +62,8 @@ export class ZoneInfo {
                 'getDefaultZone', // method
                 parameters,
                 null, // reply type
-                Gio.DBusCallFlags.NONE, // might want ALLOW_INTERACTIVE_AUTHORIZATION - https://gjs-docs.gnome.org/gio20/gio.dbuscallflags
+                // might want ALLOW_INTERACTIVE_AUTHORIZATION - https://gjs-docs.gnome.org/gio20/gio.dbuscallflags
+                Gio.DBusCallFlags.NONE,
                 -1, // timeout
                 null, // cancellable
                 (connection, res) => {

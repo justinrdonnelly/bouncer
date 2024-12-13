@@ -56,8 +56,8 @@ export const ZoneDefenseWindow = GObject.registerClass(
             this._zoneDropDown.grab_focus();
         }
 
-        // By default, we want to keep things simple for the user and only show a subset of zones. See table for behavior.
-        // Later we may make this configurable.
+        // By default, we want to keep things simple for the user and only show a subset of zones. See table for
+        // behavior. Later we may make this configurable.
         /*
          *        Simple zones (#simpleZoneList) all exist
          *       /    Default zone in simple zones

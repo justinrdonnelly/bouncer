@@ -2,6 +2,7 @@
 // SPDX-FileCopyrightText: No rights reserved
 
 import js from '@eslint/js';
+import stylistic from '@stylistic/eslint-plugin';
 
 export default [
     js.configs.recommended,
@@ -38,6 +39,9 @@ export default [
                 ecmaVersion: 2022,
                 sourceType: 'module',
             },
+        },
+        plugins: {
+            '@stylistic': stylistic
         },
         rules: {
             // See: https://eslint.org/docs/latest/rules/#possible-problems
@@ -140,10 +144,12 @@ export default [
             'no-restricted-syntax': [
                 'error',
                 {
+                    // eslint-disable-next-line @stylistic/max-len
                     selector: 'MethodDefinition[key.name="_init"] CallExpression[arguments.length<=1][callee.object.type="Super"][callee.property.name="_init"]',
                     message: 'Use constructor() and super()',
                 },
             ],
+            '@stylistic/max-len': ['error', { "code": 120 }],
         },
     },
 ];

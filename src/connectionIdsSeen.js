@@ -67,8 +67,10 @@ export class ConnectionIdsSeen {
             const dataJSON = JSON.stringify(connectionIds);
             const encoder = new TextEncoder(ConnectionIdsSeen.#textFormat);
             const encodedData = encoder.encode(dataJSON);
-            // We already tried to create this directory earlier, so this should only matter if a user somehow deleted it.
-            if (GLib.mkdir_with_parents(this.#destinationDirectory, ConnectionIdsSeen.#dataDirectoryPermissions) === 0) {
+            // We already tried to create this directory earlier, so this should only matter if a user somehow deleted
+            // it.
+            if (GLib.mkdir_with_parents(
+                this.#destinationDirectory, ConnectionIdsSeen.#dataDirectoryPermissions) === 0) {
                 // Since we `await` the results, we do not need to use `replace_contents_bytes_async`
                 let success = await this.#destinationFile.replace_contents_async(
                     encodedData,
@@ -88,7 +90,8 @@ export class ConnectionIdsSeen {
             // user has already selected a zone for the connection. Just log this error.
             console.error(`Error updating ${this.#destinationFile}.`);
             console.error(e.message);
-            console.log(`Once you restart Zone Defense, you will again be prompted to choose a firewall zone for connection ${connectionIds.slice(-1)}.`);
+            console.log('Once you restart Zone Defense, you will again be prompted to choose a firewall zone for ' +
+                `connection ${connectionIds.slice(-1)}.`);
         }
     }
 
