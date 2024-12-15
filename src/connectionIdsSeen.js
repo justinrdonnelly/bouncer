@@ -9,8 +9,8 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
+import GLib from 'gi://GLib';
 
 export class ConnectionIdsSeen {
     static #dataDirectoryPermissions = 0o700; // gnome-control-center uses 700 (USER_DIR_MODE), so we'll do that too

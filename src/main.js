@@ -10,13 +10,13 @@
  */
 
 import Adw from 'gi://Adw?version=1';
-import Gio from 'gi://Gio';
-import GLib from 'gi://GLib';
-import GLibUnix from 'gi://GLibUnix';
-import GObject from 'gi://GObject';
+import Gio from 'gi://Gio'; // Required by GJS, version not necessary.
+import GLib from 'gi://GLib'; // Required by GJS, version not necessary.
+import GLibUnix from 'gi://GLibUnix?version=2.0';
+import GObject from 'gi://GObject'; // Required by GJS, version not necessary.
 
-import { NetworkState } from './networkState.js';
 import { ConnectionIdsSeen } from './connectionIdsSeen.js';
+import { NetworkState } from './networkState.js';
 import { ZoneDefenseWindow } from './window.js';
 import { ZoneForConnection } from './zoneForConnection.js';
 import { ZoneInfo } from './zoneInfo.js';

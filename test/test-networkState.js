@@ -9,8 +9,8 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
+import GLib from 'gi://GLib';
 
 import { NetworkState } from '../src/networkState.js';
 
