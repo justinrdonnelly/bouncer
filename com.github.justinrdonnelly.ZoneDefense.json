@@ -4,21 +4,17 @@
     "runtime-version": "46",
     "sdk": "org.gnome.Sdk",
     "sdk-extensions": [
-        "org.freedesktop.Sdk.Extension.node18",
-        "org.freedesktop.Sdk.Extension.typescript"
     ],
     "command": "com.github.justinrdonnelly.ZoneDefense",
     "finish-args": [
-        "--share=network",
-        "--share=ipc",
-        "--socket=fallback-x11",
-        "--device=dri",
         "--socket=wayland",
+        "--device=dri",
+        "--socket=fallback-x11",
+        "--share=ipc",
         "--system-talk-name=org.freedesktop.NetworkManager",
         "--system-talk-name=org.fedoraproject.FirewallD1"
     ],
     "build-options": {
-        "append-path": "/usr/lib/sdk/typescript/bin:/usr/lib/sdk/node18/bin",
         "env": {}
     },
     "cleanup": [
