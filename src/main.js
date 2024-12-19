@@ -42,17 +42,17 @@ export const ZoneDefenseApplication = GObject.registerClass(
             this.#connectionIdsSeen = new ConnectionIdsSeen();
 
             // quit action
-            const quit_action = new Gio.SimpleAction({ name: 'quit' });
+            this._quitAction = new Gio.SimpleAction({ name: 'quit' });
             // eslint-disable-next-line no-unused-vars
-            quit_action.connect('activate', (action) => {
-                this.quit();
+            this._quitActionHandlerId = this._quitAction.connect('activate', (action) => {
+                this.quit(null);
             });
-            this.add_action(quit_action);
+            this.add_action(this._quitAction);
 
             // about action
-            const show_about_action = new Gio.SimpleAction({ name: 'about' });
+            this._showAboutAction = new Gio.SimpleAction({ name: 'about' });
             // eslint-disable-next-line no-unused-vars
-            show_about_action.connect('activate', (action) => {
+            this._showAboutActionHandlerId = this._showAboutAction.connect('activate', (action) => {
                 let aboutParams = {
                     transient_for: this.active_window,
                     application_name: 'zone-defense',
@@ -65,7 +65,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 const aboutWindow = new Adw.AboutWindow(aboutParams);
                 aboutWindow.present();
             });
-            this.add_action(show_about_action);
+            this.add_action(this._showAboutAction);
 
             // handle signals
             const signals = [2, 15];
@@ -100,12 +100,13 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
             // Create the `connectionChangedAction` action and pass it to NetworkState.
             try {
-                const connectionChangedAction = new Gio.SimpleAction({
+                this._connectionChangedAction = new Gio.SimpleAction({
                     name: 'connectionChangedAction',
                     parameter_type: new GLib.VariantType('as'),
                 });
 
-                connectionChangedAction.connect('activate', async (action, parameter) => {
+                this._connectionChangedActionHandlerId =
+                    this._connectionChangedAction.connect('activate', async (action, parameter) => {
                     try {
                         const parameters = parameter.deepUnpack();
                         console.log(`${action.name} parameters: ${parameters}`);
@@ -138,7 +139,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
                     }
                 });
 
-                this.networkState = new NetworkState(connectionChangedAction);
+                this.networkState = new NetworkState(this._connectionChangedAction);
             } catch (e) {
                 // Bail out here... There's nothing we can do without NetworkState.
                 console.error('Unable to initialize NetworkState.');
@@ -191,6 +192,9 @@ export const ZoneDefenseApplication = GObject.registerClass(
             this.#sourceIds.forEach((id) => GLib.Source.remove(id));
             this.networkState?.destroy();
             this.networkState = null;
+            this._quitAction.disconnect(this._quitActionHandlerId);
+            this._showAboutAction.disconnect(this._showAboutActionHandlerId);
+            this._connectionChangedAction.disconnect(this._connectionChangedActionHandlerId);
             super.quit(); // this ends up calling vfunc_shutdown()
         }
     }
