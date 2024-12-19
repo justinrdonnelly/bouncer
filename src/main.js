@@ -58,7 +58,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
                     application_name: 'zone-defense',
                     application_icon: 'com.github.justinrdonnelly.ZoneDefense',
                     developer_name: 'Justin Donnelly',
-                    version: '0.1.0',
+                    version: '47.0.0',
                     developers: ['Justin Donnelly'],
                     copyright: '© 2024 Justin Donnelly',
                 };
