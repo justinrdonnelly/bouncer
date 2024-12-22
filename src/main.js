@@ -54,7 +54,6 @@ export const ZoneDefenseApplication = GObject.registerClass(
             // eslint-disable-next-line no-unused-vars
             this._showAboutActionHandlerId = this._showAboutAction.connect('activate', (action) => {
                 let aboutParams = {
-                    transient_for: this.active_window,
                     application_name: 'zone-defense',
                     application_icon: 'com.github.justinrdonnelly.ZoneDefense',
                     developer_name: 'Justin Donnelly',
@@ -62,8 +61,8 @@ export const ZoneDefenseApplication = GObject.registerClass(
                     developers: ['Justin Donnelly'],
                     copyright: '© 2024 Justin Donnelly',
                 };
-                const aboutWindow = new Adw.AboutWindow(aboutParams);
-                aboutWindow.present();
+                const aboutDialog = new Adw.AboutDialog(aboutParams);
+                aboutDialog.present(this.active_window);
             });
             this.add_action(this._showAboutAction);
 
