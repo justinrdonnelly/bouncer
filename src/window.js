@@ -12,6 +12,8 @@
 import Adw from 'gi://Adw';
 import GObject from 'gi://GObject';
 
+import { MoreInfoDialog } from './moreInfo.js';
+
 export const ZoneDefenseWindow = GObject.registerClass(
     {
         GTypeName: 'ZoneDefenseWindow',
@@ -104,6 +106,11 @@ export const ZoneDefenseWindow = GObject.registerClass(
                 console.error('Error setting zone for connection.');
                 console.error(e.message);
             }
+        }
+
+        helpButtonClicked(_button) {
+            const moreDialog = new MoreInfoDialog();
+            moreDialog.present(this);
         }
 
         exitButtonClicked(_button) {

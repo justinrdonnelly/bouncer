@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- moreInfo.ui
+
+     Copyright 2024 Justin Donnelly
+
+     This Source Code Form is subject to the terms of the Mozilla Public
+     License, v. 2.0. If a copy of the MPL was not distributed with this
+     file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+     SPDX-License-Identifier: MPL-2.0
+-->
+<interface>
+  <requires lib="gtk" version="4.10"/>
+  <requires lib="libadwaita" version="1.4"/>
+  <template class="MoreInfoDialog" parent="AdwDialog">
+    <property name="title">More Information</property>
+    <child>
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+          </object>
+        </child>
+        <property name="content">
+          <!-- text label -->
+          <object class="GtkLabel">
+            <property name="use-markup">True</property>
+            <property name="xalign">0</property>
+            <property name="margin-top">12</property>
+            <property name="margin-bottom">12</property>
+            <property name="margin-start">12</property>
+            <property name="margin-end">12</property>
+            <property name="wrap">True</property>
+            <!-- Ignore the ugly formatting. New lines are literal. -->
+            <property name="label">You're using &lt;a href="https://firewalld.org/"&gt;firewalld&lt;/a&gt; as your firewall. One of the nice features about firewalld is that it supports different zones (sets of firewall rules). You may have a firewall zone configured for home use, and a different zone for public networks.
+
+You're using &lt;a href="https://networkmanager.dev/"&gt;NetworkManager&lt;/a&gt; for network configuration. NetworkManager integrates well with firewalld and can &lt;a href="https://firewalld.org/documentation/zone/connections-interfaces-and-sources.html"&gt;set the firewalld zone for an interface based on the connection&lt;/a&gt;. This means your firewall rules can automatically change depending on your network connection.
+
+Zone Defense is designed to make this easier for you. It opens a window when you connect to a new network, allowing you to choose the appropriate firewall zone. If you're not sure what to choose, you should probably choose the option that matches where you are. The safest option is usually 'public'. If you don't want to change anything, click 'Exit'.
+
+You can read more about Zone Defense &lt;a href="https://github.com/justinrdonnelly/zone-defense"&gt;here&lt;/a&gt;.</property>
+          </object>
+        </property>
+      </object>
+    </child>
+  </template>
+</interface>

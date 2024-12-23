@@ -112,6 +112,33 @@
                   </object> <!-- end group -->
                 </child>
 
+                <!-- Help button/label -->
+                <child>
+                  <object class="GtkBox">
+                    <property name="orientation">horizontal</property>
+                    <property name="margin-top">4</property>
+                    <property name="margin-bottom">4</property>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="width-request">100</property>
+                        <property name="label">Help</property>
+                        <property name="halign">center</property>
+                        <signal name="clicked" handler="helpButtonClicked"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="margin-start">12</property>
+                        <property name="margin-end">12</property>
+                        <property name="xalign">0</property>
+                        <property name="wrap">True</property>
+                        <property name="width-chars">30</property> <!-- min width -->
+                        <property name="label">Get more information.</property>
+                      </object> <!-- end GtkLabel -->
+                    </child>
+                  </object>
+                </child>
+
                 <!-- Exit button/label -->
                 <child>
                   <object class="GtkBox">

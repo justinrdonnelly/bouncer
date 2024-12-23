@@ -6,6 +6,7 @@
     <file>networkManagerDbusInterfaces/networkManagerProxy.js</file>
     <file>connectionIdsSeen.js</file>
     <file>main.js</file>
+    <file>moreInfo.js</file>
     <file>networkState.js</file>
     <file>window.js</file>
     <file>zoneInfo.js</file>
