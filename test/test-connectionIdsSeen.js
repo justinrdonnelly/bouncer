@@ -13,8 +13,11 @@ import GLib from 'gi://GLib';
 
 import { ConnectionIdsSeen } from '../src/connectionIdsSeen.js';
 
+import promisify from '../src/promisify.js';
+
 // When testing locally, the file will be saved in: $HOME/.local/share/zone-defense/connection-ids-seen.json
 
+promisify();
 const connectionIdsSeen = new ConnectionIdsSeen();
 
 test();

@@ -9,6 +9,7 @@
     <file>main.js</file>
     <file>moreInfo.js</file>
     <file>networkState.js</file>
+    <file>promisify.js</file>
     <file>zoneInfo.js</file>
     <file>zoneForConnection.js</file>
   </gresource>
