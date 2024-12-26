@@ -72,6 +72,31 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 this.#sourceIds.push(gsourceSignal.attach(null));
             });
 
+            // Create the `errorAction` action. We'll use it in various places.
+            this._errorAction = new Gio.SimpleAction({
+                name: 'error',
+                parameter_type: new GLib.VariantType('as'),
+            });
+
+            this._errorActionHandlerId = this._errorAction.connect('activate', async (action, parameter) => {
+                try {
+                    const parameters = parameter.deepUnpack();
+                    console.log(`${action.name} parameters: ${parameters}`);
+                    const id = parameters[0];
+                    const title = parameters[1];
+                    const messageBody = parameters[2];
+
+                    const notification = new Gio.Notification();
+                    notification.set_title(title);
+                    notification.set_body(messageBody);
+                    this.send_notification(id, notification);
+                } catch (e) {
+                    // We've hit an exception trying to generate the notification. There's not much we can do here.
+                    console.error('Unable to generate notification.');
+                    console.error(e.message);
+                }
+            });
+
             // fire and forget
             this.init()
               .catch(e => {
@@ -198,6 +223,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
             this.networkState = null;
             this._showAboutAction.disconnect(this._showAboutActionHandlerId);
             this._connectionChangedAction.disconnect(this._connectionChangedActionHandlerId);
+            this._errorAction.disconnect(this._errorActionHandlerId);
             super.quit(); // this ends up calling vfunc_shutdown()
         }
     }
