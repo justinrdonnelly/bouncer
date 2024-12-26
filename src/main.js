@@ -15,9 +15,9 @@ import GLib from 'gi://GLib'; // Required by GJS, version not necessary.
 import GLibUnix from 'gi://GLibUnix?version=2.0';
 import GObject from 'gi://GObject'; // Required by GJS, version not necessary.
 
+import { ChooseZoneWindow } from './chooseZoneWindow.js';
 import { ConnectionIdsSeen } from './connectionIdsSeen.js';
 import { NetworkState } from './networkState.js';
-import { ZoneDefenseWindow } from './window.js';
 import { ZoneForConnection } from './zoneForConnection.js';
 import { ZoneInfo } from './zoneInfo.js';
 
@@ -156,7 +156,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
             // active_window should always be null. Either this is the first creation, or we should have already called
             // closeWindowIfConnectionChanged.
             if (!active_window)
-                active_window = new ZoneDefenseWindow(
+                active_window = new ChooseZoneWindow(
                     this,
                     connectionId,
                     defaultZone,
@@ -176,7 +176,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
         async chooseClicked(connectionId, activeConnectionSettings, zone) {
             console.log(`For connection ID ${connectionId}, setting zone to ` +
-                `${zone ?? ZoneDefenseWindow.defaultZoneLabel}`);
+                `${zone ?? ChooseZoneWindow.defaultZoneLabel}`);
             // Even though these are both async, do NOT execute them concurrently. Update seen connections before
             // updating the zone. If the connection ID hasn't been added to the list of seen connections when the zone
             // is changed, the window will open again!

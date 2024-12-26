@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- chooseZoneWindow.ui
+
+     Copyright 2024 Justin Donnelly
+
+     This Source Code Form is subject to the terms of the Mozilla Public
+     License, v. 2.0. If a copy of the MPL was not distributed with this
+     file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+     SPDX-License-Identifier: MPL-2.0
+-->
 <interface>
   <requires lib="gtk" version="4.0"/>
   <requires lib="Adw" version="1.0"/>
-  <template class="ZoneDefenseWindow" parent="AdwApplicationWindow">
+  <template class="ChooseZoneWindow" parent="AdwApplicationWindow">
     <property name="title">Zone Defense</property>
     <property name="default-width">600</property>
     <property name="default-height">400</property>

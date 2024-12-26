@@ -1,4 +1,4 @@
-/* window.js
+/* chooseZoneWindow.js
  *
  * Copyright 2024 Justin Donnelly
  *
@@ -14,13 +14,13 @@ import GObject from 'gi://GObject';
 
 import { MoreInfoDialog } from './moreInfo.js';
 
-export const ZoneDefenseWindow = GObject.registerClass(
+export const ChooseZoneWindow = GObject.registerClass(
     {
-        GTypeName: 'ZoneDefenseWindow',
-        Template: 'resource:///com/github/justinrdonnelly/ZoneDefense/window.ui',
+        GTypeName: 'ChooseZoneWindow',
+        Template: 'resource:///com/github/justinrdonnelly/ZoneDefense/chooseZoneWindow.ui',
         InternalChildren: ['currentZone', 'defaultZone', 'connectionId', 'zoneDropDown', 'zoneList'],
     },
-    class ZoneDefenseWindow extends Adw.ApplicationWindow {
+    class ChooseZoneWindow extends Adw.ApplicationWindow {
         static #simpleZoneList = ['public', 'home', 'work'];
         static defaultZoneLabel = '[DEFAULT]';
         #connectionId;
@@ -38,13 +38,13 @@ export const ZoneDefenseWindow = GObject.registerClass(
             this.#connectionId = connectionId;
             this.#application = application;
             this.#activeConnectionSettings = activeConnectionSettings;
-            this._currentZone.subtitle = currentZone || ZoneDefenseWindow.defaultZoneLabel;
+            this._currentZone.subtitle = currentZone || ChooseZoneWindow.defaultZoneLabel;
             this._defaultZone.subtitle = defaultZone;
             this._connectionId.subtitle = connectionId;
 
             let selected = null;
             const zones = this.generateZoneList(allZones, defaultZone, currentZone);
-            this._zoneList.append(ZoneDefenseWindow.defaultZoneLabel); // show the default first in the list
+            this._zoneList.append(ChooseZoneWindow.defaultZoneLabel); // show the default first in the list
             if (currentZone === null)
                 // null means default zone
                 selected = 0;
@@ -77,12 +77,12 @@ export const ZoneDefenseWindow = GObject.registerClass(
          * |   T |  T |  T | Simple                     |
          */
         generateZoneList(allZones, defaultZone, currentZone) {
-            const simpleZonesExist = ZoneDefenseWindow.#simpleZoneList.every((z) => allZones.includes(z));
+            const simpleZonesExist = ChooseZoneWindow.#simpleZoneList.every((z) => allZones.includes(z));
             if (!simpleZonesExist)
                 return allZones;
-            const zones = [...ZoneDefenseWindow.#simpleZoneList];
-            const defaultZoneSimple = ZoneDefenseWindow.#simpleZoneList.includes(defaultZone);
-            const currentZoneSimple = ZoneDefenseWindow.#simpleZoneList.includes(currentZone);
+            const zones = [...ChooseZoneWindow.#simpleZoneList];
+            const defaultZoneSimple = ChooseZoneWindow.#simpleZoneList.includes(defaultZone);
+            const currentZoneSimple = ChooseZoneWindow.#simpleZoneList.includes(currentZone);
             if (!defaultZoneSimple)
                 zones.push(defaultZone);
             if (currentZone && !currentZoneSimple)
@@ -92,7 +92,7 @@ export const ZoneDefenseWindow = GObject.registerClass(
 
         async chooseButtonClicked(_button) {
             let selectedItemValue = this._zoneDropDown.get_selected_item().get_string();
-            if (selectedItemValue === ZoneDefenseWindow.defaultZoneLabel)
+            if (selectedItemValue === ChooseZoneWindow.defaultZoneLabel)
                 selectedItemValue = null; // default zone is represented by null
             try {
                 await this.#application.chooseClicked(
