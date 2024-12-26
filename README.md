@@ -25,7 +25,9 @@ Install from Flathub (pending).
 
 ## Setup
 
-Unlike most Flatpak applications, Zone Defense needs to start when you log in. So you'll need to configure autostart.
+Unlike most Flatpak applications, Zone Defense needs to start when you log in. So autostart needs to be configured. Zone Defense can do this for you, so just start it manually the first time. After that, it will start automatically when you log in. This must be done for each user on the system.
+
+If you want to configure autostart system-wide (ie for all users), you have to do that manually. Copy the `.desktop` file to the system-wide `autostart` directory. (eg `sudo cp /var/lib/flatpak/exports/share/applications/com.github.justinrdonnelly.ZoneDefense.desktop /etc/xdg/autostart/`).
 
 Because Zone Defense requires NetworkManager and firewalld, and changing firewall zones sometimes requires root (depending on polkit configuration), there may be additional setup required. The table below shows relevant information for various distributions.
 
@@ -37,28 +39,20 @@ Because Zone Defense requires NetworkManager and firewalld, and changing firewal
 
 ### Fedora
 
-For Fedora, everything just works! Though you still have to set up autostart.
-
-1. Set up autostart by doing 1 of the following:
-    - For system-wide autostart, copy the `.desktop` file to `$XDG_CONFIG_DIRS/autostart`. (eg `sudo cp /var/lib/flatpak/exports/share/applications/com.github.justinrdonnelly.ZoneDefense.desktop /etc/xdg/autostart/`)
-    - For user-specific autostart, copy the `.desktop` file to `$XDG_CONFIG_HOME/autostart`. (eg `mkdir $HOME/.config/autostart && cp /var/lib/flatpak/exports/share/applications/com.github.justinrdonnelly.ZoneDefense.desktop $HOME/.config/autostart/`)
+For Fedora, everything just works! Just remember to start Zone Defense manually once to configure autostart.
 
 ### Ubuntu
 
 1. Uninstall ufw: `sudo apt remove ufw`
 2. Install firewalld: `sudo apt install firewalld`
 3. By default, polkit is configured to not let regular users set the zone for a connection. The simplest way to change this is to add users to the `netdev` group (eg `usermod -a -G netdev justin`). Alternatively, you can create a custom polkit rule for the `org.freedesktop.NetworkManager.settings.modify.system` action (how to create custom polkit rules is beyond the scope of this document and is left as an exercise for the reader).
-4. Set up autostart by doing 1 of the following:
-    - For system-wide autostart, copy the `.desktop` file to `$XDG_CONFIG_DIRS/autostart`. (eg `sudo cp /var/lib/flatpak/exports/share/applications/com.github.justinrdonnelly.ZoneDefense.desktop /etc/xdg/autostart/`)
-    - For user-specific autostart, copy the `.desktop` file to `$XDG_CONFIG_HOME/autostart`. (eg `mkdir $HOME/.config/autostart && cp /var/lib/flatpak/exports/share/applications/com.github.justinrdonnelly.ZoneDefense.desktop $HOME/.config/autostart/`)
+4. Start Zone Defense manually once to configure autostart.
 
 ### Debian
 
 1. Install firewalld: `sudo apt install firewalld`
 2. By default, polkit is configured to not let regular users set the zone for a connection. The simplest way to change this is to add users to the `netdev` group (eg `usermod -a -G netdev justin`). Alternatively, you can create a custom polkit rule for the `org.freedesktop.NetworkManager.settings.modify.system` action (how to create custom polkit rules is beyond the scope of this document and is left as an exercise for the reader).
-3. Set up autostart by doing 1 of the following:
-    - For system-wide autostart, copy the `.desktop` file to `$XDG_CONFIG_DIRS/autostart`. (eg `sudo cp /var/lib/flatpak/exports/share/applications/com.github.justinrdonnelly.ZoneDefense.desktop /etc/xdg/autostart/`)
-    - For user-specific autostart, copy the `.desktop` file to `$XDG_CONFIG_HOME/autostart`. (eg `mkdir $HOME/.config/autostart && cp /var/lib/flatpak/exports/share/applications/com.github.justinrdonnelly.ZoneDefense.desktop $HOME/.config/autostart/`)
+3. Start Zone Defense manually once to configure autostart.
 
 ## License
 

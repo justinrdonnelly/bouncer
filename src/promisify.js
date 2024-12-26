@@ -10,6 +10,7 @@
  */
 
 import Gio from 'gi://Gio';
+import Xdp from "gi://Xdp";
 
 export default function promisify() {
     // https://gjs.guide/guides/gio/file-operations.html#file-operations
@@ -36,4 +37,7 @@ export default function promisify() {
 
     /* Gio.OutputStream */
     // Gio._promisify(Gio.OutputStream.prototype, 'write_bytes_async');
+
+    // others
+    Gio._promisify(Xdp.Portal.prototype, "request_background", "request_background_finish");
 }
