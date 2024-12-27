@@ -123,7 +123,12 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 // Bail out here... There's nothing we can reasonably do without knowing if a network has been seen.
                 console.error('Unable to initialize ConnectionIdsSeen.');
                 console.error(e.message);
-                // TODO: It'd be nice to generate a notification in this case.
+                const notification = new Gio.Notification();
+                notification.set_title('Can\'t find previously seen connections');
+                notification.set_body('There was a problem determining which connections have already been seen. ' +
+                    'Please see logs for more information.'
+                );
+                this.send_notification('main-connection-ids', notification);
                 this.quit(null);
             }
 
@@ -160,11 +165,14 @@ export const ZoneDefenseApplication = GObject.registerClass(
                     } catch (e) {
                         // We've hit an exception in the callback where we'd consider opening the window. Bail out and
                         // hope for better luck next time (unlikely).
-                        console.error('Unable to get zone information.');
+                        console.error('Error while trying to prompt. This is likely related to getting zone ' +
+                            'information.');
                         console.error(e.message);
-                        // TODO: Is it worth checking to see if firewalld is running? It can help give a more useful
-                        // error message.
-                        // TODO: handle error (maybe show a modal or notification?)
+                        const notification = new Gio.Notification();
+                        notification.set_title('Can\'t prompt for firewall zone.');
+                        notification.set_body('There was a problem getting information to prompt for the firewall ' +
+                            'zone. Please see logs for more information.');
+                        this.send_notification('main-network-state-activate', notification);
                     }
                 });
 
@@ -173,7 +181,11 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 // Bail out here... There's nothing we can do without NetworkState.
                 console.error('Unable to initialize NetworkState.');
                 console.error(e.message);
-                // TODO: It'd be nice to generate a notification in this case.
+                const notification = new Gio.Notification();
+                notification.set_title('Can\'t determine network state.');
+                notification.set_body('There was a problem tracking network connection changes. Please see logs for ' +
+                    'more information.');
+                this.send_notification('main-network-state', notification);
                 this.quit(null);
             }
         } // end init
