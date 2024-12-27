@@ -39,17 +39,19 @@ class NetworkManagerStateItem {
     // conceptually, the variables below are 'protected'
     _objectPath;
     _connectionChangedAction;
+    _errorAction;
     _proxyObj = null;
     // map of object path to object for each related child NetworkManagerStateItem
     _childNetworkManagerStateItems = new Map();
     _handlerId;
     _proxyObjHandlerId;
 
-    constructor(objectPath, connectionChangedAction) {
+    constructor(objectPath, connectionChangedAction, errorAction) {
         if (this.constructor === NetworkManagerStateItem)
             throw new Error('NetworkManagerStateItem is an abstract class. Do not instantiate.');
         this._objectPath = objectPath;
         this._connectionChangedAction = connectionChangedAction;
+        this._errorAction = errorAction;
         console.debug(`debug 1 - Instantiating ${this.constructor.name} with object path: ${this._objectPath}`);
     }
 
@@ -65,12 +67,26 @@ class NetworkManagerStateItem {
             child.destroy();
         });
     }
+
+    _error() {
+        const details = 'Zone Defense ran into an error determining network state. This most likely means the ' +
+            'application will not work correctly. Please see logs for more information.';
+        this._errorAction.activate(
+            GLib.Variant.new_array(new GLib.VariantType('s'), [
+                GLib.Variant.new_string('network-state'),
+                GLib.Variant.new_string('Error determining network state.'),
+                GLib.Variant.new_string(details),
+            ])
+        );
+    }
 }
 
+
+
 class NetworkManagerConnectionActive extends NetworkManagerStateItem {
-    constructor(objectPath, connectionChangedAction) {
+    constructor(objectPath, connectionChangedAction, errorAction) {
         // example objectPath: /org/freedesktop/NetworkManager/ActiveConnection/1
-        super(objectPath, connectionChangedAction);
+        super(objectPath, connectionChangedAction, errorAction);
         this.#getDbusProxyObject();
     }
 
@@ -100,9 +116,9 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
                     // error is [GLib.Error](https://docs.gtk.org/glib/struct.Error.html)
                     if (error instanceof Gio.DBusError)
                         Gio.DBusError.strip_remote_error(error);
-                    // TODO: Get this error up to the caller (main.js). Probably need to use a signal.
                     console.error('Error getting NetworkManagerConnectionActive D-Bus proxy object.');
                     console.error(error.message);
+                    this._error();
                     return;
                 }
                 this._proxyObj = sourceObj;
@@ -148,8 +164,8 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
         // see: https://gjs.guide/guides/gio/dbus.html#low-level-proxies
         for (const name of invalidated) {
             if (name === 'Id') {
-                // TODO: Get this error up to the caller (main.js). Probably need to use a signal.
                 console.error('Id is invalidated. This is not supported.');
+                this._error();
                 this.destroy();
                 return;
             }
@@ -167,9 +183,9 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
         return !(connectionValue === undefined || connectionValue === null || connectionValue === '/');
     }
 
-    constructor(objectPath, connectionChangedAction) {
+    constructor(objectPath, connectionChangedAction, errorAction) {
         // example objectPath: /org/freedesktop/NetworkManager/Devices/1
-        super(objectPath, connectionChangedAction);
+        super(objectPath, connectionChangedAction, errorAction);
         this.#getDbusProxyObject();
     }
 
@@ -195,9 +211,9 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
                     // error is [GLib.Error](https://docs.gtk.org/glib/struct.Error.html)
                     if (error instanceof Gio.DBusError)
                         Gio.DBusError.strip_remote_error(error);
-                    // TODO: Get this error up to the caller (main.js). Probably need to use a signal.
                     console.error('Error getting NetworkManagerDevice D-Bus proxy object.');
                     console.error(error.message);
+                    this._error();
                     return;
                 }
                 // Use DeviceType to decide whether to continue. We will only track wireless devices. For wireless, the
@@ -282,8 +298,8 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
         // see: https://gjs.guide/guides/gio/dbus.html#low-level-proxies
         for (const name of invalidated) {
             if (name === 'ActiveConnection') {
-                // TODO: Get this error up to the caller (main.js). Probably need to use a signal.
                 console.error('ActiveConnection is invalidated. This is not supported.');
+                this._error();
                 this.destroy();
                 return;
             }
@@ -306,7 +322,8 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
             // this connection is active, make another dbus call
             const networkManagerConnectionActive = new NetworkManagerConnectionActive(
                 this.#activeConnection,
-                this._connectionChangedAction
+                this._connectionChangedAction,
+                this._errorAction
             );
             this._childNetworkManagerStateItems.set(this.#activeConnection, networkManagerConnectionActive);
         }
@@ -316,9 +333,9 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
 class NetworkManager extends NetworkManagerStateItem {
     #busWatchId;
 
-    constructor(objectPath, connectionChangedAction) {
+    constructor(objectPath, connectionChangedAction, errorAction) {
         // example objectPath: /org/freedesktop/NetworkManager (this is always what it is)
-        super(objectPath, connectionChangedAction);
+        super(objectPath, connectionChangedAction, errorAction);
         this.#busWatchId = Gio.bus_watch_name(
             Gio.BusType.SYSTEM,
             NetworkManagerStateItem._wellKnownName,
@@ -361,9 +378,9 @@ class NetworkManager extends NetworkManagerStateItem {
                     // error is [GLib.Error](https://docs.gtk.org/glib/struct.Error.html)
                     if (error instanceof Gio.DBusError)
                         Gio.DBusError.strip_remote_error(error);
-                    // TODO: Get this error up to the caller (main.js). Probably need to use a signal.
                     console.error('Error getting NetworkManager D-Bus proxy object.');
                     console.error(error.message);
+                    this._error();
                     return;
                 }
                 this._proxyObj = proxy;
@@ -417,8 +434,8 @@ class NetworkManager extends NetworkManagerStateItem {
         // see: https://gjs.guide/guides/gio/dbus.html#low-level-proxies
         for (const name of invalidated) {
             if (name === 'Devices') {
-                // TODO: Get this error up to the caller (main.js). Probably need to use a signal.
                 console.error('Devices is invalidated. This is not supported.');
+                this._error();
                 this.destroy();
                 return;
             }
@@ -435,7 +452,7 @@ class NetworkManager extends NetworkManagerStateItem {
         this.#removeDevice(device); // if the device already exists, remove it
         console.debug(`debug 1 - Adding device: ${device}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
         // Instantiate a new class that will make another dbus call
-        const networkManagerDevice = new NetworkManagerDevice(device, this._connectionChangedAction);
+        const networkManagerDevice = new NetworkManagerDevice(device, this._connectionChangedAction, this._errorAction);
         // Add to child devices
         this._childNetworkManagerStateItems.set(device, networkManagerDevice);
     }
@@ -455,9 +472,13 @@ class NetworkManager extends NetworkManagerStateItem {
 export class NetworkState {
     #networkManager;
 
-    constructor(connectionChangedAction) {
+    constructor(connectionChangedAction, errorAction) {
         // Keep a reference to NetworkManager instance to prevent GC
-        this.#networkManager = new NetworkManager('/org/freedesktop/NetworkManager', connectionChangedAction);
+        this.#networkManager = new NetworkManager(
+            '/org/freedesktop/NetworkManager',
+            connectionChangedAction,
+            errorAction
+        );
     }
 
     destroy() {

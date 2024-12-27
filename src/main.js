@@ -127,7 +127,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 this.quit(null);
             }
 
-            // Create the `connectionChangedAction` action and pass it to NetworkState.
+            // Create the `connectionChangedAction` action. We'll pass it to NetworkState.
             try {
                 this._connectionChangedAction = new Gio.SimpleAction({
                     name: 'connectionChangedAction',
@@ -168,7 +168,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
                     }
                 });
 
-                this.networkState = new NetworkState(this._connectionChangedAction);
+                this.networkState = new NetworkState(this._connectionChangedAction, this._errorAction);
             } catch (e) {
                 // Bail out here... There's nothing we can do without NetworkState.
                 console.error('Unable to initialize NetworkState.');
