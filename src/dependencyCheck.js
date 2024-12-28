@@ -143,7 +143,7 @@ export const DependencyCheck = GObject.registerClass({
         try {
             await this.#dbusNames;
         } catch (e) {
-            console.log('Skipping check for firewalld on DBus due to previous ListNames error.');
+            console.log('Skipping check for NetworkManager on DBus due to previous ListNames error.');
             return;
         }
 
@@ -160,6 +160,75 @@ export const DependencyCheck = GObject.registerClass({
                 'Please make sure NetworkManager is installed, running, and available inside the flatpak ' +
                     'sandbox. Please see logs for more information.'
             );
+        }
+
+        // check NetworkManager permissions
+        console.log('Checking NetworkManager permissions.');
+        // I can't seem to make this call without a callback (was hoping it would return a promise)
+        const permissions = new Promise((resolve, reject) => {
+            Gio.DBus.system.call(
+                'org.freedesktop.NetworkManager',
+                '/org/freedesktop/NetworkManager',
+                'org.freedesktop.NetworkManager',
+                'GetPermissions', // method
+                null,
+                new GLib.VariantType('(a{ss})'), // reply type
+                // might want ALLOW_INTERACTIVE_AUTHORIZATION - https://gjs-docs.gnome.org/gio20/gio.dbuscallflags
+                Gio.DBusCallFlags.NONE,
+                -1, // timeout
+                null, // cancellable
+                (connection, res) => {
+                    try {
+                        const reply = connection.call_finish(res);
+                        resolve(reply.get_child_value(0).recursiveUnpack());
+                    } catch (e) {
+                        if (e instanceof Gio.DBusError)
+                            Gio.DBusError.strip_remote_error(e);
+                        reject(e);
+                    }
+                }
+            );
+        });
+        // GetSettings doesn't require any permissions. Update requires
+        // 'org.freedesktop.NetworkManager.settings.modify.system'.
+        const modifyPermission = (await permissions)['org.freedesktop.NetworkManager.settings.modify.system'];
+        console.log(`NetworkManager modify permission: ${modifyPermission}`);
+        switch (modifyPermission) {
+            case 'yes': // authorized, without requiring authentication
+                console.log('Authentication not required to change NetworkManager connection zone.');
+                break;
+            case 'auth': // authorized, but requires polkit authentication
+                console.warn('Authentication required to change NetworkManager connection zone.');
+                this.emit(
+                    'dependency-error',
+                    false,
+                    'dependency-error-networkmanager',
+                    'Authentication required to change NetworkManager connection zone',
+                    'You are authorized to change the connection zone in NetworkManager, but will be required to ' +
+                        'authenticate. This will work, but may be annoying. Please see logs for more information.'
+                );
+                break;
+            case 'no': // not authorized
+                console.error('Not authorized to change NetworkManager connection zone.');
+                this.emit(
+                    'dependency-error',
+                    true,
+                    'dependency-error-networkmanager',
+                    'Not authorized to change NetworkManager connection zone',
+                    'You are not authorized to change the connection zone in NetworkManager. This is required for ' +
+                        'Zone Defense to function properly. Please see logs for more information.'
+                );
+                break;
+            default:
+                console.error(`Unexpected result from NetworkManager GetSettings: ${modifyPermission}`);
+                this.emit(
+                    'dependency-error',
+                    false,
+                    'dependency-error-networkmanager',
+                    `Unexpected result from NetworkManager GetSettings: ${modifyPermission}`,
+                    'Unable to determine whether you are authorized to change the connection zone in NetworkManager. ' +
+                        'Zone Defense may not function properly. Please see logs for more information.'
+                );
         }
     }
 });
