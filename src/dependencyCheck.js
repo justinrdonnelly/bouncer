@@ -62,7 +62,8 @@ export const DependencyCheck = GObject.registerClass({
         await Promise.all([
             this.runOnStartup(),
             this.checkListNames(),
-            this.checkFirewalld()
+            this.checkFirewalld(),
+            this.checkNetworkManager()
         ]);
     }
 
@@ -132,6 +133,32 @@ export const DependencyCheck = GObject.registerClass({
                 'Can\'t find firewalld',
                 'Please make sure firewalld is installed, running, and available inside the flatpak sandbox. ' +
                     'Please see logs for more information.'
+            );
+        }
+    }
+
+    async checkNetworkManager() {
+        // We have already handled any errors with #dbusNames. So we'll swallow those errors here. We wouldn't be able
+        // to continue, so we'll just return.
+        try {
+            await this.#dbusNames;
+        } catch (e) {
+            console.log('Skipping check for firewalld on DBus due to previous ListNames error.');
+            return;
+        }
+
+        // confirm NetworkManager is running
+        if ((await this.#dbusNames).includes('org.freedesktop.NetworkManager'))
+            console.log('Found NetworkManager on D-Bus.');
+        else {
+            console.error('Didn\'t see NetworkManager on D-Bus.');
+            this.emit(
+                'dependency-error',
+                true,
+                'dependency-error-networkmanager',
+                'Can\'t find NetworkManager',
+                'Please make sure NetworkManager is installed, running, and available inside the flatpak ' +
+                    'sandbox. Please see logs for more information.'
             );
         }
     }
