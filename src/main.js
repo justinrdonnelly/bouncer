@@ -109,14 +109,35 @@ export const ZoneDefenseApplication = GObject.registerClass(
         // The init method will instantiate NetworkState and listen for its signals. We do this outside the constructor
         // so we can be async.
         async init() {
+            let dependencyCheck = null;
+            let handlerId = null;
             try {
-                await DependencyCheck.runChecks();
+                dependencyCheck = new DependencyCheck();
+                handlerId = dependencyCheck.connect(
+                    'dependency-error', (emittingObject, fatal, id, title, message) => {
+                    if (fatal)
+                        message += ' Zone Defense is shutting down. You will need to restart manually.';
+                    const notification = new Gio.Notification();
+                    notification.set_title(title);
+                    notification.set_body(message);
+                    this.send_notification(id, notification);
+                    if (fatal) {
+                        this.quit(null);
+                    }
+                });
+                await dependencyCheck.runChecks();
             } catch (e) {
-                // Bail out here... There's nothing we can reasonably do without the correct dependencies.
+                // This should really never happen. DependencyCheck is full of `try/catch`es, so exceptions shouldn't
+                // get this far. Since we don't know how this happened, we'll log it, continue, and hope for the best.
                 console.error('Error in dependency check.');
                 console.error(e.message);
-                // TODO: It'd be nice to generate a notification in this case.
-                this.quit(null);
+                const notification = new Gio.Notification();
+                notification.set_title('Unknown error');
+                notification.set_body('An unknown error occurred. Zone Defense may not function correctly. Please ' +
+                    'see logs for more information.');
+                this.send_notification('main-dependency-unknown-error', notification);
+            } finally {
+                dependencyCheck.disconnect(handlerId);
             }
             try {
                 await this.#connectionIdsSeen.init();
