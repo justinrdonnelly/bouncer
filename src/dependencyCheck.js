@@ -59,8 +59,11 @@ export const DependencyCheck = GObject.registerClass({
     }
 
     async runChecks() {
-        await this.runOnStartup();
-        await this.checkFirewalld();
+        await Promise.all([
+            this.runOnStartup(),
+            this.checkListNames(),
+            this.checkFirewalld()
+        ]);
     }
 
     // This is not really a dependency. But we need to run on startup to actually be useful.
@@ -90,21 +93,9 @@ export const DependencyCheck = GObject.registerClass({
         }
     }
 
-    async checkFirewalld() {
+    async checkListNames() {
         try {
-            if ((await this.#dbusNames).includes('org.fedoraproject.FirewallD1'))
-                console.log('Found firewalld on D-Bus.');
-            else {
-                console.error('Didn\'t see firewalld on D-Bus.');
-                this.emit(
-                    'dependency-error',
-                    true,
-                    'dependency-error-firewalld',
-                    'Can\'t find firewalld',
-                    'Please make sure firewalld is installed, running, and available inside the flatpak sandbox. ' +
-                        'Please see logs for more information.'
-                );
-            }
+            await this.#dbusNames;
         } catch (e) {
             console.error('Error awaiting D-Bus names. This is likely a result of the ListNames method call.');
             console.error(e.message)
@@ -116,6 +107,32 @@ export const DependencyCheck = GObject.registerClass({
                     'Please make sure D-Bus is installed, running, and available inside the flatpak sandbox. ' +
                         'Please see logs for more information.'
                 );
+        }
+    }
+
+    async checkFirewalld() {
+        // We have already handled any errors with #dbusNames. So we'll swallow those errors here. We wouldn't be able
+        // to continue, so we'll just return.
+        try {
+            await this.#dbusNames;
+        } catch (e) {
+            console.log('Skipping check for firewalld on DBus due to previous ListNames error.');
+            return;
+        }
+
+        // confirm firewalld is running
+        if ((await this.#dbusNames).includes('org.fedoraproject.FirewallD1'))
+            console.log('Found firewalld on D-Bus.');
+        else {
+            console.error('Didn\'t see firewalld on D-Bus.');
+            this.emit(
+                'dependency-error',
+                true,
+                'dependency-error-firewalld',
+                'Can\'t find firewalld',
+                'Please make sure firewalld is installed, running, and available inside the flatpak sandbox. ' +
+                    'Please see logs for more information.'
+            );
         }
     }
 });
