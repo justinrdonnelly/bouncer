@@ -34,6 +34,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
     class ZoneDefenseApplication extends Adw.Application {
         #sourceIds = [];
         #connectionIdsSeen;
+        #quitting = false;
 
         constructor() {
             super({
@@ -228,14 +229,21 @@ export const ZoneDefenseApplication = GObject.registerClass(
         }
 
         quit(signal) {
-            if (signal !== null)
+            if (this.#quitting) {
+                console.log('Skipping duplicate attempt to quit');
+                return; // We are already quitting. Trying again will cause problems.
+            }
+            this.#quitting = true;
+            if (signal === null)
+                console.log('quitting with no signal!');
+            else
                 console.log(`quitting due to signal ${signal}!`);
-            this.#sourceIds.forEach((id) => GLib.Source.remove(id));
+            this.#sourceIds?.forEach((id) => GLib.Source.remove(id));
             this.networkState?.destroy();
             this.networkState = null;
-            this._showAboutAction.disconnect(this._showAboutActionHandlerId);
-            this._connectionChangedAction.disconnect(this._connectionChangedActionHandlerId);
-            this._errorAction.disconnect(this._errorActionHandlerId);
+            this._showAboutAction?.disconnect(this._showAboutActionHandlerId);
+            this._connectionChangedAction?.disconnect(this._connectionChangedActionHandlerId);
+            this._errorAction?.disconnect(this._errorActionHandlerId);
             super.quit(); // this ends up calling vfunc_shutdown()
         }
     }
