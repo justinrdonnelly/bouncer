@@ -14,6 +14,8 @@ import GLib from 'gi://GLib';
 import GObject from 'gi://GObject';
 import Xdp from "gi://Xdp";
 
+import { ZoneInfo } from './zoneInfo.js';
+
 export const DependencyCheck = GObject.registerClass({
     Signals: {
         'dependency-error': {
@@ -134,6 +136,41 @@ export const DependencyCheck = GObject.registerClass({
                 'Please make sure firewalld is installed, running, and available inside the flatpak sandbox. ' +
                     'Please see logs for more information.'
             );
+        }
+
+        // Check firewalld permissions. There's no permissions D-Bus API, but since all our method calls don't make any
+        // changes, we can just make those same calls now to confirm they work.
+        try {
+            await ZoneInfo.getZones();
+            console.log('Got firewalld zones.');
+        } catch (e) {
+            console.error('Can\'t get firewalld zones.');
+            console.error(e.message);
+            this.emit(
+                'dependency-error',
+                true,
+                'dependency-error-firewalld',
+                'Can\'t get firewalld zones',
+                'Unable to get firewalld zones. Please make sure firewalld permissions are correct, and are not ' +
+                'restricted inside the flatpak sandbox. Please see logs for more information.'
+            );
+            return;
+        }
+        try {
+            await ZoneInfo.getDefaultZone();
+            console.log('Got firewalld default zone.');
+        } catch (e) {
+            console.error('Can\'t get firewalld default zone.');
+            console.error(e.message);
+            this.emit(
+                'dependency-error',
+                true,
+                'dependency-error-firewalld',
+                'Can\'t get firewalld default zone',
+                'Unable to get firewalld default zone. Please make sure firewalld permissions are correct, and are ' +
+                'not restricted inside the flatpak sandbox. Please see logs for more information.'
+            );
+            return;
         }
     }
 
