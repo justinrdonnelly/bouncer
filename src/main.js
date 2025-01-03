@@ -238,7 +238,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 active_window?.close();
         }
 
-        async chooseClicked(connectionId, activeConnectionSettings, zone) {
+        async chooseClicked(connectionId, activeConnectionSettings, zone, defaultZone) {
             console.log(`For connection ID ${connectionId}, setting zone to ` +
                 `${zone ?? ChooseZoneWindow.defaultZoneLabel}`);
             // Even though these are both async, do NOT execute them concurrently. Update seen connections before
@@ -247,6 +247,20 @@ export const ZoneDefenseApplication = GObject.registerClass(
             // Don't try/catch here. We'll let the exception propagate.
             this.#connectionIdsSeen.addConnectionIdToSeen(connectionId);
             await ZoneForConnection.setZone(activeConnectionSettings, zone);
+
+            const notification = new Gio.Notification();
+            notification.set_title(`Firewall zone set for ${connectionId}`);
+            if (zone === null) // this is the default zone
+                notification.set_body(`Firewall zone for ${connectionId} has been set to the default zone (currently ` +
+                    `${defaultZone}). Whenever you connect to ${connectionId} in the future, the firewall zone will ` +
+                    'automatically be changed to the default zone.'
+                );
+            else
+                notification.set_body(`Firewall zone for ${connectionId} has been set to ${zone}. Whenever you ` +
+                    `connect to ${connectionId} in the future, the firewall zone will automatically be changed to ` +
+                    `${zone}.`
+                );
+            this.send_notification('main-zone-chosen', notification);
         }
 
         quit(signal) {

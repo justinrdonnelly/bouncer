@@ -24,6 +24,7 @@ export const ChooseZoneWindow = GObject.registerClass(
         static #simpleZoneList = ['public', 'home', 'work'];
         static defaultZoneLabel = '[DEFAULT]';
         #connectionId;
+        #defaultZone;
         #application;
         #activeConnectionSettings;
 
@@ -38,6 +39,7 @@ export const ChooseZoneWindow = GObject.registerClass(
             this.#connectionId = connectionId;
             this.#application = application;
             this.#activeConnectionSettings = activeConnectionSettings;
+            this.#defaultZone = defaultZone;
             this._currentZone.subtitle = currentZone || ChooseZoneWindow.defaultZoneLabel;
             this._defaultZone.subtitle = defaultZone;
             this._connectionId.subtitle = connectionId;
@@ -98,7 +100,8 @@ export const ChooseZoneWindow = GObject.registerClass(
                 await this.#application.chooseClicked(
                     this.#connectionId,
                     this.#activeConnectionSettings,
-                    selectedItemValue
+                    selectedItemValue,
+                    this.#defaultZone
                 );
                 this.close();
             } catch (e) {
