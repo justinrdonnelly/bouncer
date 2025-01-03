@@ -114,7 +114,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
             try {
                 dependencyCheck = new DependencyCheck();
                 handlerId = dependencyCheck.connect(
-                    'dependency-error', (emittingObject, fatal, id, title, message) => {
+                    'error', (emittingObject, fatal, id, title, message) => {
                     if (fatal)
                         message += ' Zone Defense is shutting down. You will need to restart manually.';
                     const notification = new Gio.Notification();

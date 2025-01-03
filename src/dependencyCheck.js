@@ -14,15 +14,11 @@ import GLib from 'gi://GLib';
 import GObject from 'gi://GObject';
 import Xdp from "gi://Xdp";
 
+import { ErrorSignal } from './errorSignal.js';
 import { ZoneInfo } from './zoneInfo.js';
 
 export const DependencyCheck = GObject.registerClass({
-    Signals: {
-        'dependency-error': {
-            param_types: [GObject.TYPE_BOOLEAN, GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_STRING],
-        },
-    },
-}, class DependencyCheck extends GObject.Object {
+}, class DependencyCheck extends ErrorSignal {
     static #XDP_BACKGROUND_FLAG_AUTOSTART = 1; // https://libportal.org/flags.BackgroundFlags.html
 
     #dbusNames; // A promise that resolves to a list of D-Bus names. Use `await`.
@@ -86,7 +82,7 @@ export const DependencyCheck = GObject.registerClass({
             console.error('Error configuring autostart.');
             console.error(e.message);
             this.emit(
-                'dependency-error',
+                'error',
                 false,
                 'dependency-error-autostart',
                 'Can\'t configure autostart',
@@ -103,7 +99,7 @@ export const DependencyCheck = GObject.registerClass({
             console.error('Error awaiting D-Bus names. This is likely a result of the ListNames method call.');
             console.error(e.message)
                 this.emit(
-                    'dependency-error',
+                    'error',
                     true,
                     'dependency-error-names',
                     'Can\'t find D-Bus names',
@@ -129,7 +125,7 @@ export const DependencyCheck = GObject.registerClass({
         else {
             console.error('Didn\'t see firewalld on D-Bus.');
             this.emit(
-                'dependency-error',
+                'error',
                 true,
                 'dependency-error-firewalld',
                 'Can\'t find firewalld',
@@ -147,7 +143,7 @@ export const DependencyCheck = GObject.registerClass({
             console.error('Can\'t get firewalld zones.');
             console.error(e.message);
             this.emit(
-                'dependency-error',
+                'error',
                 true,
                 'dependency-error-firewalld',
                 'Can\'t get firewalld zones',
@@ -163,7 +159,7 @@ export const DependencyCheck = GObject.registerClass({
             console.error('Can\'t get firewalld default zone.');
             console.error(e.message);
             this.emit(
-                'dependency-error',
+                'error',
                 true,
                 'dependency-error-firewalld',
                 'Can\'t get firewalld default zone',
@@ -190,7 +186,7 @@ export const DependencyCheck = GObject.registerClass({
         else {
             console.error('Didn\'t see NetworkManager on D-Bus.');
             this.emit(
-                'dependency-error',
+                'error',
                 true,
                 'dependency-error-networkmanager',
                 'Can\'t find NetworkManager',
@@ -237,7 +233,7 @@ export const DependencyCheck = GObject.registerClass({
             case 'auth': // authorized, but requires polkit authentication
                 console.warn('Authentication required to change NetworkManager connection zone.');
                 this.emit(
-                    'dependency-error',
+                    'error',
                     false,
                     'dependency-error-networkmanager',
                     'Authentication required to change NetworkManager connection zone',
@@ -248,7 +244,7 @@ export const DependencyCheck = GObject.registerClass({
             case 'no': // not authorized
                 console.error('Not authorized to change NetworkManager connection zone.');
                 this.emit(
-                    'dependency-error',
+                    'error',
                     true,
                     'dependency-error-networkmanager',
                     'Not authorized to change NetworkManager connection zone',
@@ -259,7 +255,7 @@ export const DependencyCheck = GObject.registerClass({
             default:
                 console.error(`Unexpected result from NetworkManager GetSettings: ${modifyPermission}`);
                 this.emit(
-                    'dependency-error',
+                    'error',
                     false,
                     'dependency-error-networkmanager',
                     `Unexpected result from NetworkManager GetSettings: ${modifyPermission}`,

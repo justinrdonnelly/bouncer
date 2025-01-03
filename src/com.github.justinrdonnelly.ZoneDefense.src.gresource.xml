@@ -7,6 +7,7 @@
     <file>chooseZoneWindow.js</file>
     <file>connectionIdsSeen.js</file>
     <file>dependencyCheck.js</file>
+    <file>errorSignal.js</file>
     <file>main.js</file>
     <file>moreInfo.js</file>
     <file>networkState.js</file>
