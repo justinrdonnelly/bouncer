@@ -79,7 +79,7 @@ export class ConnectionIdsSeen {
                     null
                 );
                 if (!success) {
-                    throw new Error(`Error saving data file ${this.#destinationFile}.`);
+                    throw new Error(`Error saving data file ${this.#destination}.`);
                 }
             } else {
                 throw new Error(`Error creating directory ${this.#destinationDirectory}.`);
@@ -87,7 +87,7 @@ export class ConnectionIdsSeen {
         } catch (e) {
             // Besides the `throw`s above, this happens when there is no write permission on file. At this point the
             // user has already selected a zone for the connection. Just log this error.
-            console.error(`Error updating ${this.#destinationFile}.`);
+            console.error(`Error updating ${this.#destination}.`);
             console.error(e.message);
             console.log('Once you restart Zone Defense, you will again be prompted to choose a firewall zone for ' +
                 `connection ${connectionIds.slice(-1)}.`);
@@ -97,7 +97,7 @@ export class ConnectionIdsSeen {
     addConnectionIdToSeen(connectionId) {
         console.log(`Adding ${connectionId} to ${this.#fileName}.`);
         this.#connectionIdsSeen.push(connectionId);
-        this.#updateConfig(this.#connectionIdsSeen);
+        this.#updateConfig(this.#connectionIdsSeen); // this is async, but will never throw an error
     }
 
 }

@@ -241,9 +241,8 @@ export const ZoneDefenseApplication = GObject.registerClass(
         async chooseClicked(connectionId, activeConnectionSettings, zone, defaultZone) {
             console.log(`For connection ID ${connectionId}, setting zone to ` +
                 `${zone ?? ChooseZoneWindow.defaultZoneLabel}`);
-            // Even though these are both async, do NOT execute them concurrently. Update seen connections before
-            // updating the zone. If the connection ID hasn't been added to the list of seen connections when the zone
-            // is changed, the window will open again!
+            // Update seen connections before updating the zone. If the connection ID hasn't been added to the list of
+            // seen connections when the zone is changed, the window will open again!
             // Don't try/catch here. We'll let the exception propagate.
             this.#connectionIdsSeen.addConnectionIdToSeen(connectionId);
             await ZoneForConnection.setZone(activeConnectionSettings, zone);
