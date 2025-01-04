@@ -58,6 +58,14 @@ const NetworkManagerStateItem = GObject.registerClass(
             console.debug(`debug 1 - Instantiating ${this.constructor.name} with object path: ${this._objectPath}`);
         }
 
+        destroyChild(objectPath) {
+            const child = this._childNetworkManagerStateItems.get(objectPath);
+            if (child) {
+                this._childNetworkManagerStateItems.delete(objectPath);
+                child.destroy();
+            }
+        }
+
         destroy() {
             console.debug(`debug 1 - Destroying ${this.constructor.name} with object path: ${this._objectPath}`);
             // disconnect any proxy signals
@@ -66,8 +74,7 @@ const NetworkManagerStateItem = GObject.registerClass(
             this._proxyObj = null;
             // handle children
             Array.from(this._childNetworkManagerStateItems.values()).forEach((child) => {
-                // call destroy on children
-                child.destroy();
+                this.destroyChild(child);
             });
         }
 
@@ -316,9 +323,7 @@ const NetworkManagerDevice = GObject.registerClass(
         #deleteConnection(activeConnection) {
             // delete the child connection
             console.debug(`debug 1 - Removing connection ${activeConnection}`);
-            const child = this._childNetworkManagerStateItems.get(activeConnection);
-            this._childNetworkManagerStateItems.delete(activeConnection);
-            child.destroy();
+            this.destroyChild(activeConnection);
         }
 
         #addConnectionInfo() {
@@ -476,11 +481,7 @@ const NetworkManager = GObject.registerClass(
             // clean up old device if applicable
             // e.g. /org/freedesktop/NetworkManager/Devices/1
             console.debug(`debug 1 - Removing device: ${deviceObjectPath}`);
-            const deviceObj = this._childNetworkManagerStateItems.get(deviceObjectPath);
-            if (deviceObj) {
-                this._childNetworkManagerStateItems.delete(deviceObjectPath);
-                deviceObj.destroy();
-            }
+            this.destroyChild(deviceObjectPath);
         }
     }
 );
