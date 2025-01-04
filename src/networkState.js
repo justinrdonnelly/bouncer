@@ -11,6 +11,7 @@
 
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
+import GObject from 'gi://GObject';
 
 import { NetworkManagerConnectionActiveProxy } from
     './networkManagerDbusInterfaces/networkManagerConnectionActiveProxy.js';
@@ -31,7 +32,8 @@ import { NetworkManagerProxy } from './networkManagerDbusInterfaces/networkManag
 
 // An abstract class to hold a dbus proxy object. We will make multiple dbus calls based on the results of earlier
 // calls, building a hierarchy.
-class NetworkManagerStateItem {
+const NetworkManagerStateItem = GObject.registerClass(
+class NetworkManagerStateItem extends GObject.Object {
     // conceptually, the variables below are 'protected'
     static _wellKnownName = 'org.freedesktop.NetworkManager';
     static _propertiesChanged = 'g-properties-changed';
@@ -47,6 +49,7 @@ class NetworkManagerStateItem {
     _proxyObjHandlerId;
 
     constructor(objectPath, connectionChangedAction, errorAction) {
+        super();
         if (this.constructor === NetworkManagerStateItem)
             throw new Error('NetworkManagerStateItem is an abstract class. Do not instantiate.');
         this._objectPath = objectPath;
@@ -79,10 +82,11 @@ class NetworkManagerStateItem {
             ])
         );
     }
-}
+});
 
 
 
+const NetworkManagerConnectionActive = GObject.registerClass(
 class NetworkManagerConnectionActive extends NetworkManagerStateItem {
     constructor(objectPath, connectionChangedAction, errorAction) {
         // example objectPath: /org/freedesktop/NetworkManager/ActiveConnection/1
@@ -171,8 +175,9 @@ class NetworkManagerConnectionActive extends NetworkManagerStateItem {
             }
         }
     }
-}
+});
 
+const NetworkManagerDevice = GObject.registerClass(
 class NetworkManagerDevice extends NetworkManagerStateItem {
     // from https://developer-old.gnome.org/NetworkManager/stable/nm-dbus-types.html#NMDeviceType
     static #NM_DEVICE_TYPE_WIFI = 2;
@@ -328,8 +333,9 @@ class NetworkManagerDevice extends NetworkManagerStateItem {
             this._childNetworkManagerStateItems.set(this.#activeConnection, networkManagerConnectionActive);
         }
     }
-}
+});
 
+const NetworkManager = GObject.registerClass(
 class NetworkManager extends NetworkManagerStateItem {
     #busWatchId;
 
@@ -467,12 +473,14 @@ class NetworkManager extends NetworkManagerStateItem {
             deviceObj.destroy();
         }
     }
-}
+});
 
-export class NetworkState {
+export const NetworkState = GObject.registerClass(
+class NetworkState extends GObject.Object {
     #networkManager;
 
     constructor(connectionChangedAction, errorAction) {
+        super();
         // Keep a reference to NetworkManager instance to prevent GC
         this.#networkManager = new NetworkManager(
             '/org/freedesktop/NetworkManager',
@@ -485,4 +493,4 @@ export class NetworkState {
         this.#networkManager.destroy();
         this.#networkManager = null;
     }
-}
+});
