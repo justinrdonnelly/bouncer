@@ -58,6 +58,10 @@ const NetworkManagerStateItem = GObject.registerClass(
             console.debug(`debug 1 - Instantiating ${this.constructor.name} with object path: ${this._objectPath}`);
         }
 
+        _addChild(objectPath, object) {
+            this._childNetworkManagerStateItems.set(objectPath, object);
+        }
+
         destroyChild(objectPath) {
             const child = this._childNetworkManagerStateItems.get(objectPath);
             if (child) {
@@ -337,7 +341,7 @@ const NetworkManagerDevice = GObject.registerClass(
                     this._connectionChangedAction,
                     this._errorAction
                 );
-                this._childNetworkManagerStateItems.set(this.#activeConnection, networkManagerConnectionActive);
+                this._addChild(this.#activeConnection, networkManagerConnectionActive);
             }
         }
     }
@@ -474,7 +478,7 @@ const NetworkManager = GObject.registerClass(
                 device, this._connectionChangedAction, this._errorAction
             );
             // Add to child devices
-            this._childNetworkManagerStateItems.set(device, networkManagerDevice);
+            this._addChild(device, networkManagerDevice);
         }
 
         #removeDevice(deviceObjectPath) { // e.g. /org/freedesktop/NetworkManager/Devices/1
