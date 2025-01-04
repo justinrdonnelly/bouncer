@@ -45,20 +45,18 @@ const NetworkManagerStateItem = GObject.registerClass(
         // conceptually, the variables below are 'protected'
         objectPath;
         _connectionChangedAction;
-        _errorAction;
         _proxyObj = null;
         // map of object path to object for each related child NetworkManagerStateItem
         _childNetworkManagerStateItems = new Map();
         _handlerId;
         _proxyObjHandlerId;
 
-        constructor(objectPath, connectionChangedAction, errorAction) {
+        constructor(objectPath, connectionChangedAction) {
             super();
             if (this.constructor === NetworkManagerStateItem)
                 throw new Error('NetworkManagerStateItem is an abstract class. Do not instantiate.');
             this.objectPath = objectPath;
             this._connectionChangedAction = connectionChangedAction;
-            this._errorAction = errorAction;
             console.debug(`debug 1 - Instantiating ${this.constructor.name} with object path: ${this.objectPath}`);
         }
 
@@ -117,9 +115,9 @@ const NetworkManagerStateItem = GObject.registerClass(
 
 const NetworkManagerConnectionActive = GObject.registerClass(
     class NetworkManagerConnectionActive extends NetworkManagerStateItem {
-        constructor(objectPath, connectionChangedAction, errorAction) {
+        constructor(objectPath, connectionChangedAction) {
             // example objectPath: /org/freedesktop/NetworkManager/ActiveConnection/1
-            super(objectPath, connectionChangedAction, errorAction);
+            super(objectPath, connectionChangedAction);
             this.#getDbusProxyObject();
         }
 
@@ -218,9 +216,9 @@ const NetworkManagerDevice = GObject.registerClass(
             return !(connectionValue === undefined || connectionValue === null || connectionValue === '/');
         }
 
-        constructor(objectPath, connectionChangedAction, errorAction) {
+        constructor(objectPath, connectionChangedAction) {
             // example objectPath: /org/freedesktop/NetworkManager/Devices/1
-            super(objectPath, connectionChangedAction, errorAction);
+            super(objectPath, connectionChangedAction);
             this.#getDbusProxyObject();
         }
 
@@ -355,8 +353,7 @@ const NetworkManagerDevice = GObject.registerClass(
                 // this connection is active, make another dbus call
                 const networkManagerConnectionActive = new NetworkManagerConnectionActive(
                     this.#activeConnection,
-                    this._connectionChangedAction,
-                    this._errorAction
+                    this._connectionChangedAction
                 );
                 this._addChild(this.#activeConnection, networkManagerConnectionActive);
             }
@@ -368,9 +365,9 @@ const NetworkManager = GObject.registerClass(
     class NetworkManager extends NetworkManagerStateItem {
         #busWatchId;
 
-        constructor(objectPath, connectionChangedAction, errorAction) {
+        constructor(objectPath, connectionChangedAction) {
             // example objectPath: /org/freedesktop/NetworkManager (this is always what it is)
-            super(objectPath, connectionChangedAction, errorAction);
+            super(objectPath, connectionChangedAction);
             this.#busWatchId = Gio.bus_watch_name(
                 Gio.BusType.SYSTEM,
                 NetworkManagerStateItem._wellKnownName,
@@ -491,9 +488,7 @@ const NetworkManager = GObject.registerClass(
             this.#removeDevice(device); // if the device already exists, remove it
             console.debug(`debug 1 - Adding device: ${device}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
             // Instantiate a new class that will make another dbus call
-            const networkManagerDevice = new NetworkManagerDevice(
-                device, this._connectionChangedAction, this._errorAction
-            );
+            const networkManagerDevice = new NetworkManagerDevice(device, this._connectionChangedAction);
             // Add to child devices
             this._addChild(device, networkManagerDevice);
         }
@@ -512,14 +507,10 @@ export const NetworkState = GObject.registerClass(
         #networkManager;
         #errorHandlerId;
 
-        constructor(connectionChangedAction, errorAction) {
+        constructor(connectionChangedAction) {
             super();
             // Keep a reference to NetworkManager instance to prevent GC
-            this.#networkManager = new NetworkManager(
-                '/org/freedesktop/NetworkManager',
-                connectionChangedAction,
-                errorAction
-            );
+            this.#networkManager = new NetworkManager('/org/freedesktop/NetworkManager', connectionChangedAction);
             // relay errors from this.#networkManager
             this.#errorHandlerId = this.#networkManager.connect(
                 'error', (emittingObject, fatal, id, title, message) => {
