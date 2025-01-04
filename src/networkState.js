@@ -13,6 +13,7 @@ import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 import GObject from 'gi://GObject';
 
+import { ErrorSignal } from './errorSignal.js';
 import { NetworkManagerConnectionActiveProxy } from
     './networkManagerDbusInterfaces/networkManagerConnectionActiveProxy.js';
 import { NetworkManagerDeviceProxy } from './networkManagerDbusInterfaces/networkManagerDeviceProxy.js';
@@ -33,13 +34,16 @@ import { NetworkManagerProxy } from './networkManagerDbusInterfaces/networkManag
 // An abstract class to hold a dbus proxy object. We will make multiple dbus calls based on the results of earlier
 // calls, building a hierarchy.
 const NetworkManagerStateItem = GObject.registerClass(
-    class NetworkManagerStateItem extends GObject.Object {
+    class NetworkManagerStateItem extends ErrorSignal {
         // conceptually, the variables below are 'protected'
         static _wellKnownName = 'org.freedesktop.NetworkManager';
         static _propertiesChanged = 'g-properties-changed';
 
+        // map of object path to error handler ID for each related child NetworkManagerStateItem
+        #errorHandlerIds = new Map();
+
         // conceptually, the variables below are 'protected'
-        _objectPath;
+        objectPath;
         _connectionChangedAction;
         _errorAction;
         _proxyObj = null;
@@ -52,18 +56,33 @@ const NetworkManagerStateItem = GObject.registerClass(
             super();
             if (this.constructor === NetworkManagerStateItem)
                 throw new Error('NetworkManagerStateItem is an abstract class. Do not instantiate.');
-            this._objectPath = objectPath;
+            this.objectPath = objectPath;
             this._connectionChangedAction = connectionChangedAction;
             this._errorAction = errorAction;
-            console.debug(`debug 1 - Instantiating ${this.constructor.name} with object path: ${this._objectPath}`);
+            console.debug(`debug 1 - Instantiating ${this.constructor.name} with object path: ${this.objectPath}`);
         }
 
         _addChild(objectPath, object) {
             this._childNetworkManagerStateItems.set(objectPath, object);
+            this.#relaySignalErrors(object);
+        }
+
+        #relaySignalErrors(child) {
+            const handlerId = child.connect('error', (emittingObject, fatal, id, title, message) => {
+                console.debug('relaying error signal from deeper down in NetworkState.');
+                this.emit(fatal, id, title, message);
+            });
+            this.#errorHandlerIds.set(child.objectPath, handlerId);
         }
 
         destroyChild(objectPath) {
             const child = this._childNetworkManagerStateItems.get(objectPath);
+            const errorHandlerId = this.#errorHandlerIds.get(objectPath);
+
+            if (errorHandlerId) {
+                this.#errorHandlerIds.delete(objectPath);
+                child.disconnect(errorHandlerId);
+            }
             if (child) {
                 this._childNetworkManagerStateItems.delete(objectPath);
                 child.destroy();
@@ -71,7 +90,7 @@ const NetworkManagerStateItem = GObject.registerClass(
         }
 
         destroy() {
-            console.debug(`debug 1 - Destroying ${this.constructor.name} with object path: ${this._objectPath}`);
+            console.debug(`debug 1 - Destroying ${this.constructor.name} with object path: ${this.objectPath}`);
             // disconnect any proxy signals
             // Use optional chaining to confirm existence since we don't always keep the proxy
             this._proxyObj?.disconnect(this._proxyObjHandlerId);
@@ -126,7 +145,7 @@ const NetworkManagerConnectionActive = GObject.registerClass(
             NetworkManagerConnectionActiveProxy(
                 Gio.DBus.system,
                 NetworkManagerStateItem._wellKnownName,
-                this._objectPath,
+                this.objectPath,
                 (sourceObj, error) => {
                     if (error !== null) {
                         // error is [GLib.Error](https://docs.gtk.org/glib/struct.Error.html)
@@ -223,7 +242,7 @@ const NetworkManagerDevice = GObject.registerClass(
             NetworkManagerDeviceProxy(
                 Gio.DBus.system,
                 NetworkManagerStateItem._wellKnownName,
-                this._objectPath,
+                this.objectPath,
                 (proxy, error) => {
                     if (error !== null) {
                         // error is [GLib.Error](https://docs.gtk.org/glib/struct.Error.html)
@@ -390,7 +409,7 @@ const NetworkManager = GObject.registerClass(
             NetworkManagerProxy(
                 Gio.DBus.system,
                 NetworkManagerStateItem._wellKnownName,
-                this._objectPath,
+                this.objectPath,
                 (proxy, error) => {
                     if (error !== null) {
                         // error is [GLib.Error](https://docs.gtk.org/glib/struct.Error.html)
@@ -491,8 +510,9 @@ const NetworkManager = GObject.registerClass(
 );
 
 export const NetworkState = GObject.registerClass(
-    class NetworkState extends GObject.Object {
+    class NetworkState extends ErrorSignal {
         #networkManager;
+        #errorHandlerId;
 
         constructor(connectionChangedAction, errorAction) {
             super();
@@ -502,9 +522,16 @@ export const NetworkState = GObject.registerClass(
                 connectionChangedAction,
                 errorAction
             );
+            // relay errors from this.#networkManager
+            this.#errorHandlerId = this.#networkManager.connect(
+                'error', (emittingObject, fatal, id, title, message) => {
+                console.debug('relaying error signal from deeper down in NetworkState.');
+                this.emit(fatal, id, title, message);
+            });
         }
 
         destroy() {
+            this.#networkManager.disconnect(this.#errorHandlerId);
             this.#networkManager.destroy();
             this.#networkManager = null;
         }
