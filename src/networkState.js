@@ -102,14 +102,12 @@ const NetworkManagerStateItem = GObject.registerClass(
         }
 
         _error() {
-            const details = 'Zone Defense ran into an error determining network state. This most likely means the ' +
-                'application will not work correctly. Please see logs for more information.';
-            this._errorAction.activate(
-                GLib.Variant.new_array(new GLib.VariantType('s'), [
-                    GLib.Variant.new_string('network-state'),
-                    GLib.Variant.new_string('Error determining network state.'),
-                    GLib.Variant.new_string(details),
-                ])
+            this.emit(
+                true, // all errors here are considered fatal
+                'network-state',
+                'Error determining network state',
+                'Zone Defense ran into an error determining network state. This is required for the application to ' +
+                    'work correctly. Please see logs for more information.'
             );
         }
     }

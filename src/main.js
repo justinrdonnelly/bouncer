@@ -34,6 +34,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
     class ZoneDefenseApplication extends Adw.Application {
         #sourceIds = [];
         #connectionIdsSeen;
+        #networkStateErrorHandlerId;
         #quitting = false;
 
         constructor() {
@@ -188,6 +189,8 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 });
 
                 this.networkState = new NetworkState(this._connectionChangedAction, this._errorAction);
+                this.#networkStateErrorHandlerId = this.networkState.connect(
+                    'error', this.#handleErrorSignal.bind(this));
             } catch (e) {
                 // Bail out here... There's nothing we can do without NetworkState.
                 console.error('Unable to initialize NetworkState.');
@@ -274,6 +277,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
             else
                 console.log(`quitting due to signal ${signal}!`);
             this.#sourceIds?.forEach((id) => GLib.Source.remove(id));
+            this.networkState?.disconnect(this.#networkStateErrorHandlerId);
             this.networkState?.destroy();
             this.networkState = null;
             this._showAboutAction?.disconnect(this._showAboutActionHandlerId);
