@@ -11,19 +11,22 @@
 
 import GObject from 'gi://GObject';
 
-export const ErrorSignal = GObject.registerClass({
-    Signals: {
-        'error': {
-            param_types: [
-                GObject.TYPE_BOOLEAN, // Whether the error should be considered fatal. This may be ignored.
-                GObject.TYPE_STRING, // Error ID. This is often used for the notification ID.
-                GObject.TYPE_STRING, // Error title. This is often used for the notification title.
-                GObject.TYPE_STRING // Error message. A longer error message. This is often used for notification body.
-            ],
+export const ErrorSignal = GObject.registerClass(
+    {
+        Signals: {
+            'error': {
+                param_types: [
+                    GObject.TYPE_BOOLEAN, // Whether the error should be considered fatal. This may be ignored.
+                    GObject.TYPE_STRING, // Error ID. This is often used for the notification ID.
+                    GObject.TYPE_STRING, // Error title. This is often used for the notification title.
+                    GObject.TYPE_STRING // Error message. This is often used for notification body.
+                ],
+            },
         },
     },
-}, class ErrorSignal extends GObject.Object {
-    emit(fatal, errorId, errorTitle, errorMessage) {
-        super.emit('error', fatal, errorId, errorTitle, errorMessage)
+    class ErrorSignal extends GObject.Object {
+        emit(fatal, errorId, errorTitle, errorMessage) {
+            super.emit('error', fatal, errorId, errorTitle, errorMessage)
+        }
     }
-});
+);
