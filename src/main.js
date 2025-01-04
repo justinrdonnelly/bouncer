@@ -113,18 +113,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
             let handlerId = null;
             try {
                 dependencyCheck = new DependencyCheck();
-                handlerId = dependencyCheck.connect(
-                    'error', (emittingObject, fatal, id, title, message) => {
-                    if (fatal)
-                        message += ' Zone Defense is shutting down. You will need to restart manually.';
-                    const notification = new Gio.Notification();
-                    notification.set_title(title);
-                    notification.set_body(message);
-                    this.send_notification(id, notification);
-                    if (fatal) {
-                        this.quit(null);
-                    }
-                });
+                handlerId = dependencyCheck.connect('error', this.#handleErrorSignal.bind(this));
                 await dependencyCheck.runChecks();
             } catch (e) {
                 // This should really never happen. DependencyCheck is full of `try/catch`es, so exceptions shouldn't
@@ -213,6 +202,18 @@ export const ZoneDefenseApplication = GObject.registerClass(
         } // end init
 
         vfunc_activate() {} // Required because Adw.Application extends GApplication.
+
+        #handleErrorSignal(emittingObject, fatal, id, title, message) {
+            if (fatal)
+                message += ' Zone Defense is shutting down. You will need to restart manually.';
+            const notification = new Gio.Notification();
+            notification.set_title(title);
+            notification.set_body(message);
+            this.send_notification(id, notification);
+            if (fatal) {
+                this.quit(null);
+            }
+        }
 
         createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings) {
             let { active_window } = this;
