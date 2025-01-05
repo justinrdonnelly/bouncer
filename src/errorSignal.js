@@ -25,7 +25,7 @@ export const ErrorSignal = GObject.registerClass(
         },
     },
     class ErrorSignal extends GObject.Object {
-        emit(fatal, errorId, errorTitle, errorMessage) {
+        emitError(fatal, errorId, errorTitle, errorMessage) {
             super.emit('error', fatal, errorId, errorTitle, errorMessage)
         }
     }

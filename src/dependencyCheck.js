@@ -81,7 +81,7 @@ export const DependencyCheck = GObject.registerClass(
             } catch (e) {
                 console.error('Error configuring autostart.');
                 console.error(e.message);
-                this.emit(
+                this.emitError(
                     false,
                     'dependency-error-autostart',
                     'Can\'t configure autostart',
@@ -97,7 +97,7 @@ export const DependencyCheck = GObject.registerClass(
             } catch (e) {
                 console.error('Error awaiting D-Bus names. This is likely a result of the ListNames method call.');
                 console.error(e.message)
-                    this.emit(
+                    this.emitError(
                         true,
                         'dependency-error-names',
                         'Can\'t find D-Bus names',
@@ -122,7 +122,7 @@ export const DependencyCheck = GObject.registerClass(
                 console.log('Found firewalld on D-Bus.');
             else {
                 console.error('Didn\'t see firewalld on D-Bus.');
-                this.emit(
+                this.emitError(
                     true,
                     'dependency-error-firewalld',
                     'Can\'t find firewalld',
@@ -139,7 +139,7 @@ export const DependencyCheck = GObject.registerClass(
             } catch (e) {
                 console.error('Can\'t get firewalld zones.');
                 console.error(e.message);
-                this.emit(
+                this.emitError(
                     true,
                     'dependency-error-firewalld',
                     'Can\'t get firewalld zones',
@@ -154,7 +154,7 @@ export const DependencyCheck = GObject.registerClass(
             } catch (e) {
                 console.error('Can\'t get firewalld default zone.');
                 console.error(e.message);
-                this.emit(
+                this.emitError(
                     true,
                     'dependency-error-firewalld',
                     'Can\'t get firewalld default zone',
@@ -180,7 +180,7 @@ export const DependencyCheck = GObject.registerClass(
                 console.log('Found NetworkManager on D-Bus.');
             else {
                 console.error('Didn\'t see NetworkManager on D-Bus.');
-                this.emit(
+                this.emitError(
                     true,
                     'dependency-error-networkmanager',
                     'Can\'t find NetworkManager',
@@ -226,7 +226,7 @@ export const DependencyCheck = GObject.registerClass(
                     break;
                 case 'auth': // authorized, but requires polkit authentication
                     console.warn('Authentication required to change NetworkManager connection zone.');
-                    this.emit(
+                    this.emitError(
                         false,
                         'dependency-error-networkmanager',
                         'Authentication required to change NetworkManager connection zone',
@@ -236,7 +236,7 @@ export const DependencyCheck = GObject.registerClass(
                     break;
                 case 'no': // not authorized
                     console.error('Not authorized to change NetworkManager connection zone.');
-                    this.emit(
+                    this.emitError(
                         true,
                         'dependency-error-networkmanager',
                         'Not authorized to change NetworkManager connection zone',
@@ -246,7 +246,7 @@ export const DependencyCheck = GObject.registerClass(
                     break;
                 default:
                     console.error(`Unexpected result from NetworkManager GetSettings: ${modifyPermission}`);
-                    this.emit(
+                    this.emitError(
                         false,
                         'dependency-error-networkmanager',
                         `Unexpected result from NetworkManager GetSettings: ${modifyPermission}`,

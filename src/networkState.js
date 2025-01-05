@@ -68,7 +68,7 @@ const NetworkManagerStateItem = GObject.registerClass(
         #relaySignalErrors(child) {
             const handlerId = child.connect('error', (emittingObject, fatal, id, title, message) => {
                 console.debug('relaying error signal from deeper down in NetworkState.');
-                this.emit(fatal, id, title, message);
+                this.emitError(fatal, id, title, message);
             });
             this.#errorHandlerIds.set(child.objectPath, handlerId);
         }
@@ -100,7 +100,7 @@ const NetworkManagerStateItem = GObject.registerClass(
         }
 
         _error() {
-            this.emit(
+            this.emitError(
                 true, // all errors here are considered fatal
                 'network-state',
                 'Error determining network state',
@@ -515,7 +515,7 @@ export const NetworkState = GObject.registerClass(
             this.#errorHandlerId = this.#networkManager.connect(
                 'error', (emittingObject, fatal, id, title, message) => {
                 console.debug('relaying error signal from deeper down in NetworkState.');
-                this.emit(fatal, id, title, message);
+                this.emitError(fatal, id, title, message);
             });
         }
 
