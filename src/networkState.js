@@ -26,21 +26,42 @@ import { NetworkManagerProxy } from './networkManagerDbusInterfaces/networkManag
  * `ActiveConnection` object path. The `ActiveConnection` is the 3rd level of the tree, and contains the `Id`. This is
  * the connection name, in which we are interested.
  *
- * These classes (except for the abstract NetworkManagerStateItem) are ordered (as far as which are used first) from
- * bottom to top. We do this to keep the linter happy. We could disable linting on those lines, but I prefer not to
- * chance masking real errors. I trust that you can read from bottom to top.
+ * These classes (except for the abstract NetworkStateSignals and NetworkManagerStateItem) are ordered (as far as which
+ * are used first) from bottom to top. We do this to keep the linter happy. We could disable linting on those lines, but
+ * I prefer not to chance masking real errors. I trust that you can read from bottom to top.
  */
+
+// An absttract class with all the signals we need.
+const NetworkStateSignals = GObject.registerClass(
+    {
+        Signals: {
+            'connection-changed': {
+                param_types: [
+                    GObject.TYPE_STRING, // connection ID
+                    GObject.TYPE_STRING // settings object path (eg /org/freedesktop/NetworkManager/Settings/2)
+                ],
+            },
+        },
+    },
+    class NetworkStateSignals extends ErrorSignal {
+        emitConnectionChanged(connectionId, activeConnectionSettings) {
+            super.emit('connection-changed', connectionId, activeConnectionSettings)
+        }
+    }
+);
 
 // An abstract class to hold a dbus proxy object. We will make multiple dbus calls based on the results of earlier
 // calls, building a hierarchy.
 const NetworkManagerStateItem = GObject.registerClass(
-    class NetworkManagerStateItem extends ErrorSignal {
+    class NetworkManagerStateItem extends NetworkStateSignals {
         // conceptually, the variables below are 'protected'
         static _wellKnownName = 'org.freedesktop.NetworkManager';
         static _propertiesChanged = 'g-properties-changed';
 
         // map of object path to error handler ID for each related child NetworkManagerStateItem
         #errorHandlerIds = new Map();
+        // map of object path to connection changed handler ID for each related child NetworkManagerStateItem
+        #connectionChangedHandlerIds = new Map();
 
         // conceptually, the variables below are 'protected'
         objectPath;
@@ -63,6 +84,7 @@ const NetworkManagerStateItem = GObject.registerClass(
         _addChild(objectPath, object) {
             this._childNetworkManagerStateItems.set(objectPath, object);
             this.#relaySignalErrors(object);
+            this.#relaySignalConnectionChanged(object);
         }
 
         #relaySignalErrors(child) {
@@ -73,13 +95,27 @@ const NetworkManagerStateItem = GObject.registerClass(
             this.#errorHandlerIds.set(child.objectPath, handlerId);
         }
 
+        #relaySignalConnectionChanged(child) {
+            const handlerId = child.connect(
+                'connection-changed', (emittingObject, connectionId, activeConnectionSettings) => {
+                console.debug('relaying connection-changed signal from deeper down in NetworkState.');
+                this.emitConnectionChanged(connectionId, activeConnectionSettings);
+            });
+            this.#connectionChangedHandlerIds.set(child.objectPath, handlerId);
+        }
+
         destroyChild(objectPath) {
             const child = this._childNetworkManagerStateItems.get(objectPath);
             const errorHandlerId = this.#errorHandlerIds.get(objectPath);
+            const connectionChangedHandlerId = this.#connectionChangedHandlerIds.get(objectPath);
 
             if (errorHandlerId) {
                 this.#errorHandlerIds.delete(objectPath);
                 child.disconnect(errorHandlerId);
+            }
+            if (connectionChangedHandlerId) {
+                this.#connectionChangedHandlerIds.delete(objectPath);
+                child.disconnect(connectionChangedHandlerId);
             }
             if (child) {
                 this._childNetworkManagerStateItems.delete(objectPath);
@@ -121,13 +157,8 @@ const NetworkManagerConnectionActive = GObject.registerClass(
             this.#getDbusProxyObject();
         }
 
-        #activate() {
-            this._connectionChangedAction.activate(
-                GLib.Variant.new_array(new GLib.VariantType('s'), [
-                    GLib.Variant.new_string(this._proxyObj.Id),
-                    GLib.Variant.new_string(this._proxyObj.Connection),
-                ])
-            );
+        #connectionChanged() {
+            this.emitConnectionChanged(this._proxyObj.Id, this._proxyObj.Connection);
         }
 
         /**
@@ -162,7 +193,7 @@ const NetworkManagerConnectionActive = GObject.registerClass(
                         NetworkManagerStateItem._propertiesChanged,
                         this.#proxyUpdated.bind(this)
                     );
-                    this.#activate();
+                    this.#connectionChanged();
                 },
                 null,
                 Gio.DBusProxyFlags.NONE
@@ -184,7 +215,7 @@ const NetworkManagerConnectionActive = GObject.registerClass(
                 if (name === 'Id') {
                     console.debug(`debug 2 - ID updated to ${this._proxyObj.Id}`);
                     // the ID has changed, signal and stop checking for other changes
-                    this.#activate();
+                    this.#connectionChanged();
                     return;
                 }
             }
@@ -503,9 +534,10 @@ const NetworkManager = GObject.registerClass(
 );
 
 export const NetworkState = GObject.registerClass(
-    class NetworkState extends ErrorSignal {
+    class NetworkState extends NetworkStateSignals {
         #networkManager;
         #errorHandlerId;
+        #connectionChangedHandlerId;
 
         constructor(connectionChangedAction) {
             super();
@@ -517,10 +549,17 @@ export const NetworkState = GObject.registerClass(
                 console.debug('relaying error signal from deeper down in NetworkState.');
                 this.emitError(fatal, id, title, message);
             });
+            // relay connection changes from this.#networkManager
+            this.#connectionChangedHandlerId = this.#networkManager.connect(
+                'connection-changed', (emittingObject, connectionId, activeConnectionSettings) => {
+                console.debug('relaying error signal from deeper down in NetworkState.');
+                this.emitConnectionChanged(connectionId, activeConnectionSettings);
+            });
         }
 
         destroy() {
             this.#networkManager.disconnect(this.#errorHandlerId);
+            this.#networkManager.disconnect(this.#connectionChangedHandlerId);
             this.#networkManager.destroy();
             this.#networkManager = null;
         }
