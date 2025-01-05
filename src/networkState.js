@@ -10,7 +10,6 @@
  */
 
 import Gio from 'gi://Gio';
-import GLib from 'gi://GLib';
 import GObject from 'gi://GObject';
 
 import { ErrorSignal } from './errorSignal.js';
@@ -65,19 +64,17 @@ const NetworkManagerStateItem = GObject.registerClass(
 
         // conceptually, the variables below are 'protected'
         objectPath;
-        _connectionChangedAction;
         _proxyObj = null;
         // map of object path to object for each related child NetworkManagerStateItem
         _childNetworkManagerStateItems = new Map();
         _handlerId;
         _proxyObjHandlerId;
 
-        constructor(objectPath, connectionChangedAction) {
+        constructor(objectPath) {
             super();
             if (this.constructor === NetworkManagerStateItem)
                 throw new Error('NetworkManagerStateItem is an abstract class. Do not instantiate.');
             this.objectPath = objectPath;
-            this._connectionChangedAction = connectionChangedAction;
             console.debug(`debug 1 - Instantiating ${this.constructor.name} with object path: ${this.objectPath}`);
         }
 
@@ -151,9 +148,9 @@ const NetworkManagerStateItem = GObject.registerClass(
 
 const NetworkManagerConnectionActive = GObject.registerClass(
     class NetworkManagerConnectionActive extends NetworkManagerStateItem {
-        constructor(objectPath, connectionChangedAction) {
+        constructor(objectPath) {
             // example objectPath: /org/freedesktop/NetworkManager/ActiveConnection/1
-            super(objectPath, connectionChangedAction);
+            super(objectPath);
             this.#getDbusProxyObject();
         }
 
@@ -247,9 +244,9 @@ const NetworkManagerDevice = GObject.registerClass(
             return !(connectionValue === undefined || connectionValue === null || connectionValue === '/');
         }
 
-        constructor(objectPath, connectionChangedAction) {
+        constructor(objectPath) {
             // example objectPath: /org/freedesktop/NetworkManager/Devices/1
-            super(objectPath, connectionChangedAction);
+            super(objectPath);
             this.#getDbusProxyObject();
         }
 
@@ -321,14 +318,9 @@ const NetworkManagerDevice = GObject.registerClass(
                         console.debug('debug 2 - connection toggled from active to inactive');
                         this.#deleteConnection(oldValue); // destroy old child
                         this.#addConnectionInfo(); // this will add the child ('/' in this case)
-                        // Activate here because we won't have a child that can activate. It has been destroyed. Use
-                        // empty string to indicate no connection.
-                        this._connectionChangedAction.activate(
-                            GLib.Variant.new_array(new GLib.VariantType('s'), [
-                                GLib.Variant.new_string(''),
-                                GLib.Variant.new_string(''),
-                            ])
-                        );
+                        // Emit here because we won't have a child that can emit. It has been destroyed. Use empty
+                        // string to indicate no connection.
+                        this.emitConnectionChanged('', '')
                     } else if (!NetworkManagerDevice.#isConnectionActive(oldValue) &&
                         NetworkManagerDevice.#isConnectionActive(value)) {
                         // connection has toggled from inactive to active
@@ -382,10 +374,7 @@ const NetworkManagerDevice = GObject.registerClass(
             console.debug(`debug 1 - Adding connection ${this.#activeConnection}`);
             if (NetworkManagerDevice.#isConnectionActive(this.#activeConnection)) {
                 // this connection is active, make another dbus call
-                const networkManagerConnectionActive = new NetworkManagerConnectionActive(
-                    this.#activeConnection,
-                    this._connectionChangedAction
-                );
+                const networkManagerConnectionActive = new NetworkManagerConnectionActive(this.#activeConnection);
                 this._addChild(this.#activeConnection, networkManagerConnectionActive);
             }
         }
@@ -396,9 +385,9 @@ const NetworkManager = GObject.registerClass(
     class NetworkManager extends NetworkManagerStateItem {
         #busWatchId;
 
-        constructor(objectPath, connectionChangedAction) {
+        constructor(objectPath) {
             // example objectPath: /org/freedesktop/NetworkManager (this is always what it is)
-            super(objectPath, connectionChangedAction);
+            super(objectPath);
             this.#busWatchId = Gio.bus_watch_name(
                 Gio.BusType.SYSTEM,
                 NetworkManagerStateItem._wellKnownName,
@@ -519,7 +508,7 @@ const NetworkManager = GObject.registerClass(
             this.#removeDevice(device); // if the device already exists, remove it
             console.debug(`debug 1 - Adding device: ${device}`); // e.g. /org/freedesktop/NetworkManager/Devices/1
             // Instantiate a new class that will make another dbus call
-            const networkManagerDevice = new NetworkManagerDevice(device, this._connectionChangedAction);
+            const networkManagerDevice = new NetworkManagerDevice(device);
             // Add to child devices
             this._addChild(device, networkManagerDevice);
         }
@@ -539,10 +528,10 @@ export const NetworkState = GObject.registerClass(
         #errorHandlerId;
         #connectionChangedHandlerId;
 
-        constructor(connectionChangedAction) {
+        constructor() {
             super();
             // Keep a reference to NetworkManager instance to prevent GC
-            this.#networkManager = new NetworkManager('/org/freedesktop/NetworkManager', connectionChangedAction);
+            this.#networkManager = new NetworkManager('/org/freedesktop/NetworkManager');
             // relay errors from this.#networkManager
             this.#errorHandlerId = this.#networkManager.connect(
                 'error', (emittingObject, fatal, id, title, message) => {

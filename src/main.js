@@ -120,51 +120,8 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 this.quit(null);
             }
 
-            // Create the `connectionChangedAction` action. We'll pass it to NetworkState.
             try {
-                this._connectionChangedAction = new Gio.SimpleAction({
-                    name: 'connectionChangedAction',
-                    parameter_type: new GLib.VariantType('as'),
-                });
-
-                this._connectionChangedActionHandlerId =
-                    this._connectionChangedAction.connect('activate', async (action, parameter) => {
-                    try {
-                        const parameters = parameter.deepUnpack();
-                        console.log(`${action.name} parameters: ${parameters}`);
-                        const connectionId = parameters[0];
-                        const activeConnectionSettings = parameters[1];
-                        this.closeWindowIfConnectionChanged(connectionId);
-                        // bail out if there is no connection
-                        if (connectionId === '')
-                            return;
-
-                        const isConnectionNew = this.#connectionIdsSeen.isConnectionNew(connectionId);
-                        if (!isConnectionNew)
-                            // The connection is not new. Don't open the window.
-                            return;
-
-                        const [zones, defaultZone, currentZone] = await Promise.all([
-                            ZoneInfo.getZones(),
-                            ZoneInfo.getDefaultZone(),
-                            ZoneForConnection.getZone(activeConnectionSettings),
-                        ]);
-                        this.createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings);
-                    } catch (e) {
-                        // We've hit an exception in the callback where we'd consider opening the window. Bail out and
-                        // hope for better luck next time (unlikely).
-                        console.error('Error while trying to prompt. This is likely related to getting zone ' +
-                            'information.');
-                        console.error(e.message);
-                        const notification = new Gio.Notification();
-                        notification.set_title('Can\'t prompt for firewall zone.');
-                        notification.set_body('There was a problem getting information to prompt for the firewall ' +
-                            'zone. Please see logs for more information.');
-                        this.send_notification('main-network-state-activate', notification);
-                    }
-                });
-
-                this.networkState = new NetworkState(this._connectionChangedAction);
+                this.networkState = new NetworkState();
                 this.#networkStateErrorHandlerId = this.networkState.connect(
                     'error', this.#handleErrorSignal.bind(this));
                 this.#networkStateConnectionChangedHandlerId = this.networkState.connect(
@@ -292,7 +249,6 @@ export const ZoneDefenseApplication = GObject.registerClass(
             this.networkState?.destroy();
             this.networkState = null;
             this._showAboutAction?.disconnect(this._showAboutActionHandlerId);
-            this._connectionChangedAction?.disconnect(this._connectionChangedActionHandlerId);
             super.quit(); // this ends up calling vfunc_shutdown()
         }
     }
