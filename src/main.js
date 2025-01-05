@@ -90,18 +90,21 @@ export const ZoneDefenseApplication = GObject.registerClass(
             let handlerId = null;
             try {
                 dependencyCheck = new DependencyCheck();
-                handlerId = dependencyCheck.connect('error', this.#handleErrorSignal.bind(this));
+                handlerId = dependencyCheck.connect('error', this.#handleError.bind(this));
                 await dependencyCheck.runChecks();
             } catch (e) {
                 // This should really never happen. DependencyCheck is full of `try/catch`es, so exceptions shouldn't
                 // get this far. Since we don't know how this happened, we'll log it, continue, and hope for the best.
                 console.error('Error in dependency check.');
                 console.error(e.message);
-                const notification = new Gio.Notification();
-                notification.set_title('Unknown error');
-                notification.set_body('An unknown error occurred. Zone Defense may not function correctly. Please ' +
-                    'see logs for more information.');
-                this.send_notification('main-dependency-unknown-error', notification);
+                this.#handleError(
+                    null,
+                    false,
+                    'main-dependency-unknown-error',
+                    'Unknown error',
+                    'An unknown error occurred. Zone Defense may not function correctly. Please see logs for more ' +
+                        'information.'
+                );
             } finally {
                 dependencyCheck.disconnect(handlerId);
             }
@@ -111,37 +114,39 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 // Bail out here... There's nothing we can reasonably do without knowing if a network has been seen.
                 console.error('Unable to initialize ConnectionIdsSeen.');
                 console.error(e.message);
-                const notification = new Gio.Notification();
-                notification.set_title('Can\'t find previously seen connections');
-                notification.set_body('There was a problem determining which connections have already been seen. ' +
-                    'Please see logs for more information.'
+                this.#handleError(
+                    null,
+                    true,
+                    'main-connection-ids',
+                    'Can\'t find previously seen connections',
+                    'There was a problem determining which connections have already been seen. Please see logs for ' +
+                        'more information.'
                 );
-                this.send_notification('main-connection-ids', notification);
-                this.quit(null);
             }
 
             try {
                 this.networkState = new NetworkState();
                 this.#networkStateErrorHandlerId = this.networkState.connect(
-                    'error', this.#handleErrorSignal.bind(this));
+                    'error', this.#handleError.bind(this));
                 this.#networkStateConnectionChangedHandlerId = this.networkState.connect(
                     'connection-changed', this.#handleConnectionChangedSignal.bind(this));
             } catch (e) {
                 // Bail out here... There's nothing we can do without NetworkState.
                 console.error('Unable to initialize NetworkState.');
                 console.error(e.message);
-                const notification = new Gio.Notification();
-                notification.set_title('Can\'t determine network state.');
-                notification.set_body('There was a problem tracking network connection changes. Please see logs for ' +
-                    'more information.');
-                this.send_notification('main-network-state', notification);
-                this.quit(null);
+                this.#handleError(
+                    null,
+                    true,
+                    'main-network-state',
+                    'Can\'t determine network state',
+                    'There was a problem tracking network connection changes. Please see logs for more information.'
+                );
             }
         } // end init
 
         vfunc_activate() {} // Required because Adw.Application extends GApplication.
 
-        #handleErrorSignal(emittingObject, fatal, id, title, message) {
+        #handleError(emittingObject, fatal, id, title, message) {
             if (fatal)
                 message += ' Zone Defense is shutting down. You will need to restart manually.';
             const notification = new Gio.Notification();
@@ -177,11 +182,14 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 console.error('Error while trying to prompt. This is likely related to getting zone ' +
                     'information.');
                 console.error(e.message);
-                const notification = new Gio.Notification();
-                notification.set_title('Can\'t prompt for firewall zone.');
-                notification.set_body('There was a problem getting information to prompt for the firewall ' +
-                    'zone. Please see logs for more information.');
-                this.send_notification('main-network-state-activate', notification);
+                this.#handleError(
+                    null,
+                    false,
+                    'main-network-state-emit',
+                    'Can\'t prompt for firewall zone',
+                    'There was a problem getting information to prompt for the firewall zone. Please see logs for ' +
+                        'more information.'
+                );
             }
         }
 
