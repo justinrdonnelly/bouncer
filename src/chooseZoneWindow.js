@@ -45,7 +45,7 @@ export const ChooseZoneWindow = GObject.registerClass(
             this._connectionId.subtitle = connectionId;
 
             let selected = null;
-            const zones = this.generateZoneList(allZones, defaultZone, currentZone);
+            const zones = this.#generateZoneList(allZones, defaultZone, currentZone);
             this._zoneList.append(ChooseZoneWindow.defaultZoneLabel); // show the default first in the list
             if (currentZone === null)
                 // null means default zone
@@ -78,7 +78,7 @@ export const ChooseZoneWindow = GObject.registerClass(
          * |   T |  T |  F | Simple + Current           |
          * |   T |  T |  T | Simple                     |
          */
-        generateZoneList(allZones, defaultZone, currentZone) {
+        #generateZoneList(allZones, defaultZone, currentZone) {
             const simpleZonesExist = ChooseZoneWindow.#simpleZoneList.every((z) => allZones.includes(z));
             if (!simpleZonesExist)
                 return allZones;

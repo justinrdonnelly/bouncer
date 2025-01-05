@@ -53,22 +53,23 @@ const NetworkStateSignals = GObject.registerClass(
 // calls, building a hierarchy.
 const NetworkManagerStateItem = GObject.registerClass(
     class NetworkManagerStateItem extends NetworkStateSignals {
-        // conceptually, the variables below are 'protected'
+        // conceptually, the static variables below are 'protected'
         static _wellKnownName = 'org.freedesktop.NetworkManager';
         static _propertiesChanged = 'g-properties-changed';
 
-        // map of object path to error handler ID for each related child NetworkManagerStateItem
-        #errorHandlerIds = new Map();
-        // map of object path to connection changed handler ID for each related child NetworkManagerStateItem
-        #connectionChangedHandlerIds = new Map();
+        objectPath;
 
         // conceptually, the variables below are 'protected'
-        objectPath;
         _proxyObj = null;
         // map of object path to object for each related child NetworkManagerStateItem
         _childNetworkManagerStateItems = new Map();
         _handlerId;
         _proxyObjHandlerId;
+
+        // map of object path to error handler ID for each related child NetworkManagerStateItem
+        #errorHandlerIds = new Map();
+        // map of object path to connection changed handler ID for each related child NetworkManagerStateItem
+        #connectionChangedHandlerIds = new Map();
 
         constructor(objectPath) {
             super();
@@ -82,6 +83,25 @@ const NetworkManagerStateItem = GObject.registerClass(
             this._childNetworkManagerStateItems.set(objectPath, object);
             this.#relaySignalErrors(object);
             this.#relaySignalConnectionChanged(object);
+        }
+
+        _destroyChild(objectPath) {
+            const child = this._childNetworkManagerStateItems.get(objectPath);
+            const errorHandlerId = this.#errorHandlerIds.get(objectPath);
+            const connectionChangedHandlerId = this.#connectionChangedHandlerIds.get(objectPath);
+
+            if (errorHandlerId) {
+                this.#errorHandlerIds.delete(objectPath);
+                child.disconnect(errorHandlerId);
+            }
+            if (connectionChangedHandlerId) {
+                this.#connectionChangedHandlerIds.delete(objectPath);
+                child.disconnect(connectionChangedHandlerId);
+            }
+            if (child) {
+                this._childNetworkManagerStateItems.delete(objectPath);
+                child.destroy();
+            }
         }
 
         #relaySignalErrors(child) {
@@ -101,25 +121,6 @@ const NetworkManagerStateItem = GObject.registerClass(
             this.#connectionChangedHandlerIds.set(child.objectPath, handlerId);
         }
 
-        destroyChild(objectPath) {
-            const child = this._childNetworkManagerStateItems.get(objectPath);
-            const errorHandlerId = this.#errorHandlerIds.get(objectPath);
-            const connectionChangedHandlerId = this.#connectionChangedHandlerIds.get(objectPath);
-
-            if (errorHandlerId) {
-                this.#errorHandlerIds.delete(objectPath);
-                child.disconnect(errorHandlerId);
-            }
-            if (connectionChangedHandlerId) {
-                this.#connectionChangedHandlerIds.delete(objectPath);
-                child.disconnect(connectionChangedHandlerId);
-            }
-            if (child) {
-                this._childNetworkManagerStateItems.delete(objectPath);
-                child.destroy();
-            }
-        }
-
         destroy() {
             console.debug(`debug 1 - Destroying ${this.constructor.name} with object path: ${this.objectPath}`);
             // disconnect any proxy signals
@@ -128,7 +129,7 @@ const NetworkManagerStateItem = GObject.registerClass(
             this._proxyObj = null;
             // handle children
             Array.from(this._childNetworkManagerStateItems.values()).forEach((child) => {
-                this.destroyChild(child);
+                this._destroyChild(child);
             });
         }
 
@@ -365,7 +366,7 @@ const NetworkManagerDevice = GObject.registerClass(
         #deleteConnection(activeConnection) {
             // delete the child connection
             console.debug(`debug 1 - Removing connection ${activeConnection}`);
-            this.destroyChild(activeConnection);
+            this._destroyChild(activeConnection);
         }
 
         #addConnectionInfo() {
@@ -401,7 +402,7 @@ const NetworkManager = GObject.registerClass(
         }
 
         destroy() {
-            this.unwatchBus();
+            this.#unwatchBus();
             super.destroy();
         }
 
@@ -409,7 +410,7 @@ const NetworkManager = GObject.registerClass(
             return Array.from(this._childNetworkManagerStateItems.values()).filter((device) => device.isWifiDevice);
         }
 
-        unwatchBus() {
+        #unwatchBus() {
             Gio.bus_unwatch_name(this.#busWatchId);
         }
 
@@ -517,7 +518,7 @@ const NetworkManager = GObject.registerClass(
             // clean up old device if applicable
             // e.g. /org/freedesktop/NetworkManager/Devices/1
             console.debug(`debug 1 - Removing device: ${deviceObjectPath}`);
-            this.destroyChild(deviceObjectPath);
+            this._destroyChild(deviceObjectPath);
         }
     }
 );

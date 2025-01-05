@@ -25,10 +25,10 @@ export const DependencyCheck = GObject.registerClass(
 
         constructor(constructProperties = {}) {
             super(constructProperties);
-            this.dbusListNames();
+            this.#dbusListNames();
         }
 
-        dbusListNames() {
+        #dbusListNames() {
             // I can't seem to make this call without a callback (was hoping it would return a promise)
             this.#dbusNames = new Promise((resolve, reject) => {
                 Gio.DBus.system.call(
@@ -58,15 +58,15 @@ export const DependencyCheck = GObject.registerClass(
 
         async runChecks() {
             await Promise.all([
-                this.runOnStartup(),
-                this.checkListNames(),
-                this.checkFirewalld(),
-                this.checkNetworkManager()
+                this.#runOnStartup(),
+                this.#checkListNames(),
+                this.#checkFirewalld(),
+                this.#checkNetworkManager()
             ]);
         }
 
         // This is not really a dependency. But we need to run on startup to actually be useful.
-        async runOnStartup() {
+        async #runOnStartup() {
             try {
                 console.log('Configuring autostart');
                 const portal = new Xdp.Portal();
@@ -91,7 +91,7 @@ export const DependencyCheck = GObject.registerClass(
             }
         }
 
-        async checkListNames() {
+        async #checkListNames() {
             try {
                 await this.#dbusNames;
             } catch (e) {
@@ -107,7 +107,7 @@ export const DependencyCheck = GObject.registerClass(
             }
         }
 
-        async checkFirewalld() {
+        async #checkFirewalld() {
             // We have already handled any errors with #dbusNames. So we'll swallow those errors here. We wouldn't be
             // able to continue, so we'll just return.
             try {
@@ -165,7 +165,7 @@ export const DependencyCheck = GObject.registerClass(
             }
         }
 
-        async checkNetworkManager() {
+        async #checkNetworkManager() {
             // We have already handled any errors with #dbusNames. So we'll swallow those errors here. We wouldn't be
             // able to continue, so we'll just return.
             try {

@@ -76,7 +76,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
             });
 
             // fire and forget
-            this.init()
+            this.#init()
               .catch(e => {
                 console.error('Unhandled error in main init. This is a bug!');
                 console.error(e);
@@ -85,7 +85,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
         // The init method will instantiate NetworkState and listen for its signals. We do this outside the constructor
         // so we can be async.
-        async init() {
+        async #init() {
             let dependencyCheck = null;
             let handlerId = null;
             try {
@@ -155,7 +155,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
         async #handleConnectionChangedSignal(emittingObject, connectionId, activeConnectionSettings) {
             try {
-                this.closeWindowIfConnectionChanged(connectionId);
+                this.#closeWindowIfConnectionChanged(connectionId);
                 // bail out if there is no connection
                 if (connectionId === '')
                     return;
@@ -170,7 +170,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
                     ZoneInfo.getDefaultZone(),
                     ZoneForConnection.getZone(activeConnectionSettings),
                 ]);
-                this.createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings);
+                this.#createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings);
             } catch (e) {
                 // We've hit an exception in the callback where we'd consider opening the window. Bail out and
                 // hope for better luck next time (unlikely).
@@ -185,11 +185,11 @@ export const ZoneDefenseApplication = GObject.registerClass(
             }
         }
 
-        createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings) {
+        #createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings) {
             let { active_window } = this;
 
             // active_window should always be null. Either this is the first creation, or we should have already called
-            // closeWindowIfConnectionChanged.
+            // #closeWindowIfConnectionChanged.
             if (!active_window)
                 active_window = new ChooseZoneWindow(
                     this,
@@ -203,7 +203,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
             active_window.present();
         }
 
-        closeWindowIfConnectionChanged(connectionId) {
+        #closeWindowIfConnectionChanged(connectionId) {
             let { active_window } = this;
             if (active_window?.connectionId !== connectionId)
                 active_window?.close();
@@ -233,6 +233,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
             this.send_notification('main-zone-chosen', notification);
         }
 
+        // Don't make this private because it's an override
         quit(signal) {
             if (this.#quitting) {
                 console.log('Skipping duplicate attempt to quit');
