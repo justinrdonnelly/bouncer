@@ -208,6 +208,10 @@ export const ZoneDefenseApplication = GObject.registerClass(
                     activeConnectionSettings
                 );
 
+            // We won't bother tracking the handler ID and later disconnecting it. "When a GObject is destroyed, all
+            // signal connections are destroyed with it."
+            // https://gjs.guide/guides/gobject/basics.html#signals
+            active_window.connect('zone-selected', this.#chooseClicked.bind(this));
             active_window.present();
         }
 
@@ -217,7 +221,8 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 active_window?.close();
         }
 
-        async chooseClicked(connectionId, activeConnectionSettings, zone, defaultZone) {
+        async #chooseClicked(emittingObject, connectionId, activeConnectionSettings, zone, defaultZone) {
+            // TODO: handle error (maybe show a modal or notification?)
             console.log(`For connection ID ${connectionId}, setting zone to ` +
                 `${zone ?? ChooseZoneWindow.defaultZoneLabel}`);
             // Update seen connections before updating the zone. If the connection ID hasn't been added to the list of

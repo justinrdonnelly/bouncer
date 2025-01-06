@@ -19,13 +19,22 @@ export const ChooseZoneWindow = GObject.registerClass(
         GTypeName: 'ChooseZoneWindow',
         Template: 'resource:///com/github/justinrdonnelly/ZoneDefense/chooseZoneWindow.ui',
         InternalChildren: ['currentZone', 'defaultZone', 'connectionId', 'zoneDropDown', 'zoneList'],
+        Signals: {
+            'zone-selected': {
+                param_types: [
+                    GObject.TYPE_STRING, // connectionId
+                    GObject.TYPE_STRING, // activeConnectionSettings
+                    GObject.TYPE_STRING, // zone
+                    GObject.TYPE_STRING // defaultZone
+                ],
+            },
+        },
     },
     class ChooseZoneWindow extends Adw.ApplicationWindow {
         static #simpleZoneList = ['public', 'home', 'work'];
         static defaultZoneLabel = '[DEFAULT]';
         #connectionId;
         #defaultZone;
-        #application;
         #activeConnectionSettings;
 
         constructor(application, connectionId, defaultZone, currentZone, allZones, activeConnectionSettings) {
@@ -37,7 +46,6 @@ export const ChooseZoneWindow = GObject.registerClass(
             console.debug(`defaultZone: ${defaultZone}`);
             console.debug(`currentZone: ${currentZone}`);
             this.#connectionId = connectionId;
-            this.#application = application;
             this.#activeConnectionSettings = activeConnectionSettings;
             this.#defaultZone = defaultZone;
             this._currentZone.subtitle = currentZone || ChooseZoneWindow.defaultZoneLabel;
@@ -96,19 +104,10 @@ export const ChooseZoneWindow = GObject.registerClass(
             let selectedItemValue = this._zoneDropDown.get_selected_item().get_string();
             if (selectedItemValue === ChooseZoneWindow.defaultZoneLabel)
                 selectedItemValue = null; // default zone is represented by null
-            try {
-                await this.#application.chooseClicked(
-                    this.#connectionId,
-                    this.#activeConnectionSettings,
-                    selectedItemValue,
-                    this.#defaultZone
-                );
-                this.close();
-            } catch (e) {
-                // TODO: handle error (maybe show a modal or notification?)
-                console.error('Error setting zone for connection.');
-                console.error(e.message);
-            }
+            console.log('Zone selected.');
+            this.emit('zone-selected', this.#connectionId, this.#activeConnectionSettings, selectedItemValue,
+                this.#defaultZone);
+            this.close();
         }
 
         helpButtonClicked(_button) {
