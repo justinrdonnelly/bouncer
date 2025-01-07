@@ -61,9 +61,15 @@ export class ConnectionIdsSeen {
         return isNew;
     }
 
-    async #updateConfig(connectionIds) {
+    addConnectionIdToSeen(connectionId) {
+        console.log(`Adding ${connectionId} to ${this.#fileName}.`);
+        this.#connectionIdsSeen.push(connectionId);
+    }
+
+    async syncConnectionIdToSeen() {
         try {
-            const dataJSON = JSON.stringify(connectionIds);
+            console.log(`Syncing in memory representation to ${this.#fileName}.`);
+            const dataJSON = JSON.stringify(this.#connectionIdsSeen);
             const encoder = new TextEncoder(ConnectionIdsSeen.#textFormat);
             const encodedData = encoder.encode(dataJSON);
             // We already tried to create this directory earlier, so this should only matter if a user somehow deleted
@@ -90,14 +96,8 @@ export class ConnectionIdsSeen {
             console.error(`Error updating ${this.#destination}.`);
             console.error(e.message);
             console.log('Once you restart Zone Defense, you will again be prompted to choose a firewall zone for ' +
-                `connection ${connectionIds.slice(-1)}.`);
+                `connection ${this.#connectionIdsSeen.slice(-1)}.`);
         }
-    }
-
-    addConnectionIdToSeen(connectionId) {
-        console.log(`Adding ${connectionId} to ${this.#fileName}.`);
-        this.#connectionIdsSeen.push(connectionId);
-        this.#updateConfig(this.#connectionIdsSeen); // this is async, but will never throw an error
     }
 
 }

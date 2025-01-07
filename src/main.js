@@ -229,6 +229,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
             // seen connections when the zone is changed, the window will open again!
             // Don't try/catch here. We'll let the exception propagate.
             this.#connectionIdsSeen.addConnectionIdToSeen(connectionId);
+            this.#connectionIdsSeen.syncConnectionIdToSeen(); // this is async, but will never throw an error
             await ZoneForConnection.setZone(activeConnectionSettings, zone);
 
             const notification = new Gio.Notification();
