@@ -222,29 +222,85 @@ export const ZoneDefenseApplication = GObject.registerClass(
         }
 
         async #chooseClicked(emittingObject, connectionId, activeConnectionSettings, zone, defaultZone) {
-            // TODO: handle error (maybe show a modal or notification?)
             console.log(`For connection ID ${connectionId}, setting zone to ` +
                 `${zone ?? ChooseZoneWindow.defaultZoneLabel}`);
-            // Update seen connections before updating the zone. If the connection ID hasn't been added to the list of
-            // seen connections when the zone is changed, the window will open again!
-            // Don't try/catch here. We'll let the exception propagate.
-            this.#connectionIdsSeen.addConnectionIdToSeen(connectionId);
-            this.#connectionIdsSeen.syncConnectionIdToSeen(); // this is async, but will never throw an error
-            await ZoneForConnection.setZone(activeConnectionSettings, zone);
+            // Update the in-memory representation of seen connections before updating the zone. If the connection ID
+            // hasn't been added to the list of seen connections when the zone is changed, the window will open again!
+            // But don't sync to disk until after the zone for the connection is set. That way, if there's an error in
+            // setting the zone, the connection ID won't be added to the file.
 
-            const notification = new Gio.Notification();
-            notification.set_title(`Firewall zone set for ${connectionId}`);
-            if (zone === null) // this is the default zone
-                notification.set_body(`Firewall zone for ${connectionId} has been set to the default zone (currently ` +
-                    `${defaultZone}). Whenever you connect to ${connectionId} in the future, the firewall zone will ` +
-                    'automatically be changed to the default zone.'
+            // Update the in-memory representation of seen connections
+            try {
+                this.#connectionIdsSeen.addConnectionIdToSeen(connectionId);
+            } catch (e) {
+                console.error('Error adding connection to seen connections. Not attempting to set zone for the ' +
+                    'connection.');
+                console.error(e.message);
+                this.#handleError(
+                    null,
+                    false,
+                    'main-connection-id-save',
+                    'Can\'t add connection to seen connections',
+                    `There was a problem adding ${connectionId} to the list of seen connections. The firewall zone ` +
+                        'will not be set for this connection. Please see logs for more information.'
                 );
-            else
-                notification.set_body(`Firewall zone for ${connectionId} has been set to ${zone}. Whenever you ` +
-                    `connect to ${connectionId} in the future, the firewall zone will automatically be changed to ` +
-                    `${zone}.`
+                return; // this is not fatal, but we will not continue with this attempt to set the zone
+            }
+
+            // Set the zone for the connection
+            try {
+                await ZoneForConnection.setZone(activeConnectionSettings, zone);
+            } catch (e) {
+                console.error('Error setting zone for connection.');
+                console.error(e.message);
+                this.#handleError(
+                    null,
+                    false,
+                    'main-set-zone',
+                    'Can\'t set firewall zone for connection',
+                    `There was a problem setting the firewall zone for ${connectionId}. Please see logs for more ` +
+                        'information.'
                 );
-            this.send_notification('main-zone-chosen', notification);
+                return; // this is not fatal, but we will not continue with this attempt to set the zone
+            }
+
+            // Save the the in-memory representation of seen connections to disk
+            try {
+                await this.#connectionIdsSeen.syncConnectionIdToSeen();
+            } catch (e) {
+                console.error('Error saving connection to seen connections.');
+                console.error(e.message);
+                this.#handleError(
+                    null,
+                    false,
+                    'main-connection-id-save-to-disk',
+                    'Can\'t save connection to seen connections',
+                    `The zone has been set for ${connectionId}, but there was a problem saving the updated list of ` +
+                        'seen connections to disk. Once you restart Zone Defense, you will again be prompted to ' +
+                        `choose a firewall zone for ${connectionId}. Please see logs for more information.`
+                );
+                return; // this is not fatal, and the zone has been set, but we won't send a feel-good notification
+            }
+
+            // Everything worked. Generate a notification indicating what's happened
+            try {
+                const notification = new Gio.Notification();
+                notification.set_title(`Firewall zone set for ${connectionId}`);
+                if (zone === null) // this is the default zone
+                    notification.set_body(`Firewall zone for ${connectionId} has been set to the default zone ` +
+                        `(currently ${defaultZone}). Whenever you connect to ${connectionId} in the future, the ` +
+                        'firewall zone will automatically be changed to the default zone.'
+                    );
+                else
+                    notification.set_body(`Firewall zone for ${connectionId} has been set to ${zone}. Whenever you ` +
+                        `connect to ${connectionId} in the future, the firewall zone will automatically be changed ` +
+                        `to ${zone}.`
+                    );
+                this.send_notification('main-zone-chosen', notification);
+            } catch (e) {
+                console.error('Error generating notification setting about the zone for connection.');
+                console.error(e.message);
+            }
         }
 
         // Don't make this private because it's an override

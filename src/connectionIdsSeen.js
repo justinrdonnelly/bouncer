@@ -67,36 +67,28 @@ export class ConnectionIdsSeen {
     }
 
     async syncConnectionIdToSeen() {
-        try {
-            console.log(`Syncing in memory representation to ${this.#fileName}.`);
-            const dataJSON = JSON.stringify(this.#connectionIdsSeen);
-            const encoder = new TextEncoder(ConnectionIdsSeen.#textFormat);
-            const encodedData = encoder.encode(dataJSON);
-            // We already tried to create this directory earlier, so this should only matter if a user somehow deleted
-            // it.
-            if (GLib.mkdir_with_parents(
-                this.#destinationDirectory, ConnectionIdsSeen.#dataDirectoryPermissions) === 0) {
-                // Since we `await` the results, we do not need to use `replace_contents_bytes_async`
-                let success = await this.#destinationFile.replace_contents_async(
-                    encodedData,
-                    null,
-                    false,
-                    Gio.FileCreateFlags.REPLACE_DESTINATION,
-                    null
-                );
-                if (!success) {
-                    throw new Error(`Error saving data file ${this.#destination}.`);
-                }
-            } else {
-                throw new Error(`Error creating directory ${this.#destinationDirectory}.`);
+        // Don't try/catch here. Allow it to propagate.
+        console.log(`Syncing in memory representation to ${this.#fileName}.`);
+        const dataJSON = JSON.stringify(this.#connectionIdsSeen);
+        const encoder = new TextEncoder(ConnectionIdsSeen.#textFormat);
+        const encodedData = encoder.encode(dataJSON);
+        // We already tried to create this directory earlier, so this should only matter if a user somehow deleted
+        // it.
+        if (GLib.mkdir_with_parents(
+            this.#destinationDirectory, ConnectionIdsSeen.#dataDirectoryPermissions) === 0) {
+            // Since we `await` the results, we do not need to use `replace_contents_bytes_async`
+            let success = await this.#destinationFile.replace_contents_async(
+                encodedData,
+                null,
+                false,
+                Gio.FileCreateFlags.REPLACE_DESTINATION,
+                null
+            );
+            if (!success) {
+                throw new Error(`Error saving data file ${this.#destination}.`);
             }
-        } catch (e) {
-            // Besides the `throw`s above, this happens when there is no write permission on file. At this point the
-            // user has already selected a zone for the connection. Just log this error.
-            console.error(`Error updating ${this.#destination}.`);
-            console.error(e.message);
-            console.log('Once you restart Zone Defense, you will again be prompted to choose a firewall zone for ' +
-                `connection ${this.#connectionIdsSeen.slice(-1)}.`);
+        } else {
+            throw new Error(`Error creating directory ${this.#destinationDirectory}.`);
         }
     }
 
