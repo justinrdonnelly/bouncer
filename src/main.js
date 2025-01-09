@@ -90,7 +90,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
             let handlerId = null;
             try {
                 dependencyCheck = new DependencyCheck();
-                handlerId = dependencyCheck.connect('error', this.#handleError.bind(this));
+                handlerId = dependencyCheck.connect('error', this.#handleErrorSignal.bind(this));
                 await dependencyCheck.runChecks();
             } catch (e) {
                 // This should really never happen. DependencyCheck is full of `try/catch`es, so exceptions shouldn't
@@ -98,7 +98,6 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 console.error('Error in dependency check.');
                 console.error(e.message);
                 this.#handleError(
-                    null,
                     false,
                     'main-dependency-unknown-error',
                     'Unknown error',
@@ -115,7 +114,6 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 console.error('Unable to initialize ConnectionIdsSeen.');
                 console.error(e.message);
                 this.#handleError(
-                    null,
                     true,
                     'main-connection-ids',
                     'Can\'t find previously seen connections',
@@ -127,7 +125,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
             try {
                 this.networkState = new NetworkState();
                 this.#networkStateErrorHandlerId = this.networkState.connect(
-                    'error', this.#handleError.bind(this));
+                    'error', this.#handleErrorSignal.bind(this));
                 this.#networkStateConnectionChangedHandlerId = this.networkState.connect(
                     'connection-changed', this.#handleConnectionChangedSignal.bind(this));
             } catch (e) {
@@ -135,7 +133,6 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 console.error('Unable to initialize NetworkState.');
                 console.error(e.message);
                 this.#handleError(
-                    null,
                     true,
                     'main-network-state',
                     'Can\'t determine network state',
@@ -146,7 +143,11 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
         vfunc_activate() {} // Required because Adw.Application extends GApplication.
 
-        #handleError(emittingObject, fatal, id, title, message) {
+        #handleErrorSignal(emittingObject, fatal, id, title, message) {
+            this.#handleError(fatal, id, title, message);
+        }
+
+        #handleError(fatal, id, title, message) {
             if (fatal)
                 message += ' Zone Defense is shutting down. You will need to restart manually.';
             const notification = new Gio.Notification();
@@ -183,7 +184,6 @@ export const ZoneDefenseApplication = GObject.registerClass(
                     'information.');
                 console.error(e.message);
                 this.#handleError(
-                    null,
                     false,
                     'main-network-state-emit',
                     'Can\'t prompt for firewall zone',
@@ -237,7 +237,6 @@ export const ZoneDefenseApplication = GObject.registerClass(
                     'connection.');
                 console.error(e.message);
                 this.#handleError(
-                    null,
                     false,
                     'main-connection-id-save',
                     'Can\'t add connection to seen connections',
@@ -254,7 +253,6 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 console.error('Error setting zone for connection.');
                 console.error(e.message);
                 this.#handleError(
-                    null,
                     false,
                     'main-set-zone',
                     'Can\'t set firewall zone for connection',
@@ -271,7 +269,6 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 console.error('Error saving connection to seen connections.');
                 console.error(e.message);
                 this.#handleError(
-                    null,
                     false,
                     'main-connection-id-save-to-disk',
                     'Can\'t save connection to seen connections',
