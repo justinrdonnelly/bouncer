@@ -105,6 +105,7 @@ const NetworkManagerStateItem = GObject.registerClass(
         }
 
         #relaySignalErrors(child) {
+            // eslint-disable-next-line no-unused-vars
             const handlerId = child.connect('error', (emittingObject, fatal, id, title, message) => {
                 console.debug('relaying error signal from deeper down in NetworkState.');
                 this.emitError(fatal, id, title, message);
@@ -114,6 +115,7 @@ const NetworkManagerStateItem = GObject.registerClass(
 
         #relaySignalConnectionChanged(child) {
             const handlerId = child.connect(
+                // eslint-disable-next-line no-unused-vars
                 'connection-changed', (emittingObject, connectionId, activeConnectionSettings) => {
                 console.debug('relaying connection-changed signal from deeper down in NetworkState.');
                 this.emitConnectionChanged(connectionId, activeConnectionSettings);
@@ -535,12 +537,14 @@ export const NetworkState = GObject.registerClass(
             this.#networkManager = new NetworkManager('/org/freedesktop/NetworkManager');
             // relay errors from this.#networkManager
             this.#errorHandlerId = this.#networkManager.connect(
+                // eslint-disable-next-line no-unused-vars
                 'error', (emittingObject, fatal, id, title, message) => {
                 console.debug('relaying error signal from deeper down in NetworkState.');
                 this.emitError(fatal, id, title, message);
             });
             // relay connection changes from this.#networkManager
             this.#connectionChangedHandlerId = this.#networkManager.connect(
+                // eslint-disable-next-line no-unused-vars
                 'connection-changed', (emittingObject, connectionId, activeConnectionSettings) => {
                 console.debug('relaying error signal from deeper down in NetworkState.');
                 this.emitConnectionChanged(connectionId, activeConnectionSettings);

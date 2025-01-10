@@ -143,6 +143,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
         vfunc_activate() {} // Required because Adw.Application extends GApplication.
 
+        // eslint-disable-next-line no-unused-vars
         #handleErrorSignal(emittingObject, fatal, id, title, message) {
             this.#handleError(fatal, id, title, message);
         }
@@ -159,6 +160,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
             }
         }
 
+        // eslint-disable-next-line no-unused-vars
         async #handleConnectionChangedSignal(emittingObject, connectionId, activeConnectionSettings) {
             try {
                 this.#closeWindowIfConnectionChanged(connectionId);
@@ -221,6 +223,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
                 active_window?.close();
         }
 
+        // eslint-disable-next-line no-unused-vars
         async #chooseClicked(emittingObject, connectionId, activeConnectionSettings, zone, defaultZone) {
             console.log(`For connection ID ${connectionId}, setting zone to ` +
                 `${zone ?? ChooseZoneWindow.defaultZoneLabel}`);

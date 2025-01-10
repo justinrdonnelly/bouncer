@@ -19,6 +19,7 @@ const connectionChangedAction = new Gio.SimpleAction({
     parameter_type: new GLib.VariantType('as'),
 });
 
+// eslint-disable-next-line no-unused-vars
 connectionChangedAction.connect('activate', (action, parameter) => {
     // console.log(`${action.name} activated: ${parameter.deepUnpack()}`);
     const parameters = parameter.deepUnpack();

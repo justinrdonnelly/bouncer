@@ -100,6 +100,7 @@ export const ChooseZoneWindow = GObject.registerClass(
             return zones.sort();
         }
 
+        // eslint-disable-next-line no-unused-vars
         async chooseButtonClicked(_button) {
             let selectedItemValue = this._zoneDropDown.get_selected_item().get_string();
             if (selectedItemValue === ChooseZoneWindow.defaultZoneLabel)
@@ -110,11 +111,13 @@ export const ChooseZoneWindow = GObject.registerClass(
             this.close();
         }
 
+        // eslint-disable-next-line no-unused-vars
         helpButtonClicked(_button) {
             const moreDialog = new MoreInfoDialog();
             moreDialog.present(this);
         }
 
+        // eslint-disable-next-line no-unused-vars
         exitButtonClicked(_button) {
             console.log('Exiting without selecting a zone.');
             this.close();

@@ -87,8 +87,7 @@ export default [
             'no-unused-vars': [
                 'error',
                 {
-                    varsIgnorePattern: '^_',
-                    argsIgnorePattern: '^_',
+                    args: 'all',
                 },
             ],
             'no-var': 'warn',
