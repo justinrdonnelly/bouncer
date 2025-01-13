@@ -50,7 +50,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
             this._showAboutAction = new Gio.SimpleAction({ name: 'about' });
             // eslint-disable-next-line no-unused-vars
             this._showAboutAction.connect('activate', (action) => {
-                let aboutParams = {
+                const aboutParams = {
                     application_name: 'zone-defense',
                     application_icon: 'com.github.justinrdonnelly.ZoneDefense',
                     developer_name: 'Justin Donnelly',
