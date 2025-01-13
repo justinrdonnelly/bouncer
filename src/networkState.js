@@ -64,12 +64,6 @@ const NetworkManagerStateItem = GObject.registerClass(
         // map of object path to object for each related child NetworkManagerStateItem
         _childNetworkManagerStateItems = new Map();
         _handlerId;
-        _proxyObjHandlerId;
-
-        // map of object path to error handler ID for each related child NetworkManagerStateItem
-        #errorHandlerIds = new Map();
-        // map of object path to connection changed handler ID for each related child NetworkManagerStateItem
-        #connectionChangedHandlerIds = new Map();
 
         constructor(objectPath) {
             super();
@@ -87,17 +81,7 @@ const NetworkManagerStateItem = GObject.registerClass(
 
         _destroyChild(objectPath) {
             const child = this._childNetworkManagerStateItems.get(objectPath);
-            const errorHandlerId = this.#errorHandlerIds.get(objectPath);
-            const connectionChangedHandlerId = this.#connectionChangedHandlerIds.get(objectPath);
 
-            if (errorHandlerId) {
-                this.#errorHandlerIds.delete(objectPath);
-                child.disconnect(errorHandlerId);
-            }
-            if (connectionChangedHandlerId) {
-                this.#connectionChangedHandlerIds.delete(objectPath);
-                child.disconnect(connectionChangedHandlerId);
-            }
             if (child) {
                 this._childNetworkManagerStateItems.delete(objectPath);
                 child.destroy();
@@ -106,28 +90,22 @@ const NetworkManagerStateItem = GObject.registerClass(
 
         #relaySignalErrors(child) {
             // eslint-disable-next-line no-unused-vars
-            const handlerId = child.connect('error', (emittingObject, fatal, id, title, message) => {
+            child.connect('error', (emittingObject, fatal, id, title, message) => {
                 console.debug('relaying error signal from deeper down in NetworkState.');
                 this.emitError(fatal, id, title, message);
             });
-            this.#errorHandlerIds.set(child.objectPath, handlerId);
         }
 
         #relaySignalConnectionChanged(child) {
-            const handlerId = child.connect(
-                // eslint-disable-next-line no-unused-vars
-                'connection-changed', (emittingObject, connectionId, activeConnectionSettings) => {
+            // eslint-disable-next-line no-unused-vars
+            child.connect('connection-changed', (emittingObject, connectionId, activeConnectionSettings) => {
                 console.debug('relaying connection-changed signal from deeper down in NetworkState.');
                 this.emitConnectionChanged(connectionId, activeConnectionSettings);
             });
-            this.#connectionChangedHandlerIds.set(child.objectPath, handlerId);
         }
 
         destroy() {
             console.debug(`debug 1 - Destroying ${this.constructor.name} with object path: ${this.objectPath}`);
-            // disconnect any proxy signals
-            // Use optional chaining to confirm existence since we don't always keep the proxy
-            this._proxyObj?.disconnect(this._proxyObjHandlerId);
             this._proxyObj = null;
             // handle children
             Array.from(this._childNetworkManagerStateItems.values()).forEach((child) => {
@@ -189,10 +167,7 @@ const NetworkManagerConnectionActive = GObject.registerClass(
                     console.debug(`Settings object path: ${this._proxyObj.Connection}`);
 
                     // monitor for changes
-                    this._proxyObjHandlerId = this._proxyObj.connect(
-                        NetworkManagerStateItem._propertiesChanged,
-                        this.#proxyUpdated.bind(this)
-                    );
+                    this._proxyObj.connect(NetworkManagerStateItem._propertiesChanged, this.#proxyUpdated.bind(this));
                     this.#connectionChanged();
                 },
                 null,
@@ -287,10 +262,8 @@ const NetworkManagerDevice = GObject.registerClass(
                         this._proxyObj = proxy;
                         this.#addConnectionInfo();
                         // monitor for property changes
-                        this._proxyObjHandlerId = this._proxyObj.connect(
-                            NetworkManagerStateItem._propertiesChanged,
-                            this.#proxyUpdated.bind(this)
-                        );
+                        this._proxyObj.connect(NetworkManagerStateItem._propertiesChanged,
+                            this.#proxyUpdated.bind(this));
                     }
                 },
                 null,
@@ -441,10 +414,7 @@ const NetworkManager = GObject.registerClass(
                     this._proxyObj = proxy;
                     this.#addDevices();
                     // monitor for property changes
-                    this._proxyObjHandlerId = this._proxyObj.connect(
-                        NetworkManagerStateItem._propertiesChanged,
-                        this.#proxyUpdated.bind(this)
-                    );
+                    this._proxyObj.connect(NetworkManagerStateItem._propertiesChanged, this.#proxyUpdated.bind(this));
                 },
                 null,
                 Gio.DBusProxyFlags.NONE
@@ -528,22 +498,19 @@ const NetworkManager = GObject.registerClass(
 export const NetworkState = GObject.registerClass(
     class NetworkState extends NetworkStateSignals {
         #networkManager;
-        #errorHandlerId;
-        #connectionChangedHandlerId;
 
         constructor() {
             super();
             // Keep a reference to NetworkManager instance to prevent GC
             this.#networkManager = new NetworkManager('/org/freedesktop/NetworkManager');
             // relay errors from this.#networkManager
-            this.#errorHandlerId = this.#networkManager.connect(
-                // eslint-disable-next-line no-unused-vars
-                'error', (emittingObject, fatal, id, title, message) => {
+            // eslint-disable-next-line no-unused-vars
+            this.#networkManager.connect('error', (emittingObject, fatal, id, title, message) => {
                 console.debug('relaying error signal from deeper down in NetworkState.');
                 this.emitError(fatal, id, title, message);
             });
             // relay connection changes from this.#networkManager
-            this.#connectionChangedHandlerId = this.#networkManager.connect(
+            this.#networkManager.connect(
                 // eslint-disable-next-line no-unused-vars
                 'connection-changed', (emittingObject, connectionId, activeConnectionSettings) => {
                 console.debug('relaying error signal from deeper down in NetworkState.');
@@ -552,8 +519,6 @@ export const NetworkState = GObject.registerClass(
         }
 
         destroy() {
-            this.#networkManager.disconnect(this.#errorHandlerId);
-            this.#networkManager.disconnect(this.#connectionChangedHandlerId);
             this.#networkManager.destroy();
             this.#networkManager = null;
         }

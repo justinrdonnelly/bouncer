@@ -34,8 +34,6 @@ export const ZoneDefenseApplication = GObject.registerClass(
     class ZoneDefenseApplication extends Adw.Application {
         #sourceIds = [];
         #connectionIdsSeen;
-        #networkStateErrorHandlerId;
-        #networkStateConnectionChangedHandlerId;
         #quitting = false;
 
         constructor() {
@@ -51,7 +49,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
             // about action
             this._showAboutAction = new Gio.SimpleAction({ name: 'about' });
             // eslint-disable-next-line no-unused-vars
-            this._showAboutActionHandlerId = this._showAboutAction.connect('activate', (action) => {
+            this._showAboutAction.connect('activate', (action) => {
                 let aboutParams = {
                     application_name: 'zone-defense',
                     application_icon: 'com.github.justinrdonnelly.ZoneDefense',
@@ -86,11 +84,9 @@ export const ZoneDefenseApplication = GObject.registerClass(
         // The init method will instantiate NetworkState and listen for its signals. We do this outside the constructor
         // so we can be async.
         async #init() {
-            let dependencyCheck = null;
-            let handlerId = null;
             try {
-                dependencyCheck = new DependencyCheck();
-                handlerId = dependencyCheck.connect('error', this.#handleErrorSignal.bind(this));
+                const dependencyCheck = new DependencyCheck();
+                dependencyCheck.connect('error', this.#handleErrorSignal.bind(this));
                 await dependencyCheck.runChecks();
             } catch (e) {
                 // This should really never happen. DependencyCheck is full of `try/catch`es, so exceptions shouldn't
@@ -104,8 +100,6 @@ export const ZoneDefenseApplication = GObject.registerClass(
                     'An unknown error occurred. Zone Defense may not function correctly. Please see logs for more ' +
                         'information.'
                 );
-            } finally {
-                dependencyCheck.disconnect(handlerId);
             }
             try {
                 await this.#connectionIdsSeen.init();
@@ -124,10 +118,8 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
             try {
                 this.networkState = new NetworkState();
-                this.#networkStateErrorHandlerId = this.networkState.connect(
-                    'error', this.#handleErrorSignal.bind(this));
-                this.#networkStateConnectionChangedHandlerId = this.networkState.connect(
-                    'connection-changed', this.#handleConnectionChangedSignal.bind(this));
+                this.networkState.connect('error', this.#handleErrorSignal.bind(this));
+                this.networkState.connect('connection-changed', this.#handleConnectionChangedSignal.bind(this));
             } catch (e) {
                 // Bail out here... There's nothing we can do without NetworkState.
                 console.error('Unable to initialize NetworkState.');
@@ -210,9 +202,6 @@ export const ZoneDefenseApplication = GObject.registerClass(
                     activeConnectionSettings
                 );
 
-            // We won't bother tracking the handler ID and later disconnecting it. "When a GObject is destroyed, all
-            // signal connections are destroyed with it."
-            // https://gjs.guide/guides/gobject/basics.html#signals
             active_window.connect('zone-selected', this.#chooseClicked.bind(this));
             active_window.present();
         }
@@ -315,11 +304,8 @@ export const ZoneDefenseApplication = GObject.registerClass(
             else
                 console.log(`quitting due to signal ${signal}!`);
             this.#sourceIds?.forEach((id) => GLib.Source.remove(id));
-            this.networkState?.disconnect(this.#networkStateErrorHandlerId);
-            this.networkState?.disconnect(this.#networkStateConnectionChangedHandlerId);
             this.networkState?.destroy();
             this.networkState = null;
-            this._showAboutAction?.disconnect(this._showAboutActionHandlerId);
             super.quit(); // this ends up calling vfunc_shutdown()
         }
     }
