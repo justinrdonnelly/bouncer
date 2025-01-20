@@ -1,6 +1,6 @@
-data/com.github.justinrdonnelly.ZoneDefense.desktop.in
-data/com.github.justinrdonnelly.ZoneDefense.metainfo.xml.in
-data/com.github.justinrdonnelly.ZoneDefense.gschema.xml
+data/io.github.justinrdonnelly.bouncer.desktop.in
+data/io.github.justinrdonnelly.bouncer.metainfo.xml.in
+data/io.github.justinrdonnelly.bouncer.gschema.xml
 src/chooseZoneWindow.js
 src/chooseZoneWindow.ui
 src/main.js

@@ -35,9 +35,9 @@
 
 You're using &lt;a href="https://networkmanager.dev/"&gt;NetworkManager&lt;/a&gt; for network configuration. NetworkManager integrates well with firewalld and can &lt;a href="https://firewalld.org/documentation/zone/connections-interfaces-and-sources.html"&gt;set the firewalld zone for an interface based on the connection&lt;/a&gt;. This means your firewall rules can automatically change depending on your network connection.
 
-Zone Defense is designed to make this easier for you. It opens a window when you connect to a new network, allowing you to choose the appropriate firewall zone. If you're not sure what to choose, you should probably choose the option that matches where you are. The safest option is usually 'public'. If you don't want to change anything, click 'Exit'.
+Bouncer is designed to make this easier for you. It opens a window when you connect to a new network, allowing you to choose the appropriate firewall zone. If you're not sure what to choose, you should probably choose the option that matches where you are. The safest option is usually 'public'. If you don't want to change anything, click 'Exit'.
 
-You can read more about Zone Defense &lt;a href="https://github.com/justinrdonnelly/zone-defense"&gt;here&lt;/a&gt;.</property>
+You can read more about Bouncer &lt;a href="https://github.com/justinrdonnelly/bouncer"&gt;here&lt;/a&gt;.</property>
           </object>
         </property>
       </object>

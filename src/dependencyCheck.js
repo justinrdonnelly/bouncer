@@ -72,8 +72,8 @@ export const DependencyCheck = GObject.registerClass(
                 const portal = new Xdp.Portal();
                 await portal.request_background(
                     null,
-                    'Zone Defense must start on login',
-                    ['com.github.justinrdonnelly.ZoneDefense'],
+                    'Bouncer must start on login',
+                    ['io.github.justinrdonnelly.bouncer'],
                     DependencyCheck.#XDP_BACKGROUND_FLAG_AUTOSTART,
                     null
                 );
@@ -241,7 +241,7 @@ export const DependencyCheck = GObject.registerClass(
                         'dependency-error-networkmanager',
                         'Not authorized to change NetworkManager connection zone',
                         'You are not authorized to change the connection zone in NetworkManager. This is required ' +
-                            'for Zone Defense to function properly. Please see logs for more information.'
+                            'for Bouncer to function properly. Please see logs for more information.'
                     );
                     break;
                 default:
@@ -251,8 +251,7 @@ export const DependencyCheck = GObject.registerClass(
                         'dependency-error-networkmanager',
                         `Unexpected result from NetworkManager GetSettings: ${modifyPermission}`,
                         'Unable to determine whether you are authorized to change the connection zone in ' +
-                            'NetworkManager. Zone Defense may not function properly. Please see logs for more ' +
-                            'information.'
+                            'NetworkManager. Bouncer may not function properly. Please see logs for more information.'
                     );
             }
         }

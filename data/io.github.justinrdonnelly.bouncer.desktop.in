@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=zone-defense
-Exec=com.github.justinrdonnelly.ZoneDefense
-Icon=com.github.justinrdonnelly.ZoneDefense
+Name=Bouncer
+Exec=io.github.justinrdonnelly.bouncer
+Icon=io.github.justinrdonnelly.bouncer
 Terminal=false
 Type=Application
 Categories=GTK;

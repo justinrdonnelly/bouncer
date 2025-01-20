@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="/com/github/justinrdonnelly/ZoneDefense/js">
+  <gresource prefix="/io/github/justinrdonnelly/bouncer/js">
     <file>networkManagerDbusInterfaces/networkManagerConnectionActiveProxy.js</file>
     <file>networkManagerDbusInterfaces/networkManagerDeviceProxy.js</file>
     <file>networkManagerDbusInterfaces/networkManagerProxy.js</file>

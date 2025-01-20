@@ -1,6 +1,6 @@
 desktop_file = i18n.merge_file(
-        input: 'com.github.justinrdonnelly.ZoneDefense.desktop.in',
-       output: 'com.github.justinrdonnelly.ZoneDefense.desktop',
+        input: 'io.github.justinrdonnelly.bouncer.desktop.in',
+       output: 'io.github.justinrdonnelly.bouncer.desktop',
          type: 'desktop',
        po_dir: '../po',
       install: true,
@@ -13,8 +13,8 @@ if desktop_utils.found()
 endif
 
 appstream_file = i18n.merge_file(
-        input: 'com.github.justinrdonnelly.ZoneDefense.metainfo.xml.in',
-       output: 'com.github.justinrdonnelly.ZoneDefense.metainfo.xml',
+        input: 'io.github.justinrdonnelly.bouncer.metainfo.xml.in',
+       output: 'io.github.justinrdonnelly.bouncer.metainfo.xml',
        po_dir: '../po',
       install: true,
   install_dir: get_option('datadir') / 'metainfo'
@@ -24,7 +24,7 @@ appstreamcli = find_program('appstreamcli', required: false, disabler: true)
 test('Validate appstream file', appstreamcli,
      args: ['validate', '--no-net', '--explain', appstream_file])
 
-install_data('com.github.justinrdonnelly.ZoneDefense.gschema.xml',
+install_data('io.github.justinrdonnelly.bouncer.gschema.xml',
   install_dir: get_option('datadir') / 'glib-2.0' / 'schemas'
 )
 

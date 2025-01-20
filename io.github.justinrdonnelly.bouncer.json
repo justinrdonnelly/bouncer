@@ -1,11 +1,11 @@
 {
-    "id": "com.github.justinrdonnelly.ZoneDefense",
+    "id": "io.github.justinrdonnelly.bouncer",
     "runtime": "org.gnome.Platform",
     "runtime-version": "47",
     "sdk": "org.gnome.Sdk",
     "sdk-extensions": [
     ],
-    "command": "com.github.justinrdonnelly.ZoneDefense",
+    "command": "io.github.justinrdonnelly.bouncer",
     "finish-args": [
         "--socket=wayland",
         "--device=dri",
@@ -51,13 +51,13 @@
             ]
         },
         {
-            "name": "zone-defense",
+            "name": "bouncer",
             "builddir": true,
             "buildsystem": "meson",
             "sources": [
                 {
                     "type": "git",
-                    "url": "file:///mnt/share/nfs/code/my-code/zone-defense",
+                    "url": "file:///mnt/share/nfs/code/my-code/bouncer",
                     "branch": "main"
                 }
             ],

@@ -118,8 +118,8 @@ const NetworkManagerStateItem = GObject.registerClass(
                 true, // all errors here are considered fatal
                 'network-state',
                 'Error determining network state',
-                'Zone Defense ran into an error determining network state. This is required for the application to ' +
-                    'work correctly. Please see logs for more information.'
+                'Bouncer ran into an error determining network state. This is required for the application to work ' +
+                    'correctly. Please see logs for more information.'
             );
         }
     }

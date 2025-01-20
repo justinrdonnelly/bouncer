@@ -23,7 +23,7 @@ export class ConnectionIdsSeen {
 
     constructor() {
         const dataDir = GLib.get_user_data_dir();
-        this.#destination = GLib.build_filenamev([dataDir, 'zone-defense', this.#fileName]);
+        this.#destination = GLib.build_filenamev([dataDir, 'bouncer', this.#fileName]);
         this.#destinationFile = Gio.File.new_for_path(this.#destination);
         this.#destinationDirectory = this.#destinationFile.get_parent().get_path();
     }

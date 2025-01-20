@@ -30,19 +30,19 @@ pkg.initGettext();
 // eslint-disable-next-line no-restricted-properties
 pkg.initFormat();
 
-export const ZoneDefenseApplication = GObject.registerClass(
-    class ZoneDefenseApplication extends Adw.Application {
+export const BouncerApplication = GObject.registerClass(
+    class BouncerApplication extends Adw.Application {
         #sourceIds = [];
         #connectionIdsSeen;
         #quitting = false;
 
         constructor() {
             super({
-                application_id: 'com.github.justinrdonnelly.ZoneDefense',
+                application_id: 'io.github.justinrdonnelly.bouncer',
                 flags: Gio.ApplicationFlags.DEFAULT_FLAGS,
             });
 
-            console.log('Welcome to Zone Defense! Starting up.');
+            console.log('Welcome to Bouncer! Starting up.');
             promisify();
             this.#connectionIdsSeen = new ConnectionIdsSeen();
 
@@ -51,8 +51,8 @@ export const ZoneDefenseApplication = GObject.registerClass(
             // eslint-disable-next-line no-unused-vars
             this._showAboutAction.connect('activate', (action) => {
                 const aboutParams = {
-                    application_name: 'zone-defense',
-                    application_icon: 'com.github.justinrdonnelly.ZoneDefense',
+                    application_name: 'Bouncer',
+                    application_icon: 'io.github.justinrdonnelly.bouncer',
                     developer_name: 'Justin Donnelly',
                     version: '47.0.0',
                     developers: ['Justin Donnelly'],
@@ -97,7 +97,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
                     false,
                     'main-dependency-unknown-error',
                     'Unknown error',
-                    'An unknown error occurred. Zone Defense may not function correctly. Please see logs for more ' +
+                    'An unknown error occurred. Bouncer may not function correctly. Please see logs for more ' +
                         'information.'
                 );
             }
@@ -142,7 +142,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
 
         #handleError(fatal, id, title, message) {
             if (fatal)
-                message += ' Zone Defense is shutting down. You will need to restart manually.';
+                message += ' Bouncer is shutting down. You will need to restart manually.';
             const notification = new Gio.Notification();
             notification.set_title(title);
             notification.set_body(message);
@@ -265,8 +265,8 @@ export const ZoneDefenseApplication = GObject.registerClass(
                     'main-connection-id-save-to-disk',
                     'Can\'t save connection to seen connections',
                     `The zone has been set for ${connectionId}, but there was a problem saving the updated list of ` +
-                        'seen connections to disk. Once you restart Zone Defense, you will again be prompted to ' +
-                        `choose a firewall zone for ${connectionId}. Please see logs for more information.`
+                        'seen connections to disk. Once you restart Bouncer, you will again be prompted to choose a ' +
+                        `firewall zone for ${connectionId}. Please see logs for more information.`
                 );
                 return; // this is not fatal, and the zone has been set, but we won't send a feel-good notification
             }
@@ -312,7 +312,7 @@ export const ZoneDefenseApplication = GObject.registerClass(
 );
 
 export function main(argv) {
-    const application = new ZoneDefenseApplication();
+    const application = new BouncerApplication();
     application.hold();
     return application.runAsync(argv);
 }

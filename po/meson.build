@@ -1,1 +1,1 @@
-i18n.gettext('zone-defense', preset: 'glib')
+i18n.gettext('bouncer', preset: 'glib')

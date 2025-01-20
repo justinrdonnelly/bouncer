@@ -15,7 +15,7 @@ import { ConnectionIdsSeen } from '../src/connectionIdsSeen.js';
 
 import promisify from '../src/promisify.js';
 
-// When testing locally, the file will be saved in: $HOME/.local/share/zone-defense/connection-ids-seen.json
+// When testing locally, the file will be saved in: $HOME/.local/share/bouncer/connection-ids-seen.json
 
 promisify();
 const connectionIdsSeen = new ConnectionIdsSeen();

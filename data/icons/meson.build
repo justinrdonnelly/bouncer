@@ -1,4 +1,4 @@
-application_id = 'com.github.justinrdonnelly.ZoneDefense'
+application_id = 'io.github.justinrdonnelly.bouncer'
 
 scalable_dir = 'hicolor' / 'scalable' / 'apps'
 install_data(
