@@ -14,6 +14,7 @@ import Gio from 'gi://Gio'; // Required by GJS, version not necessary.
 import GLib from 'gi://GLib'; // Required by GJS, version not necessary.
 import GLibUnix from 'gi://GLibUnix?version=2.0';
 import GObject from 'gi://GObject'; // Required by GJS, version not necessary.
+import Gtk from 'gi://Gtk';
 
 import { ChooseZoneWindow } from './chooseZoneWindow.js';
 import { ConnectionIdsSeen } from './connectionIdsSeen.js';
@@ -51,12 +52,24 @@ export const BouncerApplication = GObject.registerClass(
             // eslint-disable-next-line no-unused-vars
             this._showAboutAction.connect('activate', (action) => {
                 const aboutParams = {
+                    // main page
                     application_name: 'Bouncer',
                     application_icon: 'io.github.justinrdonnelly.bouncer',
                     developer_name: 'Justin Donnelly',
                     version: '47.0.0',
+                    // details
+                    comments: 'Bouncer is an application to help you choose the correct firewall zone for wireless ' +
+                        'connections. When you connect to a new network, Bouncer will open a window prompting you ' +
+                        'for what kind of network (eg home, public, work) it is. When you choose the network type, ' +
+                        'it is associated with that network and automatically used in the future.',
+                    website: 'https://github.com/justinrdonnelly/bouncer',
+                    // troubleshooting
+                    issue_url: 'https://github.com/justinrdonnelly/bouncer/issues',
+                    // credits
                     developers: ['Justin Donnelly'],
+                    // legal
                     copyright: '© 2024 Justin Donnelly',
+                    license_type: Gtk.License.MPL_2_0,
                 };
                 const aboutDialog = new Adw.AboutDialog(aboutParams);
                 aboutDialog.present(this.active_window);
