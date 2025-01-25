@@ -32,10 +32,6 @@
     </ol>
   </description>
   <launchable type="desktop-id">io.github.justinrdonnelly.bouncer.desktop</launchable>
-  <categories>
-    <category>Settings</category>
-    <category>System</category>
-  </categories>
   <keywords>
     <keyword>firewall</keyword>
     <keyword>network</keyword>

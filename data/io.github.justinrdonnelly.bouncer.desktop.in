@@ -4,6 +4,6 @@ Exec=io.github.justinrdonnelly.bouncer
 Icon=io.github.justinrdonnelly.bouncer
 Terminal=false
 Type=Application
-Categories=GTK;
+Categories=Settings;System;
 StartupNotify=true
 X-GNOME-UsesNotifications=true
