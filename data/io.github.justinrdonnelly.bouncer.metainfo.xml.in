@@ -50,7 +50,6 @@
   </screenshots>
   <releases>
     <release version="47.0.0" date="2024-01-18">
-      <url type="details">https://example.org/changelog.html#version_47.0.0</url>
       <description>
         <p>Initial release</p>
       </description>
