@@ -37,7 +37,6 @@
     <keyword>network</keyword>
     <keyword>Wi-Fi</keyword>
   </keywords>
-  <icon type="stock">io.github.justinrdonnelly.bouncer</icon>
   <content_rating type="oars-1.1" />
   <url type="homepage">https://github.com/justinrdonnelly/bouncer</url>
   <url type="bugtracker">https://github.com/justinrdonnelly/bouncer/issues</url>
