@@ -57,7 +57,7 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "file:///mnt/share/nfs/code/my-code/bouncer",
+                    "url": "https://github.com/justinrdonnelly/bouncer.git",
                     "branch": "main"
                 }
             ],
