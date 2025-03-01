@@ -52,8 +52,8 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "https://github.com/justinrdonnelly/bouncer.git",
-                    "branch": "main"
+                    "url": "file:///mnt/share/nfs/code/my-code/bouncer",
+                    "branch": "diagnostics"
                 }
             ]
         }
