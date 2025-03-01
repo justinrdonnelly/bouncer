@@ -2,6 +2,7 @@
 <gresources>
   <gresource prefix="/io/github/justinrdonnelly/bouncer">
     <file preprocess="xml-stripblanks">chooseZoneWindow.ui</file>
+    <file preprocess="xml-stripblanks">diagnosticsWindow.ui</file>
     <file preprocess="xml-stripblanks">moreInfo.ui</file>
   </gresource>
 </gresources>

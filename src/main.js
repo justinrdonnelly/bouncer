@@ -20,6 +20,7 @@ import { ChooseZoneWindow } from './chooseZoneWindow.js';
 import { config } from './config.js';
 import { ConnectionIdsSeen } from './connectionIdsSeen.js';
 import { DependencyCheck } from './dependencyCheck.js';
+//import { DiagnosticsWindow } from './diagnosticsWindow.js';
 import { NetworkState } from './networkState.js';
 import { ZoneForConnection } from './zoneForConnection.js';
 import { ZoneInfo } from './zoneInfo.js';
@@ -41,6 +42,7 @@ export const BouncerApplication = GObject.registerClass(
         #quitting = false;
         #chooseZoneWindow = null
         #dependencyCheck = null
+        //#diagnosticsWindow = null
 
         constructor() {
             super({
