@@ -37,6 +37,7 @@ export const BouncerApplication = GObject.registerClass(
         #sourceIds = [];
         #connectionIdsSeen;
         #quitting = false;
+        #chooseZoneWindow = null
 
         constructor() {
             super({
@@ -159,7 +160,7 @@ export const BouncerApplication = GObject.registerClass(
                     license_type: Gtk.License.MPL_2_0,
                 };
                 const aboutDialog = new Adw.AboutDialog(aboutParams);
-                aboutDialog.present(this.active_window);
+                aboutDialog.present(this.#chooseZoneWindow);
             });
             this.add_action(this._showAboutAction);
         }
@@ -238,12 +239,10 @@ export const BouncerApplication = GObject.registerClass(
         }
 
         #createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings) {
-            let { active_window } = this;
-
-            // active_window should always be null. Either this is the first creation, or we should have already called
-            // #closeWindowIfConnectionChanged.
-            if (!active_window)
-                active_window = new ChooseZoneWindow(
+            // this.#chooseZoneWindow should always be null. Either this is the first creation, or we should have
+            // already called #closeWindowIfConnectionChanged.
+            if (!this.#chooseZoneWindow)
+                this.#chooseZoneWindow = new ChooseZoneWindow(
                     this,
                     connectionId,
                     defaultZone,
@@ -252,14 +251,14 @@ export const BouncerApplication = GObject.registerClass(
                     activeConnectionSettings
                 );
 
-            active_window.connect('zone-selected', this.#chooseClicked.bind(this));
-            active_window.present();
+            this.#chooseZoneWindow.connect('zone-selected', this.#chooseClicked.bind(this));
+            this.#chooseZoneWindow.present();
         }
 
         #closeWindowIfConnectionChanged(connectionId) {
-            let { active_window } = this;
-            if (active_window?.connectionId !== connectionId)
-                active_window?.close();
+            if (this.#chooseZoneWindow?.connectionId !== connectionId)
+                this.#chooseZoneWindow?.close();
+                this.#chooseZoneWindow = null;
         }
 
         // eslint-disable-next-line no-unused-vars
