@@ -42,6 +42,10 @@
       <caption>Bouncer prompting for the type of network</caption>
     </screenshot>
   </screenshots>
+  <branding>
+      <color type="primary" scheme_preference="light">#b4a8de</color>
+      <color type="primary" scheme_preference="dark">#9586b9</color>
+  </branding>
   <releases>
     <release version="47.0.0" date="2024-01-18">
       <description>
