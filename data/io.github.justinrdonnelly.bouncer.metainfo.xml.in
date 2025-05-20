@@ -38,7 +38,7 @@
   <url type="vcs-browser">https://github.com/justinrdonnelly/bouncer</url>
   <screenshots>
     <screenshot type="default">
-      <image>https://example.org/example1.png</image>
+      <image>https://raw.githubusercontent.com/justinrdonnelly/bouncer/7c7d0afea25a338361dad42f29d3433970798961/screenshots/bouncer-choose-zone-light.png</image>
       <caption>Bouncer prompting for the type of network</caption>
     </screenshot>
   </screenshots>
