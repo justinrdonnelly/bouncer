@@ -40,7 +40,7 @@
                 <property name="valign">GTK_ALIGN_START</property>
                 <property name="margin-start">12</property>
                 <property name="margin-end">12</property>
-                <property name="icon-name">network-wireless-symbolic</property>
+                <property name="icon-name">io.github.justinrdonnelly.bouncer</property>
                 <property name="pixel-size">64</property>
               </object>
             </child> <!-- end icon -->
