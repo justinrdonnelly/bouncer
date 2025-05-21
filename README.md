@@ -6,6 +6,8 @@ Bouncer is an application to help you choose the correct firewall zone for wirel
 
 Additional setup is required after installation. See the applicable section for your distribution.
 
+![Bouncer prompting for the type of network](screenshots/bouncer-choose-zone-light.png)
+
 ## Installation
 
 Install from Flathub (pending).
