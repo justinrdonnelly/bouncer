@@ -3,8 +3,6 @@
     "runtime": "org.gnome.Platform",
     "runtime-version": "47",
     "sdk": "org.gnome.Sdk",
-    "sdk-extensions": [
-    ],
     "command": "io.github.justinrdonnelly.bouncer",
     "finish-args": [
         "--socket=wayland",
@@ -14,9 +12,6 @@
         "--system-talk-name=org.freedesktop.NetworkManager",
         "--system-talk-name=org.fedoraproject.FirewallD1"
     ],
-    "build-options": {
-        "env": {}
-    },
     "cleanup": [
         "/include",
         "/lib/pkgconfig",
@@ -60,9 +55,6 @@
                     "url": "https://github.com/justinrdonnelly/bouncer.git",
                     "branch": "main"
                 }
-            ],
-            "config-opts": [
-                "--libdir=lib"
             ]
         }
     ]
