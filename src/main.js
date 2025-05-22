@@ -56,7 +56,7 @@ export const BouncerApplication = GObject.registerClass(
                     application_name: 'Bouncer',
                     application_icon: 'io.github.justinrdonnelly.bouncer',
                     developer_name: 'Justin Donnelly',
-                    version: '47.0.0',
+                    version: '48.0.0',
                     // details
                     comments: 'Bouncer is an application to help you choose the correct firewall zone for wireless ' +
                         'connections. When you connect to a new network, Bouncer will open a window prompting you ' +
