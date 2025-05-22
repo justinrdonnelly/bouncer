@@ -6,7 +6,7 @@
   <project_license>MPL-2.0</project_license>
   <name>Bouncer</name>
   <summary>Keep the riffraff out!</summary>
-  <developer id="com.github.justinrdonnelly">
+  <developer id="io.github.justinrdonnelly">
     <name>Justin Donnelly</name>
   </developer>
   <description>
@@ -32,7 +32,7 @@
     </ol>
   </description>
   <launchable type="desktop-id">io.github.justinrdonnelly.bouncer.desktop</launchable>
-  <content_rating type="oars-1.1" />
+  <content_rating type="oars-1.1"/>
   <url type="homepage">https://github.com/justinrdonnelly/bouncer</url>
   <url type="bugtracker">https://github.com/justinrdonnelly/bouncer/issues</url>
   <url type="vcs-browser">https://github.com/justinrdonnelly/bouncer</url>
