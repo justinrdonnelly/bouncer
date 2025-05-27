@@ -28,14 +28,11 @@ export class Data {
         this.#destinationDirectory = this.#destinationFile.get_parent().get_path();
     }
 
-    // Always call init immediately after constructor.
-    async init() {
+    async getData() {
+        // Create the data directory first. It's better to know now if there's a problem.
         if (GLib.mkdir_with_parents(this.#destinationDirectory, Data.#dataDirectoryPermissions) !== 0)
             // mkdir failed
             throw new Error(`Cannot create directory ${this.#destinationDirectory}`);
-    }
-
-    async getData() {
         try {
             // eslint-disable-next-line no-unused-vars
             const [contents, etag] = await this.#destinationFile.load_contents_async(null);
