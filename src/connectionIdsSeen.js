@@ -22,7 +22,11 @@ export class ConnectionIdsSeen {
 
     // Always call init immediately after constructor.
     async init() {
-        this.#connectionIdsSeen = await this.#data.getData();
+        const data = await this.#data.getData();
+        if (data === null)
+            this.#connectionIdsSeen = [];
+        else
+            this.#connectionIdsSeen = JSON.parse(data);
     }
 
     isConnectionNew(connectionId) {

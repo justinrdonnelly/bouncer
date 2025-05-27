@@ -37,13 +37,12 @@ export class Data {
             // eslint-disable-next-line no-unused-vars
             const [contents, etag] = await this.#destinationFile.load_contents_async(null);
             const decoder = new TextDecoder(Data.#textFormat);
-            const decoded = decoder.decode(contents);
-            return JSON.parse(decoded);
+            return decoder.decode(contents);
         } catch (e) {
             if (e.message.includes('No such file or directory')) {
                 // file does not yet exist, that's OK
                 console.log(`File ${this.#destination} does not exist. Treat as empty and create it later.`);
-                return [];
+                return null;
             }
             else
                 throw e;
