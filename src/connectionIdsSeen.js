@@ -12,12 +12,12 @@
 import { Data } from './data.js';
 
 export class ConnectionIdsSeen {
+    static #fileName = 'connection-ids-seen.json';
     #connectionIdsSeen;
     #data;
-    #fileName = 'connection-ids-seen.json';
 
     constructor() {
-        this.#data = new Data(this.#fileName);
+        this.#data = new Data(ConnectionIdsSeen.#fileName);
     }
 
     // Always call init immediately after constructor.
@@ -37,7 +37,7 @@ export class ConnectionIdsSeen {
     }
 
     addConnectionIdToSeen(connectionId) {
-        console.log(`Adding ${connectionId} to ${this.#fileName}.`);
+        console.log(`Adding ${connectionId} to ${ConnectionIdsSeen.#fileName}.`);
         this.#connectionIdsSeen.push(connectionId);
     }
 
