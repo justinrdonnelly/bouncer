@@ -22,7 +22,6 @@ export class ConnectionIdsSeen {
 
     // Always call init immediately after constructor.
     async init() {
-        this.#data.init();
         this.#connectionIdsSeen = await this.#data.getData();
     }
 
