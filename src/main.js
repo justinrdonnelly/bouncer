@@ -284,7 +284,7 @@ export const BouncerApplication = GObject.registerClass(
                 return; // this is not fatal, and the zone has been set, but we won't send a feel-good notification
             }
 
-            // Everything worked. Generate a notification indicating what's happened
+            // Everything worked. Generate a notification indicating what's happened.
             try {
                 const notification = new Gio.Notification();
                 notification.set_title(`Firewall zone set for ${connectionId}`);
