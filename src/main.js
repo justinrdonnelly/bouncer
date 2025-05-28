@@ -100,6 +100,7 @@ export const BouncerApplication = GObject.registerClass(
             try {
                 const dependencyCheck = new DependencyCheck();
                 dependencyCheck.connect('error', this.#handleErrorSignal.bind(this));
+                dependencyCheck.connect('first-run-setup-complete', this.#handleFirstRunSignal.bind(this));
                 await dependencyCheck.runChecks();
             } catch (e) {
                 // This should really never happen. DependencyCheck is full of `try/catch`es, so exceptions shouldn't
@@ -163,6 +164,17 @@ export const BouncerApplication = GObject.registerClass(
             if (fatal) {
                 this.quit(null);
             }
+        }
+
+        // eslint-disable-next-line no-unused-vars
+        #handleFirstRunSignal(emittingObject) {
+            const notification = new Gio.Notification();
+            notification.set_title('First run setup complete!');
+            const message = 'Your system is correctly configured for Bouncer. Bouncer will autostart on each login ' +
+                'and will open when you connect to a new Wi-Fi network.';
+            notification.set_body(message);
+            console.log('about to send notification');
+            this.send_notification('first-run-setup-complete', notification);
         }
 
         // eslint-disable-next-line no-unused-vars
