@@ -52,5 +52,10 @@
         <p>Initial release</p>
       </description>
     </release>
+    <release version="48.1.0" date="2025-05-27">
+      <description>
+        <p>Include a notification for first run success</p>
+      </description>
+    </release>
   </releases>
 </component>
