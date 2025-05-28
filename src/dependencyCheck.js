@@ -14,18 +14,28 @@ import GLib from 'gi://GLib';
 import GObject from 'gi://GObject';
 import Xdp from "gi://Xdp";
 
+import { Data } from './data.js';
 import { ErrorSignal } from './errorSignal.js';
 import { ZoneInfo } from './zoneInfo.js';
 
 export const DependencyCheck = GObject.registerClass(
+    {
+        Signals: {
+            'first-run-setup-complete': {
+            },
+        },
+    },
     class DependencyCheck extends ErrorSignal {
         static #XDP_BACKGROUND_FLAG_AUTOSTART = 1; // https://libportal.org/flags.BackgroundFlags.html
+        static #fileName = 'first-run-complete';
 
         #dbusNames; // A promise that resolves to a list of D-Bus names. Use `await`.
+        #data; // An instance of Data
 
         constructor(constructProperties = {}) {
             super(constructProperties);
             this.#dbusListNames();
+            this.#data = new Data(DependencyCheck.#fileName);
         }
 
         #dbusListNames() {
@@ -57,12 +67,28 @@ export const DependencyCheck = GObject.registerClass(
         }
 
         async runChecks() {
-            await Promise.all([
-                this.#runOnStartup(),
-                this.#checkListNames(),
-                this.#checkFirewalld(),
-                this.#checkNetworkManager()
-            ]);
+            try {
+                const [firstRunData] = await Promise.all([
+                    // All these methods must throw an error if they don't want first-run-setup-complete signal to be
+                    // emitted (and the corresponding notification generated).
+                    this.#data.getData(),
+                    this.#runOnStartup(),
+                    this.#checkListNames(),
+                    this.#checkFirewalld(),
+                    this.#checkNetworkManager()
+                ]);
+                if (firstRunData === null) {
+                    this.emit('first-run-setup-complete')
+                    // set a value so we don't do this again
+                    try {
+                        await this.#data.saveData('true');
+                    } catch (e) {
+                        // Just swallow this error. There's nothing we can do.
+                    }
+                }
+            } catch (e) {
+                console.log('Error in dependency checks. Not performing first run logic.');
+            }
         }
 
         // This is not really a dependency. But we need to run on startup to actually be useful.
@@ -88,6 +114,7 @@ export const DependencyCheck = GObject.registerClass(
                     'Please make sure the portal is available from inside the flatpak sandbox. Please see logs for ' +
                         'more information.'
                 );
+                throw e;
             }
         }
 
@@ -96,14 +123,15 @@ export const DependencyCheck = GObject.registerClass(
                 await this.#dbusNames;
             } catch (e) {
                 console.error('Error awaiting D-Bus names. This is likely a result of the ListNames method call.');
-                console.error(e.message)
-                    this.emitError(
-                        true,
-                        'dependency-error-names',
-                        'Can\'t find D-Bus names',
-                        'Please make sure D-Bus is installed, running, and available inside the flatpak sandbox. ' +
-                            'Please see logs for more information.'
-                    );
+                console.error(e.message);
+                this.emitError(
+                    true,
+                    'dependency-error-names',
+                    'Can\'t find D-Bus names',
+                    'Please make sure D-Bus is installed, running, and available inside the flatpak sandbox. Please ' +
+                        'see logs for more information.'
+                );
+                throw e;
             }
         }
 
@@ -129,6 +157,7 @@ export const DependencyCheck = GObject.registerClass(
                     'Please make sure firewalld is installed, running, and available inside the flatpak sandbox. ' +
                         'Please see logs for more information.'
                 );
+                throw new Error('Firewalld not on D-Bus');
             }
 
             // Check firewalld permissions. There's no permissions D-Bus API, but since all our method calls don't make
@@ -146,7 +175,7 @@ export const DependencyCheck = GObject.registerClass(
                     'Unable to get firewalld zones. Please make sure firewalld permissions are correct, and are not ' +
                         'restricted inside the flatpak sandbox. Please see logs for more information.'
                 );
-                return;
+                throw e;
             }
             try {
                 await ZoneInfo.getDefaultZone();
@@ -161,7 +190,7 @@ export const DependencyCheck = GObject.registerClass(
                     'Unable to get firewalld default zone. Please make sure firewalld permissions are correct, and ' +
                         'are not restricted inside the flatpak sandbox. Please see logs for more information.'
                 );
-                return;
+                throw e;
             }
         }
 
@@ -187,6 +216,7 @@ export const DependencyCheck = GObject.registerClass(
                     'Please make sure NetworkManager is installed, running, and available inside the flatpak ' +
                         'sandbox. Please see logs for more information.'
                 );
+                throw new Error('NetworkManager not on D-Bus');
             }
 
             // check NetworkManager permissions
@@ -233,7 +263,7 @@ export const DependencyCheck = GObject.registerClass(
                         'You are authorized to change the connection zone in NetworkManager, but will be required to ' +
                             'authenticate. This will work, but may be annoying. Please see logs for more information.'
                     );
-                    break;
+                    break; // Don't throw an error. Everything is basically OK.
                 case 'no': // not authorized
                     console.error('Not authorized to change NetworkManager connection zone.');
                     this.emitError(
@@ -243,7 +273,7 @@ export const DependencyCheck = GObject.registerClass(
                         'You are not authorized to change the connection zone in NetworkManager. This is required ' +
                             'for Bouncer to function properly. Please see logs for more information.'
                     );
-                    break;
+                    throw new Error('Not authorized to change NetworkManager');
                 default:
                     console.error(`Unexpected result from NetworkManager GetSettings: ${modifyPermission}`);
                     this.emitError(
@@ -253,6 +283,7 @@ export const DependencyCheck = GObject.registerClass(
                         'Unable to determine whether you are authorized to change the connection zone in ' +
                             'NetworkManager. Bouncer may not function properly. Please see logs for more information.'
                     );
+                    throw new Error('Unexpected result from NetworkManager GetSettings');
             }
         }
     }
