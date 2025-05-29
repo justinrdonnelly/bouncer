@@ -47,14 +47,14 @@
     <color type="primary" scheme_preference="dark">#9586b9</color>
   </branding>
   <releases>
-    <release version="48.0.0" date="2025-05-22">
-      <description>
-        <p>Initial release</p>
-      </description>
-    </release>
     <release version="48.1.0" date="2025-05-27">
       <description>
         <p>Include a notification for first run success</p>
+      </description>
+    </release>
+    <release version="48.0.0" date="2025-05-22">
+      <description>
+        <p>Initial release</p>
       </description>
     </release>
   </releases>
