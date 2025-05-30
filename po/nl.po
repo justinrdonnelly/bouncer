@@ -1,0 +1,179 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the bouncer package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: bouncer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-29 02:15+0200\n"
+"PO-Revision-Date: 2025-05-30 20:19+0200\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+
+#: data/io.github.justinrdonnelly.bouncer.desktop.in:2
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:7
+msgid "Bouncer"
+msgstr "Uitsmijter"
+
+#: data/io.github.justinrdonnelly.bouncer.desktop.in:8
+msgid "firewall;network;Wi-Fi;"
+msgstr "firewall;netwerk;Wi-Fi;wifi;"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:8
+msgid "Keep the riffraff out!"
+msgstr "Houd onbevoegden buiten!"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:10
+msgid "Justin Donnelly"
+msgstr "Justin Donnelly"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:13
+msgid ""
+"Bouncer is an application to help you choose the correct firewall zone for "
+"wireless connections. When you connect to a new network, a window opens "
+"prompting you for what kind of network (eg home, public, work) it is. When "
+"you choose the network type, it is associated with that network and "
+"automatically used in the future."
+msgstr ""
+"Uitsmijter is een toepassing waarmee de juiste firewallzones kunnen worden "
+"ingesteld op draadloze verbindingen. Als u verbinding maakt met een nieuw "
+"netwerk, opent een venster dat vraagt wat voor soort netwerk het om gaat "
+"(bijv. thuis, openbaar, werk). Na het kiezen van het netwerktype wordt dat "
+"automatisch ingesteld, zodat u volgende keer geen actie meer hoeft te "
+"ondernemen."
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:14
+msgid ""
+"NetworkManager and firewalld are required. If you don't use those, you can't "
+"use Bouncer. Fedora uses both by default. Other distributions may not."
+msgstr ""
+"Voor het gebruik van Uitsmijter zijn NetworkManager en firewalld vereist. Op "
+"Fedora zijn die pakketten standaard aanwezig; op andere distributies "
+"mogelijk niet."
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:15
+msgid ""
+"Additional setup is required after installation. See the applicable section "
+"for your distribution. Once the setup is done, start Bouncer manually to "
+"enable autostart. After that, it will start automatically when you log in."
+msgstr ""
+"Na de installatie zijn aanvullende instellingen vereist - bekijk hiervoor de "
+"relevante distributiesectie. Na het instellen kan Uitsmijter automatisch "
+"worden opgestart zodra u inlogt op uw gebruikersaccount."
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:16
+msgid "Fedora"
+msgstr "Fedora"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:18
+msgid ""
+"For Fedora, everything just works! Just remember to start Bouncer manually "
+"once to enable autostart. You won't see anything happen unless you are "
+"currently connected to Wi-Fi."
+msgstr ""
+"Goed nieuws: op Fedora werkt alles gewoon! Het enige wat u zelf nog moet "
+"doen is Uitsmijter openen om automatisch opstarten in te schakelen. Als u "
+"niet verbonden bent met een wifinetwerk, wordt er geen actiescherm getoond."
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:20
+msgid "Ubuntu"
+msgstr "Ubuntu"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:22
+msgid "Uninstall ufw: <code>sudo apt remove ufw</code>"
+msgstr "Verwijder ufw: <code>sudo apt remove ufw</code>"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:23
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:29
+msgid "Install firewalld: <code>sudo apt install firewalld</code>"
+msgstr "Installeer firewalld: <code>sudo apt install firewalld</code>"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:24
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:30
+msgid ""
+"By default, polkit is configured to not let regular users set the zone for a "
+"connection. The simplest way to change this is to add users to the "
+"<code>netdev</code> group (eg <code>usermod -a -G netdev justin</code>). "
+"Alternatively, you can create a custom polkit rule for the "
+"<code>org.freedesktop.NetworkManager.settings.modify.system</code> action "
+"(how to create custom polkit rules is beyond the scope of this document and "
+"is left as an exercise for the reader)."
+msgstr ""
+"Standaard is polkit zó ingesteld dat gewone gebruikers geen firewallzones "
+"mogen kiezen. De eenvoudigste manier om dit wél mogelijk te maken is door "
+"gebruikers toe te voegen aan de <code>netdev</code>-groep (bijv. "
+"<code>usermod -a -G netdev naamvanmijnaccount</code>). Ook kunt u een polkit-"
+"regel toevoegen aan de "
+"<code>org.freedesktop.NetworkManager.settings.modify.system</code>-actie. "
+"Hoe u dat doet, wordt elders op internet uitgelegd."
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:25
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:31
+msgid ""
+"Start Bouncer manually once to enable autostart. You won't see anything "
+"happen unless you are currently connected to Wi-Fi."
+msgstr ""
+"Open Uitsmijter om automatisch opstarten in te schakelen. Als u niet "
+"verbonden bent met een wifinetwerk, wordt er geen actiescherm getoond."
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:27
+msgid "Debian"
+msgstr "Debian"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:42
+msgid "Bouncer prompting for the type of network"
+msgstr "Uitsmijter vraagt om het soort netwerk"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:52
+msgid "Include a notification for first run success"
+msgstr "Nieuw: melding na eerste keer opstarten"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:57
+msgid "Initial release"
+msgstr "De allereerste versie"
+
+#: src/chooseZoneWindow.ui:27
+msgid "Menu"
+msgstr "Menu"
+
+#: src/chooseZoneWindow.ui:77
+msgid "Network"
+msgstr "Netwerk"
+
+#: src/chooseZoneWindow.ui:78 src/chooseZoneWindow.ui:87
+#: src/chooseZoneWindow.ui:96
+msgid "True"
+msgstr "Waar"
+
+#: src/chooseZoneWindow.ui:86
+msgid "Default Zone"
+msgstr "Standaardzone"
+
+#: src/chooseZoneWindow.ui:95
+msgid "Current Zone"
+msgstr "Huidige zone"
+
+#. make the dropdown not span the entire box
+#: src/chooseZoneWindow.ui:111
+msgid "Firewall Zone"
+msgstr "Firewallzone"
+
+#: src/chooseZoneWindow.ui:112
+msgid "Choose the firewall zone for this network."
+msgstr "Kies een firewallzone voor dit netwerk."
+
+#: src/chooseZoneWindow.ui:115
+msgid "Zone"
+msgstr "Zone"
+
+#: src/chooseZoneWindow.ui:219
+msgid "_About Bouncer"
+msgstr "_Over Uitsmijter"
