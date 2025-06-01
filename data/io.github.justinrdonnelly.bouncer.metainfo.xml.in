@@ -15,20 +15,20 @@
     <p>Additional setup is required after installation. See the applicable section for your distribution. Once the setup is done, start Bouncer manually to enable autostart. After that, it will start automatically when you log in.</p>
     <p>Fedora</p>
     <ol>
-      <li>For Fedora, everything just works! Just remember to start Bouncer manually once to enable autostart. You won't see anything happen unless you are currently connected to Wi-Fi.</li>
+      <li>For Fedora, everything just works! Just remember to start Bouncer manually once to enable autostart. You should see a notification indicating your system is correctly configured for Bouncer.</li>
     </ol>
     <p>Ubuntu</p>
     <ol>
       <li>Uninstall ufw: <code>sudo apt remove ufw</code></li>
       <li>Install firewalld: <code>sudo apt install firewalld</code></li>
       <li>By default, polkit is configured to not let regular users set the zone for a connection. The simplest way to change this is to add users to the <code>netdev</code> group (eg <code>usermod -a -G netdev justin</code>). Alternatively, you can create a custom polkit rule for the <code>org.freedesktop.NetworkManager.settings.modify.system</code> action (how to create custom polkit rules is beyond the scope of this document and is left as an exercise for the reader).</li>
-      <li>Start Bouncer manually once to enable autostart. You won't see anything happen unless you are currently connected to Wi-Fi.</li>
+      <li>Start Bouncer manually once to enable autostart. You should see a notification indicating your system is correctly configured for Bouncer.</li>
     </ol>
     <p>Debian</p>
     <ol>
       <li>Install firewalld: <code>sudo apt install firewalld</code></li>
       <li>By default, polkit is configured to not let regular users set the zone for a connection. The simplest way to change this is to add users to the <code>netdev</code> group (eg <code>usermod -a -G netdev justin</code>). Alternatively, you can create a custom polkit rule for the <code>org.freedesktop.NetworkManager.settings.modify.system</code> action (how to create custom polkit rules is beyond the scope of this document and is left as an exercise for the reader).</li>
-      <li>Start Bouncer manually once to enable autostart. You won't see anything happen unless you are currently connected to Wi-Fi.</li>
+      <li>Start Bouncer manually once to enable autostart. You should see a notification indicating your system is correctly configured for Bouncer.</li>
     </ol>
   </description>
   <launchable type="desktop-id">io.github.justinrdonnelly.bouncer.desktop</launchable>
