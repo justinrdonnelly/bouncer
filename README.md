@@ -10,7 +10,7 @@ Additional setup is required after installation. See the applicable section for 
 
 ## Installation
 
-Install from Flathub (pending).
+[![Get it on Flathub](https://flathub.org/api/badge?svg&locale=en)](https://flathub.org/apps/io.github.justinrdonnelly.bouncer)
 
 ## Setup
 
