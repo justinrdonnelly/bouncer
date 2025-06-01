@@ -1,6 +1,6 @@
 # Bouncer
 
-Bouncer is an application to help you choose the correct firewall zone for wireless connections. When you connect to a new network, Bouncer will open a window prompting you for what kind of network (eg home, public, work) it is. When you choose the network type, it is associated with that network and automatically used in the future.
+Bouncer is an application to help you choose the correct firewall zone for wireless connections. When you connect to a new Wi-Fi network, Bouncer will open a window prompting you for what kind of network (e.g. home, public, work) it is. When you choose the network type, it is associated with that network and automatically used in the future.
 
 [NetworkManager](https://networkmanager.dev/) and [firewalld](https://firewalld.org/) are required. If you don't use those, you can't use Bouncer. Fedora uses both by default. Other distributions may not.
 
@@ -16,7 +16,7 @@ Install from Flathub (pending).
 
 Unlike most Flatpak applications, Bouncer needs to start when you log in. So autostart needs to be configured. Bouncer can do this for you, so just start it manually the first time. After that, it will start automatically when you log in. This must be done for each user on the system.
 
-If you want to enable autostart system-wide (ie for all users), you have to do that manually. Copy the `.desktop` file to the system-wide `autostart` directory. (eg `sudo cp /var/lib/flatpak/exports/share/applications/io.github.justinrdonnelly.bouncer.desktop /etc/xdg/autostart/`).
+If you want to enable autostart system-wide (ie for all users), you have to do that manually. Copy the `.desktop` file to the system-wide `autostart` directory. (e.g. `sudo cp /var/lib/flatpak/exports/share/applications/io.github.justinrdonnelly.bouncer.desktop /etc/xdg/autostart/`).
 
 Because Bouncer requires NetworkManager and firewalld, and changing firewall zones sometimes requires root (depending on polkit configuration), there may be additional setup required. The table below shows relevant information for various distributions.
 
@@ -28,20 +28,20 @@ Because Bouncer requires NetworkManager and firewalld, and changing firewall zon
 
 ### Fedora
 
-For Fedora, everything just works! Just remember to start Bouncer manually once to enable autostart. You won't see anything happen unless you are currently connected to Wi-Fi.
+For Fedora, everything just works! Just remember to start Bouncer manually once to enable autostart. You should see a notification indicating your system is correctly configured for Bouncer.
 
 ### Ubuntu
 
 1. Uninstall ufw: `sudo apt remove ufw`
 2. Install firewalld: `sudo apt install firewalld`
-3. By default, polkit is configured to not let regular users set the zone for a connection. The simplest way to change this is to add users to the `netdev` group (eg `usermod -a -G netdev justin`). Alternatively, you can create a custom polkit rule for the `org.freedesktop.NetworkManager.settings.modify.system` action (how to create custom polkit rules is beyond the scope of this document and is left as an exercise for the reader).
-4. Start Bouncer manually once to enable autostart. You won't see anything happen unless you are currently connected to Wi-Fi.
+3. By default, polkit is configured to not let regular users set the zone for a connection. The simplest way to change this is to add users to the `netdev` group (e.g. `usermod -a -G netdev justin`). Alternatively, you can create a custom polkit rule for the `org.freedesktop.NetworkManager.settings.modify.system` action (how to create custom polkit rules is beyond the scope of this document and is left as an exercise for the reader).
+4. Start Bouncer manually once to enable autostart. You should see a notification indicating your system is correctly configured for Bouncer.
 
 ### Debian
 
 1. Install firewalld: `sudo apt install firewalld`
-2. By default, polkit is configured to not let regular users set the zone for a connection. The simplest way to change this is to add users to the `netdev` group (eg `usermod -a -G netdev justin`). Alternatively, you can create a custom polkit rule for the `org.freedesktop.NetworkManager.settings.modify.system` action (how to create custom polkit rules is beyond the scope of this document and is left as an exercise for the reader).
-3. Start Bouncer manually once to enable autostart. You won't see anything happen unless you are currently connected to Wi-Fi.
+2. By default, polkit is configured to not let regular users set the zone for a connection. The simplest way to change this is to add users to the `netdev` group (e.g. `usermod -a -G netdev justin`). Alternatively, you can create a custom polkit rule for the `org.freedesktop.NetworkManager.settings.modify.system` action (how to create custom polkit rules is beyond the scope of this document and is left as an exercise for the reader).
+3. Start Bouncer manually once to enable autostart. You should see a notification indicating your system is correctly configured for Bouncer.
 
 ## How It Works
 
