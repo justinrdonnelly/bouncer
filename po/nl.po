@@ -151,7 +151,7 @@ msgstr "Netwerk"
 #: src/chooseZoneWindow.ui:78 src/chooseZoneWindow.ui:87
 #: src/chooseZoneWindow.ui:96
 msgid "True"
-msgstr "Waar"
+msgstr "True"
 
 #: src/chooseZoneWindow.ui:86
 msgid "Default Zone"
