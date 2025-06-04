@@ -30,23 +30,22 @@ export class Data {
 
     async getData() {
         // Create the data directory first. It's better to know now if there's a problem.
-        if (GLib.mkdir_with_parents(this.#destinationDirectory, Data.#dataDirectoryPermissions) !== 0)
+        if (GLib.mkdir_with_parents(this.#destinationDirectory, Data.#dataDirectoryPermissions) !== 0) {
             // mkdir failed
             throw new Error(`Cannot create directory ${this.#destinationDirectory}`);
-        try {
-            // eslint-disable-next-line no-unused-vars
-            const [contents, etag] = await this.#destinationFile.load_contents_async(null);
-            const decoder = new TextDecoder(Data.#textFormat);
-            return decoder.decode(contents);
-        } catch (e) {
-            if (e.message.includes('No such file or directory')) {
-                // file does not yet exist, that's OK
-                console.log(`File ${this.#destination} does not exist. Treat as empty and create it later.`);
-                return null;
-            }
-            else
-                throw e;
         }
+        // check for existence of the file
+        const dir = Gio.File.new_for_path(this.#destinationDirectory);
+        const file = dir.get_child(this.#fileName);
+        if (!file.query_exists(null)) {
+            // file does not yet exist, that's OK
+            console.log(`File ${this.#destination} does not exist. Treat as empty and create it later.`);
+            return null;
+        }
+        // eslint-disable-next-line no-unused-vars
+        const [contents, etag] = await this.#destinationFile.load_contents_async(null);
+        const decoder = new TextDecoder(Data.#textFormat);
+        return decoder.decode(contents);
     }
 
     async saveData(data) {
