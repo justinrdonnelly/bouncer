@@ -13,7 +13,7 @@
   <requires lib="gtk" version="4.10"/>
   <requires lib="libadwaita" version="1.4"/>
   <template class="MoreInfoDialog" parent="AdwDialog">
-    <property name="title">More Information</property>
+    <property name="title" translatable="yes">More Information</property>
     <child>
       <object class="AdwToolbarView">
         <child type="top">
@@ -31,7 +31,7 @@
             <property name="margin-end">12</property>
             <property name="wrap">True</property>
             <!-- Ignore the ugly formatting. New lines are literal. -->
-            <property name="label">You're using &lt;a href="https://firewalld.org/"&gt;firewalld&lt;/a&gt; as your firewall. One of the nice features about firewalld is that it supports different zones (sets of firewall rules). You may have a firewall zone configured for home use, and a different zone for public networks.
+            <property name="label" translatable="yes">You're using &lt;a href="https://firewalld.org/"&gt;firewalld&lt;/a&gt; as your firewall. One of the nice features about firewalld is that it supports different zones (sets of firewall rules). You may have a firewall zone configured for home use, and a different zone for public networks.
 
 You're using &lt;a href="https://networkmanager.dev/"&gt;NetworkManager&lt;/a&gt; for network configuration. NetworkManager integrates well with firewalld and can &lt;a href="https://firewalld.org/documentation/zone/connections-interfaces-and-sources.html"&gt;set the firewalld zone for an interface based on the connection&lt;/a&gt;. This means your firewall rules can automatically change depending on your network connection.
 

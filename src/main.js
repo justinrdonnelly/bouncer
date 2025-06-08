@@ -58,10 +58,10 @@ export const BouncerApplication = GObject.registerClass(
                     developer_name: 'Justin Donnelly',
                     version: '48.0.0',
                     // details
-                    comments: 'Bouncer is an application to help you choose the correct firewall zone for wireless ' +
+                    comments: _('Bouncer is an application to help you choose the correct firewall zone for wireless ' +
                         'connections. When you connect to a new network, Bouncer will open a window prompting you ' +
                         'for what kind of network (eg home, public, work) it is. When you choose the network type, ' +
-                        'it is associated with that network and automatically used in the future.',
+                        'it is associated with that network and automatically used in the future.'),
                     website: 'https://github.com/justinrdonnelly/bouncer',
                     // troubleshooting
                     issue_url: 'https://github.com/justinrdonnelly/bouncer/issues',
@@ -110,9 +110,9 @@ export const BouncerApplication = GObject.registerClass(
                 this.#handleError(
                     false,
                     'main-dependency-unknown-error',
-                    'Unknown error',
-                    'An unknown error occurred. Bouncer may not function correctly. Please see logs for more ' +
-                        'information.'
+                    _('Unknown error'),
+                    _('An unknown error occurred. Bouncer may not function correctly. Please see logs for more ' +
+                        'information.')
                 );
             }
             try {
@@ -124,9 +124,9 @@ export const BouncerApplication = GObject.registerClass(
                 this.#handleError(
                     true,
                     'main-connection-ids',
-                    'Can\'t find previously seen connections',
-                    'There was a problem determining which connections have already been seen. Please see logs for ' +
-                        'more information.'
+                    _('Can\'t find previously seen connections'),
+                    _('There was a problem determining which connections have already been seen. Please see logs for ' +
+                        'more information.')
                 );
             }
 
@@ -141,8 +141,8 @@ export const BouncerApplication = GObject.registerClass(
                 this.#handleError(
                     true,
                     'main-network-state',
-                    'Can\'t determine network state',
-                    'There was a problem tracking network connection changes. Please see logs for more information.'
+                    _('Can\'t determine network state'),
+                    _('There was a problem tracking network connection changes. Please see logs for more information.')
                 );
             }
         } // end init
@@ -156,7 +156,7 @@ export const BouncerApplication = GObject.registerClass(
 
         #handleError(fatal, id, title, message) {
             if (fatal)
-                message += ' Bouncer is shutting down. You will need to restart manually.';
+                message += _(' Bouncer is shutting down. You will need to restart manually.');
             const notification = new Gio.Notification();
             notification.set_title(title);
             notification.set_body(message);
@@ -169,9 +169,9 @@ export const BouncerApplication = GObject.registerClass(
         // eslint-disable-next-line no-unused-vars
         #handleFirstRunSignal(emittingObject) {
             const notification = new Gio.Notification();
-            notification.set_title('First run setup complete!');
-            const message = 'Your system is correctly configured for Bouncer. Bouncer will autostart on each login ' +
-                'and will open when you connect to a new Wi-Fi network.';
+            notification.set_title(_('First run setup complete!'));
+            const message = _('Your system is correctly configured for Bouncer. Bouncer will autostart on each login ' +
+                'and will open when you connect to a new Wi-Fi network.');
             notification.set_body(message);
             console.log('about to send notification');
             this.send_notification('first-run-setup-complete', notification);
@@ -205,9 +205,9 @@ export const BouncerApplication = GObject.registerClass(
                 this.#handleError(
                     false,
                     'main-network-state-emit',
-                    'Can\'t prompt for firewall zone',
-                    'There was a problem getting information to prompt for the firewall zone. Please see logs for ' +
-                        'more information.'
+                    _('Can\'t prompt for firewall zone'),
+                    _('There was a problem getting information to prompt for the firewall zone. Please see logs for ' +
+                        'more information.')
                 );
             }
         }
@@ -256,9 +256,9 @@ export const BouncerApplication = GObject.registerClass(
                 this.#handleError(
                     false,
                     'main-connection-id-save',
-                    'Can\'t add connection to seen connections',
-                    `There was a problem adding ${connectionId} to the list of seen connections. The firewall zone ` +
-                        'will not be set for this connection. Please see logs for more information.'
+                    _('Can\'t add connection to seen connections'),
+                    _('There was a problem adding the connection to the list of seen connections. The firewall zone ' +
+                        'will not be set for this connection. Please see logs for more information.')
                 );
                 return; // this is not fatal, but we will not continue with this attempt to set the zone
             }
@@ -272,9 +272,9 @@ export const BouncerApplication = GObject.registerClass(
                 this.#handleError(
                     false,
                     'main-set-zone',
-                    'Can\'t set firewall zone for connection',
-                    `There was a problem setting the firewall zone for ${connectionId}. Please see logs for more ` +
-                        'information.'
+                    _('Can\'t set firewall zone for connection'),
+                    _('There was a problem setting the firewall zone for the connection. Please see logs for more ' +
+                        'information.')
                 );
                 return; // this is not fatal, but we will not continue with this attempt to set the zone
             }
@@ -288,10 +288,10 @@ export const BouncerApplication = GObject.registerClass(
                 this.#handleError(
                     false,
                     'main-connection-id-save-to-disk',
-                    'Can\'t save connection to seen connections',
-                    `The zone has been set for ${connectionId}, but there was a problem saving the updated list of ` +
+                    _('Can\'t save connection to seen connections'),
+                    _('The zone has been set for the connection, but there was a problem saving the updated list of ' +
                         'seen connections to disk. Once you restart Bouncer, you will again be prompted to choose a ' +
-                        `firewall zone for ${connectionId}. Please see logs for more information.`
+                        `firewall zone for this connection. Please see logs for more information.`)
                 );
                 return; // this is not fatal, and the zone has been set, but we won't send a feel-good notification
             }
@@ -299,16 +299,16 @@ export const BouncerApplication = GObject.registerClass(
             // Everything worked. Generate a notification indicating what's happened.
             try {
                 const notification = new Gio.Notification();
-                notification.set_title(`Firewall zone set for ${connectionId}`);
+                notification.set_title(_('Firewall zone set for connection: ') + connectionId);
                 if (zone === null) // this is the default zone
-                    notification.set_body(`Firewall zone for ${connectionId} has been set to the default zone ` +
-                        `(currently ${defaultZone}). Whenever you connect to ${connectionId} in the future, the ` +
-                        'firewall zone will automatically be changed to the default zone.'
+                    notification.set_body(_('Firewall zone for this connection has been set to the default zone ' +
+                        '(currently ') + defaultZone + _('). Whenever you connect to this network in the future, the ' +
+                        'firewall zone will automatically be changed to the default zone.')
                     );
                 else
-                    notification.set_body(`Firewall zone for ${connectionId} has been set to ${zone}. Whenever you ` +
-                        `connect to ${connectionId} in the future, the firewall zone will automatically be changed ` +
-                        `to ${zone}.`
+                    notification.set_body(_('Firewall zone for this connection has been set to ') + zone + _('. ' +
+                        'Whenever you connect to this network in the future, the firewall zone will automatically ' +
+                        'be changed to ') + zone + _('.')
                     );
                 this.send_notification('main-zone-chosen', notification);
             } catch (e) {

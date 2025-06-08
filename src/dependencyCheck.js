@@ -96,9 +96,10 @@ export const DependencyCheck = GObject.registerClass(
             try {
                 console.log('Configuring autostart');
                 const portal = new Xdp.Portal();
+                // https://libportal.org/method.Portal.request_background.html
                 await portal.request_background(
                     null,
-                    'Bouncer must start on login',
+                    _('Bouncer must start on login'),
                     ['io.github.justinrdonnelly.bouncer'],
                     DependencyCheck.#XDP_BACKGROUND_FLAG_AUTOSTART,
                     null
@@ -110,9 +111,10 @@ export const DependencyCheck = GObject.registerClass(
                 this.emitError(
                     false,
                     'dependency-error-autostart',
-                    'Can\'t configure autostart',
-                    'Please make sure the portal is available from inside the flatpak sandbox. Please see logs for ' +
-                        'more information.'
+                    _('Can\'t configure autostart'),
+                    // TODO: does this line wrapping work???
+                    _('Please make sure the portal is available from inside the flatpak sandbox. Please see logs for ' +
+                        'more information.')
                 );
                 throw e;
             }
@@ -127,9 +129,9 @@ export const DependencyCheck = GObject.registerClass(
                 this.emitError(
                     true,
                     'dependency-error-names',
-                    'Can\'t find D-Bus names',
-                    'Please make sure D-Bus is installed, running, and available inside the flatpak sandbox. Please ' +
-                        'see logs for more information.'
+                    _('Can\'t find D-Bus names'),
+                    _('Please make sure D-Bus is installed, running, and available inside the flatpak sandbox. ' +
+                        'Please see logs for more information.')
                 );
                 throw e;
             }
@@ -153,9 +155,9 @@ export const DependencyCheck = GObject.registerClass(
                 this.emitError(
                     true,
                     'dependency-error-firewalld',
-                    'Can\'t find firewalld',
-                    'Please make sure firewalld is installed, running, and available inside the flatpak sandbox. ' +
-                        'Please see logs for more information.'
+                    _('Can\'t find firewalld'),
+                    _('Please make sure firewalld is installed, running, and available inside the flatpak sandbox. ' +
+                        'Please see logs for more information.')
                 );
                 throw new Error('Firewalld not on D-Bus');
             }
@@ -171,9 +173,9 @@ export const DependencyCheck = GObject.registerClass(
                 this.emitError(
                     true,
                     'dependency-error-firewalld',
-                    'Can\'t get firewalld zones',
-                    'Unable to get firewalld zones. Please make sure firewalld permissions are correct, and are not ' +
-                        'restricted inside the flatpak sandbox. Please see logs for more information.'
+                    _('Can\'t get firewalld zones'),
+                    _('Unable to get firewalld zones. Please make sure firewalld permissions are correct, and are ' +
+                        'not restricted inside the flatpak sandbox. Please see logs for more information.')
                 );
                 throw e;
             }
@@ -186,9 +188,9 @@ export const DependencyCheck = GObject.registerClass(
                 this.emitError(
                     true,
                     'dependency-error-firewalld',
-                    'Can\'t get firewalld default zone',
-                    'Unable to get firewalld default zone. Please make sure firewalld permissions are correct, and ' +
-                        'are not restricted inside the flatpak sandbox. Please see logs for more information.'
+                    _('Can\'t get firewalld default zone'),
+                    _('Unable to get firewalld default zone. Please make sure firewalld permissions are correct, and ' +
+                        'are not restricted inside the flatpak sandbox. Please see logs for more information.')
                 );
                 throw e;
             }
@@ -212,9 +214,9 @@ export const DependencyCheck = GObject.registerClass(
                 this.emitError(
                     true,
                     'dependency-error-networkmanager',
-                    'Can\'t find NetworkManager',
-                    'Please make sure NetworkManager is installed, running, and available inside the flatpak ' +
-                        'sandbox. Please see logs for more information.'
+                    _('Can\'t find NetworkManager'),
+                    _('Please make sure NetworkManager is installed, running, and available inside the flatpak ' +
+                        'sandbox. Please see logs for more information.')
                 );
                 throw new Error('NetworkManager not on D-Bus');
             }
@@ -259,9 +261,10 @@ export const DependencyCheck = GObject.registerClass(
                     this.emitError(
                         false,
                         'dependency-error-networkmanager',
-                        'Authentication required to change NetworkManager connection zone',
-                        'You are authorized to change the connection zone in NetworkManager, but will be required to ' +
-                            'authenticate. This will work, but may be annoying. Please see logs for more information.'
+                        _('Authentication required to change NetworkManager connection zone'),
+                        _('You are authorized to change the connection zone in NetworkManager, but will be required ' +
+                            'to authenticate. This will work, but may be annoying. Please see logs for more ' +
+                            'information.')
                     );
                     break; // Don't throw an error. Everything is basically OK.
                 case 'no': // not authorized
@@ -269,9 +272,9 @@ export const DependencyCheck = GObject.registerClass(
                     this.emitError(
                         true,
                         'dependency-error-networkmanager',
-                        'Not authorized to change NetworkManager connection zone',
-                        'You are not authorized to change the connection zone in NetworkManager. This is required ' +
-                            'for Bouncer to function properly. Please see logs for more information.'
+                        _('Not authorized to change NetworkManager connection zone'),
+                        _('You are not authorized to change the connection zone in NetworkManager. This is required ' +
+                            'for Bouncer to function properly. Please see logs for more information.')
                     );
                     throw new Error('Not authorized to change NetworkManager');
                 default:
@@ -279,9 +282,9 @@ export const DependencyCheck = GObject.registerClass(
                     this.emitError(
                         false,
                         'dependency-error-networkmanager',
-                        `Unexpected result from NetworkManager GetSettings: ${modifyPermission}`,
-                        'Unable to determine whether you are authorized to change the connection zone in ' +
-                            'NetworkManager. Bouncer may not function properly. Please see logs for more information.'
+                        _('Unexpected result from NetworkManager GetSettings: ') + modifyPermission,
+                        _('Unable to determine whether you are authorized to change the connection zone in ' +
+                            'NetworkManager. Bouncer may not function properly. Please see logs for more information.')
                     );
                     throw new Error('Unexpected result from NetworkManager GetSettings');
             }
