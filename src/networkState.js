@@ -117,9 +117,9 @@ const NetworkManagerStateItem = GObject.registerClass(
             this.emitError(
                 true, // all errors here are considered fatal
                 'network-state',
-                'Error determining network state',
-                'Bouncer ran into an error determining network state. This is required for the application to work ' +
-                    'correctly. Please see logs for more information.'
+                _('Error determining network state'),
+                _('Bouncer ran into an error determining network state. This is required for the application to work ' +
+                    'correctly. Please see logs for more information.')
             );
         }
     }
