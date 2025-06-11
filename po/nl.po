@@ -1,0 +1,562 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the bouncer package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: bouncer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-10 23:44+0200\n"
+"PO-Revision-Date: 2025-06-11 10:50+0200\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+
+#: data/io.github.justinrdonnelly.bouncer.desktop.in:2
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:7
+msgid "Bouncer"
+msgstr "Poortwachter"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/io.github.justinrdonnelly.bouncer.desktop.in:9
+msgid "firewall;network;Wi-Fi;"
+msgstr "firewall;netwerk;Wi-Fi;wifi;"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:8
+msgid "Keep the riffraff out!"
+msgstr "Houd onbevoegden buiten!"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:13
+msgid ""
+"Bouncer is an application to help you choose the correct firewall zone for "
+"wireless connections. When you connect to a new network, a window opens "
+"prompting you for what kind of network (eg home, public, work) it is. When "
+"you choose the network type, it is associated with that network and "
+"automatically used in the future."
+msgstr ""
+"Poortwachter is een toepassing waarmee de juiste firewallzones kunnen worden "
+"ingesteld op draadloze verbindingen. Als u verbinding maakt met een nieuw "
+"netwerk, opent een venster dat vraagt wat voor soort netwerk het om gaat "
+"(bijv. thuis, openbaar, werk). Na het kiezen van het netwerktype wordt dat "
+"automatisch ingesteld, zodat u volgende keer geen actie meer hoeft te "
+"ondernemen."
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:14
+msgid ""
+"NetworkManager and firewalld are required. If you don't use those, you can't "
+"use Bouncer. Fedora uses both by default. Other distributions may not."
+msgstr ""
+"Voor het gebruik van Poortwachter zijn NetworkManager en firewalld vereist. Op "
+"Fedora zijn die pakketten standaard aanwezig; op andere distributies "
+"mogelijk niet."
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:15
+msgid ""
+"Additional setup is required after installation. See the applicable section "
+"for your distribution. Once the setup is done, start Bouncer manually to "
+"enable autostart. After that, it will start automatically when you log in."
+msgstr ""
+"Na de installatie zijn aanvullende instellingen vereist - bekijk hiervoor de "
+"relevante distributiesectie. Na het instellen kan Poortwachter automatisch "
+"worden opgestart zodra u inlogt op uw gebruikersaccount."
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:16
+msgid "Fedora"
+msgstr "Fedora"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:18
+msgid ""
+"For Fedora, everything just works! Just remember to start Bouncer manually "
+"once to enable autostart. You should see a notification indicating your "
+"system is correctly configured for Bouncer."
+msgstr ""
+"Op Fedora werkt alles gewoon! Het enige wat u zelf nog moet doen is "
+"Poortwachter openen om automatisch opstarten in te schakelen. Als het goed is "
+"moet u een melding krijgen dat het systeem goed is afgesteld."
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:20
+msgid "Ubuntu"
+msgstr "Ubuntu"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:22
+msgid "Uninstall ufw: <code>sudo apt remove ufw</code>"
+msgstr "Verwijder ufw: <code>sudo apt remove ufw</code>"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:23
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:29
+msgid "Install firewalld: <code>sudo apt install firewalld</code>"
+msgstr "Installeer firewalld: <code>sudo apt install firewalld</code>"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:24
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:30
+msgid ""
+"By default, polkit is configured to not let regular users set the zone for a "
+"connection. The simplest way to change this is to add users to the "
+"<code>netdev</code> group (eg <code>usermod -a -G netdev justin</code>). "
+"Alternatively, you can create a custom polkit rule for the "
+"<code>org.freedesktop.NetworkManager.settings.modify.system</code> action "
+"(how to create custom polkit rules is beyond the scope of this document and "
+"is left as an exercise for the reader)."
+msgstr ""
+"Standaard is polkit zó ingesteld dat gewone gebruikers geen firewallzones "
+"mogen kiezen. De eenvoudigste manier om dit wél mogelijk te maken is door "
+"gebruikers toe te voegen aan de <code>netdev</code>-groep (bijv. "
+"<code>usermod -a -G netdev naamvanmijnaccount</code>). Ook kunt u een polkit-"
+"regel toevoegen aan de "
+"<code>org.freedesktop.NetworkManager.settings.modify.system</code>-actie. "
+"Hoe u dat doet, wordt elders op internet uitgelegd."
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:25
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:31
+msgid ""
+"Start Bouncer manually once to enable autostart. You should see a "
+"notification indicating your system is correctly configured for Bouncer."
+msgstr ""
+"Open Poortwachter om automatisch opstarten in te schakelen. Als het goed is "
+"moet u een melding krijgen dat het systeem goed is afgesteld."
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:27
+msgid "Debian"
+msgstr "Debian"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:42
+msgid "Bouncer prompting for the type of network"
+msgstr "Poortwachter vraagt om het soort netwerk"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:52
+msgid "Include a notification for first run success"
+msgstr "Nieuw: melding na eerste keer opstarten"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:57
+msgid "Initial release"
+msgstr "De allereerste versie"
+
+#: src/chooseZoneWindow.ui:27
+msgid "Menu"
+msgstr "Menu"
+
+#: src/chooseZoneWindow.ui:61
+msgid ""
+"You have connected to a new Wi-Fi network. Please choose a firewall zone. "
+"What type of network is this?"
+msgstr ""
+"U heeft verbinding gemaakt met een nieuw wifinetwerk. Wat voor soort netwerk "
+"is dit?"
+
+#: src/chooseZoneWindow.ui:77
+msgid "Network"
+msgstr "Netwerk"
+
+#: src/chooseZoneWindow.ui:86
+msgid "Default Zone"
+msgstr "Standaardzone"
+
+#: src/chooseZoneWindow.ui:95
+msgid "Current Zone"
+msgstr "Huidige zone"
+
+#. make the dropdown not span the entire box
+#: src/chooseZoneWindow.ui:111
+msgid "Firewall Zone"
+msgstr "Firewallzone"
+
+#: src/chooseZoneWindow.ui:112
+msgid "Choose the firewall zone for this network."
+msgstr "Kies een firewallzone voor dit netwerk."
+
+#: src/chooseZoneWindow.ui:115
+msgid "Zone"
+msgstr "Zone"
+
+#: src/chooseZoneWindow.ui:134
+msgid "Help"
+msgstr "Hulp"
+
+#. min width
+#: src/chooseZoneWindow.ui:146
+msgid "Get more information."
+msgstr "Bekijk meer informatie."
+
+#: src/chooseZoneWindow.ui:161
+msgid "Exit"
+msgstr "Afsluiten"
+
+#. min width
+#: src/chooseZoneWindow.ui:173
+msgid ""
+"No change will be made. You will see this window again the next time you "
+"connect to this network."
+msgstr ""
+"Er zijn geen wijzigingen aangebracht. Dit venster wordt getoond telkens als "
+"u verbinding maakt met dit netwerk."
+
+#: src/chooseZoneWindow.ui:188
+msgid "Choose"
+msgstr "Kiezen"
+
+#. min width
+#: src/chooseZoneWindow.ui:203
+msgid ""
+"The selected firewall zone will be used every time you connect to this "
+"network."
+msgstr ""
+"De firewallzone die wordt gebruikt telkens als u verbinding maakt met dit "
+"netwerk."
+
+#: src/chooseZoneWindow.ui:219
+msgid "_About Bouncer"
+msgstr "_Over Poortwachter"
+
+#: src/dependencyCheck.js:102
+msgid "Bouncer must start on login"
+msgstr "Bouncer dient automatisch op te starten"
+
+#: src/dependencyCheck.js:114
+msgid "Can't configure autostart"
+msgstr "Automatisch opstarten mislukt"
+
+#. TODO: does this line wrapping work???
+#: src/dependencyCheck.js:116
+msgid ""
+"Please make sure the portal is available from inside the flatpak sandbox. "
+"Please see logs for more information."
+msgstr ""
+"Zorg dat het portaal beschikbaar is binnen de flatpak-sandbox. Bekijk voor "
+"meer informatie het logboek."
+
+#: src/dependencyCheck.js:132
+msgid "Can't find D-Bus names"
+msgstr "Geen D-Bus-namen beschikbaar"
+
+#: src/dependencyCheck.js:133
+msgid ""
+"Please make sure D-Bus is installed, running, and available inside the "
+"flatpak sandbox. Please see logs for more information."
+msgstr ""
+"Zorg dat D-Bus geïnstalleerd en actief is, en beschikbaar binnen de flatpak-"
+"sandbox. Bekijk voor meer informatie het logboek."
+
+#: src/dependencyCheck.js:158
+msgid "Can't find firewalld"
+msgstr "Firewalld is niet beschikbaar"
+
+#: src/dependencyCheck.js:159
+msgid ""
+"Please make sure firewalld is installed, running, and available inside the "
+"flatpak sandbox. Please see logs for more information."
+msgstr ""
+"Zorg dat firewalld geïnstalleerd en actief is, en beschikbaar binnen de "
+"flatpak-sandbox. Bekijk voor meer informatie het logboek."
+
+#: src/dependencyCheck.js:176
+msgid "Can't get firewalld zones"
+msgstr "Firewalld-zones zijn niet beschikbaar"
+
+#: src/dependencyCheck.js:177
+msgid ""
+"Unable to get firewalld zones. Please make sure firewalld permissions are "
+"correct, and are not restricted inside the flatpak sandbox. Please see logs "
+"for more information."
+msgstr ""
+"De firewalld-zones kunnen niet worden opgevraagd. Zorg dat de rechten juist "
+"zijn ingesteld en niet beperkt zijn binnen de flatpak-sandbox. Bekijk voor "
+"meer informatie het logboek."
+
+#: src/dependencyCheck.js:191
+msgid "Can't get firewalld default zone"
+msgstr "Standaard firewalld-zone is niet beschikbaar"
+
+#: src/dependencyCheck.js:192
+msgid ""
+"Unable to get firewalld default zone. Please make sure firewalld permissions "
+"are correct, and are not restricted inside the flatpak sandbox. Please see "
+"logs for more information."
+msgstr ""
+"De standaard firewalld-zone kan niet worden opgevraagd. Zorg dat de rechten "
+"juist zijn ingesteld en niet beperkt zijn binnen de flatpak-sandbox. Bekijk "
+"voor meer informatie het logboek."
+
+#: src/dependencyCheck.js:217
+msgid "Can't find NetworkManager"
+msgstr "NetworkManager is niet beschikbaar"
+
+#: src/dependencyCheck.js:218
+msgid ""
+"Please make sure NetworkManager is installed, running, and available inside "
+"the flatpak sandbox. Please see logs for more information."
+msgstr ""
+"Zorg dat NetworkManager geïnstalleerd en actief is, en beschikbaar binnen de "
+"flatpak-sandbox. Bekijk voor meer informatie het logboek."
+
+#: src/dependencyCheck.js:264
+msgid "Authentication required to change NetworkManager connection zone"
+msgstr "Verificatie vereist om de verbindingszone te wĳzigen"
+
+#: src/dependencyCheck.js:265
+msgid ""
+"You are authorized to change the connection zone in NetworkManager, but will "
+"be required to authenticate. This will work, but may be annoying. Please see "
+"logs for more information."
+msgstr ""
+"U bent bevoegd om de verbindingszone te wĳzigen, maar verificatie is "
+"vereist. Dit is een werkbare doch mogelijk licht irritante oplossing. Bekijk "
+"voor meer informatie het logboek."
+
+#: src/dependencyCheck.js:275
+msgid "Not authorized to change NetworkManager connection zone"
+msgstr "Niet bevoegd om de verbindingszone te wĳzigen"
+
+#: src/dependencyCheck.js:276
+msgid ""
+"You are not authorized to change the connection zone in NetworkManager. This "
+"is required for Bouncer to function properly. Please see logs for more "
+"information."
+msgstr ""
+"U bent niet bevoegd om de verbindingszone te wĳzigen. De juiste rechten zijn "
+"vereist om Poortwachter goed te laten werken. Bekijk voor meer informatie het "
+"logboek."
+
+#: src/dependencyCheck.js:285
+msgid "Unexpected result from NetworkManager GetSettings: "
+msgstr "Onverwacht resultaat uit NetworkManager GetSettings: "
+
+#: src/dependencyCheck.js:286
+msgid ""
+"Unable to determine whether you are authorized to change the connection zone "
+"in NetworkManager. Bouncer may not function properly. Please see logs for "
+"more information."
+msgstr ""
+"Het is niet mogelijk om vast te stellen of u bevoegd bent om de "
+"verbindingszone te wĳzigen. Poortwachter werkt hierdoor mogelijk niet naar "
+"behoren. Bekijk voor meer informatie het logboek."
+
+#. details
+#: src/main.js:61
+msgid ""
+"Bouncer is an application to help you choose the correct firewall zone for "
+"wireless connections. When you connect to a new network, Bouncer will open a "
+"window prompting you for what kind of network (eg home, public, work) it is. "
+"When you choose the network type, it is associated with that network and "
+"automatically used in the future."
+msgstr ""
+"Poortwachter is een toepassing waarmee de juiste firewallzones kunnen worden "
+"ingesteld op draadloze verbindingen. Als u verbinding maakt met een nieuw "
+"netwerk, opent een venster dat vraagt wat voor soort netwerk het om gaat "
+"(bijv. thuis, openbaar, werk). Na het kiezen van het netwerktype wordt dat "
+"automatisch ingesteld, zodat u volgende keer geen actie meer hoeft te "
+"ondernemen."
+
+#: src/main.js:113
+msgid "Unknown error"
+msgstr "Onbekende fout"
+
+#: src/main.js:114
+msgid ""
+"An unknown error occurred. Bouncer may not function correctly. Please see "
+"logs for more information."
+msgstr ""
+"Er is een onbekende fout opgetreden - Poortwachter werkt mogelijk niet naar "
+"behoren. Bekijk voor meer informatie het logboek."
+
+#: src/main.js:127
+msgid "Can't find previously seen connections"
+msgstr "Geen eerdere verbindingen aangetroffen"
+
+#: src/main.js:128
+msgid ""
+"There was a problem determining which connections have already been seen. "
+"Please see logs for more information."
+msgstr ""
+"Er is een probleem opgetreden tijdens het vaststellen van eerdere "
+"verbindingshandelingen. Bekijk voor meer informatie het logboek."
+
+#: src/main.js:144
+msgid "Can't determine network state"
+msgstr "Netwerkstatus niet beschikbaar"
+
+#: src/main.js:145
+msgid ""
+"There was a problem tracking network connection changes. Please see logs for "
+"more information."
+msgstr ""
+"De netwerkwijzigingen kunnen niet worden opgevraagd. Bekijk voor meer "
+"informatie het logboek."
+
+#: src/main.js:159
+msgid " Bouncer is shutting down. You will need to restart manually."
+msgstr " Poortwachter wordt afgesloten - herstart de toepassing handmatig."
+
+#: src/main.js:172
+msgid "First run setup complete!"
+msgstr "Instelhulp afgerond!"
+
+#: src/main.js:173
+msgid ""
+"Your system is correctly configured for Bouncer. Bouncer will autostart on "
+"each login and will open when you connect to a new Wi-Fi network."
+msgstr ""
+"Uw systeem is juist afgesteld. Poortwachter zal automatisch worden opgestart "
+"en een actiescherm tonen zodra u verbinding maakt met een nieuw wifinetwerk."
+
+#: src/main.js:208
+msgid "Can't prompt for firewall zone"
+msgstr "Firewallzonevraag mislukt"
+
+#: src/main.js:209
+msgid ""
+"There was a problem getting information to prompt for the firewall zone. "
+"Please see logs for more information."
+msgstr ""
+"Er is een probleem opgetreden tijdens het opvragen van de firewallzone. "
+"Bekijk voor meer informatie het logboek."
+
+#: src/main.js:259
+msgid "Can't add connection to seen connections"
+msgstr "Verbinding toevoegen aan eerdere mislukt"
+
+#: src/main.js:260
+msgid ""
+"There was a problem adding the connection to the list of seen connections. "
+"The firewall zone will not be set for this connection. Please see logs for "
+"more information."
+msgstr ""
+"Er is een probleem opgetreden tijdens het toevoegen van de verbinding aan de "
+"lijst met eerdere verbindingen. De firewallzone kan hierdoor niet worden "
+"ingesteld. Bekijk voor meer informatie het logboek."
+
+#: src/main.js:275
+msgid "Can't set firewall zone for connection"
+msgstr "Firewallzone instellen mislukt"
+
+#: src/main.js:276
+msgid ""
+"There was a problem setting the firewall zone for the connection. Please see "
+"logs for more information."
+msgstr ""
+"Er is een probleem opgetreden tijdens het instellen van de firewallzone. "
+"Bekijk voor meer informatie het logboek."
+
+#: src/main.js:291
+msgid "Can't save connection to seen connections"
+msgstr "Verbinding toevoegen aan eerdere mislukt"
+
+#: src/main.js:292
+msgid ""
+"The zone has been set for the connection, but there was a problem saving the "
+"updated list of seen connections to disk. Once you restart Bouncer, you will "
+"again be prompted to choose a firewall zone for this connection. Please see "
+"logs for more information."
+msgstr ""
+"De zone is ingesteld, maar er is een probleem opgetreden tijdens het "
+"bijwerken van de lijst met eerdere verbindingen. Als u Poortwachter herstart, "
+"wordt u daarom opnieuw gevraagd om een firewallzone te kiezen. Bekijk voor "
+"meer informatie het logboek."
+
+#: src/main.js:302
+msgid "Firewall zone set for connection: "
+msgstr "Firewallzone ingesteld voor: "
+
+#. this is the default zone
+#: src/main.js:304
+msgid ""
+"Firewall zone for this connection has been set to the default zone "
+"(currently "
+msgstr "De firewallzone is ingesteld op de standaardzone (momenteel: "
+
+#: src/main.js:305
+msgid ""
+"). Whenever you connect to this network in the future, the firewall zone "
+"will automatically be changed to the default zone."
+msgstr ""
+"). Als u later opnieuw verbinding maakt met dit netwerk, zal de firewallzone "
+"automatisch worden ingesteld op de standaardzone."
+
+#: src/main.js:309
+msgid "Firewall zone for this connection has been set to "
+msgstr "De firewall is ingesteld op "
+
+#: src/main.js:309
+msgid ""
+". Whenever you connect to this network in the future, the firewall zone will "
+"automatically be changed to "
+msgstr ""
+". Als u later opnieuw verbinding maakt met dit netwerk, zal de firewallzone "
+"automatisch worden ingesteld op "
+
+#: src/main.js:311
+msgid "."
+msgstr "."
+
+#: src/moreInfo.ui:16
+msgid "More Information"
+msgstr "Meer informatie"
+
+#. Ignore the ugly formatting. New lines are literal.
+#: src/moreInfo.ui:34
+msgid ""
+"You're using <a href=\"https://firewalld.org/\">firewalld</a> as your "
+"firewall. One of the nice features about firewalld is that it supports "
+"different zones (sets of firewall rules). You may have a firewall zone "
+"configured for home use, and a different zone for public networks.\n"
+"\n"
+"You're using <a href=\"https://networkmanager.dev/\">NetworkManager</a> for "
+"network configuration. NetworkManager integrates well with firewalld and can "
+"<a href=\"https://firewalld.org/documentation/zone/connections-interfaces-"
+"and-sources.html\">set the firewalld zone for an interface based on the "
+"connection</a>. This means your firewall rules can automatically change "
+"depending on your network connection.\n"
+"\n"
+"Bouncer is designed to make this easier for you. It opens a window when you "
+"connect to a new network, allowing you to choose the appropriate firewall "
+"zone. If you're not sure what to choose, you should probably choose the "
+"option that matches where you are. The safest option is usually 'public'. If "
+"you don't want to change anything, click 'Exit'.\n"
+"\n"
+"You can read more about Bouncer <a href=\"https://github.com/justinrdonnelly/"
+"bouncer\">here</a>."
+msgstr ""
+"U maakt gebruik van de <a href=\"https://firewalld.org/\">firewalld</a>-"
+"software. Een van de voordelen hiervan is dat u keuze heeft uit "
+"verschillende zones (firewallregels). Zo kunt u bijvoorbeeld een zone kiezen "
+"voor thuisgebruik en een andere voor openbare netwerken.\n"
+"\n"
+"Daarnaast maakt u gebruik van <a href=\"https://networkmanager.dev/"
+"\">NetworkManager</a>. NetworkManager integreert naadloos met firewalld en "
+"kan <a href=\"https://firewalld.org/documentation/zone/connections-"
+"interfaces-and-sources.html\">de firewalld-zone instellen op basis van het "
+"type verbinding</a>. Oftewel: de firewallregels worden zo automatisch "
+"gewijzigd op basis van de vastgestelde verbinding.\n"
+"\n"
+"Poortwachter tracht dit proces te vereenvoudigen. Zodra u verbinding maakt met "
+"een nieuw netwerk, wordt er een venster getoond waarop u de gewenste "
+"firewallzone kunt kiezen. Kies bij twijfel voor de zone die het meest "
+"overeenkomt met de locatie waar u op dat moment bent. De veiligste optie is "
+"doorgaans ‘openbaar’. Als u geen zone wilt instellen, klik dan op "
+"afsluiten.\n"
+"\n"
+"Meer informatie over Poortwachter is te vinden op <a href=\"https://github.com/"
+"justinrdonnelly/bouncer\">deze pagina</a>."
+
+#: src/networkState.js:120
+msgid "Error determining network state"
+msgstr "Netwerkstatus niet beschikbaar"
+
+#: src/networkState.js:121
+msgid ""
+"Bouncer ran into an error determining network state. This is required for "
+"the application to work correctly. Please see logs for more information."
+msgstr ""
+"Er is een fout opgetreden tijdens het vaststellen van de netwerkstatus. Deze "
+"vaststelling is vereist. Bekijk voor meer informatie het logboek."
+
+#~ msgid "Justin Donnelly"
+#~ msgstr "Justin Donnelly"
+
+#~ msgid "True"
+#~ msgstr "True"
