@@ -47,6 +47,15 @@
     <color type="primary" scheme_preference="dark">#9586b9</color>
   </branding>
   <releases>
+    <release version="48.2.0" date="2025-06-12">
+      <description>
+        <ul>
+          <li>Critical bug fix for non-English language users</li>
+          <li>Added Dutch translation</li>
+          <li>Documentation cleanups</li>
+        </ul>
+      </description>
+    </release>
     <release version="48.1.0" date="2025-05-27">
       <description>
         <p>Include a notification for first run success</p>
