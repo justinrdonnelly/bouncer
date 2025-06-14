@@ -68,7 +68,7 @@ export const BouncerApplication = GObject.registerClass(
                     // credits
                     developers: ['Justin Donnelly'],
                     // legal
-                    copyright: '© 2024 Justin Donnelly',
+                    copyright: '© 2024-2025 Justin Donnelly',
                     license_type: Gtk.License.MPL_2_0,
                 };
                 const aboutDialog = new Adw.AboutDialog(aboutParams);
