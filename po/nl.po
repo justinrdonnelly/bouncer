@@ -554,9 +554,3 @@ msgid ""
 msgstr ""
 "Er is een fout opgetreden tijdens het vaststellen van de netwerkstatus. Deze "
 "vaststelling is vereist. Bekijk voor meer informatie het logboek."
-
-#~ msgid "Justin Donnelly"
-#~ msgstr "Justin Donnelly"
-
-#~ msgid "True"
-#~ msgstr "True"
