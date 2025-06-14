@@ -67,6 +67,9 @@ export const BouncerApplication = GObject.registerClass(
                     issue_url: 'https://github.com/justinrdonnelly/bouncer/issues',
                     // credits
                     developers: ['Justin Donnelly'],
+                    // Translators: Replace 'translator-credits' with your name/username, and optionally an email or
+                    // URL.
+                    translator_credits: _('translator-credits'),
                     // legal
                     copyright: '© 2024-2025 Justin Donnelly',
                     license_type: Gtk.License.MPL_2_0,
