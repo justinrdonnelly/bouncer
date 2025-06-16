@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bouncer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-10 23:44+0200\n"
-"PO-Revision-Date: 2025-06-11 10:50+0200\n"
+"POT-Creation-Date: 2025-06-14 18:16+0200\n"
+"PO-Revision-Date: 2025-06-16 10:52+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -52,8 +52,8 @@ msgid ""
 "NetworkManager and firewalld are required. If you don't use those, you can't "
 "use Bouncer. Fedora uses both by default. Other distributions may not."
 msgstr ""
-"Voor het gebruik van Poortwachter zijn NetworkManager en firewalld vereist. Op "
-"Fedora zijn die pakketten standaard aanwezig; op andere distributies "
+"Voor het gebruik van Poortwachter zijn NetworkManager en firewalld vereist. "
+"Op Fedora zijn die pakketten standaard aanwezig; op andere distributies "
 "mogelijk niet."
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:15
@@ -77,8 +77,8 @@ msgid ""
 "system is correctly configured for Bouncer."
 msgstr ""
 "Op Fedora werkt alles gewoon! Het enige wat u zelf nog moet doen is "
-"Poortwachter openen om automatisch opstarten in te schakelen. Als het goed is "
-"moet u een melding krijgen dat het systeem goed is afgesteld."
+"Poortwachter openen om automatisch opstarten in te schakelen. Als het goed "
+"is moet u een melding krijgen dat het systeem goed is afgesteld."
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:20
 msgid "Ubuntu"
@@ -129,11 +129,23 @@ msgstr "Debian"
 msgid "Bouncer prompting for the type of network"
 msgstr "Poortwachter vraagt om het soort netwerk"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:52
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:53
+msgid "Critical bug fix for non-English language users"
+msgstr "Opgelost: kritieke bug opgelost voor niet-Engelssprekenden"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:54
+msgid "Added Dutch translation"
+msgstr "Nieuw: Nederlandse vertaling"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:55
+msgid "Documentation cleanups"
+msgstr "Verbeterd: documentatie"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:61
 msgid "Include a notification for first run success"
 msgstr "Nieuw: melding na eerste keer opstarten"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:57
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:66
 msgid "Initial release"
 msgstr "De allereerste versie"
 
@@ -319,8 +331,8 @@ msgid ""
 "information."
 msgstr ""
 "U bent niet bevoegd om de verbindingszone te wĳzigen. De juiste rechten zijn "
-"vereist om Poortwachter goed te laten werken. Bekijk voor meer informatie het "
-"logboek."
+"vereist om Poortwachter goed te laten werken. Bekijk voor meer informatie "
+"het logboek."
 
 #: src/dependencyCheck.js:285
 msgid "Unexpected result from NetworkManager GetSettings: "
@@ -352,11 +364,17 @@ msgstr ""
 "automatisch ingesteld, zodat u volgende keer geen actie meer hoeft te "
 "ondernemen."
 
-#: src/main.js:113
+#. Translators: Replace 'translator-credits' with your name/username, and optionally an email or
+#. URL.
+#: src/main.js:72
+msgid "translator-credits"
+msgstr "Heimen Stoffels <vistausss@fastmail.com>"
+
+#: src/main.js:116
 msgid "Unknown error"
 msgstr "Onbekende fout"
 
-#: src/main.js:114
+#: src/main.js:117
 msgid ""
 "An unknown error occurred. Bouncer may not function correctly. Please see "
 "logs for more information."
@@ -364,11 +382,11 @@ msgstr ""
 "Er is een onbekende fout opgetreden - Poortwachter werkt mogelijk niet naar "
 "behoren. Bekijk voor meer informatie het logboek."
 
-#: src/main.js:127
+#: src/main.js:130
 msgid "Can't find previously seen connections"
 msgstr "Geen eerdere verbindingen aangetroffen"
 
-#: src/main.js:128
+#: src/main.js:131
 msgid ""
 "There was a problem determining which connections have already been seen. "
 "Please see logs for more information."
@@ -376,11 +394,11 @@ msgstr ""
 "Er is een probleem opgetreden tijdens het vaststellen van eerdere "
 "verbindingshandelingen. Bekijk voor meer informatie het logboek."
 
-#: src/main.js:144
+#: src/main.js:147
 msgid "Can't determine network state"
 msgstr "Netwerkstatus niet beschikbaar"
 
-#: src/main.js:145
+#: src/main.js:148
 msgid ""
 "There was a problem tracking network connection changes. Please see logs for "
 "more information."
@@ -388,15 +406,15 @@ msgstr ""
 "De netwerkwijzigingen kunnen niet worden opgevraagd. Bekijk voor meer "
 "informatie het logboek."
 
-#: src/main.js:159
+#: src/main.js:162
 msgid " Bouncer is shutting down. You will need to restart manually."
 msgstr " Poortwachter wordt afgesloten - herstart de toepassing handmatig."
 
-#: src/main.js:172
+#: src/main.js:175
 msgid "First run setup complete!"
 msgstr "Instelhulp afgerond!"
 
-#: src/main.js:173
+#: src/main.js:176
 msgid ""
 "Your system is correctly configured for Bouncer. Bouncer will autostart on "
 "each login and will open when you connect to a new Wi-Fi network."
@@ -404,11 +422,11 @@ msgstr ""
 "Uw systeem is juist afgesteld. Poortwachter zal automatisch worden opgestart "
 "en een actiescherm tonen zodra u verbinding maakt met een nieuw wifinetwerk."
 
-#: src/main.js:208
+#: src/main.js:211
 msgid "Can't prompt for firewall zone"
 msgstr "Firewallzonevraag mislukt"
 
-#: src/main.js:209
+#: src/main.js:212
 msgid ""
 "There was a problem getting information to prompt for the firewall zone. "
 "Please see logs for more information."
@@ -416,11 +434,11 @@ msgstr ""
 "Er is een probleem opgetreden tijdens het opvragen van de firewallzone. "
 "Bekijk voor meer informatie het logboek."
 
-#: src/main.js:259
+#: src/main.js:262
 msgid "Can't add connection to seen connections"
 msgstr "Verbinding toevoegen aan eerdere mislukt"
 
-#: src/main.js:260
+#: src/main.js:263
 msgid ""
 "There was a problem adding the connection to the list of seen connections. "
 "The firewall zone will not be set for this connection. Please see logs for "
@@ -430,11 +448,11 @@ msgstr ""
 "lijst met eerdere verbindingen. De firewallzone kan hierdoor niet worden "
 "ingesteld. Bekijk voor meer informatie het logboek."
 
-#: src/main.js:275
+#: src/main.js:278
 msgid "Can't set firewall zone for connection"
 msgstr "Firewallzone instellen mislukt"
 
-#: src/main.js:276
+#: src/main.js:279
 msgid ""
 "There was a problem setting the firewall zone for the connection. Please see "
 "logs for more information."
@@ -442,11 +460,11 @@ msgstr ""
 "Er is een probleem opgetreden tijdens het instellen van de firewallzone. "
 "Bekijk voor meer informatie het logboek."
 
-#: src/main.js:291
+#: src/main.js:294
 msgid "Can't save connection to seen connections"
 msgstr "Verbinding toevoegen aan eerdere mislukt"
 
-#: src/main.js:292
+#: src/main.js:295
 msgid ""
 "The zone has been set for the connection, but there was a problem saving the "
 "updated list of seen connections to disk. Once you restart Bouncer, you will "
@@ -454,22 +472,22 @@ msgid ""
 "logs for more information."
 msgstr ""
 "De zone is ingesteld, maar er is een probleem opgetreden tijdens het "
-"bijwerken van de lijst met eerdere verbindingen. Als u Poortwachter herstart, "
-"wordt u daarom opnieuw gevraagd om een firewallzone te kiezen. Bekijk voor "
-"meer informatie het logboek."
+"bijwerken van de lijst met eerdere verbindingen. Als u Poortwachter "
+"herstart, wordt u daarom opnieuw gevraagd om een firewallzone te kiezen. "
+"Bekijk voor meer informatie het logboek."
 
-#: src/main.js:302
+#: src/main.js:305
 msgid "Firewall zone set for connection: "
 msgstr "Firewallzone ingesteld voor: "
 
 #. this is the default zone
-#: src/main.js:304
+#: src/main.js:307
 msgid ""
 "Firewall zone for this connection has been set to the default zone "
 "(currently "
 msgstr "De firewallzone is ingesteld op de standaardzone (momenteel: "
 
-#: src/main.js:305
+#: src/main.js:308
 msgid ""
 "). Whenever you connect to this network in the future, the firewall zone "
 "will automatically be changed to the default zone."
@@ -477,11 +495,11 @@ msgstr ""
 "). Als u later opnieuw verbinding maakt met dit netwerk, zal de firewallzone "
 "automatisch worden ingesteld op de standaardzone."
 
-#: src/main.js:309
+#: src/main.js:312
 msgid "Firewall zone for this connection has been set to "
 msgstr "De firewall is ingesteld op "
 
-#: src/main.js:309
+#: src/main.js:312
 msgid ""
 ". Whenever you connect to this network in the future, the firewall zone will "
 "automatically be changed to "
@@ -489,7 +507,7 @@ msgstr ""
 ". Als u later opnieuw verbinding maakt met dit netwerk, zal de firewallzone "
 "automatisch worden ingesteld op "
 
-#: src/main.js:311
+#: src/main.js:314
 msgid "."
 msgstr "."
 
@@ -533,15 +551,15 @@ msgstr ""
 "type verbinding</a>. Oftewel: de firewallregels worden zo automatisch "
 "gewijzigd op basis van de vastgestelde verbinding.\n"
 "\n"
-"Poortwachter tracht dit proces te vereenvoudigen. Zodra u verbinding maakt met "
-"een nieuw netwerk, wordt er een venster getoond waarop u de gewenste "
+"Poortwachter tracht dit proces te vereenvoudigen. Zodra u verbinding maakt "
+"met een nieuw netwerk, wordt er een venster getoond waarop u de gewenste "
 "firewallzone kunt kiezen. Kies bij twijfel voor de zone die het meest "
 "overeenkomt met de locatie waar u op dat moment bent. De veiligste optie is "
 "doorgaans ‘openbaar’. Als u geen zone wilt instellen, klik dan op "
 "afsluiten.\n"
 "\n"
-"Meer informatie over Poortwachter is te vinden op <a href=\"https://github.com/"
-"justinrdonnelly/bouncer\">deze pagina</a>."
+"Meer informatie over Poortwachter is te vinden op <a href=\"https://"
+"github.com/justinrdonnelly/bouncer\">deze pagina</a>."
 
 #: src/networkState.js:120
 msgid "Error determining network state"
