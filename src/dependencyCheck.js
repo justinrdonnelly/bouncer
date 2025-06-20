@@ -82,11 +82,11 @@ export const DependencyCheck = GObject.registerClass(
                     // set a value so we don't do this again
                     try {
                         await this.#data.saveData('true');
-                    } catch (e) {
+                    } catch {
                         // Just swallow this error. There's nothing we can do.
                     }
                 }
-            } catch (e) {
+            } catch {
                 console.log('Error in dependency checks. Not performing first run logic.');
             }
         }
@@ -142,7 +142,7 @@ export const DependencyCheck = GObject.registerClass(
             // able to continue, so we'll just return.
             try {
                 await this.#dbusNames;
-            } catch (e) {
+            } catch {
                 console.log('Skipping check for firewalld on DBus due to previous ListNames error.');
                 return;
             }
@@ -201,7 +201,7 @@ export const DependencyCheck = GObject.registerClass(
             // able to continue, so we'll just return.
             try {
                 await this.#dbusNames;
-            } catch (e) {
+            } catch {
                 console.log('Skipping check for NetworkManager on DBus due to previous ListNames error.');
                 return;
             }
