@@ -32,7 +32,6 @@ async function getZone(objectPath) {
  *
  * @param {string} objectPath - The object path of the configuration/settings to update.
  */
-// eslint-disable-next-line no-unused-vars
 async function updateZone(objectPath) {
     let zone;
     let newZone;
