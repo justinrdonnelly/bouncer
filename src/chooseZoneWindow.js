@@ -25,7 +25,7 @@ export const ChooseZoneWindow = GObject.registerClass(
                     GObject.TYPE_STRING, // connectionId
                     GObject.TYPE_STRING, // activeConnectionSettings
                     GObject.TYPE_STRING, // zone
-                    GObject.TYPE_STRING // defaultZone
+                    GObject.TYPE_STRING, // defaultZone
                 ],
             },
         },
@@ -106,8 +106,13 @@ export const ChooseZoneWindow = GObject.registerClass(
             if (selectedItemValue === ChooseZoneWindow.defaultZoneLabel)
                 selectedItemValue = null; // default zone is represented by null
             console.log('Zone selected.');
-            this.emit('zone-selected', this.#connectionId, this.#activeConnectionSettings, selectedItemValue,
-                this.#defaultZone);
+            this.emit(
+                'zone-selected',
+                this.#connectionId,
+                this.#activeConnectionSettings,
+                selectedItemValue,
+                this.#defaultZone
+            );
             this.close();
         }
 

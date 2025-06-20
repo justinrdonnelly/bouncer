@@ -90,11 +90,10 @@ export const BouncerApplication = GObject.registerClass(
             });
 
             // fire and forget
-            this.#init()
-              .catch(e => {
+            this.#init().catch((e) => {
                 console.error('Unhandled error in main init. This is a bug!');
                 console.error(e);
-              });
+            });
         } // end constructor
 
         // The init method will instantiate NetworkState and listen for its signals. We do this outside the constructor

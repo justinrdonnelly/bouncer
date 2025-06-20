@@ -16,10 +16,7 @@ import { ZoneInfo } from '../src/zoneInfo.js';
 async function getZoneInformation() {
     try {
         // Any firewalld dbus failures are considered fatal
-        const [zones, defaultZone] = await Promise.all([
-            ZoneInfo.getZones(),
-            ZoneInfo.getDefaultZone(),
-        ]);
+        const [zones, defaultZone] = await Promise.all([ZoneInfo.getZones(), ZoneInfo.getDefaultZone()]);
         console.log('promises!');
         console.log(`zones: ${zones}`);
         console.log(`defaultZone: ${defaultZone}`);

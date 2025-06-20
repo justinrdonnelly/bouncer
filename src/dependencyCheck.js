@@ -12,7 +12,7 @@
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 import GObject from 'gi://GObject';
-import Xdp from "gi://Xdp";
+import Xdp from 'gi://Xdp';
 
 import { Data } from './data.js';
 import { ErrorSignal } from './errorSignal.js';
@@ -21,8 +21,7 @@ import { ZoneInfo } from './zoneInfo.js';
 export const DependencyCheck = GObject.registerClass(
     {
         Signals: {
-            'first-run-setup-complete': {
-            },
+            'first-run-setup-complete': {},
         },
     },
     class DependencyCheck extends ErrorSignal {
@@ -75,10 +74,10 @@ export const DependencyCheck = GObject.registerClass(
                     this.#runOnStartup(),
                     this.#checkListNames(),
                     this.#checkFirewalld(),
-                    this.#checkNetworkManager()
+                    this.#checkNetworkManager(),
                 ]);
                 if (firstRunData === null) {
-                    this.emit('first-run-setup-complete')
+                    this.emit('first-run-setup-complete');
                     // set a value so we don't do this again
                     try {
                         await this.#data.saveData('true');

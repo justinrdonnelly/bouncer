@@ -17,6 +17,5 @@ export const MoreInfoDialog = GObject.registerClass(
         GTypeName: 'MoreInfoDialog',
         Template: 'resource:///io/github/justinrdonnelly/bouncer/moreInfo.ui',
     },
-    class MoreInfoDialog extends Adw.Dialog {
-    }
+    class MoreInfoDialog extends Adw.Dialog {}
 );

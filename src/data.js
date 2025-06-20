@@ -54,8 +54,7 @@ export class Data {
         const encoder = new TextEncoder(Data.#textFormat);
         const encodedData = encoder.encode(data);
         // We already tried to create this directory earlier, so this should only matter if a user somehow deleted it.
-        if (GLib.mkdir_with_parents(
-            this.#destinationDirectory, Data.#dataDirectoryPermissions) === 0) {
+        if (GLib.mkdir_with_parents(this.#destinationDirectory, Data.#dataDirectoryPermissions) === 0) {
             // Since we `await` the results, we do not need to use `replace_contents_bytes_async`
             let success = await this.#destinationFile.replace_contents_async(
                 encodedData,

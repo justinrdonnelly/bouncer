@@ -14,19 +14,19 @@ import GObject from 'gi://GObject';
 export const ErrorSignal = GObject.registerClass(
     {
         Signals: {
-            'error': {
+            error: {
                 param_types: [
                     GObject.TYPE_BOOLEAN, // Whether the error should be considered fatal. This may be ignored.
                     GObject.TYPE_STRING, // Error ID. This is often used for the notification ID.
                     GObject.TYPE_STRING, // Error title. This is often used for the notification title.
-                    GObject.TYPE_STRING // Error message. This is often used for notification body.
+                    GObject.TYPE_STRING, // Error message. This is often used for notification body.
                 ],
             },
         },
     },
     class ErrorSignal extends GObject.Object {
         emitError(fatal, errorId, errorTitle, errorMessage) {
-            super.emit('error', fatal, errorId, errorTitle, errorMessage)
+            super.emit('error', fatal, errorId, errorTitle, errorMessage);
         }
     }
 );
