@@ -233,7 +233,6 @@ msgstr "Bouncer dient automatisch op te starten"
 msgid "Can't configure autostart"
 msgstr "Automatisch opstarten mislukt"
 
-#. TODO: does this line wrapping work???
 #: src/dependencyCheck.js:116
 msgid ""
 "Please make sure the portal is available from inside the flatpak sandbox. "

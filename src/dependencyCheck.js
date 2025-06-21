@@ -111,7 +111,6 @@ export const DependencyCheck = GObject.registerClass(
                     false,
                     'dependency-error-autostart',
                     _('Can\'t configure autostart'),
-                    // TODO: does this line wrapping work???
                     _('Please make sure the portal is available from inside the flatpak sandbox. Please see logs for ' +
                         'more information.')
                 );
