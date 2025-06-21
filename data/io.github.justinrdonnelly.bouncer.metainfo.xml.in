@@ -32,6 +32,7 @@
     </ol>
   </description>
   <launchable type="desktop-id">io.github.justinrdonnelly.bouncer.desktop</launchable>
+  <translation type="gettext">io.github.justinrdonnelly.bouncer</translation>
   <content_rating type="oars-1.1"/>
   <url type="homepage">https://github.com/justinrdonnelly/bouncer</url>
   <url type="bugtracker">https://github.com/justinrdonnelly/bouncer/issues</url>
