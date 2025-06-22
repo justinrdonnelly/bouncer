@@ -155,6 +155,12 @@ export default [
                     'code': 120
                 },
             ],
+            'no-warning-comments': [
+                'error',
+                {
+                    'decoration': ['/', '*']
+                },
+            ],
         },
     },
 ];
