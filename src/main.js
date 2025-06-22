@@ -176,7 +176,6 @@ export const BouncerApplication = GObject.registerClass(
             const message = _('Your system is correctly configured for Bouncer. Bouncer will autostart on each login ' +
                 'and will open when you connect to a new Wi-Fi network.');
             notification.set_body(message);
-            console.log('about to send notification');
             this.send_notification('first-run-setup-complete', notification);
         }
 
