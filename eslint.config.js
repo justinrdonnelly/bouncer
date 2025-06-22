@@ -148,7 +148,13 @@ export default [
                     message: 'Use constructor() and super()',
                 },
             ],
-            '@stylistic/max-len': ['error', { "code": 120 }],
+            // Others (added by me)
+            '@stylistic/max-len': [
+                'error',
+                {
+                    'code': 120
+                },
+            ],
         },
     },
 ];
