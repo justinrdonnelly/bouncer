@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: bouncer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 20:41-0400\n"
-"PO-Revision-Date: 2025-06-20 21:06+1000\n"
+"PO-Revision-Date: 2025-06-26 10:23+1000\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: \n"
 "Language: oc\n"
@@ -30,7 +30,7 @@ msgstr "parafuòc;ret;malhum;Wi-Fi;"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:8
 msgid "Keep the riffraff out!"
-msgstr "Fòra los paucvals !"
+msgstr "Fòra los paucvals !"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:13
 msgid ""
@@ -41,10 +41,10 @@ msgid ""
 "automatically used in the future."
 msgstr ""
 "Bouncer es una aplicacion que vos ajuda a causir la zòna de proteccion "
-"corrècta per las connexions sens fil. Quand vos connectatz a un ret novèl, "
+"corrècta per las connexions sens fil. Quand vos connectatz a una ret novèla, "
 "una fenèstra s'obrís en vos demandant quin tipe de ret es (per exemple, "
 "domicili, public, trabalh). Quand causissètz lo tipe de ret, es associat a "
-"aquel ret e automaticament utilizat a l'avenir."
+"aquela ret e automaticament utilizat a l'avenir."
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:14
 msgid ""
@@ -76,7 +76,7 @@ msgid ""
 "once to enable autostart. You should see a notification indicating your "
 "system is correctly configured for Bouncer."
 msgstr ""
-"Per Fedora, tot fonciona plan ! Remembratz-vos solament de lançar Bouncer "
+"Per Fedora, tot fonciona plan ! Remembratz-vos solament de lançar Bouncer "
 "manualament un còp per activar l’aviada automatica. Deuriatz veire una "
 "notificacion que vos indica que lo sistèma es configurat corrèctament per "
 "Bouncer."
@@ -105,6 +105,14 @@ msgid ""
 "create custom polkit rules is beyond the scope of this document and is left "
 "as an exercise for the reader)."
 msgstr ""
+"Per defaut, polkit es configurat per daissar pas los utilizaires costumièrs "
+"definir la zòna per una connexion. Lo biais mai simple de cambiar aquò es "
+"d'ajustar los utilizaires al grop <code>netdev</code> (per exemple "
+"<code>usermod -a -G netdev justin</code>). Autrament, podètz crear una règla "
+"polkit personalizaa per l'accion <code>org.freedesktop.NetworkManager."
+"settings.modify.system</code> (cossí crear de règlas polkit personalizas es "
+"al delà de l'objècte d'aqueste document e es daissat coma exercici al "
+"lector)."
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:25
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:31
@@ -112,6 +120,9 @@ msgid ""
 "Start Bouncer manually once to enable autostart. You should see a "
 "notification indicating your system is correctly configured for Bouncer."
 msgstr ""
+"Aviatz Bouncer manualament un còp per activar l'aviada automatica. Deuriatz "
+"veire una notificacion qu'indica que lo sistèma es configurat corrèctament "
+"per Bouncer."
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:27
 msgid "Debian"
@@ -123,7 +134,7 @@ msgstr "Bouncer dobrís una fenèstra pel tipe de ret"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:53
 msgid "Critical bug fix for non-English language users"
-msgstr ""
+msgstr "Correccion de bug critica per los utilizaires de lengas non anglesas"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:54
 msgid "Added Dutch translation"
@@ -135,7 +146,7 @@ msgstr "Netejatge de la documentacion"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:61
 msgid "Include a notification for first run success"
-msgstr ""
+msgstr "Inclure una notificacion per la capitada de la primièra execucion"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:66
 msgid "Initial release"
@@ -150,8 +161,8 @@ msgid ""
 "You have connected to a new Wi-Fi network. Please choose a firewall zone. "
 "What type of network is this?"
 msgstr ""
-"Vos sètz connectat a un ret Wi-Fi novèl. Mercés de causir una zòna de "
-"proteccion. Qual tipe de ret es aquò ?"
+"Vos sètz connectat a una ret Wi-Fi novèl. Mercés de causir una zòna de "
+"proteccion. Qual tipe de ret es aquò ?"
 
 #: src/chooseZoneWindow.ui:77
 msgid "Network"
@@ -172,7 +183,7 @@ msgstr "Zòna del parafuòc"
 
 #: src/chooseZoneWindow.ui:112
 msgid "Choose the firewall zone for this network."
-msgstr "Causir una zòna de proteccion per aqueste ret."
+msgstr "Causir una zòna de proteccion per aquesta ret."
 
 #: src/chooseZoneWindow.ui:115
 msgid "Zone"
@@ -197,6 +208,8 @@ msgid ""
 "No change will be made. You will see this window again the next time you "
 "connect to this network."
 msgstr ""
+"Cap de cambiament serà pas fach. Veiretz tornamai aquesta fenèstra lo còp "
+"que ven que vos connectaretz a aquesta ret."
 
 #: src/chooseZoneWindow.ui:188
 msgid "Choose"
@@ -208,6 +221,8 @@ msgid ""
 "The selected firewall zone will be used every time you connect to this "
 "network."
 msgstr ""
+"La zòna de proteccion seleccionada serà utilizada cada còp que vos "
+"connectaretz a aquesta ret."
 
 #: src/chooseZoneWindow.ui:219
 msgid "_About Bouncer"
@@ -226,6 +241,8 @@ msgid ""
 "Please make sure the portal is available from inside the flatpak sandbox. "
 "Please see logs for more information."
 msgstr ""
+"Asseguratz-vos que lo portal siá disponible dempuèi l'interior del nauc de "
+"sabla flatpak. Consultatz los jornals per mai d'informacions."
 
 #: src/dependencyCheck.js:132
 msgid "Can't find D-Bus names"
@@ -236,6 +253,8 @@ msgid ""
 "Please make sure D-Bus is installed, running, and available inside the "
 "flatpak sandbox. Please see logs for more information."
 msgstr ""
+"Asseguratz-vos que D-Bus es installat, en cors d'execucion e disponible dins "
+"lo nauc de sabla flatpak. Consultatz los jornals per mai d'informacion."
 
 #: src/dependencyCheck.js:158
 msgid "Can't find firewalld"
@@ -246,6 +265,8 @@ msgid ""
 "Please make sure firewalld is installed, running, and available inside the "
 "flatpak sandbox. Please see logs for more information."
 msgstr ""
+"Asseguratz-vos que firewalld es installat, en cors d'execucion e disponible "
+"dins lo nauc de sabla flatpak. Consultatz los jornals per mai d'informacion."
 
 #: src/dependencyCheck.js:176
 msgid "Can't get firewalld zones"
@@ -257,6 +278,9 @@ msgid ""
 "correct, and are not restricted inside the flatpak sandbox. Please see logs "
 "for more information."
 msgstr ""
+"Impossible d'obténer las zònas de firewalld. Asseguratz-vos que las "
+"permissions de firewalld sián corrèctas e que son pas restrenchas dins lo "
+"nauc de sabla de flatpak. Consultatz los jornals per mai d'informacions."
 
 #: src/dependencyCheck.js:191
 msgid "Can't get firewalld default zone"
@@ -268,6 +292,9 @@ msgid ""
 "are correct, and are not restricted inside the flatpak sandbox. Please see "
 "logs for more information."
 msgstr ""
+"Impossible d'obténer la zòna per defaut de firewalld. Asseguratz-vos que las "
+"permissions de firewalld sián corrèctas e que son pas restrenchas dins lo "
+"nauc de sabla flatpak. Consultatz los jornals per mai d'informacions."
 
 #: src/dependencyCheck.js:217
 msgid "Can't find NetworkManager"
@@ -278,6 +305,9 @@ msgid ""
 "Please make sure NetworkManager is installed, running, and available inside "
 "the flatpak sandbox. Please see logs for more information."
 msgstr ""
+"Asseguratz-vos que NetworkManager es installat, en cors d'execucion e "
+"disponible dins lo nauc de sabla flatpak. Consultatz los jornals per mai "
+"d'informacions."
 
 #: src/dependencyCheck.js:264
 msgid "Authentication required to change NetworkManager connection zone"
@@ -291,6 +321,9 @@ msgid ""
 "be required to authenticate. This will work, but may be annoying. Please see "
 "logs for more information."
 msgstr ""
+"Asseguratz-vos que NetworkManager es installat, en cors d'execucion e "
+"disponible dins lo nauc de sabla flatpak. Consultatz los jornals per mai "
+"d'informacions."
 
 #: src/dependencyCheck.js:275
 msgid "Not authorized to change NetworkManager connection zone"
@@ -304,10 +337,13 @@ msgid ""
 "is required for Bouncer to function properly. Please see logs for more "
 "information."
 msgstr ""
+"Sètz pas autorizat a cambiar la zòna de connexion dins NetworkManager. Aquò "
+"es necessari per que Bouncer foncione corrèctament. Consultatz los jornals "
+"per mai d'informacions."
 
 #: src/dependencyCheck.js:285
 msgid "Unexpected result from NetworkManager GetSettings: "
-msgstr ""
+msgstr "Resultat inesperat de NetworkManager GetSettings : "
 
 #: src/dependencyCheck.js:286
 msgid ""
@@ -315,6 +351,9 @@ msgid ""
 "in NetworkManager. Bouncer may not function properly. Please see logs for "
 "more information."
 msgstr ""
+"Impossible de determinar se sètz autorizat a cambiar la zòna de connexion "
+"dins NetworkManager. Bouncer poiriá foncionar incorrèctament. Consultatz los "
+"jornals per mai d'informacions."
 
 #: src/main.js:61
 msgid ""
@@ -324,6 +363,11 @@ msgid ""
 "When you choose the network type, it is associated with that network and "
 "automatically used in the future."
 msgstr ""
+"Bouncer es una aplicacion per vos ajudar a causir la zòna de proteccion "
+"corrècta per las connexions sens fial. Quand vos connectatz a una ret "
+"novèla, Bouncer dobrirà una fenèstra que vos demandarà quin tipe de ret (per "
+"ex. ostal, public, trabalh) es. Quand causissètz lo tipe de ret, es associat "
+"amb aquela ret e utilizat automaticament a l'avenir."
 
 #: src/main.js:72
 msgid "translator-credits"
@@ -338,6 +382,8 @@ msgid ""
 "An unknown error occurred. Bouncer may not function correctly. Please see "
 "logs for more information."
 msgstr ""
+"Una error desconeguda s'es produsida. Bouncer poiriá foncionar "
+"incorrèctament. Consultatz los jornals per mai d'informacion."
 
 #: src/main.js:130
 msgid "Can't find previously seen connections"
@@ -348,30 +394,37 @@ msgid ""
 "There was a problem determining which connections have already been seen. "
 "Please see logs for more information."
 msgstr ""
+"I a agut un problèma per determinar quinas connexions son ja estadas vistas. "
+"Consultatz los jornals per mai d'informacions."
 
 #: src/main.js:147
 msgid "Can't determine network state"
-msgstr "Impossible de determinar de l’estat del ret"
+msgstr "Impossible de determinar de l’estat de la ret"
 
 #: src/main.js:148
 msgid ""
 "There was a problem tracking network connection changes. Please see logs for "
 "more information."
 msgstr ""
+"I a agut un problèma amb lo seguiment dels cambiaments de connexion ret. "
+"Consultatz los jornals per mai d'informacions."
 
 #: src/main.js:162
 msgid " Bouncer is shutting down. You will need to restart manually."
-msgstr ""
+msgstr "Bouncer es a s'arrestar. Lo vos caldrà tornar aviar manualament."
 
 #: src/main.js:175
 msgid "First run setup complete!"
-msgstr "Configuracion del primièr lançament acabada !"
+msgstr "Configuracion del primièr lançament acabada !"
 
 #: src/main.js:176
 msgid ""
 "Your system is correctly configured for Bouncer. Bouncer will autostart on "
 "each login and will open when you connect to a new Wi-Fi network."
 msgstr ""
+"Lo sistèma es configurat corrèctament per Bouncer. Bouncer s'aviarà "
+"automaticament a cada connexion e s'obrirà quand vos connectaretz a una ret "
+"Wi-Fi novèla."
 
 #: src/main.js:211
 msgid "Can't prompt for firewall zone"
@@ -382,6 +435,8 @@ msgid ""
 "There was a problem getting information to prompt for the firewall zone. "
 "Please see logs for more information."
 msgstr ""
+"I a agut un problèma per obténer d'informacions per demandar la zòna de "
+"proteccion. Consultatz los jornals per mai d'informacions."
 
 #: src/main.js:262
 msgid "Can't add connection to seen connections"
@@ -393,6 +448,9 @@ msgid ""
 "The firewall zone will not be set for this connection. Please see logs for "
 "more information."
 msgstr ""
+"I a agut un problèma en ajustant la connexion a la lista de las connexions "
+"vistas. La zòna de proteccion serà pas definida per aquesta connexion. "
+"Consultatz los jornals per mai d'informacions."
 
 #: src/main.js:278
 msgid "Can't set firewall zone for connection"
@@ -403,6 +461,8 @@ msgid ""
 "There was a problem setting the firewall zone for the connection. Please see "
 "logs for more information."
 msgstr ""
+"I a agut un problèma en definissent la zòna de proteccion per la connexion. "
+"Consultatz los jornals per mai d'informacions."
 
 #: src/main.js:294
 msgid "Can't save connection to seen connections"
@@ -416,6 +476,10 @@ msgid ""
 "again be prompted to choose a firewall zone for this connection. Please see "
 "logs for more information."
 msgstr ""
+"La zòna es estada definida per la connexion, mas s'es produsit un problèma "
+"en salvant la lista mesa a jorn de las connexions vistas sul disc. Un còp "
+"que tornaretz aviar Bouncer, vos demandarem de causir una zòna de proteccion "
+"per aquesta connexion. Consultatz los jornals per mai d'informacions."
 
 #: src/main.js:305
 msgid "Firewall zone set for connection: "
@@ -426,12 +490,16 @@ msgid ""
 "Firewall zone for this connection has been set to the default zone "
 "(currently "
 msgstr ""
+"La zòna de proteccioin per aquesta connexion es estada definida a la zòna "
+"per defaut (actualament "
 
 #: src/main.js:308
 msgid ""
 "). Whenever you connect to this network in the future, the firewall zone "
 "will automatically be changed to the default zone."
 msgstr ""
+"). Cada còp que vos connectaretz a aqueste ret a l'avenir, la zòna de "
+"proteccion serà automaticament cambiada a la zòna per defaut."
 
 #: src/main.js:312
 msgid "Firewall zone for this connection has been set to "
@@ -442,10 +510,12 @@ msgid ""
 ". Whenever you connect to this network in the future, the firewall zone will "
 "automatically be changed to "
 msgstr ""
+". Cada còp que vos connectaretz a aqueste ret a l'avenir, la zòna de "
+"parafuòc serà automaticament cambiada a "
 
 #: src/main.js:314
 msgid "."
-msgstr ""
+msgstr "."
 
 #: src/moreInfo.ui:16
 msgid "More Information"
@@ -475,10 +545,31 @@ msgid ""
 "You can read more about Bouncer <a href=\"https://github.com/justinrdonnelly/"
 "bouncer\">here</a>."
 msgstr ""
+"Utilizatz <a href=\"https://firewalld.org/\">firewalld</a> coma parafuòc. "
+"Una de las caracteristicas interessantas de firewalld es que pren en carga "
+"diferentas zònas (ensems de règlas de parafuòc). Podètz aver una zòna de "
+"parafuòc configurada per un usatge domestic, e una zòna diferenta per las "
+"rets publicas.\n"
+"\n"
+"Utilizatz <a href=\"https://networkmanager.dev/\">NetworkManager</a> per la "
+"configuracion de la ret. NetworkManager s'intègra plan amb firewalld e pòt "
+"<a href=\"https://firewalld.org/documentation/zone/connections-interfaces-"
+"and-sources.html\">definir la zòna firewalld per una interfàcia basada sus "
+"la connexion</a>. Aquò significa que vòstras règlas de parafuòc pòdon "
+"cambiar automaticament segon vòstra connexion ret.\n"
+"\n"
+"Bouncer es concebut per vos facilitar aquò. Dobrís una fenèstra quand vos "
+"connectatz a una ret novèla, vos permetent de causir la zòna de parafuòc "
+"apropriada. Se sabètz pas que causir, deuriatz probablament causir l'opcion "
+"que correspond a vòstre emplaçament. L'opcion mai segura es generalament « "
+"public ». Se volètz pas res cambiar, clicatz sus « Sortir ».\n"
+"\n"
+"Ne podètz legir mai tocant Bouncer <a href=\"https://github.com/"
+"justinrdonnelly/bouncer\">aicí</a>."
 
 #: src/networkState.js:120
 msgid "Error determining network state"
-msgstr "Error al moment de la determinacion de l’estat del ret"
+msgstr "Error al moment de la determinacion de l’estat de la ret"
 
 #: src/networkState.js:121
 msgid ""
