@@ -1,0 +1,6 @@
+{
+    "io.github.justinrdonnelly.bouncer": [
+        "appstream-screenshots-not-mirrored-in-ostree",
+        "appstream-external-screenshot-url"
+    ]
+}
