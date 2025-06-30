@@ -17,7 +17,7 @@ export class ZoneInfo {
     static #wellKnownName = 'org.fedoraproject.FirewallD1';
     static #objectPath = '/org/fedoraproject/FirewallD1';
 
-    static getZones() {
+    static async getZones() {
         const parameters = null;
 
         // I can't seem to make this call without a callback (was hoping it would return a promise)
@@ -50,7 +50,7 @@ export class ZoneInfo {
         });
     }
 
-    static getDefaultZone() {
+    static async getDefaultZone() {
         const parameters = null;
 
         // I can't seem to make this call without a callback (was hoping it would return a promise)
