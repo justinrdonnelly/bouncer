@@ -10,6 +10,9 @@ gnome = import('gnome')
 
 
 
+app_id = 'io.github.justinrdonnelly.bouncer'
+version = meson.project_version()
+
 subdir('data')
 subdir('src')
 subdir('po')

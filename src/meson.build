@@ -1,9 +1,19 @@
 pkgdatadir = get_option('datadir') / meson.project_name()
 gnome = import('gnome')
 
+app_conf = configuration_data()
+app_conf.set('app_id', app_id)
+app_conf.set('version', version)
+app_conf_created = configure_file(
+  configuration: app_conf,
+  input: 'config.js.in',
+  output: 'config.js',
+)
+
 src_res = gnome.compile_resources(
   'io.github.justinrdonnelly.bouncer.src',
   'io.github.justinrdonnelly.bouncer.src.gresource.xml',
+  dependencies: [app_conf_created],
   gresource_bundle: true,
   install: true,
   install_dir: pkgdatadir,

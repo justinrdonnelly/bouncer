@@ -1,0 +1,4 @@
+export const config = {
+  "APP_ID": "@app_id@",
+  "VERSION": "@version@"
+}
