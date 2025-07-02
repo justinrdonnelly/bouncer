@@ -1,6 +1,7 @@
-project('bouncer',
-          version: '48.0.0',
-    meson_version: '>= 1.5.2',
+project(
+  'bouncer',
+  version: '48.0.0',
+  meson_version: '>= 1.5.2',
   default_options: [ 'warning_level=2', 'werror=false', ],
 )
 
@@ -14,7 +15,7 @@ subdir('src')
 subdir('po')
 
 gnome.post_install(
-     glib_compile_schemas: true,
-    gtk_update_icon_cache: true,
+  glib_compile_schemas: true,
+  gtk_update_icon_cache: true,
   update_desktop_database: true,
 )

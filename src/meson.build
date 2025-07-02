@@ -1,14 +1,16 @@
 pkgdatadir = get_option('datadir') / meson.project_name()
 gnome = import('gnome')
 
-src_res = gnome.compile_resources('io.github.justinrdonnelly.bouncer.src',
+src_res = gnome.compile_resources(
+  'io.github.justinrdonnelly.bouncer.src',
   'io.github.justinrdonnelly.bouncer.src.gresource.xml',
   gresource_bundle: true,
   install: true,
   install_dir: pkgdatadir,
 )
 
-data_res = gnome.compile_resources('io.github.justinrdonnelly.bouncer.data',
+data_res = gnome.compile_resources(
+  'io.github.justinrdonnelly.bouncer.data',
   'io.github.justinrdonnelly.bouncer.data.gresource.xml',
   gresource_bundle: true,
   install: true,
