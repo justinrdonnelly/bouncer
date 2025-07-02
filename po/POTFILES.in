@@ -1,4 +1,4 @@
-data/io.github.justinrdonnelly.bouncer.desktop.in
+data/io.github.justinrdonnelly.bouncer.desktop.in.in
 data/io.github.justinrdonnelly.bouncer.gschema.xml
 data/io.github.justinrdonnelly.bouncer.metainfo.xml.in
 src/chooseZoneWindow.ui

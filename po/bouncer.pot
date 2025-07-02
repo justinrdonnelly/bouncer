@@ -17,13 +17,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/io.github.justinrdonnelly.bouncer.desktop.in:2
+#: data/io.github.justinrdonnelly.bouncer.desktop.in.in:2
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:7
 msgid "Bouncer"
 msgstr ""
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/io.github.justinrdonnelly.bouncer.desktop.in:9
+#: data/io.github.justinrdonnelly.bouncer.desktop.in.in:9
 msgid "firewall;network;Wi-Fi;"
 msgstr ""
 

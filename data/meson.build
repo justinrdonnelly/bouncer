@@ -1,6 +1,16 @@
+app_name = 'Bouncer'
+
+desktop_config = configuration_data()
+desktop_config.set('APP_ID', app_id)
+desktop_config.set('APP_NAME', app_name)
+desktop_file_in = configure_file(
+  input: 'io.github.justinrdonnelly.bouncer.desktop.in.in',
+  output: 'io.github.justinrdonnelly.bouncer.desktop.in',
+  configuration: desktop_config
+)
 desktop_file = i18n.merge_file(
-  input: 'io.github.justinrdonnelly.bouncer.desktop.in',
-  output: 'io.github.justinrdonnelly.bouncer.desktop',
+  input: desktop_file_in,
+  output: '@0@.desktop'.format(app_id),
   type: 'desktop',
   po_dir: '../po',
   install: true,

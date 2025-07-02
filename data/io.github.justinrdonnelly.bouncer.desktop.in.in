@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=Bouncer
-Exec=io.github.justinrdonnelly.bouncer
-Icon=io.github.justinrdonnelly.bouncer
+Name=@APP_NAME@
+Exec=@APP_ID@
+Icon=@APP_ID@
 Terminal=false
 Type=Application
 Categories=Settings;System;
