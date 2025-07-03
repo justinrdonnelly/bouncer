@@ -1,6 +1,6 @@
 data/io.github.justinrdonnelly.bouncer.desktop.in.in
 data/io.github.justinrdonnelly.bouncer.gschema.xml
-data/io.github.justinrdonnelly.bouncer.metainfo.xml.in
+data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in
 src/chooseZoneWindow.ui
 src/dependencyCheck.js
 src/main.js

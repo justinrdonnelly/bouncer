@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 3.6\n"
 
 #: data/io.github.justinrdonnelly.bouncer.desktop.in.in:2
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:7
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:7
 msgid "Bouncer"
 msgstr "Poortwachter"
 
@@ -28,11 +28,11 @@ msgstr "Poortwachter"
 msgid "firewall;network;Wi-Fi;"
 msgstr "firewall;netwerk;Wi-Fi;wifi;"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:8
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:8
 msgid "Keep the riffraff out!"
 msgstr "Houd onbevoegden buiten!"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:13
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:13
 msgid ""
 "Bouncer is an application to help you choose the correct firewall zone for "
 "wireless connections. When you connect to a new network, a window opens "
@@ -47,7 +47,7 @@ msgstr ""
 "automatisch ingesteld, zodat u volgende keer geen actie meer hoeft te "
 "ondernemen."
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:14
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:14
 msgid ""
 "NetworkManager and firewalld are required. If you don't use those, you can't "
 "use Bouncer. Fedora uses both by default. Other distributions may not."
@@ -56,7 +56,7 @@ msgstr ""
 "Op Fedora zijn die pakketten standaard aanwezig; op andere distributies "
 "mogelijk niet."
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:15
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:15
 msgid ""
 "Additional setup is required after installation. See the applicable section "
 "for your distribution. Once the setup is done, start Bouncer manually to "
@@ -66,11 +66,11 @@ msgstr ""
 "relevante distributiesectie. Na het instellen kan Poortwachter automatisch "
 "worden opgestart zodra u inlogt op uw gebruikersaccount."
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:16
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:16
 msgid "Fedora"
 msgstr "Fedora"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:18
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:18
 msgid ""
 "For Fedora, everything just works! Just remember to start Bouncer manually "
 "once to enable autostart. You should see a notification indicating your "
@@ -80,21 +80,21 @@ msgstr ""
 "Poortwachter openen om automatisch opstarten in te schakelen. Als het goed "
 "is moet u een melding krijgen dat het systeem goed is afgesteld."
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:20
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:20
 msgid "Ubuntu"
 msgstr "Ubuntu"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:22
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:22
 msgid "Uninstall ufw: <code>sudo apt remove ufw</code>"
 msgstr "Verwijder ufw: <code>sudo apt remove ufw</code>"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:23
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:29
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:23
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:29
 msgid "Install firewalld: <code>sudo apt install firewalld</code>"
 msgstr "Installeer firewalld: <code>sudo apt install firewalld</code>"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:24
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:30
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:24
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:30
 msgid ""
 "By default, polkit is configured to not let regular users set the zone for a "
 "connection. The simplest way to change this is to add users to the "
@@ -112,8 +112,8 @@ msgstr ""
 "<code>org.freedesktop.NetworkManager.settings.modify.system</code>-actie. "
 "Hoe u dat doet, wordt elders op internet uitgelegd."
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:25
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:31
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:25
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:31
 msgid ""
 "Start Bouncer manually once to enable autostart. You should see a "
 "notification indicating your system is correctly configured for Bouncer."
@@ -121,31 +121,31 @@ msgstr ""
 "Open Poortwachter om automatisch opstarten in te schakelen. Als het goed is "
 "moet u een melding krijgen dat het systeem goed is afgesteld."
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:27
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:27
 msgid "Debian"
 msgstr "Debian"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:42
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:42
 msgid "Bouncer prompting for the type of network"
 msgstr "Poortwachter vraagt om het soort netwerk"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:53
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:53
 msgid "Critical bug fix for non-English language users"
 msgstr "Opgelost: kritieke bug opgelost voor niet-Engelssprekenden"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:54
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:54
 msgid "Added Dutch translation"
 msgstr "Nieuw: Nederlandse vertaling"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:55
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:55
 msgid "Documentation cleanups"
 msgstr "Verbeterd: documentatie"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:61
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:61
 msgid "Include a notification for first run success"
 msgstr "Nieuw: melding na eerste keer opstarten"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in:66
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:66
 msgid "Initial release"
 msgstr "De allereerste versie"
 

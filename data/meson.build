@@ -22,8 +22,16 @@ if desktop_utils.found()
   test('Validate desktop file', desktop_utils, args: [desktop_file])
 endif
 
+appstream_config = configuration_data()
+appstream_config.set('APP_ID', app_id)
+appstream_config.set('APP_NAME', app_name)
+appstream_file_in = configure_file(
+  input: 'io.github.justinrdonnelly.bouncer.metainfo.xml.in.in',
+  output: 'io.github.justinrdonnelly.bouncer.metainfo.xml.in',
+  configuration: appstream_config
+)
 appstream_file = i18n.merge_file(
-  input: 'io.github.justinrdonnelly.bouncer.metainfo.xml.in',
+  input: appstream_file_in,
   output: 'io.github.justinrdonnelly.bouncer.metainfo.xml',
   po_dir: '../po',
   install: true,
