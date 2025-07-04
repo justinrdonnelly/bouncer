@@ -47,6 +47,7 @@ test(
 
 gschema_config = configuration_data()
 gschema_config.set('APP_ID', app_id)
+gschema_config.set('APP_SCHEMA_PATH', app_schema_path)
 gschema_file_in = configure_file(
   input: 'io.github.justinrdonnelly.bouncer.gschema.xml.in',
   output: 'io.github.justinrdonnelly.bouncer.gschema.xml',

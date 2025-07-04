@@ -11,6 +11,7 @@ gnome = import('gnome')
 
 
 app_id = 'io.github.justinrdonnelly.bouncer'
+app_schema_path = '/io/github/justinrdonnelly/bouncer/'
 version = meson.project_version()
 
 subdir('data')

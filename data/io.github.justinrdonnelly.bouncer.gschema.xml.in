@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="bouncer">
-	<schema id="@APP_ID@" path="/io/github/justinrdonnelly/bouncer/">
+	<schema id="@APP_ID@" path="@APP_SCHEMA_PATH@">
 	</schema>
 </schemalist>
