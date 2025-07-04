@@ -45,8 +45,16 @@ test(
   args: ['validate', '--no-net', '--explain', appstream_file]
 )
 
+gschema_config = configuration_data()
+gschema_config.set('APP_ID', app_id)
+gschema_file_in = configure_file(
+  input: 'io.github.justinrdonnelly.bouncer.gschema.xml.in',
+  output: 'io.github.justinrdonnelly.bouncer.gschema.xml',
+  configuration: gschema_config
+)
+
 install_data(
-  'io.github.justinrdonnelly.bouncer.gschema.xml',
+  gschema_file_in,
   install_dir: get_option('datadir') / 'glib-2.0' / 'schemas'
 )
 
