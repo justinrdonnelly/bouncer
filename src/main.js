@@ -17,6 +17,7 @@ import GObject from 'gi://GObject'; // Required by GJS, version not necessary.
 import Gtk from 'gi://Gtk';
 
 import { ChooseZoneWindow } from './chooseZoneWindow.js';
+import { config } from './config.js';
 import { ConnectionIdsSeen } from './connectionIdsSeen.js';
 import { DependencyCheck } from './dependencyCheck.js';
 import { NetworkState } from './networkState.js';
@@ -39,7 +40,7 @@ export const BouncerApplication = GObject.registerClass(
 
         constructor() {
             super({
-                application_id: 'io.github.justinrdonnelly.bouncer',
+                application_id: config.APP_ID,
                 flags: Gio.ApplicationFlags.DEFAULT_FLAGS,
             });
 
@@ -54,9 +55,9 @@ export const BouncerApplication = GObject.registerClass(
                 const aboutParams = {
                     // main page
                     application_name: 'Bouncer',
-                    application_icon: 'io.github.justinrdonnelly.bouncer',
+                    application_icon: config.APP_ID,
                     developer_name: 'Justin Donnelly',
-                    version: '48.0.0',
+                    version: config.VERSION,
                     // details
                     comments: _('Bouncer is an application to help you choose the correct firewall zone for wireless ' +
                         'connections. When you connect to a new network, Bouncer will open a window prompting you ' +

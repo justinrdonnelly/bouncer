@@ -14,6 +14,7 @@ import GLib from 'gi://GLib';
 import GObject from 'gi://GObject';
 import Xdp from 'gi://Xdp';
 
+import { config } from './config.js';
 import { Data } from './data.js';
 import { ErrorSignal } from './errorSignal.js';
 import { ZoneInfo } from './zoneInfo.js';
@@ -99,7 +100,7 @@ export const DependencyCheck = GObject.registerClass(
                 await portal.request_background(
                     null,
                     _('Bouncer must start on login'),
-                    ['io.github.justinrdonnelly.bouncer'],
+                    [config.APP_ID],
                     DependencyCheck.#XDP_BACKGROUND_FLAG_AUTOSTART,
                     null
                 );

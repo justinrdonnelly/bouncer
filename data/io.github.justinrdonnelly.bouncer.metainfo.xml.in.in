@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2024 Justin Donnelly -->
 <component type="desktop-application">
-  <id>io.github.justinrdonnelly.bouncer</id>
+  <id>@APP_ID@</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>MPL-2.0</project_license>
-  <name>Bouncer</name>
+  <name>@APP_NAME@</name>
   <summary>Keep the riffraff out!</summary>
   <developer id="io.github.justinrdonnelly">
     <name translate="no">Justin Donnelly</name>
@@ -31,8 +31,8 @@
       <li>Start Bouncer manually once to enable autostart. You should see a notification indicating your system is correctly configured for Bouncer.</li>
     </ol>
   </description>
-  <launchable type="desktop-id">io.github.justinrdonnelly.bouncer.desktop</launchable>
-  <translation type="gettext">io.github.justinrdonnelly.bouncer</translation>
+  <launchable type="desktop-id">@APP_ID@.desktop</launchable>
+  <translation type="gettext">@APP_ID@</translation>
   <content_rating type="oars-1.1"/>
   <url type="homepage">https://github.com/justinrdonnelly/bouncer</url>
   <url type="bugtracker">https://github.com/justinrdonnelly/bouncer/issues</url>
