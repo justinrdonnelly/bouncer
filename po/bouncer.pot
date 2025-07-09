@@ -1,25 +1,25 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the bouncer package.
+# Copyright (C) YEAR Justin Donnelly
+# This file is distributed under the same license as the Bouncer package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: bouncer\n"
+"Project-Id-Version: Bouncer 48\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-17 20:41-0400\n"
+"POT-Creation-Date: 2025-07-09 19:10-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: data/io.github.justinrdonnelly.bouncer.desktop.in.in:2
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:7
-msgid "Bouncer"
+msgid "@APP_NAME@"
 msgstr ""
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
@@ -100,27 +100,27 @@ msgstr ""
 msgid "Debian"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:42
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:43
 msgid "Bouncer prompting for the type of network"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:53
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:54
 msgid "Critical bug fix for non-English language users"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:54
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:55
 msgid "Added Dutch translation"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:55
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:56
 msgid "Documentation cleanups"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:61
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:62
 msgid "Include a notification for first run success"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:66
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:67
 msgid "Initial release"
 msgstr ""
 
@@ -202,98 +202,99 @@ msgstr ""
 msgid "Can't configure autostart"
 msgstr ""
 
-#: src/dependencyCheck.js:116
+#: src/dependencyCheck.js:115
 msgid ""
 "Please make sure the portal is available from inside the flatpak sandbox. "
 "Please see logs for more information."
 msgstr ""
 
-#: src/dependencyCheck.js:132
+#: src/dependencyCheck.js:131
 msgid "Can't find D-Bus names"
 msgstr ""
 
-#: src/dependencyCheck.js:133
+#: src/dependencyCheck.js:132
 msgid ""
 "Please make sure D-Bus is installed, running, and available inside the "
 "flatpak sandbox. Please see logs for more information."
 msgstr ""
 
-#: src/dependencyCheck.js:158
+#: src/dependencyCheck.js:157
 msgid "Can't find firewalld"
 msgstr ""
 
-#: src/dependencyCheck.js:159
+#: src/dependencyCheck.js:158
 msgid ""
 "Please make sure firewalld is installed, running, and available inside the "
 "flatpak sandbox. Please see logs for more information."
 msgstr ""
 
-#: src/dependencyCheck.js:176
+#: src/dependencyCheck.js:175
 msgid "Can't get firewalld zones"
 msgstr ""
 
-#: src/dependencyCheck.js:177
+#: src/dependencyCheck.js:176
 msgid ""
 "Unable to get firewalld zones. Please make sure firewalld permissions are "
 "correct, and are not restricted inside the flatpak sandbox. Please see logs "
 "for more information."
 msgstr ""
 
-#: src/dependencyCheck.js:191
+#: src/dependencyCheck.js:190
 msgid "Can't get firewalld default zone"
 msgstr ""
 
-#: src/dependencyCheck.js:192
+#: src/dependencyCheck.js:191
 msgid ""
 "Unable to get firewalld default zone. Please make sure firewalld permissions "
 "are correct, and are not restricted inside the flatpak sandbox. Please see "
 "logs for more information."
 msgstr ""
 
-#: src/dependencyCheck.js:217
+#: src/dependencyCheck.js:216
 msgid "Can't find NetworkManager"
 msgstr ""
 
-#: src/dependencyCheck.js:218
+#: src/dependencyCheck.js:217
 msgid ""
 "Please make sure NetworkManager is installed, running, and available inside "
 "the flatpak sandbox. Please see logs for more information."
 msgstr ""
 
-#: src/dependencyCheck.js:264
+#: src/dependencyCheck.js:263
 msgid "Authentication required to change NetworkManager connection zone"
 msgstr ""
 
-#: src/dependencyCheck.js:265
+#: src/dependencyCheck.js:264
 msgid ""
 "You are authorized to change the connection zone in NetworkManager, but will "
 "be required to authenticate. This will work, but may be annoying. Please see "
 "logs for more information."
 msgstr ""
 
-#: src/dependencyCheck.js:275
+#: src/dependencyCheck.js:274
 msgid "Not authorized to change NetworkManager connection zone"
 msgstr ""
 
-#: src/dependencyCheck.js:276
+#: src/dependencyCheck.js:275
 msgid ""
 "You are not authorized to change the connection zone in NetworkManager. This "
 "is required for Bouncer to function properly. Please see logs for more "
 "information."
 msgstr ""
 
-#: src/dependencyCheck.js:285
+#: src/dependencyCheck.js:284
 msgid "Unexpected result from NetworkManager GetSettings: "
 msgstr ""
 
-#: src/dependencyCheck.js:286
+#: src/dependencyCheck.js:285
 msgid ""
 "Unable to determine whether you are authorized to change the connection zone "
 "in NetworkManager. Bouncer may not function properly. Please see logs for "
 "more information."
 msgstr ""
 
-#: src/main.js:61
+#. details
+#: src/main.js:62
 msgid ""
 "Bouncer is an application to help you choose the correct firewall zone for "
 "wireless connections. When you connect to a new network, Bouncer will open a "
@@ -302,49 +303,51 @@ msgid ""
 "automatically used in the future."
 msgstr ""
 
-#: src/main.js:72
+#. Translators: Replace 'translator-credits' with your name/username, and optionally an email or
+#. URL.
+#: src/main.js:74
 msgid "translator-credits"
 msgstr ""
 
-#: src/main.js:116
+#: src/main.js:117
 msgid "Unknown error"
 msgstr ""
 
-#: src/main.js:117
+#: src/main.js:118
 msgid ""
 "An unknown error occurred. Bouncer may not function correctly. Please see "
 "logs for more information."
 msgstr ""
 
-#: src/main.js:130
+#: src/main.js:131
 msgid "Can't find previously seen connections"
 msgstr ""
 
-#: src/main.js:131
+#: src/main.js:132
 msgid ""
 "There was a problem determining which connections have already been seen. "
 "Please see logs for more information."
 msgstr ""
 
-#: src/main.js:147
+#: src/main.js:148
 msgid "Can't determine network state"
 msgstr ""
 
-#: src/main.js:148
+#: src/main.js:149
 msgid ""
 "There was a problem tracking network connection changes. Please see logs for "
 "more information."
 msgstr ""
 
-#: src/main.js:162
+#: src/main.js:163
 msgid " Bouncer is shutting down. You will need to restart manually."
 msgstr ""
 
-#: src/main.js:175
+#: src/main.js:176
 msgid "First run setup complete!"
 msgstr ""
 
-#: src/main.js:176
+#: src/main.js:177
 msgid ""
 "Your system is correctly configured for Bouncer. Bouncer will autostart on "
 "each login and will open when you connect to a new Wi-Fi network."
@@ -397,6 +400,7 @@ msgstr ""
 msgid "Firewall zone set for connection: "
 msgstr ""
 
+#. this is the default zone
 #: src/main.js:307
 msgid ""
 "Firewall zone for this connection has been set to the default zone "
