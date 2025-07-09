@@ -40,7 +40,7 @@ msgid ""
 "you choose the network type, it is associated with that network and "
 "automatically used in the future."
 msgstr ""
-"Poortwachter is een toepassing waarmee de juiste firewallzones kunnen worden "
+"Bouncer is een toepassing waarmee de juiste firewallzones kunnen worden "
 "ingesteld op draadloze verbindingen. Als u verbinding maakt met een nieuw "
 "netwerk, opent een venster dat vraagt wat voor soort netwerk het om gaat "
 "(bijv. thuis, openbaar, werk). Na het kiezen van het netwerktype wordt dat "
@@ -52,7 +52,7 @@ msgid ""
 "NetworkManager and firewalld are required. If you don't use those, you can't "
 "use Bouncer. Fedora uses both by default. Other distributions may not."
 msgstr ""
-"Voor het gebruik van Poortwachter zijn NetworkManager en firewalld vereist. "
+"Voor het gebruik van Bouncer zijn NetworkManager en firewalld vereist. "
 "Op Fedora zijn die pakketten standaard aanwezig; op andere distributies "
 "mogelijk niet."
 
@@ -63,7 +63,7 @@ msgid ""
 "enable autostart. After that, it will start automatically when you log in."
 msgstr ""
 "Na de installatie zijn aanvullende instellingen vereist - bekijk hiervoor de "
-"relevante distributiesectie. Na het instellen kan Poortwachter automatisch "
+"relevante distributiesectie. Na het instellen kan Bouncer automatisch "
 "worden opgestart zodra u inlogt op uw gebruikersaccount."
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:16
@@ -77,7 +77,7 @@ msgid ""
 "system is correctly configured for Bouncer."
 msgstr ""
 "Op Fedora werkt alles gewoon! Het enige wat u zelf nog moet doen is "
-"Poortwachter openen om automatisch opstarten in te schakelen. Als het goed "
+"Bouncer openen om automatisch opstarten in te schakelen. Als het goed "
 "is moet u een melding krijgen dat het systeem goed is afgesteld."
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:20
@@ -118,7 +118,7 @@ msgid ""
 "Start Bouncer manually once to enable autostart. You should see a "
 "notification indicating your system is correctly configured for Bouncer."
 msgstr ""
-"Open Poortwachter om automatisch opstarten in te schakelen. Als het goed is "
+"Open Bouncer om automatisch opstarten in te schakelen. Als het goed is "
 "moet u een melding krijgen dat het systeem goed is afgesteld."
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:27
@@ -127,7 +127,7 @@ msgstr "Debian"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:42
 msgid "Bouncer prompting for the type of network"
-msgstr "Poortwachter vraagt om het soort netwerk"
+msgstr "Bouncer vraagt om het soort netwerk"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:53
 msgid "Critical bug fix for non-English language users"
@@ -223,7 +223,7 @@ msgstr ""
 
 #: src/chooseZoneWindow.ui:219
 msgid "_About Bouncer"
-msgstr "_Over Poortwachter"
+msgstr "_Over Bouncer"
 
 #: src/dependencyCheck.js:102
 msgid "Bouncer must start on login"
@@ -330,7 +330,7 @@ msgid ""
 "information."
 msgstr ""
 "U bent niet bevoegd om de verbindingszone te wĳzigen. De juiste rechten zijn "
-"vereist om Poortwachter goed te laten werken. Bekijk voor meer informatie "
+"vereist om Bouncer goed te laten werken. Bekijk voor meer informatie "
 "het logboek."
 
 #: src/dependencyCheck.js:285
@@ -344,7 +344,7 @@ msgid ""
 "more information."
 msgstr ""
 "Het is niet mogelijk om vast te stellen of u bevoegd bent om de "
-"verbindingszone te wĳzigen. Poortwachter werkt hierdoor mogelijk niet naar "
+"verbindingszone te wĳzigen. Bouncer werkt hierdoor mogelijk niet naar "
 "behoren. Bekijk voor meer informatie het logboek."
 
 #. details
@@ -356,7 +356,7 @@ msgid ""
 "When you choose the network type, it is associated with that network and "
 "automatically used in the future."
 msgstr ""
-"Poortwachter is een toepassing waarmee de juiste firewallzones kunnen worden "
+"Bouncer is een toepassing waarmee de juiste firewallzones kunnen worden "
 "ingesteld op draadloze verbindingen. Als u verbinding maakt met een nieuw "
 "netwerk, opent een venster dat vraagt wat voor soort netwerk het om gaat "
 "(bijv. thuis, openbaar, werk). Na het kiezen van het netwerktype wordt dat "
@@ -378,7 +378,7 @@ msgid ""
 "An unknown error occurred. Bouncer may not function correctly. Please see "
 "logs for more information."
 msgstr ""
-"Er is een onbekende fout opgetreden - Poortwachter werkt mogelijk niet naar "
+"Er is een onbekende fout opgetreden - Bouncer werkt mogelijk niet naar "
 "behoren. Bekijk voor meer informatie het logboek."
 
 #: src/main.js:130
@@ -407,7 +407,7 @@ msgstr ""
 
 #: src/main.js:162
 msgid " Bouncer is shutting down. You will need to restart manually."
-msgstr " Poortwachter wordt afgesloten - herstart de toepassing handmatig."
+msgstr " Bouncer wordt afgesloten - herstart de toepassing handmatig."
 
 #: src/main.js:175
 msgid "First run setup complete!"
@@ -418,7 +418,7 @@ msgid ""
 "Your system is correctly configured for Bouncer. Bouncer will autostart on "
 "each login and will open when you connect to a new Wi-Fi network."
 msgstr ""
-"Uw systeem is juist afgesteld. Poortwachter zal automatisch worden opgestart "
+"Uw systeem is juist afgesteld. Bouncer zal automatisch worden opgestart "
 "en een actiescherm tonen zodra u verbinding maakt met een nieuw wifinetwerk."
 
 #: src/main.js:211
@@ -471,7 +471,7 @@ msgid ""
 "logs for more information."
 msgstr ""
 "De zone is ingesteld, maar er is een probleem opgetreden tijdens het "
-"bijwerken van de lijst met eerdere verbindingen. Als u Poortwachter "
+"bijwerken van de lijst met eerdere verbindingen. Als u Bouncer "
 "herstart, wordt u daarom opnieuw gevraagd om een firewallzone te kiezen. "
 "Bekijk voor meer informatie het logboek."
 
@@ -550,14 +550,14 @@ msgstr ""
 "type verbinding</a>. Oftewel: de firewallregels worden zo automatisch "
 "gewijzigd op basis van de vastgestelde verbinding.\n"
 "\n"
-"Poortwachter tracht dit proces te vereenvoudigen. Zodra u verbinding maakt "
+"Bouncer tracht dit proces te vereenvoudigen. Zodra u verbinding maakt "
 "met een nieuw netwerk, wordt er een venster getoond waarop u de gewenste "
 "firewallzone kunt kiezen. Kies bij twijfel voor de zone die het meest "
 "overeenkomt met de locatie waar u op dat moment bent. De veiligste optie is "
 "doorgaans ‘openbaar’. Als u geen zone wilt instellen, klik dan op "
 "afsluiten.\n"
 "\n"
-"Meer informatie over Poortwachter is te vinden op <a href=\"https://"
+"Meer informatie over Bouncer is te vinden op <a href=\"https://"
 "github.com/justinrdonnelly/bouncer\">deze pagina</a>."
 
 #: src/networkState.js:120
