@@ -337,7 +337,7 @@ msgstr ""
 #. URL.
 #: src/main.js:74
 msgid "translator-credits"
-msgstr "翻译者名称"
+msgstr "Ariel Wang <ariel@netc.fr>"
 
 #: src/main.js:117
 msgid "Unknown error"
