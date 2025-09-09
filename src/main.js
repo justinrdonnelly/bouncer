@@ -93,6 +93,7 @@ export const BouncerApplication = GObject.registerClass(
 
         // This will only run once. It runs on the primary instance, and will run early.
         vfunc_startup() {
+            this.hold();
             // fire and forget
             this.#init().catch((e) => {
                 console.error('Unhandled error in main init. This is a bug!');
@@ -345,6 +346,5 @@ export const BouncerApplication = GObject.registerClass(
 
 export function main(argv) {
     const application = new BouncerApplication();
-    application.hold();
     return application.runAsync(argv);
 }
