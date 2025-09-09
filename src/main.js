@@ -43,12 +43,11 @@ export const BouncerApplication = GObject.registerClass(
                 application_id: config.APP_ID,
                 flags: Gio.ApplicationFlags.DEFAULT_FLAGS,
             });
-
-            console.log('Welcome to Bouncer! Starting up.');
-        } // end constructor
+        }
 
         // This will only run once. It runs on the primary instance, and will run early.
         vfunc_startup() {
+            console.log('Welcome to Bouncer! Starting up.');
             promisify();
             this.hold();
             this.#createAboutAction();
@@ -63,8 +62,7 @@ export const BouncerApplication = GObject.registerClass(
 
         vfunc_activate() {} // Required because Adw.Application extends GApplication.
 
-        // The init method will instantiate NetworkState and listen for its signals. We do this outside the constructor
-        // so we can be async.
+        // The init method will instantiate NetworkState and listen for its signals.
         async #init() {
             try {
                 const dependencyCheck = new DependencyCheck();
