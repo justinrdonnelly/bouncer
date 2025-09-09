@@ -47,39 +47,6 @@ export const BouncerApplication = GObject.registerClass(
             console.log('Welcome to Bouncer! Starting up.');
             promisify();
 
-            // about action
-            this._showAboutAction = new Gio.SimpleAction({ name: 'about' });
-            // eslint-disable-next-line no-unused-vars
-            this._showAboutAction.connect('activate', (action) => {
-                const aboutParams = {
-                    // main page
-                    application_name: 'Bouncer',
-                    application_icon: config.APP_ID,
-                    developer_name: 'Justin Donnelly',
-                    version: config.VERSION,
-                    // details
-                    comments: _('Bouncer is an application to help you choose the correct firewall zone for wireless ' +
-                        'connections. When you connect to a new network, Bouncer will open a window prompting you ' +
-                        'for what kind of network (eg home, public, work) it is. When you choose the network type, ' +
-                        'it is associated with that network and automatically used in the future.'),
-                    website: 'https://github.com/justinrdonnelly/bouncer',
-                    // troubleshooting
-                    issue_url: 'https://github.com/justinrdonnelly/bouncer/issues',
-                    // credits
-                    artists: ['Jakub Steiner https://jimmac.eu/'],
-                    developers: ['Justin Donnelly https://github.com/justinrdonnelly'],
-                    // Translators: Replace 'translator-credits' with your name/username, and optionally an email or
-                    // URL.
-                    translator_credits: _('translator-credits'),
-                    // legal
-                    copyright: '© 2024-2025 Justin Donnelly',
-                    license_type: Gtk.License.MPL_2_0,
-                };
-                const aboutDialog = new Adw.AboutDialog(aboutParams);
-                aboutDialog.present(this.active_window);
-            });
-            this.add_action(this._showAboutAction);
-
             // handle signals
             const signals = [2, 15];
             signals.forEach((signal) => {
@@ -94,6 +61,7 @@ export const BouncerApplication = GObject.registerClass(
         // This will only run once. It runs on the primary instance, and will run early.
         vfunc_startup() {
             this.hold();
+            this.#createAboutAction();
             // fire and forget
             this.#init().catch((e) => {
                 console.error('Unhandled error in main init. This is a bug!');
@@ -157,6 +125,40 @@ export const BouncerApplication = GObject.registerClass(
                 );
             }
         } // end init
+
+        #createAboutAction() {
+            this._showAboutAction = new Gio.SimpleAction({ name: 'about' });
+            // eslint-disable-next-line no-unused-vars
+            this._showAboutAction.connect('activate', (action) => {
+                const aboutParams = {
+                    // main page
+                    application_name: 'Bouncer',
+                    application_icon: config.APP_ID,
+                    developer_name: 'Justin Donnelly',
+                    version: config.VERSION,
+                    // details
+                    comments: _('Bouncer is an application to help you choose the correct firewall zone for wireless ' +
+                        'connections. When you connect to a new network, Bouncer will open a window prompting you ' +
+                        'for what kind of network (eg home, public, work) it is. When you choose the network type, ' +
+                        'it is associated with that network and automatically used in the future.'),
+                    website: 'https://github.com/justinrdonnelly/bouncer',
+                    // troubleshooting
+                    issue_url: 'https://github.com/justinrdonnelly/bouncer/issues',
+                    // credits
+                    artists: ['Jakub Steiner https://jimmac.eu/'],
+                    developers: ['Justin Donnelly https://github.com/justinrdonnelly'],
+                    // Translators: Replace 'translator-credits' with your name/username, and optionally an email or
+                    // URL.
+                    translator_credits: _('translator-credits'),
+                    // legal
+                    copyright: '© 2024-2025 Justin Donnelly',
+                    license_type: Gtk.License.MPL_2_0,
+                };
+                const aboutDialog = new Adw.AboutDialog(aboutParams);
+                aboutDialog.present(this.active_window);
+            });
+            this.add_action(this._showAboutAction);
+        }
 
         // eslint-disable-next-line no-unused-vars
         #handleErrorSignal(emittingObject, fatal, id, title, message) {
