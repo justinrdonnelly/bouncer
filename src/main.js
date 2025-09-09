@@ -89,13 +89,19 @@ export const BouncerApplication = GObject.registerClass(
                 });
                 this.#sourceIds.push(gsourceSignal.attach(null));
             });
+        } // end constructor
 
+        // This will only run once. It runs on the primary instance, and will run early.
+        vfunc_startup() {
             // fire and forget
             this.#init().catch((e) => {
                 console.error('Unhandled error in main init. This is a bug!');
                 console.error(e);
             });
-        } // end constructor
+            return super.vfunc_startup();
+        }
+
+        vfunc_activate() {} // Required because Adw.Application extends GApplication.
 
         // The init method will instantiate NetworkState and listen for its signals. We do this outside the constructor
         // so we can be async.
@@ -150,8 +156,6 @@ export const BouncerApplication = GObject.registerClass(
                 );
             }
         } // end init
-
-        vfunc_activate() {} // Required because Adw.Application extends GApplication.
 
         // eslint-disable-next-line no-unused-vars
         #handleErrorSignal(emittingObject, fatal, id, title, message) {
