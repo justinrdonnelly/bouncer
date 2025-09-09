@@ -45,11 +45,11 @@ export const BouncerApplication = GObject.registerClass(
             });
 
             console.log('Welcome to Bouncer! Starting up.');
-            promisify();
         } // end constructor
 
         // This will only run once. It runs on the primary instance, and will run early.
         vfunc_startup() {
+            promisify();
             this.hold();
             this.#createAboutAction();
             this.#handleSignals();
