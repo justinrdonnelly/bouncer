@@ -46,7 +46,6 @@ export const BouncerApplication = GObject.registerClass(
 
             console.log('Welcome to Bouncer! Starting up.');
             promisify();
-            this.#connectionIdsSeen = new ConnectionIdsSeen();
 
             // about action
             this._showAboutAction = new Gio.SimpleAction({ name: 'about' });
@@ -120,6 +119,7 @@ export const BouncerApplication = GObject.registerClass(
                 );
             }
             try {
+                this.#connectionIdsSeen = new ConnectionIdsSeen();
                 await this.#connectionIdsSeen.init();
             } catch (e) {
                 // Bail out here... There's nothing we can reasonably do without knowing if a network has been seen.
