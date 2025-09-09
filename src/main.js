@@ -46,22 +46,13 @@ export const BouncerApplication = GObject.registerClass(
 
             console.log('Welcome to Bouncer! Starting up.');
             promisify();
-
-            // handle signals
-            const signals = [2, 15];
-            signals.forEach((signal) => {
-                const gsourceSignal = GLibUnix.signal_source_new(signal);
-                gsourceSignal.set_callback(() => {
-                    this.quit(signal);
-                });
-                this.#sourceIds.push(gsourceSignal.attach(null));
-            });
         } // end constructor
 
         // This will only run once. It runs on the primary instance, and will run early.
         vfunc_startup() {
             this.hold();
             this.#createAboutAction();
+            this.#handleSignals();
             // fire and forget
             this.#init().catch((e) => {
                 console.error('Unhandled error in main init. This is a bug!');
@@ -158,6 +149,17 @@ export const BouncerApplication = GObject.registerClass(
                 aboutDialog.present(this.active_window);
             });
             this.add_action(this._showAboutAction);
+        }
+
+        #handleSignals() {
+            const signals = [2, 15];
+            signals.forEach((signal) => {
+                const gsourceSignal = GLibUnix.signal_source_new(signal);
+                gsourceSignal.set_callback(() => {
+                    this.quit(signal);
+                });
+                this.#sourceIds.push(gsourceSignal.attach(null));
+            });
         }
 
         // eslint-disable-next-line no-unused-vars
