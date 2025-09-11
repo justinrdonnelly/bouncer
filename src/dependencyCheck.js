@@ -26,7 +26,6 @@ export const DependencyCheck = GObject.registerClass(
         },
     },
     class DependencyCheck extends ErrorSignal {
-        static #XDP_BACKGROUND_FLAG_AUTOSTART = 1; // https://libportal.org/flags.BackgroundFlags.html
         static #fileName = 'first-run-complete';
 
         #dbusNames; // A promise that resolves to a list of D-Bus names. Use `await`.
@@ -101,8 +100,10 @@ export const DependencyCheck = GObject.registerClass(
                     null,
                     _('Bouncer must start on login'),
                     [config.APP_ID],
-                    DependencyCheck.#XDP_BACKGROUND_FLAG_AUTOSTART,
-                    null
+                    Xdp.BackgroundFlags.AUTOSTART,
+                    null, // cancellable
+                    // callback is N/A since we've used promisify
+                    null // user_data
                 );
                 console.log('Successfully configured autostart');
             } catch (e) {
