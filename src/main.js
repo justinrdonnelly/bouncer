@@ -34,6 +34,7 @@ pkg.initFormat();
 
 export const BouncerApplication = GObject.registerClass(
     class BouncerApplication extends Adw.Application {
+        #networkState = null;
         #sourceIds = [];
         #connectionIdsSeen;
         #quitting = false;
@@ -118,9 +119,11 @@ export const BouncerApplication = GObject.registerClass(
             }
 
             try {
-                this.networkState = new NetworkState();
-                this.networkState.connect('error', this.#handleErrorSignal.bind(this));
-                this.networkState.connect('connection-changed', this.#handleConnectionChangedSignal.bind(this));
+                if (this.#networkState === null) {
+                    this.#networkState = new NetworkState();
+                    this.#networkState.connect('error', this.#handleErrorSignal.bind(this));
+                    this.#networkState.connect('connection-changed', this.#handleConnectionChangedSignal.bind(this));
+                }
             } catch (e) {
                 // Bail out here... There's nothing we can do without NetworkState.
                 console.error('Unable to initialize NetworkState.');
@@ -356,8 +359,8 @@ export const BouncerApplication = GObject.registerClass(
             else
                 console.log(`quitting due to signal ${signal}!`);
             this.#sourceIds?.forEach((id) => GLib.Source.remove(id));
-            this.networkState?.destroy();
-            this.networkState = null;
+            this.#networkState?.destroy();
+            this.#networkState = null;
             this.#dependencyCheck = null;
             super.quit(); // this ends up calling vfunc_shutdown()
         }
