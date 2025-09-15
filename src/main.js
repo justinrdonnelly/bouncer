@@ -36,7 +36,7 @@ export const BouncerApplication = GObject.registerClass(
     class BouncerApplication extends Adw.Application {
         #networkState = null;
         #sourceIds = [];
-        #connectionIdsSeen;
+        #connectionIdsSeen = null;
         #quitting = false;
         #chooseZoneWindow = null
         #dependencyCheck = null
@@ -88,8 +88,10 @@ export const BouncerApplication = GObject.registerClass(
                 );
             }
             try {
-                this.#connectionIdsSeen = new ConnectionIdsSeen();
-                await this.#connectionIdsSeen.init();
+                if (this.#connectionIdsSeen === null) {
+                    this.#connectionIdsSeen = new ConnectionIdsSeen();
+                    await this.#connectionIdsSeen.init();
+                }
             } catch (e) {
                 // Bail out here... There's nothing we can reasonably do without knowing if a network has been seen.
                 console.error('Unable to initialize ConnectionIdsSeen.');
