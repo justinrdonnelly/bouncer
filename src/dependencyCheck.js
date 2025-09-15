@@ -30,6 +30,12 @@ export const DependencyCheck = GObject.registerClass(
 
         #dbusNames; // A promise that resolves to a list of D-Bus names. Use `await`.
         #data; // An instance of Data
+        // Public status fields. They're tri-state. 1 means good, 2 means warning, 3 means bad (green/yellow/red).
+        statusDbus = null;
+        statusStartup = null;
+        statusFirewalld = null;
+        statusNetworkManagerRunning = null;
+        statusNetworkManagerPermissions = null;
 
         constructor(constructProperties = {}) {
             super(constructProperties);
@@ -71,10 +77,11 @@ export const DependencyCheck = GObject.registerClass(
                     // All these methods must throw an error if they don't want first-run-setup-complete signal to be
                     // emitted (and the corresponding notification generated).
                     this.#data.getData(),
-                    this.#runOnStartup(),
-                    this.#checkListNames(),
-                    this.#checkFirewalld(),
-                    this.#checkNetworkManager(),
+                    this.runOnStartup(),
+                    this.checkListNames(),
+                    this.checkFirewalld(),
+                    this.checkNetworkManagerRunning(),
+                    this.checkNetworkManagerPermissions(),
                 ]);
                 if (firstRunData === null) {
                     this.emit('first-run-setup-complete');
@@ -91,7 +98,7 @@ export const DependencyCheck = GObject.registerClass(
         }
 
         // This is not really a dependency. But we need to run on startup to actually be useful.
-        async #runOnStartup() {
+        async runOnStartup() {
             try {
                 console.log('Configuring autostart');
                 const portal = new Xdp.Portal();
@@ -105,8 +112,10 @@ export const DependencyCheck = GObject.registerClass(
                     // callback is N/A since we've used promisify
                     null // user_data
                 );
+                this.statusStartup = 1;
                 console.log('Successfully configured autostart');
             } catch (e) {
+                this.statusStartup = 3;
                 console.error('Error configuring autostart.');
                 console.error(e.message);
                 this.emitError(
@@ -120,10 +129,16 @@ export const DependencyCheck = GObject.registerClass(
             }
         }
 
-        async #checkListNames() {
+        async checkListNames() {
             try {
-                await this.#dbusNames;
+                const names = await this.#dbusNames;
+                if (names.length > 0) {
+                    this.statusDbus = 1;
+                } else {
+                    this.statusDbus = 3;
+                }
             } catch (e) {
+                this.statusDbus = 3;
                 console.error('Error awaiting D-Bus names. This is likely a result of the ListNames method call.');
                 console.error(e.message);
                 this.emitError(
@@ -137,20 +152,23 @@ export const DependencyCheck = GObject.registerClass(
             }
         }
 
-        async #checkFirewalld() {
+        async checkFirewalld() {
             // We have already handled any errors with #dbusNames. So we'll swallow those errors here. We wouldn't be
             // able to continue, so we'll just return.
             try {
                 await this.#dbusNames;
             } catch {
+                this.statusFirewalld = null; // we don't know the status
                 console.log('Skipping check for firewalld on DBus due to previous ListNames error.');
                 return;
             }
 
             // confirm firewalld is running
-            if ((await this.#dbusNames).includes('org.fedoraproject.FirewallD1'))
+            if ((await this.#dbusNames).includes('org.fedoraproject.FirewallD1')) {
+                this.statusFirewalld = 1;
                 console.log('Found firewalld on D-Bus.');
-            else {
+            } else {
+                this.statusFirewalld = 3;
                 console.error('Didn\'t see firewalld on D-Bus.');
                 this.emitError(
                     true,
@@ -196,20 +214,23 @@ export const DependencyCheck = GObject.registerClass(
             }
         }
 
-        async #checkNetworkManager() {
+        async checkNetworkManagerRunning() {
             // We have already handled any errors with #dbusNames. So we'll swallow those errors here. We wouldn't be
             // able to continue, so we'll just return.
             try {
                 await this.#dbusNames;
             } catch {
+                this.statusNetworkManagerRunning = null; // we don't know the status
                 console.log('Skipping check for NetworkManager on DBus due to previous ListNames error.');
                 return;
             }
 
             // confirm NetworkManager is running
-            if ((await this.#dbusNames).includes('org.freedesktop.NetworkManager'))
+            if ((await this.#dbusNames).includes('org.freedesktop.NetworkManager')) {
+                this.statusNetworkManagerRunning = 1;
                 console.log('Found NetworkManager on D-Bus.');
-            else {
+            } else {
+                this.statusNetworkManagerRunning = 3;
                 console.error('Didn\'t see NetworkManager on D-Bus.');
                 this.emitError(
                     true,
@@ -220,8 +241,9 @@ export const DependencyCheck = GObject.registerClass(
                 );
                 throw new Error('NetworkManager not on D-Bus');
             }
+        }
 
-            // check NetworkManager permissions
+        async checkNetworkManagerPermissions() {
             console.log('Checking NetworkManager permissions.');
             // I can't seem to make this call without a callback (was hoping it would return a promise)
             const permissions = new Promise((resolve, reject) => {
@@ -254,9 +276,11 @@ export const DependencyCheck = GObject.registerClass(
             console.log(`NetworkManager modify permission: ${modifyPermission}`);
             switch (modifyPermission) {
                 case 'yes': // authorized, without requiring authentication
+                    this.statusNetworkManagerPermissions = 1;
                     console.log('Authentication not required to change NetworkManager connection zone.');
                     break;
                 case 'auth': // authorized, but requires polkit authentication
+                    this.statusNetworkManagerPermissions = 2;
                     console.warn('Authentication required to change NetworkManager connection zone.');
                     this.emitError(
                         false,
@@ -268,6 +292,7 @@ export const DependencyCheck = GObject.registerClass(
                     );
                     break; // Don't throw an error. Everything is basically OK.
                 case 'no': // not authorized
+                    this.statusNetworkManagerPermissions = 3;
                     console.error('Not authorized to change NetworkManager connection zone.');
                     this.emitError(
                         true,
@@ -278,6 +303,7 @@ export const DependencyCheck = GObject.registerClass(
                     );
                     throw new Error('Not authorized to change NetworkManager');
                 default:
+                    this.statusNetworkManagerPermissions = 3;
                     console.error(`Unexpected result from NetworkManager GetSettings: ${modifyPermission}`);
                     this.emitError(
                         false,

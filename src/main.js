@@ -38,6 +38,7 @@ export const BouncerApplication = GObject.registerClass(
         #connectionIdsSeen;
         #quitting = false;
         #chooseZoneWindow = null
+        #dependencyCheck = null
 
         constructor() {
             super({
@@ -66,10 +67,12 @@ export const BouncerApplication = GObject.registerClass(
         // The init method will instantiate NetworkState and listen for its signals.
         async #init() {
             try {
-                const dependencyCheck = new DependencyCheck();
-                dependencyCheck.connect('error', this.#handleErrorSignal.bind(this));
-                dependencyCheck.connect('first-run-setup-complete', this.#handleFirstRunSignal.bind(this));
-                await dependencyCheck.runChecks();
+                if (this.#dependencyCheck === null) {
+                    this.#dependencyCheck = new DependencyCheck();
+                    this.#dependencyCheck.connect('error', this.#handleErrorSignal.bind(this));
+                    this.#dependencyCheck.connect('first-run-setup-complete', this.#handleFirstRunSignal.bind(this));
+                    await this.#dependencyCheck.runChecks();
+                }
             } catch (e) {
                 // This should really never happen. DependencyCheck is full of `try/catch`es, so exceptions shouldn't
                 // get this far. Since we don't know how this happened, we'll log it, continue, and hope for the best.
@@ -340,6 +343,7 @@ export const BouncerApplication = GObject.registerClass(
             this.#sourceIds?.forEach((id) => GLib.Source.remove(id));
             this.networkState?.destroy();
             this.networkState = null;
+            this.#dependencyCheck = null;
             super.quit(); // this ends up calling vfunc_shutdown()
         }
     }
