@@ -34,6 +34,7 @@ pkg.initFormat();
 
 export const BouncerApplication = GObject.registerClass(
     class BouncerApplication extends Adw.Application {
+        #monitoring = false; // whether we're monitoring
         #networkState = null;
         #sourceIds = [];
         #connectionIdsSeen = null;
@@ -60,7 +61,6 @@ export const BouncerApplication = GObject.registerClass(
         vfunc_startup() {
             console.log('Welcome to Bouncer! Starting up.');
             promisify();
-            this.hold();
             this.#createAboutAction();
             this.#handleSignals();
             return super.vfunc_startup();
@@ -82,6 +82,11 @@ export const BouncerApplication = GObject.registerClass(
 
         // The init method will instantiate NetworkState and listen for its signals.
         async #init() {
+            if (this.#monitoring) {
+                return;
+            }
+            this.hold();
+            this.#monitoring = true;
             try {
                 if (this.#dependencyCheck === null) {
                     this.#dependencyCheck = new DependencyCheck();
