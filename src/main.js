@@ -72,7 +72,7 @@ export const BouncerApplication = GObject.registerClass(
             if (gioApplicationCommandLine.get_options_dict().contains('monitor')) {
                 console.log('Starting Bouncer in monitor mode.');
             }
-            this.#init()
+            this.#monitorNetwork()
                 .catch((e) => {
                 console.error('Unhandled error in main init. This is a bug!');
                 console.error(e);
@@ -80,8 +80,8 @@ export const BouncerApplication = GObject.registerClass(
             );
         }
 
-        // The init method will instantiate NetworkState and listen for its signals.
-        async #init() {
+        // The monitorNetwork method will instantiate NetworkState and listen for its signals.
+        async #monitorNetwork() {
             if (this.#monitoring) {
                 return;
             }
@@ -142,7 +142,7 @@ export const BouncerApplication = GObject.registerClass(
                     _('There was a problem tracking network connection changes. Please see logs for more information.')
                 );
             }
-        } // end init
+        } // end monitorNetwork
 
         #createAboutAction() {
             this._showAboutAction = new Gio.SimpleAction({ name: 'about' });
