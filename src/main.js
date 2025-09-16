@@ -41,7 +41,7 @@ export const BouncerApplication = GObject.registerClass(
         constructor() {
             super({
                 application_id: config.APP_ID,
-                flags: Gio.ApplicationFlags.DEFAULT_FLAGS,
+                flags: Gio.ApplicationFlags.HANDLES_COMMAND_LINE,
             });
         }
 
@@ -52,15 +52,19 @@ export const BouncerApplication = GObject.registerClass(
             this.hold();
             this.#createAboutAction();
             this.#handleSignals();
-            // fire and forget
-            this.#init().catch((e) => {
-                console.error('Unhandled error in main init. This is a bug!');
-                console.error(e);
-            });
             return super.vfunc_startup();
         }
 
         vfunc_activate() {} // Required because Adw.Application extends GApplication.
+
+        vfunc_command_line() {
+            this.#init()
+                .catch((e) => {
+                console.error('Unhandled error in main init. This is a bug!');
+                console.error(e);
+                }
+            );
+        }
 
         // The init method will instantiate NetworkState and listen for its signals.
         async #init() {
