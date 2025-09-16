@@ -45,7 +45,7 @@ export const BouncerApplication = GObject.registerClass(
         constructor() {
             super({
                 application_id: config.APP_ID,
-                flags: Gio.ApplicationFlags.DEFAULT_FLAGS,
+                flags: Gio.ApplicationFlags.HANDLES_COMMAND_LINE,
             });
         }
 
@@ -55,15 +55,19 @@ export const BouncerApplication = GObject.registerClass(
             promisify();
             this.#createAboutAction();
             this.#handleSignals();
-            // fire and forget
-            this.#monitorNetwork().catch((e) => {
-                console.error('Unhandled error in main monitorNetwork. This is a bug!');
-                console.error(e);
-            });
             return super.vfunc_startup();
         }
 
         vfunc_activate() {} // Required because Adw.Application extends GApplication.
+
+        vfunc_command_line() {
+            this.#monitorNetwork()
+                .catch((e) => {
+                console.error('Unhandled error in main monitorNetwork. This is a bug!');
+                console.error(e);
+                }
+            );
+        }
 
         // The monitorNetwork method will instantiate NetworkState and listen for its signals.
         async #monitorNetwork() {
