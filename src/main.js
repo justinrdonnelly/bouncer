@@ -20,7 +20,7 @@ import { ChooseZoneWindow } from './chooseZoneWindow.js';
 import { config } from './config.js';
 import { ConnectionIdsSeen } from './connectionIdsSeen.js';
 import { DependencyCheck } from './dependencyCheck.js';
-//import { DiagnosticsWindow } from './diagnosticsWindow.js';
+import { DiagnosticsWindow } from './diagnosticsWindow.js';
 import { NetworkState } from './networkState.js';
 import { ZoneForConnection } from './zoneForConnection.js';
 import { ZoneInfo } from './zoneInfo.js';
@@ -42,13 +42,14 @@ export const BouncerApplication = GObject.registerClass(
         #quitting = false;
         #chooseZoneWindow = null
         #dependencyCheck = null
-        //#diagnosticsWindow = null
+        #diagnosticsWindow = null
 
         constructor() {
             super({
                 application_id: config.APP_ID,
                 flags: Gio.ApplicationFlags.HANDLES_COMMAND_LINE,
             });
+            this.add_main_option('diagnostics', 'd'.charCodeAt(0), 0, 0, _('Open a diagnostic window'), null);
         }
 
         // This will only run once. It runs on the primary instance, and will run early.
@@ -62,13 +63,28 @@ export const BouncerApplication = GObject.registerClass(
 
         vfunc_activate() {} // Required because Adw.Application extends GApplication.
 
-        vfunc_command_line() {
-            this.#monitorNetwork()
-                .catch((e) => {
-                console.error('Unhandled error in main monitorNetwork. This is a bug!');
-                console.error(e);
+        vfunc_command_line(gioApplicationCommandLine) {
+            if (gioApplicationCommandLine.get_options_dict().contains('diagnostics')) {
+                if (this.#diagnosticsWindow !== null) {
+                    console.log('Bouncer diagnostics window is already showing.');
+                    return;
                 }
-            );
+                this.#diagnosticsWindow = new DiagnosticsWindow(this);
+                this.#diagnosticsWindow.connect('close-request', this.#handleDiagsWindowClose.bind(this));
+                this.#diagnosticsWindow.present();
+            } else {
+                this.#monitorNetwork()
+                    .catch((e) => {
+                    console.error('Unhandled error in main monitorNetwork. This is a bug!');
+                    console.error(e);
+                    }
+                );
+            }
+        }
+
+        // eslint-disable-next-line no-unused-vars
+        #handleDiagsWindowClose(emittingObject) {
+            this.#diagnosticsWindow = null;
         }
 
         // The monitorNetwork method will instantiate NetworkState and listen for its signals.
