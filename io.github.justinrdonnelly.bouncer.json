@@ -1,7 +1,7 @@
 {
     "id": "io.github.justinrdonnelly.bouncer",
     "runtime": "org.gnome.Platform",
-    "runtime-version": "48",
+    "runtime-version": "49",
     "sdk": "org.gnome.Sdk",
     "command": "io.github.justinrdonnelly.bouncer",
     "finish-args": [
