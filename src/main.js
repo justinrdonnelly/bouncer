@@ -43,63 +43,26 @@ export const BouncerApplication = GObject.registerClass(
                 application_id: config.APP_ID,
                 flags: Gio.ApplicationFlags.DEFAULT_FLAGS,
             });
+        }
 
+        // This will only run once. It runs on the primary instance, and will run early.
+        vfunc_startup() {
             console.log('Welcome to Bouncer! Starting up.');
             promisify();
-            this.#connectionIdsSeen = new ConnectionIdsSeen();
-
-            // about action
-            this._showAboutAction = new Gio.SimpleAction({ name: 'about' });
-            // eslint-disable-next-line no-unused-vars
-            this._showAboutAction.connect('activate', (action) => {
-                const aboutParams = {
-                    // main page
-                    application_name: 'Bouncer',
-                    application_icon: config.APP_ID,
-                    developer_name: 'Justin Donnelly',
-                    version: config.VERSION,
-                    // details
-                    comments: _('Bouncer is an application to help you choose the correct firewall zone for wireless ' +
-                        'connections. When you connect to a new network, Bouncer will open a window prompting you ' +
-                        'for what kind of network (eg home, public, work) it is. When you choose the network type, ' +
-                        'it is associated with that network and automatically used in the future.'),
-                    website: 'https://github.com/justinrdonnelly/bouncer',
-                    // troubleshooting
-                    issue_url: 'https://github.com/justinrdonnelly/bouncer/issues',
-                    // credits
-                    artists: ['Jakub Steiner https://jimmac.eu/'],
-                    developers: ['Justin Donnelly https://github.com/justinrdonnelly'],
-                    // Translators: Replace 'translator-credits' with your name/username, and optionally an email or
-                    // URL.
-                    translator_credits: _('translator-credits'),
-                    // legal
-                    copyright: '© 2024-2025 Justin Donnelly',
-                    license_type: Gtk.License.MPL_2_0,
-                };
-                const aboutDialog = new Adw.AboutDialog(aboutParams);
-                aboutDialog.present(this.active_window);
-            });
-            this.add_action(this._showAboutAction);
-
-            // handle signals
-            const signals = [2, 15];
-            signals.forEach((signal) => {
-                const gsourceSignal = GLibUnix.signal_source_new(signal);
-                gsourceSignal.set_callback(() => {
-                    this.quit(signal);
-                });
-                this.#sourceIds.push(gsourceSignal.attach(null));
-            });
-
+            this.hold();
+            this.#createAboutAction();
+            this.#handleSignals();
             // fire and forget
             this.#init().catch((e) => {
                 console.error('Unhandled error in main init. This is a bug!');
                 console.error(e);
             });
-        } // end constructor
+            return super.vfunc_startup();
+        }
 
-        // The init method will instantiate NetworkState and listen for its signals. We do this outside the constructor
-        // so we can be async.
+        vfunc_activate() {} // Required because Adw.Application extends GApplication.
+
+        // The init method will instantiate NetworkState and listen for its signals.
         async #init() {
             try {
                 const dependencyCheck = new DependencyCheck();
@@ -120,6 +83,7 @@ export const BouncerApplication = GObject.registerClass(
                 );
             }
             try {
+                this.#connectionIdsSeen = new ConnectionIdsSeen();
                 await this.#connectionIdsSeen.init();
             } catch (e) {
                 // Bail out here... There's nothing we can reasonably do without knowing if a network has been seen.
@@ -151,7 +115,50 @@ export const BouncerApplication = GObject.registerClass(
             }
         } // end init
 
-        vfunc_activate() {} // Required because Adw.Application extends GApplication.
+        #createAboutAction() {
+            this._showAboutAction = new Gio.SimpleAction({ name: 'about' });
+            // eslint-disable-next-line no-unused-vars
+            this._showAboutAction.connect('activate', (action) => {
+                const aboutParams = {
+                    // main page
+                    application_name: 'Bouncer',
+                    application_icon: config.APP_ID,
+                    developer_name: 'Justin Donnelly',
+                    version: config.VERSION,
+                    // details
+                    comments: _('Bouncer is an application to help you choose the correct firewall zone for wireless ' +
+                        'connections. When you connect to a new network, Bouncer will open a window prompting you ' +
+                        'for what kind of network (eg home, public, work) it is. When you choose the network type, ' +
+                        'it is associated with that network and automatically used in the future.'),
+                    website: 'https://github.com/justinrdonnelly/bouncer',
+                    // troubleshooting
+                    issue_url: 'https://github.com/justinrdonnelly/bouncer/issues',
+                    // credits
+                    artists: ['Jakub Steiner https://jimmac.eu/'],
+                    developers: ['Justin Donnelly https://github.com/justinrdonnelly'],
+                    // Translators: Replace 'translator-credits' with your name/username, and optionally an email or
+                    // URL.
+                    translator_credits: _('translator-credits'),
+                    // legal
+                    copyright: '© 2024-2025 Justin Donnelly',
+                    license_type: Gtk.License.MPL_2_0,
+                };
+                const aboutDialog = new Adw.AboutDialog(aboutParams);
+                aboutDialog.present(this.active_window);
+            });
+            this.add_action(this._showAboutAction);
+        }
+
+        #handleSignals() {
+            const signals = [2, 15];
+            signals.forEach((signal) => {
+                const gsourceSignal = GLibUnix.signal_source_new(signal);
+                gsourceSignal.set_callback(() => {
+                    this.quit(signal);
+                });
+                this.#sourceIds.push(gsourceSignal.attach(null));
+            });
+        }
 
         // eslint-disable-next-line no-unused-vars
         #handleErrorSignal(emittingObject, fatal, id, title, message) {
@@ -341,6 +348,5 @@ export const BouncerApplication = GObject.registerClass(
 
 export function main(argv) {
     const application = new BouncerApplication();
-    application.hold();
     return application.runAsync(argv);
 }
