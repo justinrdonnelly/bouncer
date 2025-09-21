@@ -48,6 +48,16 @@
     <color type="primary" scheme_preference="dark">#9586b9</color>
   </branding>
   <releases>
+    <release version="49.0.0" date="2025-09-21">
+      <description>
+        <ul>
+          <li>Added Occitan translation</li>
+          <li>Added Simplified Chinese translation</li>
+          <li>Fixed multiple instance support</li>
+          <li>Use GNOME 49 runtime</li>
+        </ul>
+      </description>
+    </release>
     <release version="48.2.0" date="2025-06-12">
       <description>
         <ul>
