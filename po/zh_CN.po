@@ -28,8 +28,8 @@ msgid "firewall;network;Wi-Fi;"
 msgstr "防火墙;网络;Wi-Fi;"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:8
-msgid "Keep the riffraff out!"
-msgstr "阻止未经授权的访问！"
+msgid "Keep the riffraff out"
+msgstr "阻止未经授权的访问"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:13
 msgid ""

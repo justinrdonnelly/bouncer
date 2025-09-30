@@ -31,8 +31,8 @@ msgid "firewall;network;Wi-Fi;"
 msgstr "firewall;network;Wi-Fi;"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:8
-msgid "Keep the riffraff out!"
-msgstr "Держись подальше от всякого сброда!"
+msgid "Keep the riffraff out"
+msgstr "Держись подальше от всякого сброда"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:13
 msgid ""
