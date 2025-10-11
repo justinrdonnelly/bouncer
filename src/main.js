@@ -63,6 +63,23 @@ export const BouncerApplication = GObject.registerClass(
 
         vfunc_activate() {} // Required because Adw.Application extends GApplication.
 
+        /*vfunc_handle_local_options(options) {
+            console.error('start vfunc_handle_local_options');
+            return super.vfunc_handle_local_options(options); // handle errors
+            //return -1; // proceed with default processing
+        }*/
+
+        /*vfunc_local_command_line(commandLine) {
+            console.error('start vfunc_local_command_line');
+            console.error(commandLine);
+            // returning the commandLine errors out, but calling super works
+            //return commandLine;
+            const good = super.vfunc_local_command_line(commandLine);
+            //console.log(good);
+            console.error('end vfunc_local_command_line');
+            return good;
+        }*/
+
         vfunc_command_line(gioApplicationCommandLine) {
             if (gioApplicationCommandLine.get_options_dict().contains('diagnostics')) {
                 this.#checkDependencies()
