@@ -76,7 +76,7 @@ export const DependencyCheck = GObject.registerClass(
                 const [firstRunData] = await Promise.all([
                     // All these methods must throw an error if they don't want first-run-setup-complete signal to be
                     // emitted (and the corresponding notification generated).
-                    this.#data.getData(),
+                    this.#data.getData(), // this will return null on the first run, true otherwise
                     this.runOnStartup(),
                     this.checkListNames(),
                     this.checkFirewalld(),
