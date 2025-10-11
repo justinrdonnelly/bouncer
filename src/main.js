@@ -96,20 +96,13 @@ export const BouncerApplication = GObject.registerClass(
             this.#dashboardWindow = null;
         }
 
-        // The monitorNetwork method will instantiate NetworkState and listen for its signals.
-        async #monitorNetwork() {
-            if (this.#monitoring) {
-                return;
-            }
-            this.hold();
-            this.#monitoring = true;
+        #instantiateDependencyCheck() {
             try {
                 if (this.#dependencyCheck === null) {
                     this.#dependencyCheck = new DependencyCheck();
-                    this.#dependencyCheck.connect('error', this.#handleErrorSignal.bind(this));
-                    this.#dependencyCheck.connect('first-run-setup-complete', this.#handleFirstRunSignal.bind(this));
-                    await this.#dependencyCheck.runChecks();
                 }
+                this.#dependencyCheck.connect('error', this.#handleErrorSignal.bind(this));
+                this.#dependencyCheck.connect('first-run-setup-complete', this.#handleFirstRunSignal.bind(this));
             } catch (e) {
                 // This should really never happen. DependencyCheck is full of `try/catch`es, so exceptions shouldn't
                 // get this far. Since we don't know how this happened, we'll log it, continue, and hope for the best.
@@ -123,6 +116,17 @@ export const BouncerApplication = GObject.registerClass(
                         'information.')
                 );
             }
+        }
+
+        // The monitorNetwork method will instantiate NetworkState and listen for its signals.
+        async #monitorNetwork() {
+            if (this.#monitoring) {
+                return;
+            }
+            this.hold();
+            this.#monitoring = true;
+            this.#instantiateDependencyCheck();
+            await this.#dependencyCheck.runChecks();
             try {
                 if (this.#connectionIdsSeen === null) {
                     this.#connectionIdsSeen = new ConnectionIdsSeen();
