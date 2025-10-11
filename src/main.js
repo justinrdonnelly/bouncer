@@ -81,7 +81,8 @@ export const BouncerApplication = GObject.registerClass(
         }*/
 
         vfunc_command_line(gioApplicationCommandLine) {
-            if (gioApplicationCommandLine.get_options_dict().contains('diagnostics')) {
+            // TODO: Remove the `!` below that was used to force diagnostics
+            if (!gioApplicationCommandLine.get_options_dict().contains('diagnostics')) {
                 this.#checkDependencies()
                     .catch((e) => {
                     console.error('Unhandled error in main checkDependencies. This is a bug!');
