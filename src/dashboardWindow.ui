@@ -31,11 +31,37 @@
           </object>
         </child>
         <property name="content">
-          <object class="GtkLabel" id="label">
-            <property name="label" translatable="yes">Hello, World!</property>
-            <style>
-              <class name="title-1"/>
-            </style>
+          <object class="GtkScrolledWindow">
+            <property name="hscrollbar-policy">never</property>
+            <property name="child">
+              <object class="GtkViewport">
+                <property name="child">
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <property name="margin-start">60</property>
+                    <property name="margin-end">60</property>
+                    <property name="margin-top">30</property>
+                    <property name="margin-bottom">30</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="xalign">0</property>
+                        <property name="margin-bottom">12</property>
+                        <property name="wrap">True</property>
+                        <property name="label" translatable="yes">In order to function properly, Bouncer depends on multiple other system components and configurations. In order to help facilitate the correct setup, this page shows the status for those required components and configurations.</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkListBox" id="listBox">
+                        <property name="selection-mode">none</property>
+                        <style>
+                          <class name="boxed-list"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </property>
           </object>
         </property>
       </object>

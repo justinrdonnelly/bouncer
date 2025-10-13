@@ -12,13 +12,83 @@
 import GObject from 'gi://GObject';
 import Adw from 'gi://Adw';
 
+import { DependencyItem } from './dependencyItem.js';
+
 export const DashboardWindow = GObject.registerClass({
     GTypeName: 'DashboardWindow',
     Template: 'resource:///io/github/justinrdonnelly/bouncer/dashboardWindow.ui',
-    InternalChildren: ['label'],
+    InternalChildren: ['listBox'],
 }, class DashboardWindow extends Adw.ApplicationWindow {
-    constructor(application) {
+    constructor(application, dependencyCheck) {
         super({ application });
+        let count = 0;
+        let dependencyItem;
+
+        // D-Bus
+        dependencyItem = new DependencyItem(
+            _('D-Bus'),
+            dependencyCheck,
+            'status-dbus',
+            async () => {
+                try {
+                    // also call dbusListNames to reflect any changes made
+                    await dependencyCheck.dbusListNames();
+                    await dependencyCheck.checkListNames(false);
+                // eslint-disable-next-line no-empty
+                } catch {}
+            }
+        );
+        this._listBox.insert(dependencyItem, count++);
+
+        // firewalld Running
+        dependencyItem = new DependencyItem(
+            _('firewalld Running'),
+            dependencyCheck,
+            'status-firewalld-running',
+            async () => {
+                try {
+                    // also call dbusListNames to reflect any changes made
+                    await dependencyCheck.dbusListNames();
+                    await dependencyCheck.checkFirewalld(false);
+                // eslint-disable-next-line no-empty
+                } catch {}
+            }
+        );
+        this._listBox.insert(dependencyItem, count++);
+
+        // NetworkManager Running
+        dependencyItem = new DependencyItem(
+            _('NetworkManager Running'),
+            dependencyCheck,
+            'status-network-manager-running',
+            async () => {
+                try {
+                    // also call dbusListNames to reflect any changes made
+                    await dependencyCheck.dbusListNames();
+                    await dependencyCheck.checkNetworkManagerRunning(false);
+                // eslint-disable-next-line no-empty
+                } catch {}
+            }
+        );
+        this._listBox.insert(dependencyItem, count++);
+
+        // NetworkManager Permissions
+        dependencyItem = new DependencyItem(
+            _('NetworkManager Permissions'),
+            dependencyCheck,
+            'status-network-manager-permissions',
+            async () => dependencyCheck.checkNetworkManagerPermissions(false).catch(() => {})
+        );
+        this._listBox.insert(dependencyItem, count++);
+
+        // NetworkManager Running
+        dependencyItem = new DependencyItem(
+            _('Run on Startup'),
+            dependencyCheck,
+            'status-startup',
+            async () => dependencyCheck.runOnStartup(false).catch(() => {})
+        );
+        this._listBox.insert(dependencyItem, count++);
     }
 });
 

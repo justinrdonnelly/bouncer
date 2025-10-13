@@ -125,7 +125,7 @@ export const BouncerApplication = GObject.registerClass(
             this.#instantiateDependencyCheck();
             // We need to show the window right away (before `await`ing `this.#dependencyCheck.runChecks()`, or else
             // the application will exit
-            this.#dashboardWindow = new DashboardWindow(this);
+            this.#dashboardWindow = new DashboardWindow(this, this.#dependencyCheck);
             this.#dashboardWindow.connect('close-request', this.#handleDashboardWindowClose.bind(this));
             this.#dashboardWindow.present();
             await this.#dependencyCheck.runChecks(false);
