@@ -65,13 +65,12 @@ export const BouncerApplication = GObject.registerClass(
 
         vfunc_command_line(gioApplicationCommandLine) {
             if (gioApplicationCommandLine.get_options_dict().contains('diagnostics')) {
-                if (this.#diagnosticsWindow !== null) {
-                    console.log('Bouncer diagnostics window is already showing.');
-                    return;
-                }
-                this.#diagnosticsWindow = new DiagnosticsWindow(this);
-                this.#diagnosticsWindow.connect('close-request', this.#handleDiagsWindowClose.bind(this));
-                this.#diagnosticsWindow.present();
+                this.#checkDependencies()
+                    .catch((e) => {
+                    console.error('Unhandled error in main checkDependencies. This is a bug!');
+                    console.error(e);
+                    }
+                );
             } else {
                 this.#monitorNetwork()
                     .catch((e) => {
@@ -107,6 +106,20 @@ export const BouncerApplication = GObject.registerClass(
                         'information.')
                 );
             }
+        }
+
+        async #checkDependencies() {
+            if (this.#diagnosticsWindow !== null) {
+                console.log('Bouncer diagnostics window is already showing.');
+                return;
+            }
+            this.#instantiateDependencyCheck();
+            // We need to show the window right away (before `await`ing `this.#dependencyCheck.runChecks()`, or else
+            // the application will exit
+            this.#diagnosticsWindow = new DiagnosticsWindow(this);
+            this.#diagnosticsWindow.connect('close-request', this.#handleDiagsWindowClose.bind(this));
+            this.#diagnosticsWindow.present();
+            await this.#dependencyCheck.runChecks();
         }
 
         // The monitorNetwork method will instantiate NetworkState and listen for its signals.
