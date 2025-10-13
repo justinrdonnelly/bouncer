@@ -81,13 +81,12 @@ export const BouncerApplication = GObject.registerClass(
                 );
             } else {
                 console.log('Starting Bouncer in dashboard mode.');
-                if (this.#dashboardWindow !== null) {
-                    console.error('Bouncer dashboard window is already showing.');
-                    return;
-                }
-                this.#dashboardWindow = new DashboardWindow(this);
-                this.#dashboardWindow.connect('close-request', this.#handleDashboardWindowClose.bind(this));
-                this.#dashboardWindow.present();
+                this.#launchDashboard()
+                    .catch((e) => {
+                    console.error('Unhandled error in main launchDashboard. This is a bug!');
+                    console.error(e);
+                    }
+                );
             }
         }
 
@@ -116,6 +115,20 @@ export const BouncerApplication = GObject.registerClass(
                         'information.')
                 );
             }
+        }
+
+        async #launchDashboard() {
+            if (this.#dashboardWindow !== null) {
+                console.log('Bouncer dashboard window is already showing.');
+                return;
+            }
+            this.#instantiateDependencyCheck();
+            // We need to show the window right away (before `await`ing `this.#dependencyCheck.runChecks()`, or else
+            // the application will exit
+            this.#dashboardWindow = new DashboardWindow(this);
+            this.#dashboardWindow.connect('close-request', this.#handleDashboardWindowClose.bind(this));
+            this.#dashboardWindow.present();
+            await this.#dependencyCheck.runChecks();
         }
 
         // The monitorNetwork method will instantiate NetworkState and listen for its signals.
