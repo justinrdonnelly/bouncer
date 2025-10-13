@@ -116,7 +116,7 @@ export const BouncerApplication = GObject.registerClass(
             this.#instantiateDependencyCheck();
             // We need to show the window right away (before `await`ing `this.#dependencyCheck.runChecks()`, or else
             // the application will exit
-            this.#diagnosticsWindow = new DiagnosticsWindow(this);
+            this.#diagnosticsWindow = new DiagnosticsWindow(this, this.#dependencyCheck);
             this.#diagnosticsWindow.connect('close-request', this.#handleDiagsWindowClose.bind(this));
             this.#diagnosticsWindow.present();
             await this.#dependencyCheck.runChecks();
@@ -214,7 +214,10 @@ export const BouncerApplication = GObject.registerClass(
 
         // eslint-disable-next-line no-unused-vars
         #handleErrorSignal(emittingObject, fatal, id, title, message) {
-            this.#handleError(fatal, id, title, message);
+            // Only do anything with error signals when the diagnostics window is not open
+            if (this.#diagnosticsWindow === null) {
+                this.#handleError(fatal, id, title, message);
+            }
         }
 
         #handleError(fatal, id, title, message) {
