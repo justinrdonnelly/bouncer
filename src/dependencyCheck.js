@@ -24,18 +24,59 @@ export const DependencyCheck = GObject.registerClass(
         Signals: {
             'first-run-setup-complete': {},
         },
+        Properties: {
+            'status-dbus': GObject.ParamSpec.uint(
+                'status-dbus',
+                'status D-Bus',
+                'Status for whether DBus ListNames returned',
+                GObject.ParamFlags.READWRITE,
+                0,
+                3,
+                0,
+            ),
+            'status-firewalld-running': GObject.ParamSpec.uint(
+                'status-firewalld-running',
+                'status firewalld running',
+                'Status for whether firewalld is running',
+                GObject.ParamFlags.READWRITE,
+                0,
+                3,
+                0,
+            ),
+            'status-network-manager-running': GObject.ParamSpec.uint(
+                'status-network-manager-running',
+                'status NetworkManager running',
+                'Status for whether NetworkManager is running',
+                GObject.ParamFlags.READWRITE,
+                0,
+                3,
+                0,
+            ),
+            'status-network-manager-permissions': GObject.ParamSpec.uint(
+                'status-network-manager-permissions',
+                'status NetworkManager permissions',
+                'Status for whether NetworkManager permissions are good',
+                GObject.ParamFlags.READWRITE,
+                0,
+                3,
+                0,
+            ),
+            'status-startup': GObject.ParamSpec.uint(
+                'status-startup',
+                'status startup',
+                'Status for whether startup is configured',
+                GObject.ParamFlags.READWRITE,
+                0,
+                3,
+                0,
+            ),
+        },
     },
     class DependencyCheck extends ErrorSignal {
         static #fileName = 'first-run-complete';
 
         #dbusNames; // A promise that resolves to a list of D-Bus names. Use `await`.
         #data; // An instance of Data
-        // Public status fields. They're tri-state. 1 means good, 2 means warning, 3 means bad (green/yellow/red).
-        statusDbus = null;
-        statusStartup = null;
-        statusFirewalld = null;
-        statusNetworkManagerRunning = null;
-        statusNetworkManagerPermissions = null;
 
         constructor(constructProperties = {}) {
             super(constructProperties);
@@ -158,17 +199,17 @@ export const DependencyCheck = GObject.registerClass(
             try {
                 await this.#dbusNames;
             } catch {
-                this.statusFirewalld = null; // we don't know the status
-                console.log('Skipping check for firewalld on DBus due to previous ListNames error.');
+                this.statusFirewalldRunning = 0; // we don't know the status
+                console.log('Skipping check for firewalld on D-Bus due to previous ListNames error.');
                 return;
             }
 
             // confirm firewalld is running
             if ((await this.#dbusNames).includes('org.fedoraproject.FirewallD1')) {
-                this.statusFirewalld = 1;
+                this.statusFirewalldRunning = 1;
                 console.log('Found firewalld on D-Bus.');
             } else {
-                this.statusFirewalld = 3;
+                this.statusFirewalldRunning = 3;
                 console.error('Didn\'t see firewalld on D-Bus.');
                 this.emitError(
                     true,
@@ -220,8 +261,8 @@ export const DependencyCheck = GObject.registerClass(
             try {
                 await this.#dbusNames;
             } catch {
-                this.statusNetworkManagerRunning = null; // we don't know the status
-                console.log('Skipping check for NetworkManager on DBus due to previous ListNames error.');
+                this.statusNetworkManagerRunning = 0; // we don't know the status
+                console.log('Skipping check for NetworkManager on D-Bus due to previous ListNames error.');
                 return;
             }
 
