@@ -80,11 +80,11 @@ export const DependencyCheck = GObject.registerClass(
 
         constructor(constructProperties = {}) {
             super(constructProperties);
-            this.#dbusListNames();
+            this.dbusListNames();
             this.#data = new Data(DependencyCheck.#fileName);
         }
 
-        #dbusListNames() {
+        dbusListNames() {
             // I can't seem to make this call without a callback (was hoping it would return a promise)
             this.#dbusNames = new Promise((resolve, reject) => {
                 Gio.DBus.system.call(
