@@ -21,8 +21,7 @@
     <child>
       <object class="GtkLabel">
         <property name="xalign">0</property>
-        <property name="margin-top">6</property>
-        <property name="margin-bottom">6</property>
+        <property name="margin-bottom">12</property>
         <property name="label" translatable="yes">You have connected to a new Wi-Fi network. Please choose a firewall zone. What type of network is this?</property>
         <property name="wrap">True</property>
       </object>
@@ -172,4 +171,3 @@
     </child>
   </template>
 </interface>
-
