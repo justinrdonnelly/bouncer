@@ -4,7 +4,7 @@
     <file preprocess="xml-stripblanks">bouncerWindow.ui</file>
     <file preprocess="xml-stripblanks">chooseZoneBox.ui</file>
     <file preprocess="xml-stripblanks">diagnosticsItem.ui</file>
-    <file preprocess="xml-stripblanks">diagnosticsWindow.ui</file>
+    <file preprocess="xml-stripblanks">diagnosticsBox.ui</file>
     <file preprocess="xml-stripblanks">moreInfo.ui</file>
   </gresource>
 </gresources>

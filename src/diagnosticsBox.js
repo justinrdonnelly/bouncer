@@ -1,4 +1,4 @@
-/* diagnosticsWindow.js
+/* diagnosticsBox.js
  *
  * Copyright 2025 Justin Donnelly
  *
@@ -10,17 +10,17 @@
  */
 
 import GObject from 'gi://GObject';
-import Adw from 'gi://Adw';
+import Gtk from 'gi://Gtk';
 
 import { DiagnosticsItem } from './diagnosticsItem.js';
 
-export const DiagnosticsWindow = GObject.registerClass({
-    GTypeName: 'DiagnosticsWindow',
-    Template: 'resource:///io/github/justinrdonnelly/bouncer/diagnosticsWindow.ui',
+export const DiagnosticsBox = GObject.registerClass({
+    GTypeName: 'DiagnosticsBox',
+    Template: 'resource:///io/github/justinrdonnelly/bouncer/diagnosticsBox.ui',
     InternalChildren: ['listBox'],
-}, class DiagnosticsWindow extends Adw.ApplicationWindow {
-    constructor(application, dependencyCheck) {
-        super({ application });
+}, class DiagnosticsBox extends Gtk.Box {
+    constructor(dependencyCheck) {
+        super();
         let count = 0;
         let diagnosticsItem;
 
@@ -88,4 +88,3 @@ export const DiagnosticsWindow = GObject.registerClass({
         this._listBox.insert(diagnosticsItem, count++);
     }
 });
-

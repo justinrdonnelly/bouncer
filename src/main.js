@@ -21,7 +21,7 @@ import { ChooseZoneBox } from './chooseZoneBox.js';
 import { config } from './config.js';
 import { ConnectionIdsSeen } from './connectionIdsSeen.js';
 import { DependencyCheck } from './dependencyCheck.js';
-import { DiagnosticsWindow } from './diagnosticsWindow.js';
+import { DiagnosticsBox } from './diagnosticsBox.js';
 import { NetworkState } from './networkState.js';
 import { ZoneForConnection } from './zoneForConnection.js';
 import { ZoneInfo } from './zoneInfo.js';
@@ -135,7 +135,8 @@ export const BouncerApplication = GObject.registerClass(
             this.#instantiateDependencyCheck();
             // We need to show the window right away (before `await`ing `this.#dependencyCheck.runChecks()`, or else
             // the application will exit
-            this.#diagnosticsWindow = new DiagnosticsWindow(this, this.#dependencyCheck);
+            const diagnosticsBox = new DiagnosticsBox(this.#dependencyCheck);
+            this.#diagnosticsWindow = new BouncerWindow(this, diagnosticsBox);
             this.#diagnosticsWindow.connect('close-request', this.#handleDiagsWindowClose.bind(this));
             this.#diagnosticsWindow.present();
             await this.#dependencyCheck.runChecks();

@@ -11,7 +11,7 @@
     <file>data.js</file>
     <file>dependencyCheck.js</file>
     <file>diagnosticsItem.js</file>
-    <file>diagnosticsWindow.js</file>
+    <file>diagnosticsBox.js</file>
     <file>errorSignal.js</file>
     <file>main.js</file>
     <file>moreInfo.js</file>
