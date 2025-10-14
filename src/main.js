@@ -16,7 +16,8 @@ import GLibUnix from 'gi://GLibUnix?version=2.0';
 import GObject from 'gi://GObject'; // Required by GJS, version not necessary.
 import Gtk from 'gi://Gtk';
 
-import { ChooseZoneWindow } from './chooseZoneWindow.js';
+import { BouncerWindow } from './bouncerWindow.js';
+import { ChooseZoneBox } from './chooseZoneBox.js';
 import { config } from './config.js';
 import { ConnectionIdsSeen } from './connectionIdsSeen.js';
 import { DependencyCheck } from './dependencyCheck.js';
@@ -298,22 +299,27 @@ export const BouncerApplication = GObject.registerClass(
         #createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings) {
             // this.#chooseZoneWindow should always be null. Either this is the first creation, or we should have
             // already called #closeWindowIfConnectionChanged.
-            if (!this.#chooseZoneWindow)
-                this.#chooseZoneWindow = new ChooseZoneWindow(
-                    this,
+            if (!this.#chooseZoneWindow) {
+                const chooseZoneBox = new ChooseZoneBox(
                     connectionId,
                     defaultZone,
                     currentZone,
                     zones,
                     activeConnectionSettings
                 );
+                this.#chooseZoneWindow = new BouncerWindow(
+                    this,
+                    chooseZoneBox
+                );
+                chooseZoneBox.window = this.#chooseZoneWindow;
+            }
 
-            this.#chooseZoneWindow.connect('zone-selected', this.#chooseClicked.bind(this));
+            this.#chooseZoneWindow.content.connect('zone-selected', this.#chooseClicked.bind(this));
             this.#chooseZoneWindow.present();
         }
 
         #closeWindowIfConnectionChanged(connectionId) {
-            if (this.#chooseZoneWindow?.connectionId !== connectionId)
+            if (this.#chooseZoneWindow?.content?.connectionId !== connectionId)
                 this.#chooseZoneWindow?.close();
                 this.#chooseZoneWindow = null;
         }
@@ -321,7 +327,7 @@ export const BouncerApplication = GObject.registerClass(
         // eslint-disable-next-line no-unused-vars
         async #chooseClicked(emittingObject, connectionId, activeConnectionSettings, zone, defaultZone) {
             console.log(`For connection ID ${connectionId}, setting zone to ` +
-                `${zone ?? ChooseZoneWindow.defaultZoneLabel}`);
+                `${zone ?? ChooseZoneBox.defaultZoneLabel}`);
             // Update the in-memory representation of seen connections before updating the zone. If the connection ID
             // hasn't been added to the list of seen connections when the zone is changed, the window will open again!
             // But don't sync to disk until after the zone for the connection is set. That way, if there's an error in
