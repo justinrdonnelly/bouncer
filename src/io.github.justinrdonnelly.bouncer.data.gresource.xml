@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/io/github/justinrdonnelly/bouncer">
-    <file preprocess="xml-stripblanks">chooseZoneWindow.ui</file>
+    <file preprocess="xml-stripblanks">bouncerWindow.ui</file>
+    <file preprocess="xml-stripblanks">chooseZoneBox.ui</file>
     <file preprocess="xml-stripblanks">dashboardWindow.ui</file>
     <file preprocess="xml-stripblanks">dependencyItem.ui</file>
     <file preprocess="xml-stripblanks">moreInfo.ui</file>

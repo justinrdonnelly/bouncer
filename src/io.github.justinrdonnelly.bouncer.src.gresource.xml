@@ -4,7 +4,8 @@
     <file>networkManagerDbusInterfaces/networkManagerConnectionActiveProxy.js</file>
     <file>networkManagerDbusInterfaces/networkManagerDeviceProxy.js</file>
     <file>networkManagerDbusInterfaces/networkManagerProxy.js</file>
-    <file>chooseZoneWindow.js</file>
+    <file>bouncerWindow.js</file>
+    <file>chooseZoneBox.js</file>
     <file>config.js</file>
     <file>connectionIdsSeen.js</file>
     <file>dashboardWindow.js</file>

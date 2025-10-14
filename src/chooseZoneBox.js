@@ -1,4 +1,4 @@
-/* chooseZoneWindow.js
+/* chooseZoneBox.js
  *
  * Copyright 2024 Justin Donnelly
  *
@@ -9,15 +9,15 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-import Adw from 'gi://Adw';
 import GObject from 'gi://GObject';
+import Gtk from 'gi://Gtk';
 
 import { MoreInfoDialog } from './moreInfo.js';
 
-export const ChooseZoneWindow = GObject.registerClass(
+export const ChooseZoneBox = GObject.registerClass(
     {
-        GTypeName: 'ChooseZoneWindow',
-        Template: 'resource:///io/github/justinrdonnelly/bouncer/chooseZoneWindow.ui',
+        GTypeName: 'ChooseZoneBox',
+        Template: 'resource:///io/github/justinrdonnelly/bouncer/chooseZoneBox.ui',
         InternalChildren: ['currentZone', 'defaultZone', 'connectionId', 'zoneDropDown', 'zoneList'],
         Signals: {
             'zone-selected': {
@@ -30,17 +30,17 @@ export const ChooseZoneWindow = GObject.registerClass(
             },
         },
     },
-    class ChooseZoneWindow extends Adw.ApplicationWindow {
+    class ChooseZoneBox extends Gtk.Box {
         static #simpleZoneList = ['public', 'home', 'work'];
         static defaultZoneLabel = '[DEFAULT]';
         #connectionId;
         #defaultZone;
         #activeConnectionSettings;
+        window;
 
-        constructor(application, connectionId, defaultZone, currentZone, allZones, activeConnectionSettings) {
-            super({ application });
+        constructor(connectionId, defaultZone, currentZone, allZones, activeConnectionSettings) {
+            super();
             console.debug('Building window.');
-            console.debug(`application: ${application}`);
             console.debug(`connectionId: ${connectionId}`);
             console.debug(`allZones: ${allZones}`);
             console.debug(`defaultZone: ${defaultZone}`);
@@ -48,13 +48,13 @@ export const ChooseZoneWindow = GObject.registerClass(
             this.#connectionId = connectionId;
             this.#activeConnectionSettings = activeConnectionSettings;
             this.#defaultZone = defaultZone;
-            this._currentZone.subtitle = currentZone || ChooseZoneWindow.defaultZoneLabel;
+            this._currentZone.subtitle = currentZone || ChooseZoneBox.defaultZoneLabel;
             this._defaultZone.subtitle = defaultZone;
             this._connectionId.subtitle = connectionId;
 
             let selected = null;
             const zones = this.#generateZoneList(allZones, defaultZone, currentZone);
-            this._zoneList.append(ChooseZoneWindow.defaultZoneLabel); // show the default first in the list
+            this._zoneList.append(ChooseZoneBox.defaultZoneLabel); // show the default first in the list
             if (currentZone === null)
                 // null means default zone
                 selected = 0;
@@ -87,12 +87,12 @@ export const ChooseZoneWindow = GObject.registerClass(
          * |   T |  T |  T | Simple                     |
          */
         #generateZoneList(allZones, defaultZone, currentZone) {
-            const simpleZonesExist = ChooseZoneWindow.#simpleZoneList.every((z) => allZones.includes(z));
+            const simpleZonesExist = ChooseZoneBox.#simpleZoneList.every((z) => allZones.includes(z));
             if (!simpleZonesExist)
                 return allZones;
-            const zones = [...ChooseZoneWindow.#simpleZoneList];
-            const defaultZoneSimple = ChooseZoneWindow.#simpleZoneList.includes(defaultZone);
-            const currentZoneSimple = ChooseZoneWindow.#simpleZoneList.includes(currentZone);
+            const zones = [...ChooseZoneBox.#simpleZoneList];
+            const defaultZoneSimple = ChooseZoneBox.#simpleZoneList.includes(defaultZone);
+            const currentZoneSimple = ChooseZoneBox.#simpleZoneList.includes(currentZone);
             if (!defaultZoneSimple)
                 zones.push(defaultZone);
             if (currentZone && !currentZoneSimple)
@@ -103,7 +103,7 @@ export const ChooseZoneWindow = GObject.registerClass(
         // eslint-disable-next-line no-unused-vars
         async chooseButtonClicked(_button) {
             let selectedItemValue = this._zoneDropDown.get_selected_item().get_string();
-            if (selectedItemValue === ChooseZoneWindow.defaultZoneLabel)
+            if (selectedItemValue === ChooseZoneBox.defaultZoneLabel)
                 selectedItemValue = null; // default zone is represented by null
             console.log('Zone selected.');
             this.emit(
@@ -113,7 +113,7 @@ export const ChooseZoneWindow = GObject.registerClass(
                 selectedItemValue,
                 this.#defaultZone
             );
-            this.close();
+            this.window.close();
         }
 
         // eslint-disable-next-line no-unused-vars
@@ -125,7 +125,7 @@ export const ChooseZoneWindow = GObject.registerClass(
         // eslint-disable-next-line no-unused-vars
         exitButtonClicked(_button) {
             console.log('Exiting without selecting a zone.');
-            this.close();
+            this.window.close();
         }
     }
 );
