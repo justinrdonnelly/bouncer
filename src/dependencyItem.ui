@@ -15,6 +15,9 @@
   <template class="DependencyItem" parent="AdwActionRow">
     <child>
       <object class="GtkButton" id="button">
+        <style>
+          <class name="pill"/>
+        </style>
         <property name="margin-start">12</property>
         <property name="margin-end">12</property>
         <property name="label" translatable="yes">Check Status</property>
