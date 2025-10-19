@@ -87,4 +87,10 @@ export const DiagnosticsBox = GObject.registerClass({
         );
         this._listBox.insert(diagnosticsItem, count++);
     }
+
+    // eslint-disable-next-line no-unused-vars
+    async monitorButtonClicked(_button) {
+        console.log('HERE');
+    }
+
 });
