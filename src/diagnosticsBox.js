@@ -17,7 +17,7 @@ import { DiagnosticsItem } from './diagnosticsItem.js';
 export const DiagnosticsBox = GObject.registerClass({
     GTypeName: 'DiagnosticsBox',
     Template: 'resource:///io/github/justinrdonnelly/bouncer/diagnosticsBox.ui',
-    InternalChildren: ['listBox'],
+    InternalChildren: ['listBox', 'monitorButton'],
 }, class DiagnosticsBox extends Gtk.Box {
     constructor(dependencyCheck) {
         super();
@@ -86,6 +86,14 @@ export const DiagnosticsBox = GObject.registerClass({
             async () => dependencyCheck.runOnStartup().catch(() => {})
         );
         this._listBox.insert(diagnosticsItem, count++);
+
+        // bind button sensitive (enabled) to dependencyCheck
+        dependencyCheck.bind_property(
+            'status-overall',
+            this._monitorButton,
+            'sensitive',
+            GObject.BindingFlags.SYNC_CREATE
+        );
     }
 
     // eslint-disable-next-line no-unused-vars
