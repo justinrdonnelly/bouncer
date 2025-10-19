@@ -90,4 +90,10 @@ export const DashboardBox = GObject.registerClass({
         );
         this._listBox.insert(dependencyItem, count++);
     }
+
+    // eslint-disable-next-line no-unused-vars
+    async monitorButtonClicked(_button) {
+        console.log('HERE');
+    }
+
 });

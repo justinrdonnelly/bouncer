@@ -39,5 +39,32 @@
         </style>
       </object>
     </child>
+
+    <!-- Monitor label/button -->
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">horizontal</property>
+        <property name="margin-top">12</property>
+        <property name="margin-bottom">12</property> <!-- add some extra margin since this is on the bottom of the window -->
+        <child>
+          <object class="GtkLabel">
+            <property name="xalign">0</property>
+            <property name="wrap">true</property>
+            <property name="hexpand">true</property>
+            <property name="label" translatable="yes">Once everything is ready, click to begin using Bouncer.</property>
+          </object> <!-- end GtkLabel -->
+        </child>
+        <child>
+          <object class="GtkButton">
+            <property name="halign">end</property>
+            <property name="label" translatable="yes">Monitor</property>
+            <style>
+              <class name="suggested-action"/>
+            </style>
+            <signal name="clicked" handler="monitorButtonClicked"/>
+          </object> <!-- end GtkButton -->
+        </child>
+      </object> <!-- end GtkBox -->
+    </child>
   </template>
 </interface>
