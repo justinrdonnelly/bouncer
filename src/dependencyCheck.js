@@ -77,11 +77,73 @@ export const DependencyCheck = GObject.registerClass(
 
         #dbusNames; // A promise that resolves to a list of D-Bus names. Use `await`.
         #data; // An instance of Data
+        // properties
+        #statusDbus = 0;
+        #statusFirewalldRunning = 0;
+        #statusNetworkManagerRunning = 0;
+        #statusNetworkManagerPermissions = 0;
+        #statusStartup = 0;
 
         constructor(constructProperties = {}) {
             super(constructProperties);
             this.dbusListNames();
             this.#data = new Data(DependencyCheck.#fileName);
+        }
+
+        // get/set methods for properties
+        get statusDbus() {
+            // no need to do anything extra here
+            return this.#statusDbus;
+        }
+        set statusDbus(status) {
+            if (this.#statusDbus === status)
+                return;
+            this.#statusDbus = status;
+            this.notify('status-dbus');
+        }
+
+        get statusFirewalldRunning() {
+            // no need to do anything extra here
+            return this.#statusFirewalldRunning;
+        }
+        set statusFirewalldRunning(status) {
+            if (this.#statusFirewalldRunning === status)
+                return;
+            this.#statusFirewalldRunning = status;
+            this.notify('status-firewalld-running');
+        }
+
+        get statusNetworkManagerRunning() {
+            // no need to do anything extra here
+            return this.#statusNetworkManagerRunning;
+        }
+        set statusNetworkManagerRunning(status) {
+            if (this.#statusNetworkManagerRunning === status)
+                return;
+            this.#statusNetworkManagerRunning = status;
+            this.notify('status-network-manager-running');
+        }
+
+        get statusNetworkManagerPermissions() {
+            // no need to do anything extra here
+            return this.#statusNetworkManagerPermissions;
+        }
+        set statusNetworkManagerPermissions(status) {
+            if (this.#statusNetworkManagerPermissions === status)
+                return;
+            this.#statusNetworkManagerPermissions = status;
+            this.notify('status-network-manager-permissions');
+        }
+
+        get statusStartup() {
+            // no need to do anything extra here
+            return this.#statusStartup;
+        }
+        set statusStartup(status) {
+            if (this.#statusStartup === status)
+                return;
+            this.#statusStartup = status;
+            this.notify('status-startup');
         }
 
         dbusListNames() {
