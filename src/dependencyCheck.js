@@ -70,6 +70,13 @@ export const DependencyCheck = GObject.registerClass(
                 3,
                 0,
             ),
+            'status-overall': GObject.ParamSpec.boolean(
+                'status-overall',
+                'status overall',
+                'Overall status for whether all dependencies are good',
+                GObject.ParamFlags.READWRITE,
+                false,
+            ),
         },
     },
     class DependencyCheck extends ErrorSignal {
@@ -100,6 +107,7 @@ export const DependencyCheck = GObject.registerClass(
                 return;
             this.#statusDbus = status;
             this.notify('status-dbus');
+            this.checkOverallStatus();
         }
 
         get statusFirewalldRunning() {
@@ -111,6 +119,7 @@ export const DependencyCheck = GObject.registerClass(
                 return;
             this.#statusFirewalldRunning = status;
             this.notify('status-firewalld-running');
+            this.checkOverallStatus();
         }
 
         get statusNetworkManagerRunning() {
@@ -122,6 +131,7 @@ export const DependencyCheck = GObject.registerClass(
                 return;
             this.#statusNetworkManagerRunning = status;
             this.notify('status-network-manager-running');
+            this.checkOverallStatus();
         }
 
         get statusNetworkManagerPermissions() {
@@ -133,6 +143,7 @@ export const DependencyCheck = GObject.registerClass(
                 return;
             this.#statusNetworkManagerPermissions = status;
             this.notify('status-network-manager-permissions');
+            this.checkOverallStatus();
         }
 
         get statusStartup() {
@@ -144,6 +155,21 @@ export const DependencyCheck = GObject.registerClass(
                 return;
             this.#statusStartup = status;
             this.notify('status-startup');
+            this.checkOverallStatus();
+        }
+
+        checkOverallStatus() {
+            this.statusOverall = (
+                this.checkComponentStatus(this.#statusDbus) &&
+                this.checkComponentStatus(this.#statusFirewalldRunning) &&
+                this.checkComponentStatus(this.#statusNetworkManagerRunning) &&
+                this.checkComponentStatus(this.#statusNetworkManagerPermissions) &&
+                this.checkComponentStatus(this.#statusStartup)
+            );
+        }
+
+        checkComponentStatus(component) {
+            return component === 1 || component === 2;
         }
 
         dbusListNames() {
