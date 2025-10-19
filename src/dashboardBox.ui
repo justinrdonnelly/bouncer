@@ -55,9 +55,10 @@
           </object> <!-- end GtkLabel -->
         </child>
         <child>
-          <object class="GtkButton">
+          <object class="GtkButton" id="monitorButton">
             <property name="halign">end</property>
             <property name="label" translatable="yes">Monitor</property>
+            <property name="sensitive">false</property> <!-- disabled by default -->
             <style>
               <class name="suggested-action"/>
             </style>
