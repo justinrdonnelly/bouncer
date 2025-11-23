@@ -4,7 +4,8 @@ Exec=@APP_ID@
 Icon=@APP_ID@
 Terminal=false
 Type=Application
-Categories=Settings;System;
+# Ordered by Main Categories, then Additional Categories
+Categories=Network;Settings;System;Security;
 # Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 Keywords=firewall;network;Wi-Fi;
 StartupNotify=true
