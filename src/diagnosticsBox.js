@@ -18,6 +18,9 @@ export const DiagnosticsBox = GObject.registerClass({
     GTypeName: 'DiagnosticsBox',
     Template: 'resource:///io/github/justinrdonnelly/bouncer/diagnosticsBox.ui',
     InternalChildren: ['listBox', 'monitorButton'],
+    Signals: {
+        'monitor-network': {},
+    },
 }, class DiagnosticsBox extends Gtk.Box {
     constructor(dependencyCheck) {
         super();
@@ -98,7 +101,7 @@ export const DiagnosticsBox = GObject.registerClass({
 
     // eslint-disable-next-line no-unused-vars
     async monitorButtonClicked(_button) {
-        console.log('HERE');
+        this.emit('monitor-network');
     }
 
 });

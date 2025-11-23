@@ -221,8 +221,9 @@ export const DependencyCheck = GObject.registerClass(
                         // Just swallow this error. There's nothing we can do.
                     }
                 }
-            } catch {
-                console.log('Error in dependency checks. Not performing first run logic.');
+            } catch (e) { // TODO: use the old logic (console.log) for my errors, this for other errors
+                console.error('Error in dependency checks. Not performing first run logic.');
+                console.error(e);
             }
         }
 

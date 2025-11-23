@@ -91,12 +91,7 @@ export const BouncerApplication = GObject.registerClass(
                     }
                 );
             } else {
-                this.#monitorNetwork()
-                    .catch((e) => {
-                    console.error('Unhandled error in main monitorNetwork. This is a bug!');
-                    console.error(e);
-                    }
-                );
+                this.monitorNetworkAndCatch();
             }
         }
 
@@ -136,20 +131,46 @@ export const BouncerApplication = GObject.registerClass(
             // We need to show the window right away (before `await`ing `this.#dependencyCheck.runChecks()`, or else
             // the application will exit
             const diagnosticsBox = new DiagnosticsBox(this.#dependencyCheck);
+            // v this needs to look like the monitorNetwork call commented out below
+            diagnosticsBox.connect('monitor-network', (this.monitorNetworkAndCatch.bind(this)));
+            // this works, but i need to think about this:
+            // 1. won't handle exceptions well
+            // 2. the button is still enabled even after start. might be nice to disable, and get a toast.
+            //
+            // Maybe it doesn't need the `catch`. All we actually do with that is log.
             this.#diagnosticsWindow = new BouncerWindow(this, diagnosticsBox);
             this.#diagnosticsWindow.connect('close-request', this.#handleDiagsWindowClose.bind(this));
             this.#diagnosticsWindow.present();
             await this.#dependencyCheck.runChecks();
         }
 
+        /*
+                this.#monitorNetwork()
+                    .catch((e) => {
+                    console.error('Unhandled error in main monitorNetwork. This is a bug!');
+                    console.error(e);
+                    }
+
+        */
+
+        monitorNetworkAndCatch() {
+            this.#monitorNetwork()
+                .catch((e) => {
+                console.error('Unhandled error in main monitorNetwork. This is a bug!');
+                console.error(e);
+                }
+            );
+        }
         // The monitorNetwork method will instantiate NetworkState and listen for its signals.
         async #monitorNetwork() {
             if (!this.#holding) {
                 this.hold();
                 this.#holding = true;
             }
+            // TODO: now that we can monitor the network from the diags window, it doesn't make sense to always run dependency checks again
+            // actually, all it's going to do is connect the signals. not sure why i get so much logging
             this.#instantiateDependencyCheck();
-            await this.#dependencyCheck.runChecks();
+            await this.#dependencyCheck.runChecks(); // oh, this is why. we probably don't want to always do this. although it doesn't really hurt anything
             try {
                 if (this.#connectionIdsSeen === null) {
                     this.#connectionIdsSeen = new ConnectionIdsSeen();
