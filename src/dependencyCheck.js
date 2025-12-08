@@ -99,7 +99,7 @@ export const DependencyCheck = GObject.registerClass(
                 await portal.request_background(
                     null,
                     _('Bouncer must start on login'),
-                    [config.APP_ID],
+                    [config.APP_ID, '--monitor'],
                     Xdp.BackgroundFlags.AUTOSTART,
                     null, // cancellable
                     // callback is N/A since we've used promisify
