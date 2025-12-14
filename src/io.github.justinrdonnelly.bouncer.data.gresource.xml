@@ -3,7 +3,7 @@
   <gresource prefix="/io/github/justinrdonnelly/bouncer">
     <file preprocess="xml-stripblanks">bouncerWindow.ui</file>
     <file preprocess="xml-stripblanks">chooseZoneBox.ui</file>
-    <file preprocess="xml-stripblanks">dashboardWindow.ui</file>
+    <file preprocess="xml-stripblanks">dashboardBox.ui</file>
     <file preprocess="xml-stripblanks">dependencyItem.ui</file>
     <file preprocess="xml-stripblanks">moreInfo.ui</file>
   </gresource>

@@ -8,7 +8,7 @@
     <file>chooseZoneBox.js</file>
     <file>config.js</file>
     <file>connectionIdsSeen.js</file>
-    <file>dashboardWindow.js</file>
+    <file>dashboardBox.js</file>
     <file>data.js</file>
     <file>dependencyCheck.js</file>
     <file>dependencyItem.js</file>

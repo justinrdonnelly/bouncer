@@ -1,4 +1,4 @@
-/* dashboardWindow.js
+/* dashboardBox.js
  *
  * Copyright 2025 Justin Donnelly
  *
@@ -10,17 +10,17 @@
  */
 
 import GObject from 'gi://GObject';
-import Adw from 'gi://Adw';
+import Gtk from 'gi://Gtk';
 
 import { DependencyItem } from './dependencyItem.js';
 
-export const DashboardWindow = GObject.registerClass({
-    GTypeName: 'DashboardWindow',
-    Template: 'resource:///io/github/justinrdonnelly/bouncer/dashboardWindow.ui',
+export const DashboardBox = GObject.registerClass({
+    GTypeName: 'DashboardBox',
+    Template: 'resource:///io/github/justinrdonnelly/bouncer/dashboardBox.ui',
     InternalChildren: ['listBox'],
-}, class DashboardWindow extends Adw.ApplicationWindow {
-    constructor(application, dependencyCheck) {
-        super({ application });
+}, class DashboardBox extends Gtk.Box {
+    constructor(dependencyCheck) {
+        super();
         let count = 0;
         let dependencyItem;
 
@@ -91,4 +91,3 @@ export const DashboardWindow = GObject.registerClass({
         this._listBox.insert(dependencyItem, count++);
     }
 });
-
