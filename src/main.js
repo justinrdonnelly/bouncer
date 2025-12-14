@@ -20,6 +20,7 @@ import { ChooseZoneWindow } from './chooseZoneWindow.js';
 import { config } from './config.js';
 import { ConnectionIdsSeen } from './connectionIdsSeen.js';
 import { DependencyCheck } from './dependencyCheck.js';
+import { DashboardWindow } from './dashboardWindow.js';
 import { NetworkState } from './networkState.js';
 import { ZoneForConnection } from './zoneForConnection.js';
 import { ZoneInfo } from './zoneInfo.js';
@@ -41,6 +42,7 @@ export const BouncerApplication = GObject.registerClass(
         #quitting = false;
         #chooseZoneWindow = null
         #dependencyCheck = null
+        #dashboardWindow = null
 
         constructor() {
             super({
@@ -71,13 +73,27 @@ export const BouncerApplication = GObject.registerClass(
         vfunc_command_line(gioApplicationCommandLine) {
             if (gioApplicationCommandLine.get_options_dict().contains('monitor')) {
                 console.log('Starting Bouncer in monitor mode.');
-            }
-            this.#monitorNetwork()
-                .catch((e) => {
-                console.error('Unhandled error in main init. This is a bug!');
-                console.error(e);
+                this.#monitorNetwork()
+                    .catch((e) => {
+                    console.error('Unhandled error in main init. This is a bug!');
+                    console.error(e);
+                    }
+                );
+            } else {
+                console.log('Starting Bouncer in dashboard mode.');
+                if (this.#dashboardWindow !== null) {
+                    console.error('Bouncer dashboard window is already showing.');
+                    return;
                 }
-            );
+                this.#dashboardWindow = new DashboardWindow(this);
+                this.#dashboardWindow.connect('close-request', this.#handleDashboardWindowClose.bind(this));
+                this.#dashboardWindow.present();
+            }
+        }
+
+        // eslint-disable-next-line no-unused-vars
+        #handleDashboardWindowClose(emittingObject) {
+            this.#dashboardWindow = null;
         }
 
         // The monitorNetwork method will instantiate NetworkState and listen for its signals.
