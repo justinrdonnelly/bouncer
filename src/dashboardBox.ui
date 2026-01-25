@@ -24,6 +24,14 @@
       </object>
     </child>
     <child>
+      <object class="GtkLabel">
+        <property name="xalign">0</property>
+        <property name="margin-bottom">12</property>
+        <property name="wrap">true</property>
+        <property name="label" translatable="yes">You can close this window at any time without affecting network monitoring.</property>
+      </object>
+    </child>
+    <child>
       <object class="GtkListBox" id="listBox">
         <property name="selection-mode">none</property>
         <style>
