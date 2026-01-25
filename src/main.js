@@ -74,12 +74,7 @@ export const BouncerApplication = GObject.registerClass(
         vfunc_command_line(gioApplicationCommandLine) {
             if (gioApplicationCommandLine.get_options_dict().contains('monitor')) {
                 console.log('Starting Bouncer in monitor mode.');
-                this.#monitorNetwork()
-                    .catch((e) => {
-                    console.error('Unhandled error in main init. This is a bug!');
-                    console.error(e);
-                    }
-                );
+                this.monitorNetworkAndCatch();
             } else {
                 console.log('Starting Bouncer in dashboard mode.');
                 this.#launchDashboard()
@@ -131,6 +126,15 @@ export const BouncerApplication = GObject.registerClass(
             this.#dashboardWindow.connect('close-request', this.#handleDashboardWindowClose.bind(this));
             this.#dashboardWindow.present();
             await this.#dependencyCheck.runChecks(false);
+        }
+
+        monitorNetworkAndCatch() {
+            this.#monitorNetwork()
+                .catch((e) => {
+                console.error('Unhandled error in main monitorNetwork. This is a bug!');
+                console.error(e);
+                }
+            );
         }
 
         // The monitorNetwork method will instantiate NetworkState and listen for its signals.
