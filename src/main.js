@@ -128,7 +128,7 @@ export const BouncerApplication = GObject.registerClass(
             this.#dashboardWindow = new DashboardWindow(this);
             this.#dashboardWindow.connect('close-request', this.#handleDashboardWindowClose.bind(this));
             this.#dashboardWindow.present();
-            await this.#dependencyCheck.runChecks();
+            await this.#dependencyCheck.runChecks(false);
         }
 
         // The monitorNetwork method will instantiate NetworkState and listen for its signals.
@@ -139,7 +139,7 @@ export const BouncerApplication = GObject.registerClass(
             this.hold();
             this.#monitoring = true;
             this.#instantiateDependencyCheck();
-            await this.#dependencyCheck.runChecks();
+            await this.#dependencyCheck.runChecks(true);
             try {
                 if (this.#connectionIdsSeen === null) {
                     this.#connectionIdsSeen = new ConnectionIdsSeen();

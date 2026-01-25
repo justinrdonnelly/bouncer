@@ -112,17 +112,17 @@ export const DependencyCheck = GObject.registerClass(
             });
         }
 
-        async runChecks() {
+        async runChecks(emit) {
             try {
                 const [firstRunData] = await Promise.all([
                     // All these methods must throw an error if they don't want first-run-setup-complete signal to be
                     // emitted (and the corresponding notification generated).
                     this.#data.getData(), // this will return null on the first run, true otherwise
-                    this.runOnStartup(),
-                    this.checkListNames(),
-                    this.checkFirewalld(),
-                    this.checkNetworkManagerRunning(),
-                    this.checkNetworkManagerPermissions(),
+                    this.runOnStartup(emit),
+                    this.checkListNames(emit),
+                    this.checkFirewalld(emit),
+                    this.checkNetworkManagerRunning(emit),
+                    this.checkNetworkManagerPermissions(emit),
                 ]);
                 if (firstRunData === null) {
                     this.emit('first-run-setup-complete');
@@ -139,7 +139,7 @@ export const DependencyCheck = GObject.registerClass(
         }
 
         // This is not really a dependency. But we need to run on startup to actually be useful.
-        async runOnStartup() {
+        async runOnStartup(emit) {
             try {
                 console.log('Configuring autostart');
                 const portal = new Xdp.Portal();
@@ -159,18 +159,20 @@ export const DependencyCheck = GObject.registerClass(
                 this.statusStartup = 3;
                 console.error('Error configuring autostart.');
                 console.error(e.message);
-                this.emitError(
-                    false,
-                    'dependency-error-autostart',
-                    _('Can\'t configure autostart'),
-                    _('Please make sure the portal is available from inside the flatpak sandbox. Please see logs for ' +
-                        'more information.')
-                );
+                if (emit) {
+                    this.emitError(
+                        false,
+                        'dependency-error-autostart',
+                        _('Can\'t configure autostart'),
+                        _('Please make sure the portal is available from inside the flatpak sandbox. Please see logs ' +
+                            'for more information.')
+                    );
+                }
                 throw e;
             }
         }
 
-        async checkListNames() {
+        async checkListNames(emit) {
             try {
                 const names = await this.#dbusNames;
                 if (names.length > 0) {
@@ -182,18 +184,20 @@ export const DependencyCheck = GObject.registerClass(
                 this.statusDbus = 3;
                 console.error('Error awaiting D-Bus names. This is likely a result of the ListNames method call.');
                 console.error(e.message);
-                this.emitError(
-                    true,
-                    'dependency-error-names',
-                    _('Can\'t find D-Bus names'),
-                    _('Please make sure D-Bus is installed, running, and available inside the flatpak sandbox. ' +
-                        'Please see logs for more information.')
-                );
+                if (emit) {
+                    this.emitError(
+                        true,
+                        'dependency-error-names',
+                        _('Can\'t find D-Bus names'),
+                        _('Please make sure D-Bus is installed, running, and available inside the flatpak sandbox. ' +
+                            'Please see logs for more information.')
+                    );
+                }
                 throw e;
             }
         }
 
-        async checkFirewalld() {
+        async checkFirewalld(emit) {
             // We have already handled any errors with #dbusNames. So we'll swallow those errors here. We wouldn't be
             // able to continue, so we'll just return.
             try {
@@ -211,13 +215,15 @@ export const DependencyCheck = GObject.registerClass(
             } else {
                 this.statusFirewalldRunning = 3;
                 console.error('Didn\'t see firewalld on D-Bus.');
-                this.emitError(
-                    true,
-                    'dependency-error-firewalld',
-                    _('Can\'t find firewalld'),
-                    _('Please make sure firewalld is installed, running, and available inside the flatpak sandbox. ' +
-                        'Please see logs for more information.')
-                );
+                if (emit) {
+                    this.emitError(
+                        true,
+                        'dependency-error-firewalld',
+                        _('Can\'t find firewalld'),
+                        _('Please make sure firewalld is installed, running, and available inside the flatpak ' +
+                            'sandbox. Please see logs for more information.')
+                    );
+                }
                 throw new Error('Firewalld not on D-Bus');
             }
 
@@ -229,13 +235,15 @@ export const DependencyCheck = GObject.registerClass(
             } catch (e) {
                 console.error('Can\'t get firewalld zones.');
                 console.error(e.message);
-                this.emitError(
-                    true,
-                    'dependency-error-firewalld',
-                    _('Can\'t get firewalld zones'),
-                    _('Unable to get firewalld zones. Please make sure firewalld permissions are correct, and are ' +
-                        'not restricted inside the flatpak sandbox. Please see logs for more information.')
-                );
+                if (emit) {
+                    this.emitError(
+                        true,
+                        'dependency-error-firewalld',
+                        _('Can\'t get firewalld zones'),
+                        _('Unable to get firewalld zones. Please make sure firewalld permissions are correct, and ' +
+                            'are not restricted inside the flatpak sandbox. Please see logs for more information.')
+                    );
+                }
                 throw e;
             }
             try {
@@ -244,18 +252,20 @@ export const DependencyCheck = GObject.registerClass(
             } catch (e) {
                 console.error('Can\'t get firewalld default zone.');
                 console.error(e.message);
-                this.emitError(
-                    true,
-                    'dependency-error-firewalld',
-                    _('Can\'t get firewalld default zone'),
-                    _('Unable to get firewalld default zone. Please make sure firewalld permissions are correct, and ' +
-                        'are not restricted inside the flatpak sandbox. Please see logs for more information.')
-                );
+                if (emit) {
+                    this.emitError(
+                        true,
+                        'dependency-error-firewalld',
+                        _('Can\'t get firewalld default zone'),
+                        _('Unable to get firewalld default zone. Please make sure firewalld permissions are correct, ' +
+                            'and are not restricted inside the flatpak sandbox. Please see logs for more information.')
+                    );
+                }
                 throw e;
             }
         }
 
-        async checkNetworkManagerRunning() {
+        async checkNetworkManagerRunning(emit) {
             // We have already handled any errors with #dbusNames. So we'll swallow those errors here. We wouldn't be
             // able to continue, so we'll just return.
             try {
@@ -273,18 +283,20 @@ export const DependencyCheck = GObject.registerClass(
             } else {
                 this.statusNetworkManagerRunning = 3;
                 console.error('Didn\'t see NetworkManager on D-Bus.');
-                this.emitError(
-                    true,
-                    'dependency-error-networkmanager',
-                    _('Can\'t find NetworkManager'),
-                    _('Please make sure NetworkManager is installed, running, and available inside the flatpak ' +
-                        'sandbox. Please see logs for more information.')
-                );
+                if (emit) {
+                    this.emitError(
+                        true,
+                        'dependency-error-networkmanager',
+                        _('Can\'t find NetworkManager'),
+                        _('Please make sure NetworkManager is installed, running, and available inside the flatpak ' +
+                            'sandbox. Please see logs for more information.')
+                    );
+                }
                 throw new Error('NetworkManager not on D-Bus');
             }
         }
 
-        async checkNetworkManagerPermissions() {
+        async checkNetworkManagerPermissions(emit) {
             console.log('Checking NetworkManager permissions.');
             // I can't seem to make this call without a callback (was hoping it would return a promise)
             const permissions = new Promise((resolve, reject) => {
@@ -323,36 +335,43 @@ export const DependencyCheck = GObject.registerClass(
                 case 'auth': // authorized, but requires polkit authentication
                     this.statusNetworkManagerPermissions = 2;
                     console.warn('Authentication required to change NetworkManager connection zone.');
-                    this.emitError(
-                        false,
-                        'dependency-error-networkmanager',
-                        _('Authentication required to change NetworkManager connection zone'),
-                        _('You are authorized to change the connection zone in NetworkManager, but will be required ' +
-                            'to authenticate. This will work, but may be annoying. Please see logs for more ' +
-                            'information.')
-                    );
+                    if (emit) {
+                        this.emitError(
+                            false,
+                            'dependency-error-networkmanager',
+                            _('Authentication required to change NetworkManager connection zone'),
+                            _('You are authorized to change the connection zone in NetworkManager, but will be ' +
+                                'required to authenticate. This will work, but may be annoying. Please see logs for ' +
+                                'more information.')
+                        );
+                    }
                     break; // Don't throw an error. Everything is basically OK.
                 case 'no': // not authorized
                     this.statusNetworkManagerPermissions = 3;
                     console.error('Not authorized to change NetworkManager connection zone.');
-                    this.emitError(
-                        true,
-                        'dependency-error-networkmanager',
-                        _('Not authorized to change NetworkManager connection zone'),
-                        _('You are not authorized to change the connection zone in NetworkManager. This is required ' +
-                            'for Bouncer to function properly. Please see logs for more information.')
-                    );
+                    if (emit) {
+                        this.emitError(
+                            true,
+                            'dependency-error-networkmanager',
+                            _('Not authorized to change NetworkManager connection zone'),
+                            _('You are not authorized to change the connection zone in NetworkManager. This is ' +
+                                'required for Bouncer to function properly. Please see logs for more information.')
+                        );
+                    }
                     throw new Error('Not authorized to change NetworkManager');
                 default:
                     this.statusNetworkManagerPermissions = 3;
                     console.error(`Unexpected result from NetworkManager GetSettings: ${modifyPermission}`);
-                    this.emitError(
-                        false,
-                        'dependency-error-networkmanager',
-                        _('Unexpected result from NetworkManager GetSettings: ') + modifyPermission,
-                        _('Unable to determine whether you are authorized to change the connection zone in ' +
-                            'NetworkManager. Bouncer may not function properly. Please see logs for more information.')
-                    );
+                    if (emit) {
+                        this.emitError(
+                            false,
+                            'dependency-error-networkmanager',
+                            _('Unexpected result from NetworkManager GetSettings: ') + modifyPermission,
+                            _('Unable to determine whether you are authorized to change the connection zone in ' +
+                                'NetworkManager. Bouncer may not function properly. Please see logs for more ' +
+                                'information.')
+                        );
+                    }
                     throw new Error('Unexpected result from NetworkManager GetSettings');
             }
         }
