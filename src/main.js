@@ -101,11 +101,11 @@ export const BouncerApplication = GObject.registerClass(
                 this.#dependencyCheck.connect('first-run-setup-complete', this.#handleFirstRunSignal.bind(this));
             } catch (e) {
                 // This should really never happen. DependencyCheck is full of `try/catch`es, so exceptions shouldn't
-                // get this far. Since we don't know how this happened, we'll log it, continue, and hope for the best.
+                // get this far. Since we don't know how this happened, we'll log it, and quit.
                 console.error('Error in dependency check.');
                 console.error(e.message);
                 this.#handleError(
-                    false,
+                    true,
                     'main-dependency-unknown-error',
                     _('Unknown error'),
                     _('An unknown error occurred. Bouncer may not function correctly. Please see logs for more ' +
