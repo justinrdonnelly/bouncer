@@ -66,6 +66,7 @@ export const BouncerApplication = GObject.registerClass(
             promisify();
             this.#createAboutAction();
             this.#handleSignals();
+            this.#instantiateDependencyCheck();
             return super.vfunc_startup();
         }
 
@@ -118,7 +119,6 @@ export const BouncerApplication = GObject.registerClass(
                 console.log('Bouncer dashboard window is already showing.');
                 return;
             }
-            this.#instantiateDependencyCheck();
             // We need to show the window right away (before `await`ing `this.#dependencyCheck.runChecks()`, or else
             // the application will exit
             const dashboardBox = new DashboardBox(this.#dependencyCheck);
@@ -144,7 +144,6 @@ export const BouncerApplication = GObject.registerClass(
             }
             this.hold();
             this.#monitoring = true;
-            this.#instantiateDependencyCheck();
             await this.#dependencyCheck.runChecks(true);
             try {
                 if (this.#connectionIdsSeen === null) {
