@@ -137,7 +137,8 @@ export const BouncerApplication = GObject.registerClass(
             );
         }
 
-        // The monitorNetwork method will instantiate NetworkState and listen for its signals.
+        // The monitorNetwork method will instantiate NetworkState and listen for its signals. If we're already
+        // monitoring, this will be a no-op.
         async #monitorNetwork() {
             if (this.#monitoring) {
                 return;
@@ -155,12 +156,16 @@ export const BouncerApplication = GObject.registerClass(
                 console.error('Unable to initialize ConnectionIdsSeen.');
                 console.error(e.message);
                 this.#handleError(
-                    true,
+                    false,
                     'main-connection-ids',
                     _('Can\'t find previously seen connections'),
                     _('There was a problem determining which connections have already been seen. Please see logs for ' +
                         'more information.')
                 );
+                // clean up
+                this.#connectionIdsSeen = null
+                this.release();
+                this.#monitoring = false;
             }
 
             try {
@@ -174,11 +179,17 @@ export const BouncerApplication = GObject.registerClass(
                 console.error('Unable to initialize NetworkState.');
                 console.error(e.message);
                 this.#handleError(
-                    true,
+                    false,
                     'main-network-state',
                     _('Can\'t determine network state'),
                     _('There was a problem tracking network connection changes. Please see logs for more information.')
                 );
+                // clean up
+                this.#connectionIdsSeen = null
+                this.#networkState?.destroy();
+                this.#networkState = null
+                this.release();
+                this.#monitoring = false;
             }
         } // end monitorNetwork
 
