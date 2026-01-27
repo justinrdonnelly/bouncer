@@ -17,10 +17,17 @@ import { DependencyItem } from './dependencyItem.js';
 export const DashboardBox = GObject.registerClass({
     GTypeName: 'DashboardBox',
     Template: 'resource:///io/github/justinrdonnelly/bouncer/dashboardBox.ui',
-    InternalChildren: ['listBox', 'monitorButton'],
+    InternalChildren: ['listBox', 'monitorButton', 'labelNotMonitoring', 'labelMonitoring'],
+    Signals: {
+        'monitor-network': {},
+    },
 }, class DashboardBox extends Gtk.Box {
-    constructor(dependencyCheck) {
+    #monitoring;
+    #statusOverall;
+
+    constructor(dependencyCheck, monitoring) {
         super();
+        this.#monitoring = monitoring;
         let count = 0;
         let dependencyItem;
 
@@ -90,18 +97,48 @@ export const DashboardBox = GObject.registerClass({
         );
         this._listBox.insert(dependencyItem, count++);
 
-        // bind button sensitive (enabled) to dependencyCheck
-        dependencyCheck.bind_property(
-            'status-overall',
-            this._monitorButton,
-            'sensitive',
-            GObject.BindingFlags.SYNC_CREATE
+        // when the dependencyCheck status-overall property changes, update the "monitor" portion
+        dependencyCheck.connect(
+            'notify::status-overall',
+            // eslint-disable-next-line no-unused-vars
+            (object, _pspec) => {
+                // we could bind #statusOverall directly, but we'd still need to listen to the 'notify::status-overall'
+                // signal so we can call #handleMonitoringRow
+                this.#statusOverall = object.statusOverall;
+                this.#handleMonitoringRow();
+            }
         );
+        this.#handleMonitoringRow();
+    } // end constructor
+
+    #handleMonitoringRow() {
+        console.log('Updating dashboard monitoring row');
+        if (this.#monitoring) { // already monitoring, disable button and show correct text
+            this._monitorButton.sensitive = false;
+            this._labelNotMonitoring.visible = false;
+            this._labelMonitoring.visible = true;
+            return;
+        }
+        // We're not monitoring. Show the correct text.
+        this._labelNotMonitoring.visible = true;
+        this._labelMonitoring.visible = false;
+        if (this.#statusOverall) { // overall status is ready to go
+            this._monitorButton.sensitive = true;
+        } else { // overall status is not ready to go
+            this._monitorButton.sensitive = false;
+        }
+    }
+
+    beginMonitoring() {
+        console.log('Dashboard now knows Bouncer is monitoring');
+        this.#monitoring = true;
+        this.#handleMonitoringRow();
     }
 
     // eslint-disable-next-line no-unused-vars
     async monitorButtonClicked(_button) {
-        console.log('HERE');
+        console.log('Beginning monitoring from dashboard');
+        this.emit('monitor-network');
     }
 
 });

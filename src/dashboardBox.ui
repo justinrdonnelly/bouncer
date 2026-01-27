@@ -47,11 +47,21 @@
         <property name="margin-top">12</property>
         <property name="margin-bottom">12</property> <!-- add some extra margin since this is on the bottom of the window -->
         <child>
-          <object class="GtkLabel">
+          <object class="GtkLabel" id="labelNotMonitoring">
+            <property name="visible">True</property>
             <property name="xalign">0</property>
             <property name="wrap">true</property>
             <property name="hexpand">true</property>
             <property name="label" translatable="yes">Once everything is ready, click to begin using Bouncer.</property>
+          </object> <!-- end GtkLabel -->
+        </child>
+        <child>
+          <object class="GtkLabel" id="labelMonitoring">
+            <property name="visible">False</property>
+            <property name="xalign">0</property>
+            <property name="wrap">true</property>
+            <property name="hexpand">true</property>
+            <property name="label" translatable="yes">Bouncer is monitoring your Wi-Fi!</property>
           </object> <!-- end GtkLabel -->
         </child>
         <child>

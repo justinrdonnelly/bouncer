@@ -121,7 +121,8 @@ export const BouncerApplication = GObject.registerClass(
             }
             // We need to show the window right away (before `await`ing `this.#dependencyCheck.runChecks()`, or else
             // the application will exit
-            const dashboardBox = new DashboardBox(this.#dependencyCheck);
+            const dashboardBox = new DashboardBox(this.#dependencyCheck, this.#monitoring);
+            dashboardBox.connect('monitor-network', this.monitorNetworkAndCatch.bind(this));
             this.#dashboardWindow = new BouncerWindow(this, dashboardBox);
             this.#dashboardWindow.connect('close-request', this.#handleDashboardWindowClose.bind(this));
             this.#dashboardWindow.present();
@@ -145,7 +146,9 @@ export const BouncerApplication = GObject.registerClass(
             }
             this.hold();
             this.#monitoring = true;
-            await this.#dependencyCheck.runChecks(true);
+            // do not emit (which is fatal) when the dashboard is open
+            const emit = this.#dashboardWindow === null;
+            await this.#dependencyCheck.runChecks(emit);
             try {
                 if (this.#connectionIdsSeen === null) {
                     this.#connectionIdsSeen = new ConnectionIdsSeen();
@@ -173,6 +176,8 @@ export const BouncerApplication = GObject.registerClass(
                     this.#networkState = new NetworkState();
                     this.#networkState.connect('error', this.#handleErrorSignal.bind(this));
                     this.#networkState.connect('connection-changed', this.#handleConnectionChangedSignal.bind(this));
+                    // if the dashboard is open, tell it that we've begun monitoring
+                    this.#dashboardWindow?.content.beginMonitoring();
                 }
             } catch (e) {
                 // Bail out here... There's nothing we can do without NetworkState.
