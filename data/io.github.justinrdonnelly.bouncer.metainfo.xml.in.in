@@ -42,6 +42,10 @@
       <image>https://raw.githubusercontent.com/justinrdonnelly/bouncer/7c7d0afea25a338361dad42f29d3433970798961/screenshots/bouncer-choose-zone-light.png</image>
       <caption>Bouncer prompting for the type of network</caption>
     </screenshot>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/justinrdonnelly/bouncer/dfee30ba33a44031c2e4fad0a4cd796d91554ab4/screenshots/bouncer-dashboard-light.png</image>
+      <caption>Bouncer dashboard showing configuration status</caption>
+    </screenshot>
   </screenshots>
   <branding>
     <color type="primary" scheme_preference="light">#b4a8de</color>
