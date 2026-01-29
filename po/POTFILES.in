@@ -1,8 +1,12 @@
 data/io.github.justinrdonnelly.bouncer.desktop.in.in
 data/io.github.justinrdonnelly.bouncer.gschema.xml.in
 data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in
-src/chooseZoneWindow.ui
+src/bouncerWindow.ui
+src/chooseZoneBox.ui
+src/dashboardBox.js
+src/dashboardBox.ui
 src/dependencyCheck.js
+src/dependencyItem.ui
 src/main.js
 src/moreInfo.ui
 src/networkState.js

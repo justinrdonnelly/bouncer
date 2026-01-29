@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Bouncer 49\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-09 19:10-0400\n"
+"POT-Creation-Date: 2026-01-28 21:01-0500\n"
 "PO-Revision-Date: 2025-09-22 18:34+0300\n"
 "Last-Translator: Vlad Lee <vladleegit@proton.me>\n"
 "Language-Team: Russian\n"
@@ -26,7 +26,7 @@ msgid "@APP_NAME@"
 msgstr "@APP_NAME@"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/io.github.justinrdonnelly.bouncer.desktop.in.in:9
+#: data/io.github.justinrdonnelly.bouncer.desktop.in.in:10
 msgid "firewall;network;Wi-Fi;"
 msgstr "firewall;network;Wi-Fi;"
 
@@ -60,13 +60,10 @@ msgstr ""
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:15
 msgid ""
 "Additional setup is required after installation. See the applicable section "
-"for your distribution. Once the setup is done, start Bouncer manually to "
-"enable autostart. After that, it will start automatically when you log in."
+"for your distribution. Once the setup is done, start Bouncer and confirm "
+"your system is configured correctly. Then click the Monitor button to begin "
+"using Bouncer. After that, it will start automatically when you log in."
 msgstr ""
-"Требуется дополнительная настройка. Обратитесь к соответствующему разделу "
-"для вашего дистрибутива. После завершения настройки запустите Bouncer "
-"вручную для активации автозапуска. В дальнейшем программа будет запускаться "
-"автоматически при входе в систему."
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:16
 msgid "Fedora"
@@ -74,13 +71,9 @@ msgstr "Fedora"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:18
 msgid ""
-"For Fedora, everything just works! Just remember to start Bouncer manually "
-"once to enable autostart. You should see a notification indicating your "
-"system is correctly configured for Bouncer."
+"For Fedora, everything just works! Just start Bouncer to confirm, and click "
+"the Monitor button to begin using Bouncer."
 msgstr ""
-"В Fedora всё работает из коробки! Помните, чтобы активировать автозагрузку, "
-"вам необходимо запустить Bouncer вручную один раз. Вы увидите уведомление, "
-"указывающее на корректную настройку системы для работы с Bouncer."
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:20
 msgid "Ubuntu"
@@ -118,12 +111,9 @@ msgstr ""
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:25
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:31
 msgid ""
-"Start Bouncer manually once to enable autostart. You should see a "
-"notification indicating your system is correctly configured for Bouncer."
+"Start Bouncer and confirm your system is configured correctly. Then click "
+"the Monitor button to begin using Bouncer."
 msgstr ""
-"Для активации автозагрузки запустите Bouncer вручную. Вы увидите "
-"уведомление, указывающее на корректную настройку системы для работы с "
-"Bouncer."
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:27
 msgid "Debian"
@@ -134,32 +124,69 @@ msgid "Bouncer prompting for the type of network"
 msgstr "Теперь Bouncer запрашивает тип сети"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:54
+msgid "Include additional desktop categories"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:55
+msgid "Support command line arguments"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:62
+msgid "Added Russian translation"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:63
+#, fuzzy
+msgid "Fixed metainfo formatting"
+msgstr "Получить дополнительную информацию."
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:70
+msgid "Added Occitan translation"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:71
+msgid "Added Simplified Chinese translation"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:72
+msgid "Fixed multiple instance support"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:73
+msgid "Use GNOME 49 runtime"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:80
 msgid "Critical bug fix for non-English language users"
 msgstr ""
 "Исправлена критическая ошибка для пользователей, не использующих английскую "
 "локализацию"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:55
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:81
 msgid "Added Dutch translation"
 msgstr "Добавлен перевод на Голландский язык"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:56
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:82
 msgid "Documentation cleanups"
 msgstr "Подчищена документация"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:62
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:88
 msgid "Include a notification for first run success"
 msgstr "Добавлено уведомление при первом успешном запуске"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:67
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:93
 msgid "Initial release"
 msgstr "Первичный релиз"
 
-#: src/chooseZoneWindow.ui:27
+#: src/bouncerWindow.ui:27
 msgid "Menu"
 msgstr "Меню"
 
-#: src/chooseZoneWindow.ui:61
+#: src/bouncerWindow.ui:54
+msgid "_About Bouncer"
+msgstr "_О Bouncer"
+
+#: src/chooseZoneBox.ui:25
 msgid ""
 "You have connected to a new Wi-Fi network. Please choose a firewall zone. "
 "What type of network is this?"
@@ -167,46 +194,46 @@ msgstr ""
 "Вы подключились к новой сети Wi-Fi. Пожалуйста, выберите зону брандмауэра. "
 "Что это за сеть?"
 
-#: src/chooseZoneWindow.ui:77
+#: src/chooseZoneBox.ui:41
 msgid "Network"
 msgstr "Сеть"
 
-#: src/chooseZoneWindow.ui:86
+#: src/chooseZoneBox.ui:50
 msgid "Default Zone"
 msgstr "Зона по умолчанию"
 
-#: src/chooseZoneWindow.ui:95
+#: src/chooseZoneBox.ui:59
 msgid "Current Zone"
 msgstr "Текущая зона"
 
 #. make the dropdown not span the entire box
-#: src/chooseZoneWindow.ui:111
+#: src/chooseZoneBox.ui:75
 msgid "Firewall Zone"
 msgstr "Зона брандмауэра"
 
-#: src/chooseZoneWindow.ui:112
+#: src/chooseZoneBox.ui:76
 msgid "Choose the firewall zone for this network."
 msgstr "Выберите зону брандмауэра для этой сети."
 
-#: src/chooseZoneWindow.ui:115
+#: src/chooseZoneBox.ui:79
 msgid "Zone"
 msgstr "Зона"
 
-#: src/chooseZoneWindow.ui:134
+#: src/chooseZoneBox.ui:98
 msgid "Help"
 msgstr "Помощь"
 
 #. min width
-#: src/chooseZoneWindow.ui:146
+#: src/chooseZoneBox.ui:110
 msgid "Get more information."
 msgstr "Получить дополнительную информацию."
 
-#: src/chooseZoneWindow.ui:161
+#: src/chooseZoneBox.ui:125
 msgid "Exit"
 msgstr "Выйти"
 
 #. min width
-#: src/chooseZoneWindow.ui:173
+#: src/chooseZoneBox.ui:137
 msgid ""
 "No change will be made. You will see this window again the next time you "
 "connect to this network."
@@ -214,12 +241,12 @@ msgstr ""
 "Изменения не будут внесены. Вы снова увидите это окно при повторном "
 "подключении к данной сети."
 
-#: src/chooseZoneWindow.ui:188
+#: src/chooseZoneBox.ui:152
 msgid "Choose"
 msgstr "Выбрать"
 
 #. min width
-#: src/chooseZoneWindow.ui:203
+#: src/chooseZoneBox.ui:167
 msgid ""
 "The selected firewall zone will be used every time you connect to this "
 "network."
@@ -227,19 +254,59 @@ msgstr ""
 "Указанная зона брандмауэра будет использоваться при каждом подключении к "
 "данной сети."
 
-#: src/chooseZoneWindow.ui:219
-msgid "_About Bouncer"
-msgstr "_О Bouncer"
+#: src/dashboardBox.js:36
+msgid "D-Bus"
+msgstr ""
 
-#: src/dependencyCheck.js:102
+#: src/dashboardBox.js:52
+msgid "firewalld Running"
+msgstr ""
+
+#: src/dashboardBox.js:68
+msgid "NetworkManager Running"
+msgstr ""
+
+#: src/dashboardBox.js:84
+msgid "NetworkManager Permissions"
+msgstr ""
+
+#: src/dashboardBox.js:93
+msgid "Run on Startup"
+msgstr ""
+
+#: src/dashboardBox.ui:23
+msgid ""
+"In order to function properly, Bouncer depends on multiple other system "
+"components and configurations. To help facilitate the correct setup, this "
+"page shows the status for those required components and configurations."
+msgstr ""
+
+#: src/dashboardBox.ui:31
+msgid ""
+"You can close this window at any time without affecting network monitoring."
+msgstr ""
+
+#: src/dashboardBox.ui:55
+msgid "Once everything is ready, click to begin using Bouncer."
+msgstr ""
+
+#: src/dashboardBox.ui:64
+msgid "Bouncer is monitoring your Wi-Fi!"
+msgstr ""
+
+#: src/dashboardBox.ui:70
+msgid "Monitor"
+msgstr ""
+
+#: src/dependencyCheck.js:237
 msgid "Bouncer must start on login"
 msgstr "Bouncer должен запускаться при входе в систему"
 
-#: src/dependencyCheck.js:114
+#: src/dependencyCheck.js:254
 msgid "Can't configure autostart"
 msgstr "Невозможно настроить автозапуск"
 
-#: src/dependencyCheck.js:115
+#: src/dependencyCheck.js:255
 msgid ""
 "Please make sure the portal is available from inside the flatpak sandbox. "
 "Please see logs for more information."
@@ -247,11 +314,11 @@ msgstr ""
 "Пожалуйста, убедитесь, что портал доступен из песочницы flatpak. Обратитесь "
 "к логам, чтобы получить дополнительную информацию."
 
-#: src/dependencyCheck.js:131
+#: src/dependencyCheck.js:279
 msgid "Can't find D-Bus names"
 msgstr "Имена D-Bus не найдены"
 
-#: src/dependencyCheck.js:132
+#: src/dependencyCheck.js:280
 msgid ""
 "Please make sure D-Bus is installed, running, and available inside the "
 "flatpak sandbox. Please see logs for more information."
@@ -259,11 +326,11 @@ msgstr ""
 "Пожалуйста, убедитесь, что D-Bus установлен, запущен и доступен из песочницы "
 "flatpak. Обратитесь к логам, чтобы получить дополнительную информацию."
 
-#: src/dependencyCheck.js:157
+#: src/dependencyCheck.js:310
 msgid "Can't find firewalld"
 msgstr "firewalld не найден"
 
-#: src/dependencyCheck.js:158
+#: src/dependencyCheck.js:311
 msgid ""
 "Please make sure firewalld is installed, running, and available inside the "
 "flatpak sandbox. Please see logs for more information."
@@ -272,11 +339,11 @@ msgstr ""
 "песочницы flatpak. Обратитесь к логам, чтобы получить дополнительную "
 "информацию."
 
-#: src/dependencyCheck.js:175
+#: src/dependencyCheck.js:330
 msgid "Can't get firewalld zones"
 msgstr "Не удалось получить зоны firewalld"
 
-#: src/dependencyCheck.js:176
+#: src/dependencyCheck.js:331
 msgid ""
 "Unable to get firewalld zones. Please make sure firewalld permissions are "
 "correct, and are not restricted inside the flatpak sandbox. Please see logs "
@@ -286,11 +353,11 @@ msgstr ""
 "firewalld выданы корректные разрешения, а внутри песочницы flatpak нет "
 "ограничений. Обратитесь к логам, чтобы получить дополнительную информацию."
 
-#: src/dependencyCheck.js:190
+#: src/dependencyCheck.js:347
 msgid "Can't get firewalld default zone"
 msgstr "Не удалось получить зону firewalld по умолчанию"
 
-#: src/dependencyCheck.js:191
+#: src/dependencyCheck.js:348
 msgid ""
 "Unable to get firewalld default zone. Please make sure firewalld permissions "
 "are correct, and are not restricted inside the flatpak sandbox. Please see "
@@ -300,11 +367,11 @@ msgstr ""
 "что firewalld выданы корректные разрешения, а внутри песочницы flatpak нет "
 "ограничений. Обратитесь к логам, чтобы получить дополнительную информацию."
 
-#: src/dependencyCheck.js:216
+#: src/dependencyCheck.js:378
 msgid "Can't find NetworkManager"
 msgstr "NetworkManager не найден"
 
-#: src/dependencyCheck.js:217
+#: src/dependencyCheck.js:379
 msgid ""
 "Please make sure NetworkManager is installed, running, and available inside "
 "the flatpak sandbox. Please see logs for more information."
@@ -313,11 +380,11 @@ msgstr ""
 "песочницы flatpak. Обратитесь к логам, чтобы получить дополнительную "
 "информацию."
 
-#: src/dependencyCheck.js:263
+#: src/dependencyCheck.js:430
 msgid "Authentication required to change NetworkManager connection zone"
 msgstr "Для изменения зоны подключения NetworkManager требуется аутентификация"
 
-#: src/dependencyCheck.js:264
+#: src/dependencyCheck.js:431
 msgid ""
 "You are authorized to change the connection zone in NetworkManager, but will "
 "be required to authenticate. This will work, but may be annoying. Please see "
@@ -328,11 +395,11 @@ msgstr ""
 "оказаться неудобным. Обратитесь к логам, чтобы получить дополнительную "
 "информацию."
 
-#: src/dependencyCheck.js:274
+#: src/dependencyCheck.js:444
 msgid "Not authorized to change NetworkManager connection zone"
 msgstr "У вас нет прав для изменения зоны подключения NetworkManager"
 
-#: src/dependencyCheck.js:275
+#: src/dependencyCheck.js:445
 msgid ""
 "You are not authorized to change the connection zone in NetworkManager. This "
 "is required for Bouncer to function properly. Please see logs for more "
@@ -342,11 +409,11 @@ msgstr ""
 "для корректной работы Bouncer. Обратитесь к логам, чтобы получить "
 "дополнительную информацию."
 
-#: src/dependencyCheck.js:284
+#: src/dependencyCheck.js:457
 msgid "Unexpected result from NetworkManager GetSettings: "
 msgstr "NetworkManager GetSettings вернул неожиданный результат:"
 
-#: src/dependencyCheck.js:285
+#: src/dependencyCheck.js:458
 msgid ""
 "Unable to determine whether you are authorized to change the connection zone "
 "in NetworkManager. Bouncer may not function properly. Please see logs for "
@@ -356,8 +423,52 @@ msgstr ""
 "NetworkManager. Bouncer может работать неправильно. Обратитесь к логам, "
 "чтобы получить дополнительную информацию."
 
+#: src/dependencyItem.ui:23
+msgid "Check Status"
+msgstr ""
+
+#: src/main.js:58
+msgid "Monitor Wi-Fi connections in the background"
+msgstr ""
+
+#: src/main.js:110
+msgid "Unknown error"
+msgstr "Неизвестная ошибка"
+
+#: src/main.js:111
+msgid ""
+"An unknown error occurred. Bouncer may not function correctly. Please see "
+"logs for more information."
+msgstr ""
+"Произошла неизвестная ошибка. Bouncer может работать некорректно. Обратитесь "
+"к логам, чтобы получить дополнительную информацию."
+
+#: src/main.js:164
+msgid "Can't find previously seen connections"
+msgstr "Не удалось найти установленные ранее подключения"
+
+#: src/main.js:165
+msgid ""
+"There was a problem determining which connections have already been seen. "
+"Please see logs for more information."
+msgstr ""
+"Возникла проблема с определением установленных ранее подключений. Обратитесь "
+"к логам, чтобы получить дополнительную информацию."
+
+#: src/main.js:189
+msgid "Can't determine network state"
+msgstr "Не удалось определить состояние сети"
+
+#: src/main.js:190
+msgid ""
+"There was a problem tracking network connection changes. Please see logs for "
+"more information."
+msgstr ""
+"Возникла проблема с отслеживанием изменений сетевых подключений. Обратитесь "
+"к логам, чтобы получить дополнительную информацию."
+
 #. details
-#: src/main.js:62
+#: src/main.js:212
 msgid ""
 "Bouncer is an application to help you choose the correct firewall zone for "
 "wireless connections. When you connect to a new network, Bouncer will open a "
@@ -373,55 +484,19 @@ msgstr ""
 
 #. Translators: Replace 'translator-credits' with your name/username, and optionally an email or
 #. URL.
-#: src/main.js:74
+#: src/main.js:224
 msgid "translator-credits"
 msgstr "Vladislav Lishchenko <vladleegit@proton.me>"
 
-#: src/main.js:117
-msgid "Unknown error"
-msgstr "Неизвестная ошибка"
-
-#: src/main.js:118
-msgid ""
-"An unknown error occurred. Bouncer may not function correctly. Please see "
-"logs for more information."
-msgstr ""
-"Произошла неизвестная ошибка. Bouncer может работать некорректно. Обратитесь "
-"к логам, чтобы получить дополнительную информацию."
-
-#: src/main.js:131
-msgid "Can't find previously seen connections"
-msgstr "Не удалось найти установленные ранее подключения"
-
-#: src/main.js:132
-msgid ""
-"There was a problem determining which connections have already been seen. "
-"Please see logs for more information."
-msgstr ""
-"Возникла проблема с определением установленных ранее подключений. Обратитесь "
-"к логам, чтобы получить дополнительную информацию."
-
-#: src/main.js:148
-msgid "Can't determine network state"
-msgstr "Не удалось определить состояние сети"
-
-#: src/main.js:149
-msgid ""
-"There was a problem tracking network connection changes. Please see logs for "
-"more information."
-msgstr ""
-"Возникла проблема с отслеживанием изменений сетевых подключений. Обратитесь "
-"к логам, чтобы получить дополнительную информацию."
-
-#: src/main.js:163
+#: src/main.js:253
 msgid " Bouncer is shutting down. You will need to restart manually."
 msgstr "Bouncer завершил работу. Вам потребуется перезапустить его вручную."
 
-#: src/main.js:176
+#: src/main.js:266
 msgid "First run setup complete!"
 msgstr "Первичная настройка завершена!"
 
-#: src/main.js:177
+#: src/main.js:267
 msgid ""
 "Your system is correctly configured for Bouncer. Bouncer will autostart on "
 "each login and will open when you connect to a new Wi-Fi network."
@@ -429,11 +504,11 @@ msgstr ""
 "Ваша система корректно настроена. Bouncer будет автоматически запускаться с "
 "каждым входом в систему и появляться при подключении к новой сети Wi-Fi."
 
-#: src/main.js:211
+#: src/main.js:301
 msgid "Can't prompt for firewall zone"
 msgstr "Невозможно выбрать зону брандмауэра"
 
-#: src/main.js:212
+#: src/main.js:302
 msgid ""
 "There was a problem getting information to prompt for the firewall zone. "
 "Please see logs for more information."
@@ -441,11 +516,11 @@ msgstr ""
 "Возникла проблема с получением информации для выбора зоны брандмауэра. "
 "Обратитесь к логам, чтобы получить дополнительную информацию."
 
-#: src/main.js:262
+#: src/main.js:355
 msgid "Can't add connection to seen connections"
 msgstr "Не удалось добавить подключение в список известных подключений"
 
-#: src/main.js:263
+#: src/main.js:356
 msgid ""
 "There was a problem adding the connection to the list of seen connections. "
 "The firewall zone will not be set for this connection. Please see logs for "
@@ -455,11 +530,11 @@ msgstr ""
 "Зона брандмауэра не будет установлена. Обратитесь к логам, чтобы получить "
 "дополнительную информацию."
 
-#: src/main.js:278
+#: src/main.js:371
 msgid "Can't set firewall zone for connection"
 msgstr "Не удалось установить зону брандмауэра для подключения"
 
-#: src/main.js:279
+#: src/main.js:372
 msgid ""
 "There was a problem setting the firewall zone for the connection. Please see "
 "logs for more information."
@@ -467,11 +542,11 @@ msgstr ""
 "Возникла проблема с установкой зоны брандмауэра для подключения. Обратитесь "
 "к логам, чтобы получить дополнительную информацию."
 
-#: src/main.js:294
+#: src/main.js:387
 msgid "Can't save connection to seen connections"
 msgstr "Не удалось сохранить подключение в список известных подключений"
 
-#: src/main.js:295
+#: src/main.js:388
 msgid ""
 "The zone has been set for the connection, but there was a problem saving the "
 "updated list of seen connections to disk. Once you restart Bouncer, you will "
@@ -483,12 +558,12 @@ msgstr ""
 "снова нужно будет выбрать зону брандмауэра для этого подключения. Обратитесь "
 "к логам, чтобы получить дополнительную информацию."
 
-#: src/main.js:305
+#: src/main.js:398
 msgid "Firewall zone set for connection: "
 msgstr "Зона брандмауэра установлена для подключения:"
 
 #. this is the default zone
-#: src/main.js:307
+#: src/main.js:400
 msgid ""
 "Firewall zone for this connection has been set to the default zone "
 "(currently "
@@ -496,7 +571,7 @@ msgstr ""
 "Зона брандмауэра для этого подключения была установлена в качестве зоны по "
 "умолчанию (на данный момент"
 
-#: src/main.js:308
+#: src/main.js:401
 msgid ""
 "). Whenever you connect to this network in the future, the firewall zone "
 "will automatically be changed to the default zone."
@@ -504,11 +579,11 @@ msgstr ""
 "). В будущем при подключении к данной сети, зона брандмауэра будет "
 "автоматически изменена на зону по умолчанию."
 
-#: src/main.js:312
+#: src/main.js:405
 msgid "Firewall zone for this connection has been set to "
 msgstr "Для данного подключения была установлена зона:"
 
-#: src/main.js:312
+#: src/main.js:405
 msgid ""
 ". Whenever you connect to this network in the future, the firewall zone will "
 "automatically be changed to "
@@ -516,7 +591,7 @@ msgstr ""
 ". В будущем при подключении к данной сети, зона брандмауэра будет "
 "автоматически изменена на "
 
-#: src/main.js:314
+#: src/main.js:407
 msgid "."
 msgstr "."
 
@@ -583,3 +658,31 @@ msgstr ""
 "Bouncer столкнулся с ошибкой при определении состояния сети. Это необходимо "
 "для корректной работы приложения. Обратитесь к логам, чтобы получить "
 "дополнительную информацию."
+
+#~ msgid ""
+#~ "Additional setup is required after installation. See the applicable section "
+#~ "for your distribution. Once the setup is done, start Bouncer manually to "
+#~ "enable autostart. After that, it will start automatically when you log in."
+#~ msgstr ""
+#~ "Требуется дополнительная настройка. Обратитесь к соответствующему разделу "
+#~ "для вашего дистрибутива. После завершения настройки запустите Bouncer "
+#~ "вручную для активации автозапуска. В дальнейшем программа будет запускаться "
+#~ "автоматически при входе в систему."
+
+#~ msgid ""
+#~ "For Fedora, everything just works! Just remember to start Bouncer "
+#~ "manually once to enable autostart. You should see a notification "
+#~ "indicating your system is correctly configured for Bouncer."
+#~ msgstr ""
+#~ "В Fedora всё работает из коробки! Помните, чтобы активировать "
+#~ "автозагрузку, вам необходимо запустить Bouncer вручную один раз. Вы "
+#~ "увидите уведомление, указывающее на корректную настройку системы для "
+#~ "работы с Bouncer."
+
+#~ msgid ""
+#~ "Start Bouncer manually once to enable autostart. You should see a "
+#~ "notification indicating your system is correctly configured for Bouncer."
+#~ msgstr ""
+#~ "Для активации автозагрузки запустите Bouncer вручную. Вы увидите "
+#~ "уведомление, указывающее на корректную настройку системы для работы с "
+#~ "Bouncer."
