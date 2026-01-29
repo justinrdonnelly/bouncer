@@ -28,20 +28,20 @@ Because Bouncer requires NetworkManager and firewalld, and changing firewall zon
 
 ### Fedora
 
-For Fedora, everything just works! Just remember to start Bouncer manually once to enable autostart. You should see a notification indicating your system is correctly configured for Bouncer.
+For Fedora, everything just works! Just start Bouncer to confirm, and click the Monitor button to begin using Bouncer.
 
 ### Ubuntu
 
 1. Uninstall ufw: `sudo apt remove ufw`
 2. Install firewalld: `sudo apt install firewalld`
 3. By default, polkit is configured to not let regular users set the zone for a connection. The simplest way to change this is to add users to the `netdev` group (e.g. `usermod -a -G netdev justin`). Alternatively, you can create a custom polkit rule for the `org.freedesktop.NetworkManager.settings.modify.system` action (how to create custom polkit rules is beyond the scope of this document and is left as an exercise for the reader).
-4. Start Bouncer manually once to enable autostart. You should see a notification indicating your system is correctly configured for Bouncer.
+4. Start Bouncer and confirm your system is configured correctly. Then click the Monitor button to begin using Bouncer.
 
 ### Debian
 
 1. Install firewalld: `sudo apt install firewalld`
 2. By default, polkit is configured to not let regular users set the zone for a connection. The simplest way to change this is to add users to the `netdev` group (e.g. `usermod -a -G netdev justin`). Alternatively, you can create a custom polkit rule for the `org.freedesktop.NetworkManager.settings.modify.system` action (how to create custom polkit rules is beyond the scope of this document and is left as an exercise for the reader).
-3. Start Bouncer manually once to enable autostart. You should see a notification indicating your system is correctly configured for Bouncer.
+3. Start Bouncer and confirm your system is configured correctly. Then click the Monitor button to begin using Bouncer.
 
 ## How It Works
 

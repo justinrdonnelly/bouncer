@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- bouncerWindow.ui
+
+     Copyright 2024 Justin Donnelly
+
+     This Source Code Form is subject to the terms of the Mozilla Public
+     License, v. 2.0. If a copy of the MPL was not distributed with this
+     file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+     SPDX-License-Identifier: MPL-2.0
+-->
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.0"/>
+  <template class="BouncerWindow" parent="AdwApplicationWindow">
+    <property name="title">Bouncer</property>
+    <property name="default-width">600</property>
+    <property name="default-height">400</property>
+    <property name="content">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <child type="end">
+              <object class="GtkMenuButton">
+                <property name="primary">True</property>
+                <property name="icon-name">open-menu-symbolic</property>
+                <property name="tooltip-text" translatable="yes">Menu</property>
+                <property name="menu-model">primary_menu</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <property name="content">
+          <object class="GtkBox" id="contentBox"> <!-- append content to this GtkBox -->
+            <property name="orientation">horizontal</property>
+            <!-- icon -->
+            <child>
+              <object class="GtkImage">
+                <property name="valign">GTK_ALIGN_START</property>
+                <property name="margin-start">12</property>
+                <property name="margin-end">12</property>
+                <property name="icon-name">io.github.justinrdonnelly.bouncer</property>
+                <property name="pixel-size">64</property>
+              </object>
+            </child> <!-- end icon -->
+          </object> <!-- end horizontal GtkBox -->
+        </property>
+      </object>
+    </property>
+  </template>
+  <menu id="primary_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_About Bouncer</attribute>
+        <attribute name="action">app.about</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

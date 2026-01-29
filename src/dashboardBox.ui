@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- dashboardBox.ui
+
+     Copyright 2025 Justin Donnelly
+
+     This Source Code Form is subject to the terms of the Mozilla Public
+     License, v. 2.0. If a copy of the MPL was not distributed with this
+     file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+     SPDX-License-Identifier: MPL-2.0
+-->
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <template class="DashboardBox" parent="GtkBox">
+    <property name="orientation">vertical</property>
+    <property name="margin-start">12</property>
+    <property name="margin-end">12</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="xalign">0</property>
+        <property name="margin-bottom">12</property>
+        <property name="wrap">true</property>
+        <property name="label" translatable="yes">In order to function properly, Bouncer depends on multiple other system components and configurations. To help facilitate the correct setup, this page shows the status for those required components and configurations.</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel">
+        <property name="xalign">0</property>
+        <property name="margin-bottom">12</property>
+        <property name="wrap">true</property>
+        <property name="label" translatable="yes">You can close this window at any time without affecting network monitoring.</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkListBox" id="listBox">
+        <property name="selection-mode">none</property>
+        <style>
+          <class name="boxed-list"/>
+        </style>
+      </object>
+    </child>
+
+    <!-- Monitor label/button -->
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">horizontal</property>
+        <property name="margin-top">12</property>
+        <property name="margin-bottom">12</property> <!-- add some extra margin since this is on the bottom of the window -->
+        <child>
+          <object class="GtkLabel" id="labelNotMonitoring">
+            <property name="visible">True</property>
+            <property name="xalign">0</property>
+            <property name="wrap">true</property>
+            <property name="hexpand">true</property>
+            <property name="label" translatable="yes">Once everything is ready, click to begin using Bouncer.</property>
+          </object> <!-- end GtkLabel -->
+        </child>
+        <child>
+          <object class="GtkLabel" id="labelMonitoring">
+            <property name="visible">False</property>
+            <property name="xalign">0</property>
+            <property name="wrap">true</property>
+            <property name="hexpand">true</property>
+            <property name="label" translatable="yes">Bouncer is monitoring your Wi-Fi!</property>
+          </object> <!-- end GtkLabel -->
+        </child>
+        <child>
+          <object class="GtkButton" id="monitorButton">
+            <property name="halign">end</property>
+            <property name="label" translatable="yes">Monitor</property>
+            <property name="sensitive">false</property> <!-- disabled by default -->
+            <style>
+              <class name="suggested-action"/>
+            </style>
+            <signal name="clicked" handler="monitorButtonClicked"/>
+          </object> <!-- end GtkButton -->
+        </child>
+      </object> <!-- end GtkBox -->
+    </child>
+  </template>
+</interface>
