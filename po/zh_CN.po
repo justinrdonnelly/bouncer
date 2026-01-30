@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Bouncer 48\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-09 19:10-0400\n"
+"POT-Creation-Date: 2026-01-28 21:01-0500\n"
 "PO-Revision-Date: 2025-07-09 19:10-0400\n"
 "Last-Translator: Ariel Wang <ariel@netc.fr>\n"
 "Language-Team: \n"
@@ -23,7 +23,7 @@ msgid "@APP_NAME@"
 msgstr "@APP_NAME@"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/io.github.justinrdonnelly.bouncer.desktop.in.in:9
+#: data/io.github.justinrdonnelly.bouncer.desktop.in.in:10
 msgid "firewall;network;Wi-Fi;"
 msgstr "防火墙;网络;Wi-Fi;"
 
@@ -39,24 +39,25 @@ msgid ""
 "you choose the network type, it is associated with that network and "
 "automatically used in the future."
 msgstr ""
-"Bouncer 是一个帮助您为无线连接选择正确防火墙区域的应用程序。当您连接到一个新网络时，"
-"会弹出一个窗口，提示您选择网络类型（例如家庭、公共、工作）。当您选择网络类型后，它会与该网络关联，并在未来自动应用。"
+"Bouncer 是一个帮助您为无线连接选择正确防火墙区域的应用程序。当您连接到一个新"
+"网络时，会弹出一个窗口，提示您选择网络类型（例如家庭、公共、工作）。当您选择"
+"网络类型后，它会与该网络关联，并在未来自动应用。"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:14
 msgid ""
 "NetworkManager and firewalld are required. If you don't use those, you can't "
 "use Bouncer. Fedora uses both by default. Other distributions may not."
 msgstr ""
-"需要使用 NetworkManager 和 firewalld。如果您不使用这些，"
-"就无法使用 Bouncer。Fedora 默认使用这两者，其他发行版可能不是如此。"
+"需要使用 NetworkManager 和 firewalld。如果您不使用这些，就无法使用 Bouncer。"
+"Fedora 默认使用这两者，其他发行版可能不是如此。"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:15
 msgid ""
 "Additional setup is required after installation. See the applicable section "
-"for your distribution. Once the setup is done, start Bouncer manually to "
-"enable autostart. After that, it will start automatically when you log in."
+"for your distribution. Once the setup is done, start Bouncer and confirm "
+"your system is configured correctly. Then click the Monitor button to begin "
+"using Bouncer. After that, it will start automatically when you log in."
 msgstr ""
-"安装后需要进行额外的设置。请查看适用于您发行版的相关部分。设置完成后，手动启动 Bouncer 以启用自动启动。此后，每次登录时它将自动启动。"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:16
 msgid "Fedora"
@@ -64,12 +65,9 @@ msgstr "Fedora"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:18
 msgid ""
-"For Fedora, everything just works! Just remember to start Bouncer manually "
-"once to enable autostart. You should see a notification indicating your "
-"system is correctly configured for Bouncer."
+"For Fedora, everything just works! Just start Bouncer to confirm, and click "
+"the Monitor button to begin using Bouncer."
 msgstr ""
-"对于 Fedora，一切都能正常运行！只需记住手动启动 Bouncer 一次以启用自动启动。"
-"您应该会看到一个通知，表明您的系统已正确配置为使用 Bouncer。"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:20
 msgid "Ubuntu"
@@ -95,18 +93,19 @@ msgid ""
 "(how to create custom polkit rules is beyond the scope of this document and "
 "is left as an exercise for the reader)."
 msgstr ""
-"默认情况下，polkit 配置为不允许普通用户设置连接的区域。最简单的更改方法是将用户添加到 "
-"<code>netdev</code> 组（例如 <code>usermod -a -G netdev justin</code>）。"
-"或者，您可以为 <code>org.freedesktop.NetworkManager.settings.modify.system</code> "
-"操作创建自定义 polkit 规则（如何创建自定义 polkit 规则超出了本文档的范围，留给读者自行练习）。"
+"默认情况下，polkit 配置为不允许普通用户设置连接的区域。最简单的更改方法是将用"
+"户添加到 <code>netdev</code> 组（例如 <code>usermod -a -G netdev justin</"
+"code>）。或者，您可以为 "
+"<code>org.freedesktop.NetworkManager.settings.modify.system</code> 操作创建自"
+"定义 polkit 规则（如何创建自定义 polkit 规则超出了本文档的范围，留给读者自行"
+"练习）。"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:25
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:31
 msgid ""
-"Start Bouncer manually once to enable autostart. You should see a "
-"notification indicating your system is correctly configured for Bouncer."
+"Start Bouncer and confirm your system is configured correctly. Then click "
+"the Monitor button to begin using Bouncer."
 msgstr ""
-"手动启动 Bouncer 一次以启用自动启动。您应该会看到一个通知，表明您的系统已正确配置为使用 Bouncer。"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:27
 msgid "Debian"
@@ -117,211 +116,329 @@ msgid "Bouncer prompting for the type of network"
 msgstr "Bouncer 提示选择网络类型"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:54
+msgid "Include additional desktop categories"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:55
+msgid "Support command line arguments"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:62
+msgid "Added Russian translation"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:63
+#, fuzzy
+msgid "Fixed metainfo formatting"
+msgstr "获取更多信息。"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:70
+msgid "Added Occitan translation"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:71
+msgid "Added Simplified Chinese translation"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:72
+msgid "Fixed multiple instance support"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:73
+msgid "Use GNOME 49 runtime"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:80
 msgid "Critical bug fix for non-English language users"
 msgstr "修复非英语用户的关键错误"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:55
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:81
 msgid "Added Dutch translation"
 msgstr "添加了荷兰语翻译"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:56
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:82
 msgid "Documentation cleanups"
 msgstr "文档清理"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:62
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:88
 msgid "Include a notification for first run success"
 msgstr "包含首次运行成功的通知"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:67
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:93
 msgid "Initial release"
 msgstr "初始版本"
 
-#: src/chooseZoneWindow.ui:27
+#: src/bouncerWindow.ui:27
 msgid "Menu"
 msgstr "菜单"
 
-#: src/chooseZoneWindow.ui:61
+#: src/bouncerWindow.ui:54
+msgid "_About Bouncer"
+msgstr "_关于 Bouncer"
+
+#: src/chooseZoneBox.ui:25
 msgid ""
 "You have connected to a new Wi-Fi network. Please choose a firewall zone. "
 "What type of network is this?"
 msgstr ""
 "您已连接到一个新的 Wi-Fi 网络。请选择一个防火墙区域。这是什么类型的网络？"
 
-#: src/chooseZoneWindow.ui:77
+#: src/chooseZoneBox.ui:41
 msgid "Network"
 msgstr "网络"
 
-#: src/chooseZoneWindow.ui:86
+#: src/chooseZoneBox.ui:50
 msgid "Default Zone"
 msgstr "默认区域"
 
-#: src/chooseZoneWindow.ui:95
+#: src/chooseZoneBox.ui:59
 msgid "Current Zone"
 msgstr "当前区域"
 
 #. make the dropdown not span the entire box
-#: src/chooseZoneWindow.ui:111
+#: src/chooseZoneBox.ui:75
 msgid "Firewall Zone"
 msgstr "防火墙区域"
 
-#: src/chooseZoneWindow.ui:112
+#: src/chooseZoneBox.ui:76
 msgid "Choose the firewall zone for this network."
 msgstr "为这个网络选择防火墙区域。"
 
-#: src/chooseZoneWindow.ui:115
+#: src/chooseZoneBox.ui:79
 msgid "Zone"
 msgstr "区域"
 
-#: src/chooseZoneWindow.ui:134
+#: src/chooseZoneBox.ui:98
 msgid "Help"
 msgstr "帮助"
 
 #. min width
-#: src/chooseZoneWindow.ui:146
+#: src/chooseZoneBox.ui:110
 msgid "Get more information."
 msgstr "获取更多信息。"
 
-#: src/chooseZoneWindow.ui:161
+#: src/chooseZoneBox.ui:125
 msgid "Exit"
 msgstr "退出"
 
 #. min width
-#: src/chooseZoneWindow.ui:173
+#: src/chooseZoneBox.ui:137
 msgid ""
 "No change will be made. You will see this window again the next time you "
 "connect to this network."
-msgstr ""
-"不会进行任何更改。下次您连接到此网络时，将再次看到此窗口。"
+msgstr "不会进行任何更改。下次您连接到此网络时，将再次看到此窗口。"
 
-#: src/chooseZoneWindow.ui:188
+#: src/chooseZoneBox.ui:152
 msgid "Choose"
 msgstr "选择"
 
 #. min width
-#: src/chooseZoneWindow.ui:203
+#: src/chooseZoneBox.ui:167
 msgid ""
 "The selected firewall zone will be used every time you connect to this "
 "network."
+msgstr "每次您连接到此网络时，将使用所选的防火墙区域。"
+
+#: src/dashboardBox.js:36
+msgid "D-Bus"
 msgstr ""
-"每次您连接到此网络时，将使用所选的防火墙区域。"
 
-#: src/chooseZoneWindow.ui:219
-msgid "_About Bouncer"
-msgstr "_关于 Bouncer"
+#: src/dashboardBox.js:52
+msgid "firewalld Running"
+msgstr ""
 
-#: src/dependencyCheck.js:102
+#: src/dashboardBox.js:68
+msgid "NetworkManager Running"
+msgstr ""
+
+#: src/dashboardBox.js:84
+msgid "NetworkManager Permissions"
+msgstr ""
+
+#: src/dashboardBox.js:93
+msgid "Run on Startup"
+msgstr ""
+
+#: src/dashboardBox.ui:23
+msgid ""
+"In order to function properly, Bouncer depends on multiple other system "
+"components and configurations. To help facilitate the correct setup, this "
+"page shows the status for those required components and configurations."
+msgstr ""
+
+#: src/dashboardBox.ui:31
+msgid ""
+"You can close this window at any time without affecting network monitoring."
+msgstr ""
+
+#: src/dashboardBox.ui:55
+msgid "Once everything is ready, click to begin using Bouncer."
+msgstr ""
+
+#: src/dashboardBox.ui:64
+msgid "Bouncer is monitoring your Wi-Fi!"
+msgstr ""
+
+#: src/dashboardBox.ui:70
+msgid "Monitor"
+msgstr ""
+
+#: src/dependencyCheck.js:237
 msgid "Bouncer must start on login"
 msgstr "Bouncer 必须在登录时启动"
 
-#: src/dependencyCheck.js:114
+#: src/dependencyCheck.js:254
 msgid "Can't configure autostart"
 msgstr "无法配置自动启动"
 
-#: src/dependencyCheck.js:115
+#: src/dependencyCheck.js:255
 msgid ""
 "Please make sure the portal is available from inside the flatpak sandbox. "
 "Please see logs for more information."
-msgstr ""
-"请确保在 flatpak 沙盒内门户可用。请查看日志以获取更多信息。"
+msgstr "请确保在 flatpak 沙盒内门户可用。请查看日志以获取更多信息。"
 
-#: src/dependencyCheck.js:131
+#: src/dependencyCheck.js:279
 msgid "Can't find D-Bus names"
 msgstr "找不到 D-Bus 名称"
 
-#: src/dependencyCheck.js:132
+#: src/dependencyCheck.js:280
 msgid ""
 "Please make sure D-Bus is installed, running, and available inside the "
 "flatpak sandbox. Please see logs for more information."
 msgstr ""
-"请确保 D-Bus 已安装、正在运行且在 flatpak 沙盒内可用。请查看日志以获取更多信息。"
+"请确保 D-Bus 已安装、正在运行且在 flatpak 沙盒内可用。请查看日志以获取更多信"
+"息。"
 
-#: src/dependencyCheck.js:157
+#: src/dependencyCheck.js:310
 msgid "Can't find firewalld"
 msgstr "找不到 firewalld"
 
-#: src/dependencyCheck.js:158
+#: src/dependencyCheck.js:311
 msgid ""
 "Please make sure firewalld is installed, running, and available inside the "
 "flatpak sandbox. Please see logs for more information."
 msgstr ""
-"请确保 firewalld 已安装、正在运行且在 flatpak 沙盒内可用。请查看日志以获取更多信息。"
+"请确保 firewalld 已安装、正在运行且在 flatpak 沙盒内可用。请查看日志以获取更"
+"多信息。"
 
-#: src/dependencyCheck.js:175
+#: src/dependencyCheck.js:330
 msgid "Can't get firewalld zones"
 msgstr "无法获取 firewalld 区域"
 
-#: src/dependencyCheck.js:176
+#: src/dependencyCheck.js:331
 msgid ""
 "Unable to get firewalld zones. Please make sure firewalld permissions are "
 "correct, and are not restricted inside the flatpak sandbox. Please see logs "
 "for more information."
 msgstr ""
-"无法获取 firewalld 区域。请确保 firewalld 权限正确，"
-"且在 flatpak 沙盒内未受限制。请查看日志以获取更多信息。"
+"无法获取 firewalld 区域。请确保 firewalld 权限正确，且在 flatpak 沙盒内未受限"
+"制。请查看日志以获取更多信息。"
 
-#: src/dependencyCheck.js:190
+#: src/dependencyCheck.js:347
 msgid "Can't get firewalld default zone"
 msgstr "无法获取 firewalld 默认区域"
 
-#: src/dependencyCheck.js:191
+#: src/dependencyCheck.js:348
 msgid ""
 "Unable to get firewalld default zone. Please make sure firewalld permissions "
 "are correct, and are not restricted inside the flatpak sandbox. Please see "
 "logs for more information."
 msgstr ""
-"无法获取 firewalld 默认区域。请确保 firewalld 权限正确，"
-"且在 flatpak 沙盒内未受限制。请查看日志以获取更多信息。"
+"无法获取 firewalld 默认区域。请确保 firewalld 权限正确，且在 flatpak 沙盒内未"
+"受限制。请查看日志以获取更多信息。"
 
-#: src/dependencyCheck.js:216
+#: src/dependencyCheck.js:378
 msgid "Can't find NetworkManager"
 msgstr "找不到 NetworkManager"
 
-#: src/dependencyCheck.js:217
+#: src/dependencyCheck.js:379
 msgid ""
 "Please make sure NetworkManager is installed, running, and available inside "
 "the flatpak sandbox. Please see logs for more information."
 msgstr ""
-"请确保 NetworkManager 已安装、正在运行且在 flatpak 沙盒内可用。请查看日志以获取更多信息。"
+"请确保 NetworkManager 已安装、正在运行且在 flatpak 沙盒内可用。请查看日志以获"
+"取更多信息。"
 
-#: src/dependencyCheck.js:263
+#: src/dependencyCheck.js:430
 msgid "Authentication required to change NetworkManager connection zone"
 msgstr "更改 NetworkManager 连接区域需要身份验证"
 
-#: src/dependencyCheck.js:264
+#: src/dependencyCheck.js:431
 msgid ""
 "You are authorized to change the connection zone in NetworkManager, but will "
 "be required to authenticate. This will work, but may be annoying. Please see "
 "logs for more information."
 msgstr ""
-"您有权限更改 NetworkManager 中的连接区域，但需要进行身份验证。"
-"这可以正常工作，但可能会有些烦人。请查看日志以获取更多信息。"
+"您有权限更改 NetworkManager 中的连接区域，但需要进行身份验证。这可以正常工"
+"作，但可能会有些烦人。请查看日志以获取更多信息。"
 
-#: src/dependencyCheck.js:274
+#: src/dependencyCheck.js:444
 msgid "Not authorized to change NetworkManager connection zone"
 msgstr "无权限更改 NetworkManager 连接区域"
 
-#: src/dependencyCheck.js:275
+#: src/dependencyCheck.js:445
 msgid ""
 "You are not authorized to change the connection zone in NetworkManager. This "
 "is required for Bouncer to function properly. Please see logs for more "
 "information."
 msgstr ""
-"您无权限更改 NetworkManager 中的连接区域。这是 Bouncer 正常运行所需的。请查看日志以获取更多信息。"
+"您无权限更改 NetworkManager 中的连接区域。这是 Bouncer 正常运行所需的。请查看"
+"日志以获取更多信息。"
 
-#: src/dependencyCheck.js:284
+#: src/dependencyCheck.js:457
 msgid "Unexpected result from NetworkManager GetSettings: "
 msgstr "NetworkManager GetSettings 返回意外结果："
 
-#: src/dependencyCheck.js:285
+#: src/dependencyCheck.js:458
 msgid ""
 "Unable to determine whether you are authorized to change the connection zone "
 "in NetworkManager. Bouncer may not function properly. Please see logs for "
 "more information."
 msgstr ""
-"无法确定您是否有权限更改 NetworkManager 中的连接区域。Bouncer 可能无法正常运行。请查看日志以获取更多信息。"
+"无法确定您是否有权限更改 NetworkManager 中的连接区域。Bouncer 可能无法正常运"
+"行。请查看日志以获取更多信息。"
+
+#: src/dependencyItem.ui:23
+msgid "Check Status"
+msgstr ""
+
+#: src/main.js:58
+msgid "Monitor Wi-Fi connections in the background"
+msgstr ""
+
+#: src/main.js:110
+msgid "Unknown error"
+msgstr "未知错误"
+
+#: src/main.js:111
+msgid ""
+"An unknown error occurred. Bouncer may not function correctly. Please see "
+"logs for more information."
+msgstr ""
+"发生了一个未知错误。Bouncer 可能无法正常运行。请查看日志以获取更多信息。"
+
+#: src/main.js:164
+msgid "Can't find previously seen connections"
+msgstr "找不到之前见过的连接"
+
+#: src/main.js:165
+msgid ""
+"There was a problem determining which connections have already been seen. "
+"Please see logs for more information."
+msgstr "确定哪些连接已经被看到时出现了问题。请查看日志以获取更多信息。"
+
+#: src/main.js:189
+msgid "Can't determine network state"
+msgstr "无法确定网络状态"
+
+#: src/main.js:190
+msgid ""
+"There was a problem tracking network connection changes. Please see logs for "
+"more information."
+msgstr "跟踪网络连接变化时出现了问题。请查看日志以获取更多信息。"
 
 #. details
-#: src/main.js:62
+#: src/main.js:212
 msgid ""
 "Bouncer is an application to help you choose the correct firewall zone for "
 "wireless connections. When you connect to a new network, Bouncer will open a "
@@ -329,143 +446,108 @@ msgid ""
 "When you choose the network type, it is associated with that network and "
 "automatically used in the future."
 msgstr ""
-"Bouncer 是一个帮助您为无线连接选择正确防火墙区域的应用程序。当您连接到一个新网络时，"
-"Bouncer 会弹出一个窗口，提示您选择网络类型（例如家庭、公共、工作）。"
+"Bouncer 是一个帮助您为无线连接选择正确防火墙区域的应用程序。当您连接到一个新"
+"网络时，Bouncer 会弹出一个窗口，提示您选择网络类型（例如家庭、公共、工作）。"
 "当您选择网络类型后，它会与该网络关联，并在未来自动应用。"
 
 #. Translators: Replace 'translator-credits' with your name/username, and optionally an email or
 #. URL.
-#: src/main.js:74
+#: src/main.js:224
 msgid "translator-credits"
 msgstr "Ariel Wang <ariel@netc.fr>"
 
-#: src/main.js:117
-msgid "Unknown error"
-msgstr "未知错误"
-
-#: src/main.js:118
-msgid ""
-"An unknown error occurred. Bouncer may not function correctly. Please see "
-"logs for more information."
-msgstr ""
-"发生了一个未知错误。Bouncer 可能无法正常运行。请查看日志以获取更多信息。"
-
-#: src/main.js:131
-msgid "Can't find previously seen connections"
-msgstr "找不到之前见过的连接"
-
-#: src/main.js:132
-msgid ""
-"There was a problem determining which connections have already been seen. "
-"Please see logs for more information."
-msgstr ""
-"确定哪些连接已经被看到时出现了问题。请查看日志以获取更多信息。"
-
-#: src/main.js:148
-msgid "Can't determine network state"
-msgstr "无法确定网络状态"
-
-#: src/main.js:149
-msgid ""
-"There was a problem tracking network connection changes. Please see logs for "
-"more information."
-msgstr ""
-"跟踪网络连接变化时出现了问题。请查看日志以获取更多信息。"
-
-#: src/main.js:163
+#: src/main.js:253
 msgid " Bouncer is shutting down. You will need to restart manually."
 msgstr " Bouncer 正在关闭。您需要手动重启。"
 
-#: src/main.js:176
+#: src/main.js:266
 msgid "First run setup complete!"
 msgstr "首次运行设置完成！"
 
-#: src/main.js:177
+#: src/main.js:267
 msgid ""
 "Your system is correctly configured for Bouncer. Bouncer will autostart on "
 "each login and will open when you connect to a new Wi-Fi network."
 msgstr ""
-"您的系统已正确配置为使用 Bouncer。Bouncer 将在每次登录时自动启动，并在您连接到新的 Wi-Fi 网络时打开。"
+"您的系统已正确配置为使用 Bouncer。Bouncer 将在每次登录时自动启动，并在您连接"
+"到新的 Wi-Fi 网络时打开。"
 
-#: src/main.js:211
+#: src/main.js:301
 msgid "Can't prompt for firewall zone"
 msgstr "无法提示选择防火墙区域"
 
-#: src/main.js:212
+#: src/main.js:302
 msgid ""
 "There was a problem getting information to prompt for the firewall zone. "
 "Please see logs for more information."
-msgstr ""
-"获取提示选择防火墙区域的信息时出现了问题。请查看日志以获取更多信息。"
+msgstr "获取提示选择防火墙区域的信息时出现了问题。请查看日志以获取更多信息。"
 
-#: src/main.js:262
+#: src/main.js:355
 msgid "Can't add connection to seen connections"
 msgstr "无法将连接添加到已见过的连接列表"
 
-#: src/main.js:263
+#: src/main.js:356
 msgid ""
 "There was a problem adding the connection to the list of seen connections. "
 "The firewall zone will not be set for this connection. Please see logs for "
 "more information."
 msgstr ""
-"将连接添加到已见过的连接列表时出现了问题。此连接的防火墙区域将不会被设置。请查看日志以获取更多信息。"
+"将连接添加到已见过的连接列表时出现了问题。此连接的防火墙区域将不会被设置。请"
+"查看日志以获取更多信息。"
 
-#: src/main.js:278
+#: src/main.js:371
 msgid "Can't set firewall zone for connection"
 msgstr "无法为连接设置防火墙区域"
 
-#: src/main.js:279
+#: src/main.js:372
 msgid ""
 "There was a problem setting the firewall zone for the connection. Please see "
 "logs for more information."
-msgstr ""
-"为连接设置防火墙区域时出现了问题。请查看日志以获取更多信息。"
+msgstr "为连接设置防火墙区域时出现了问题。请查看日志以获取更多信息。"
 
-#: src/main.js:294
+#: src/main.js:387
 msgid "Can't save connection to seen connections"
 msgstr "无法将连接保存到已见过的连接列表"
 
-#: src/main.js:295
+#: src/main.js:388
 msgid ""
 "The zone has been set for the connection, but there was a problem saving the "
 "updated list of seen connections to disk. Once you restart Bouncer, you will "
 "again be prompted to choose a firewall zone for this connection. Please see "
 "logs for more information."
 msgstr ""
-"已为该连接设置了区域，但将更新的已见过的连接列表保存到磁盘时出现了问题。"
-"一旦您重启 Bouncer，您将再次被提示为该连接选择防火墙区域。请查看日志以获取更多信息。"
+"已为该连接设置了区域，但将更新的已见过的连接列表保存到磁盘时出现了问题。一旦"
+"您重启 Bouncer，您将再次被提示为该连接选择防火墙区域。请查看日志以获取更多信"
+"息。"
 
-#: src/main.js:305
+#: src/main.js:398
 msgid "Firewall zone set for connection: "
 msgstr "为连接设置的防火墙区域："
 
 #. this is the default zone
-#: src/main.js:307
+#: src/main.js:400
 msgid ""
 "Firewall zone for this connection has been set to the default zone "
 "(currently "
-msgstr ""
-"此连接的防火墙区域已设置为默认区域（当前为 "
+msgstr "此连接的防火墙区域已设置为默认区域（当前为 "
 
-#: src/main.js:308
+#: src/main.js:401
 msgid ""
 "). Whenever you connect to this network in the future, the firewall zone "
 "will automatically be changed to the default zone."
-msgstr ""
-"）。未来每次您连接到此网络时，防火墙区域将自动更改为默认区域。"
+msgstr "）。未来每次您连接到此网络时，防火墙区域将自动更改为默认区域。"
 
-#: src/main.js:312
+#: src/main.js:405
 msgid "Firewall zone for this connection has been set to "
 msgstr "此连接的防火墙区域已设置为 "
 
-#: src/main.js:312
+#: src/main.js:405
 msgid ""
 ". Whenever you connect to this network in the future, the firewall zone will "
 "automatically be changed to "
-msgstr ""
-"。未来每次您连接到此网络时，防火墙区域将自动更改为 "
+msgstr "。未来每次您连接到此网络时，防火墙区域将自动更改为 "
 
-#: src/main.js:314
+#: src/main.js:407
 msgid "."
 msgstr "。"
 
@@ -498,19 +580,21 @@ msgid ""
 "bouncer\">here</a>."
 msgstr ""
 "您正在使用 <a href=\"https://firewalld.org/\">firewalld</a> 作为防火墙。"
-"firewalld 的一个优点是它支持不同的区域（防火墙规则集）。"
-"您可能为家庭使用配置了一个防火墙区域，而为公共网络配置了另一个不同的区域。\n"
+"firewalld 的一个优点是它支持不同的区域（防火墙规则集）。您可能为家庭使用配置"
+"了一个防火墙区域，而为公共网络配置了另一个不同的区域。\n"
 "\n"
-"您正在使用 <a href=\"https://networkmanager.dev/\">NetworkManager</a> "
-"进行网络配置。NetworkManager 与 firewalld 集成良好，可以 "
-"<a href=\"https://firewalld.org/documentation/zone/connections-interfaces-and-sources.html\">"
-"根据连接为接口设置 firewalld 区域</a>。这意味着您的防火墙规则可以根据网络连接自动更改。\n"
+"您正在使用 <a href=\"https://networkmanager.dev/\">NetworkManager</a> 进行网"
+"络配置。NetworkManager 与 firewalld 集成良好，可以 <a href=\"https://"
+"firewalld.org/documentation/zone/connections-interfaces-and-sources.html\">根"
+"据连接为接口设置 firewalld 区域</a>。这意味着您的防火墙规则可以根据网络连接自"
+"动更改。\n"
 "\n"
-"Bouncer 的设计旨在为您简化这一过程。当您连接到一个新网络时，它会打开一个窗口，"
-"让您选择适当的防火墙区域。如果您不确定选择什么，通常应选择与您所在位置匹配的选项。"
-"最安全的选项通常是“公共”。如果您不想更改任何内容，请点击“退出”。\n"
+"Bouncer 的设计旨在为您简化这一过程。当您连接到一个新网络时，它会打开一个窗"
+"口，让您选择适当的防火墙区域。如果您不确定选择什么，通常应选择与您所在位置匹"
+"配的选项。最安全的选项通常是“公共”。如果您不想更改任何内容，请点击“退出”。\n"
 "\n"
-"您可以在 <a href=\"https://github.com/justinrdonnelly/bouncer\">这里</a> 阅读更多关于 Bouncer 的信息。"
+"您可以在 <a href=\"https://github.com/justinrdonnelly/bouncer\">这里</a> 阅读"
+"更多关于 Bouncer 的信息。"
 
 #: src/networkState.js:120
 msgid "Error determining network state"
@@ -521,4 +605,28 @@ msgid ""
 "Bouncer ran into an error determining network state. This is required for "
 "the application to work correctly. Please see logs for more information."
 msgstr ""
-"Bouncer 在确定网络状态时遇到了错误。这是应用程序正常运行所需的。请查看日志以获取更多信息。"
+"Bouncer 在确定网络状态时遇到了错误。这是应用程序正常运行所需的。请查看日志以"
+"获取更多信息。"
+
+#~ msgid ""
+#~ "Additional setup is required after installation. See the applicable section "
+#~ "for your distribution. Once the setup is done, start Bouncer manually to "
+#~ "enable autostart. After that, it will start automatically when you log in."
+#~ msgstr ""
+#~ "安装后需要进行额外的设置。请查看适用于您发行版的相关部分。设置完成后，手动启"
+#~ "动 Bouncer 以启用自动启动。此后，每次登录时它将自动启动。"
+
+#~ msgid ""
+#~ "For Fedora, everything just works! Just remember to start Bouncer "
+#~ "manually once to enable autostart. You should see a notification "
+#~ "indicating your system is correctly configured for Bouncer."
+#~ msgstr ""
+#~ "对于 Fedora，一切都能正常运行！只需记住手动启动 Bouncer 一次以启用自动启"
+#~ "动。您应该会看到一个通知，表明您的系统已正确配置为使用 Bouncer。"
+
+#~ msgid ""
+#~ "Start Bouncer manually once to enable autostart. You should see a "
+#~ "notification indicating your system is correctly configured for Bouncer."
+#~ msgstr ""
+#~ "手动启动 Bouncer 一次以启用自动启动。您应该会看到一个通知，表明您的系统已"
+#~ "正确配置为使用 Bouncer。"

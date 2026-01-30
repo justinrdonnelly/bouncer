@@ -16,10 +16,12 @@ import GLibUnix from 'gi://GLibUnix?version=2.0';
 import GObject from 'gi://GObject'; // Required by GJS, version not necessary.
 import Gtk from 'gi://Gtk';
 
-import { ChooseZoneWindow } from './chooseZoneWindow.js';
+import { BouncerWindow } from './bouncerWindow.js';
+import { ChooseZoneBox } from './chooseZoneBox.js';
 import { config } from './config.js';
 import { ConnectionIdsSeen } from './connectionIdsSeen.js';
 import { DependencyCheck } from './dependencyCheck.js';
+import { DashboardBox } from './dashboardBox.js';
 import { NetworkState } from './networkState.js';
 import { ZoneForConnection } from './zoneForConnection.js';
 import { ZoneInfo } from './zoneInfo.js';
@@ -34,9 +36,14 @@ pkg.initFormat();
 
 export const BouncerApplication = GObject.registerClass(
     class BouncerApplication extends Adw.Application {
+        #monitoring = false; // whether we're monitoring
+        #networkState = null;
         #sourceIds = [];
-        #connectionIdsSeen;
+        #connectionIdsSeen = null;
         #quitting = false;
+        #chooseZoneWindow = null
+        #dependencyCheck = null
+        #dashboardWindow = null
 
         constructor() {
             super({
@@ -57,9 +64,9 @@ export const BouncerApplication = GObject.registerClass(
         vfunc_startup() {
             console.log('Welcome to Bouncer! Starting up.');
             promisify();
-            this.hold();
             this.#createAboutAction();
             this.#handleSignals();
+            this.#instantiateDependencyCheck();
             return super.vfunc_startup();
         }
 
@@ -68,67 +75,128 @@ export const BouncerApplication = GObject.registerClass(
         vfunc_command_line(gioApplicationCommandLine) {
             if (gioApplicationCommandLine.get_options_dict().contains('monitor')) {
                 console.log('Starting Bouncer in monitor mode.');
+                this.monitorNetworkAndCatch();
+            } else {
+                console.log('Starting Bouncer in dashboard mode.');
+                this.#launchDashboard()
+                    .catch((e) => {
+                    console.error('Unhandled error in main launchDashboard. This is a bug!');
+                    console.error(e);
+                    }
+                );
             }
-            this.#init()
-                .catch((e) => {
-                console.error('Unhandled error in main init. This is a bug!');
-                console.error(e);
-                }
-            );
         }
 
-        // The init method will instantiate NetworkState and listen for its signals.
-        async #init() {
+        // eslint-disable-next-line no-unused-vars
+        #handleDashboardWindowClose(emittingObject) {
+            this.#dashboardWindow = null;
+        }
+
+        #instantiateDependencyCheck() {
             try {
-                const dependencyCheck = new DependencyCheck();
-                dependencyCheck.connect('error', this.#handleErrorSignal.bind(this));
-                dependencyCheck.connect('first-run-setup-complete', this.#handleFirstRunSignal.bind(this));
-                await dependencyCheck.runChecks();
+                if (this.#dependencyCheck === null) {
+                    this.#dependencyCheck = new DependencyCheck();
+                }
+                this.#dependencyCheck.connect('error', this.#handleErrorSignal.bind(this));
+                this.#dependencyCheck.connect('first-run-setup-complete', this.#handleFirstRunSignal.bind(this));
             } catch (e) {
                 // This should really never happen. DependencyCheck is full of `try/catch`es, so exceptions shouldn't
-                // get this far. Since we don't know how this happened, we'll log it, continue, and hope for the best.
+                // get this far. Since we don't know how this happened, we'll log it, and quit.
                 console.error('Error in dependency check.');
                 console.error(e.message);
                 this.#handleError(
-                    false,
+                    true,
                     'main-dependency-unknown-error',
                     _('Unknown error'),
                     _('An unknown error occurred. Bouncer may not function correctly. Please see logs for more ' +
                         'information.')
                 );
             }
+        }
+
+        async #launchDashboard() {
+            if (this.#dashboardWindow !== null) {
+                console.log('Bouncer dashboard window is already showing.');
+                return;
+            }
+            // We need to show the window right away (before `await`ing `this.#dependencyCheck.runChecks()`, or else
+            // the application will exit
+            const dashboardBox = new DashboardBox(this.#dependencyCheck, this.#monitoring);
+            dashboardBox.connect('monitor-network', this.monitorNetworkAndCatch.bind(this));
+            this.#dashboardWindow = new BouncerWindow(this, dashboardBox);
+            this.#dashboardWindow.connect('close-request', this.#handleDashboardWindowClose.bind(this));
+            this.#dashboardWindow.present();
+            await this.#dependencyCheck.runChecks(false);
+        }
+
+        monitorNetworkAndCatch() {
+            this.#monitorNetwork()
+                .catch((e) => {
+                console.error('Unhandled error in main monitorNetwork. This is a bug!');
+                console.error(e);
+                }
+            );
+        }
+
+        // The monitorNetwork method will instantiate NetworkState and listen for its signals. If we're already
+        // monitoring, this will be a no-op.
+        async #monitorNetwork() {
+            if (this.#monitoring) {
+                return;
+            }
+            this.hold();
+            this.#monitoring = true;
+            // do not emit (which is fatal) when the dashboard is open
+            const emit = this.#dashboardWindow === null;
+            await this.#dependencyCheck.runChecks(emit);
             try {
-                this.#connectionIdsSeen = new ConnectionIdsSeen();
-                await this.#connectionIdsSeen.init();
+                if (this.#connectionIdsSeen === null) {
+                    this.#connectionIdsSeen = new ConnectionIdsSeen();
+                    await this.#connectionIdsSeen.init();
+                }
             } catch (e) {
                 // Bail out here... There's nothing we can reasonably do without knowing if a network has been seen.
                 console.error('Unable to initialize ConnectionIdsSeen.');
                 console.error(e.message);
                 this.#handleError(
-                    true,
+                    false,
                     'main-connection-ids',
                     _('Can\'t find previously seen connections'),
                     _('There was a problem determining which connections have already been seen. Please see logs for ' +
                         'more information.')
                 );
+                // clean up
+                this.#connectionIdsSeen = null
+                this.release();
+                this.#monitoring = false;
             }
 
             try {
-                this.networkState = new NetworkState();
-                this.networkState.connect('error', this.#handleErrorSignal.bind(this));
-                this.networkState.connect('connection-changed', this.#handleConnectionChangedSignal.bind(this));
+                if (this.#networkState === null) {
+                    this.#networkState = new NetworkState();
+                    this.#networkState.connect('error', this.#handleErrorSignal.bind(this));
+                    this.#networkState.connect('connection-changed', this.#handleConnectionChangedSignal.bind(this));
+                    // if the dashboard is open, tell it that we've begun monitoring
+                    this.#dashboardWindow?.content.beginMonitoring();
+                }
             } catch (e) {
                 // Bail out here... There's nothing we can do without NetworkState.
                 console.error('Unable to initialize NetworkState.');
                 console.error(e.message);
                 this.#handleError(
-                    true,
+                    false,
                     'main-network-state',
                     _('Can\'t determine network state'),
                     _('There was a problem tracking network connection changes. Please see logs for more information.')
                 );
+                // clean up
+                this.#connectionIdsSeen = null
+                this.#networkState?.destroy();
+                this.#networkState = null
+                this.release();
+                this.#monitoring = false;
             }
-        } // end init
+        } // end monitorNetwork
 
         #createAboutAction() {
             this._showAboutAction = new Gio.SimpleAction({ name: 'about' });
@@ -159,7 +227,7 @@ export const BouncerApplication = GObject.registerClass(
                     license_type: Gtk.License.MPL_2_0,
                 };
                 const aboutDialog = new Adw.AboutDialog(aboutParams);
-                aboutDialog.present(this.active_window);
+                aboutDialog.present(this.#chooseZoneWindow);
             });
             this.add_action(this._showAboutAction);
         }
@@ -238,34 +306,37 @@ export const BouncerApplication = GObject.registerClass(
         }
 
         #createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings) {
-            let { active_window } = this;
-
-            // active_window should always be null. Either this is the first creation, or we should have already called
-            // #closeWindowIfConnectionChanged.
-            if (!active_window)
-                active_window = new ChooseZoneWindow(
-                    this,
+            // this.#chooseZoneWindow should always be null. Either this is the first creation, or we should have
+            // already called #closeWindowIfConnectionChanged.
+            if (!this.#chooseZoneWindow) {
+                const chooseZoneBox = new ChooseZoneBox(
                     connectionId,
                     defaultZone,
                     currentZone,
                     zones,
                     activeConnectionSettings
                 );
+                this.#chooseZoneWindow = new BouncerWindow(
+                    this,
+                    chooseZoneBox
+                );
+                chooseZoneBox.window = this.#chooseZoneWindow;
+            }
 
-            active_window.connect('zone-selected', this.#chooseClicked.bind(this));
-            active_window.present();
+            this.#chooseZoneWindow.content.connect('zone-selected', this.#chooseClicked.bind(this));
+            this.#chooseZoneWindow.present();
         }
 
         #closeWindowIfConnectionChanged(connectionId) {
-            let { active_window } = this;
-            if (active_window?.connectionId !== connectionId)
-                active_window?.close();
+            if (this.#chooseZoneWindow?.content?.connectionId !== connectionId)
+                this.#chooseZoneWindow?.close();
+                this.#chooseZoneWindow = null;
         }
 
         // eslint-disable-next-line no-unused-vars
         async #chooseClicked(emittingObject, connectionId, activeConnectionSettings, zone, defaultZone) {
             console.log(`For connection ID ${connectionId}, setting zone to ` +
-                `${zone ?? ChooseZoneWindow.defaultZoneLabel}`);
+                `${zone ?? ChooseZoneBox.defaultZoneLabel}`);
             // Update the in-memory representation of seen connections before updating the zone. If the connection ID
             // hasn't been added to the list of seen connections when the zone is changed, the window will open again!
             // But don't sync to disk until after the zone for the connection is set. That way, if there's an error in
@@ -354,8 +425,9 @@ export const BouncerApplication = GObject.registerClass(
             else
                 console.log(`quitting due to signal ${signal}!`);
             this.#sourceIds?.forEach((id) => GLib.Source.remove(id));
-            this.networkState?.destroy();
-            this.networkState = null;
+            this.#networkState?.destroy();
+            this.#networkState = null;
+            this.#dependencyCheck = null;
             super.quit(); // this ends up calling vfunc_shutdown()
         }
     }
