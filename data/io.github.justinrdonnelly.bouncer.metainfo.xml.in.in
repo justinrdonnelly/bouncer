@@ -52,6 +52,13 @@
     <color type="primary" scheme_preference="dark">#9586b9</color>
   </branding>
   <releases>
+    <release version="49.3.0" date="2026-01-29">
+      <description>
+        <ul>
+          <li>Include dashboard</li>
+        </ul>
+      </description>
+    </release>
     <release version="49.2.0" date="2025-12-08">
       <description>
         <ul>
