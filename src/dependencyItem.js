@@ -28,7 +28,7 @@ export const DependencyItem = GObject.registerClass({
             GObject.BindingFlags.SYNC_CREATE,
             // eslint-disable-next-line no-unused-vars
             (binding, value) => [true, this.#convertStatus(value)],
-            null,
+            null
         );
         this._button.connect('clicked', callbackFunction);
     }
@@ -36,16 +36,16 @@ export const DependencyItem = GObject.registerClass({
     #convertStatus(status) {
         switch (status) {
             case 0:
-            return '⚪';
+                return '⚪';
             case 1:
-            return '🟢';
+                return '🟢';
             case 2:
-            return '🟡';
+                return '🟡';
             case 3:
-            return '🔴';
+                return '🔴';
             default:
-            console.error(`Invalid DependencyItem status: ${status}`);
-            return '⚪';
+                console.error(`Invalid DependencyItem status: ${status}`);
+                return '⚪';
         }
     }
 });
