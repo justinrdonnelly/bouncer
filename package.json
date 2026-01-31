@@ -5,10 +5,10 @@
   "author": "Justin Donnelly",
   "license": "MPL-2.0",
   "devDependencies": {
-    "@stylistic/eslint-plugin": "^5.1.0",
-    "eslint": "^9.29.0",
+    "@stylistic/eslint-plugin": "^5.7.0",
+    "eslint": "^9.39.0",
     "husky": "^9.1.0",
-    "prettier": "^3.5.0"
+    "prettier": "^3.8.0"
   },
   "scripts": {
     "prepare": "husky"
