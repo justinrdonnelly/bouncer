@@ -41,8 +41,8 @@ export class ConnectionIdsSeen {
         this.#connectionIdsSeen.push(connectionId);
     }
 
-    async syncConnectionIdToSeen() {
-        // Don't try/catch here. Allow it to propagate.
+    async save() {
+        // Don't try/catch here. Allow errors to propagate.
         const dataJSON = JSON.stringify(this.#connectionIdsSeen);
         this.#data.saveData(dataJSON);
     }

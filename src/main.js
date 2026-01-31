@@ -377,7 +377,7 @@ export const BouncerApplication = GObject.registerClass(
 
             // Save the the in-memory representation of seen connections to disk
             try {
-                await this.#connectionIdsSeen.syncConnectionIdToSeen();
+                await this.#connectionIdsSeen.save();
             } catch (e) {
                 console.error('Error saving connection to seen connections.');
                 console.error(e.message);
