@@ -232,15 +232,17 @@ export const DependencyCheck = GObject.registerClass(
                 console.log('Configuring autostart');
                 const portal = new Xdp.Portal();
                 // https://libportal.org/method.Portal.request_background.html
-                await portal.request_background(
+                const success = await portal.request_background(
                     null,
                     _('Bouncer must start on login'),
                     [config.APP_ID, '--monitor'],
                     Xdp.BackgroundFlags.AUTOSTART,
-                    null, // cancellable
+                    null // cancellable
                     // callback is N/A since we've used promisify
-                    null // user_data
                 );
+                if (!success) {
+                    throw new Error('Portal error configuring autostart');
+                }
                 this.statusStartup = 1;
                 console.log('Successfully configured autostart');
             } catch (e) {
