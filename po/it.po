@@ -497,7 +497,7 @@ msgstr ""
 #. URL.  
 #: src/main.js:224  
 msgid "translator-credits"  
-msgstr "Albano Battistella <albanobattistella@gmail.com"  
+msgstr "Albano Battistella <albanobattistella@gmail.com>"  
   
 #: src/main.js:253  
 msgid " Bouncer is shutting down. You will need to restart manually."  
