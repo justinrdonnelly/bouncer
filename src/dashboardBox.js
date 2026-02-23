@@ -33,7 +33,7 @@ export const DashboardBox = GObject.registerClass({
 
         // D-Bus
         dependencyItem = new DependencyItem(
-            _('D-Bus'),
+            ('D-Bus'),
             dependencyCheck,
             'status-dbus',
             async () => {
