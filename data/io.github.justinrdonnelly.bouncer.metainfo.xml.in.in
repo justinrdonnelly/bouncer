@@ -4,7 +4,7 @@
   <id>@APP_ID@</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>MPL-2.0</project_license>
-  <name>@APP_NAME@</name>
+  <name translate="no">@APP_NAME@</name>
   <summary>Keep the riffraff out</summary>
   <developer id="io.github.justinrdonnelly">
     <name translate="no">Justin Donnelly</name>

@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=@APP_NAME@
+_Name=@APP_NAME@
 Exec=@APP_ID@
 Icon=@APP_ID@
 Terminal=false
