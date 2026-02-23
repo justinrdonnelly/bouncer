@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Bouncer 49\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-28 21:01-0500\n"
+"POT-Creation-Date: 2026-02-22 23:54-0500\n"
 "PO-Revision-Date: 2025-09-22 18:34+0300\n"
 "Last-Translator: Vlad Lee <vladleegit@proton.me>\n"
 "Language-Team: Russian\n"
@@ -19,11 +19,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Gtranslator 49.0\n"
-
-#: data/io.github.justinrdonnelly.bouncer.desktop.in.in:2
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:7
-msgid "@APP_NAME@"
-msgstr "@APP_NAME@"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/io.github.justinrdonnelly.bouncer.desktop.in.in:10
@@ -123,58 +118,66 @@ msgstr "Debian"
 msgid "Bouncer prompting for the type of network"
 msgstr "Теперь Bouncer запрашивает тип сети"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:54
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:47
+msgid "Bouncer dashboard showing configuration status"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:58
+msgid "Include dashboard"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:65
 msgid "Include additional desktop categories"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:55
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:66
 msgid "Support command line arguments"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:62
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:73
 msgid "Added Russian translation"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:63
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:74
 #, fuzzy
 msgid "Fixed metainfo formatting"
 msgstr "Получить дополнительную информацию."
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:70
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:81
 msgid "Added Occitan translation"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:71
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:82
 msgid "Added Simplified Chinese translation"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:72
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:83
 msgid "Fixed multiple instance support"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:73
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:84
 msgid "Use GNOME 49 runtime"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:80
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:91
 msgid "Critical bug fix for non-English language users"
 msgstr ""
 "Исправлена критическая ошибка для пользователей, не использующих английскую "
 "локализацию"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:81
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:92
 msgid "Added Dutch translation"
 msgstr "Добавлен перевод на Голландский язык"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:82
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:93
 msgid "Documentation cleanups"
 msgstr "Подчищена документация"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:88
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:99
 msgid "Include a notification for first run success"
 msgstr "Добавлено уведомление при первом успешном запуске"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:93
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:104
 msgid "Initial release"
 msgstr "Первичный релиз"
 
@@ -254,10 +257,6 @@ msgstr ""
 "Указанная зона брандмауэра будет использоваться при каждом подключении к "
 "данной сети."
 
-#: src/dashboardBox.js:36
-msgid "D-Bus"
-msgstr ""
-
 #: src/dashboardBox.js:52
 msgid "firewalld Running"
 msgstr ""
@@ -302,11 +301,11 @@ msgstr ""
 msgid "Bouncer must start on login"
 msgstr "Bouncer должен запускаться при входе в систему"
 
-#: src/dependencyCheck.js:254
+#: src/dependencyCheck.js:256
 msgid "Can't configure autostart"
 msgstr "Невозможно настроить автозапуск"
 
-#: src/dependencyCheck.js:255
+#: src/dependencyCheck.js:257
 msgid ""
 "Please make sure the portal is available from inside the flatpak sandbox. "
 "Please see logs for more information."
@@ -314,11 +313,11 @@ msgstr ""
 "Пожалуйста, убедитесь, что портал доступен из песочницы flatpak. Обратитесь "
 "к логам, чтобы получить дополнительную информацию."
 
-#: src/dependencyCheck.js:279
+#: src/dependencyCheck.js:281
 msgid "Can't find D-Bus names"
 msgstr "Имена D-Bus не найдены"
 
-#: src/dependencyCheck.js:280
+#: src/dependencyCheck.js:282
 msgid ""
 "Please make sure D-Bus is installed, running, and available inside the "
 "flatpak sandbox. Please see logs for more information."
@@ -326,11 +325,11 @@ msgstr ""
 "Пожалуйста, убедитесь, что D-Bus установлен, запущен и доступен из песочницы "
 "flatpak. Обратитесь к логам, чтобы получить дополнительную информацию."
 
-#: src/dependencyCheck.js:310
+#: src/dependencyCheck.js:312
 msgid "Can't find firewalld"
 msgstr "firewalld не найден"
 
-#: src/dependencyCheck.js:311
+#: src/dependencyCheck.js:313
 msgid ""
 "Please make sure firewalld is installed, running, and available inside the "
 "flatpak sandbox. Please see logs for more information."
@@ -339,11 +338,11 @@ msgstr ""
 "песочницы flatpak. Обратитесь к логам, чтобы получить дополнительную "
 "информацию."
 
-#: src/dependencyCheck.js:330
+#: src/dependencyCheck.js:332
 msgid "Can't get firewalld zones"
 msgstr "Не удалось получить зоны firewalld"
 
-#: src/dependencyCheck.js:331
+#: src/dependencyCheck.js:333
 msgid ""
 "Unable to get firewalld zones. Please make sure firewalld permissions are "
 "correct, and are not restricted inside the flatpak sandbox. Please see logs "
@@ -353,11 +352,11 @@ msgstr ""
 "firewalld выданы корректные разрешения, а внутри песочницы flatpak нет "
 "ограничений. Обратитесь к логам, чтобы получить дополнительную информацию."
 
-#: src/dependencyCheck.js:347
+#: src/dependencyCheck.js:349
 msgid "Can't get firewalld default zone"
 msgstr "Не удалось получить зону firewalld по умолчанию"
 
-#: src/dependencyCheck.js:348
+#: src/dependencyCheck.js:350
 msgid ""
 "Unable to get firewalld default zone. Please make sure firewalld permissions "
 "are correct, and are not restricted inside the flatpak sandbox. Please see "
@@ -367,11 +366,11 @@ msgstr ""
 "что firewalld выданы корректные разрешения, а внутри песочницы flatpak нет "
 "ограничений. Обратитесь к логам, чтобы получить дополнительную информацию."
 
-#: src/dependencyCheck.js:378
+#: src/dependencyCheck.js:380
 msgid "Can't find NetworkManager"
 msgstr "NetworkManager не найден"
 
-#: src/dependencyCheck.js:379
+#: src/dependencyCheck.js:381
 msgid ""
 "Please make sure NetworkManager is installed, running, and available inside "
 "the flatpak sandbox. Please see logs for more information."
@@ -380,11 +379,11 @@ msgstr ""
 "песочницы flatpak. Обратитесь к логам, чтобы получить дополнительную "
 "информацию."
 
-#: src/dependencyCheck.js:430
+#: src/dependencyCheck.js:432
 msgid "Authentication required to change NetworkManager connection zone"
 msgstr "Для изменения зоны подключения NetworkManager требуется аутентификация"
 
-#: src/dependencyCheck.js:431
+#: src/dependencyCheck.js:433
 msgid ""
 "You are authorized to change the connection zone in NetworkManager, but will "
 "be required to authenticate. This will work, but may be annoying. Please see "
@@ -395,11 +394,11 @@ msgstr ""
 "оказаться неудобным. Обратитесь к логам, чтобы получить дополнительную "
 "информацию."
 
-#: src/dependencyCheck.js:444
+#: src/dependencyCheck.js:446
 msgid "Not authorized to change NetworkManager connection zone"
 msgstr "У вас нет прав для изменения зоны подключения NetworkManager"
 
-#: src/dependencyCheck.js:445
+#: src/dependencyCheck.js:447
 msgid ""
 "You are not authorized to change the connection zone in NetworkManager. This "
 "is required for Bouncer to function properly. Please see logs for more "
@@ -409,11 +408,11 @@ msgstr ""
 "для корректной работы Bouncer. Обратитесь к логам, чтобы получить "
 "дополнительную информацию."
 
-#: src/dependencyCheck.js:457
+#: src/dependencyCheck.js:459
 msgid "Unexpected result from NetworkManager GetSettings: "
 msgstr "NetworkManager GetSettings вернул неожиданный результат:"
 
-#: src/dependencyCheck.js:458
+#: src/dependencyCheck.js:460
 msgid ""
 "Unable to determine whether you are authorized to change the connection zone "
 "in NetworkManager. Bouncer may not function properly. Please see logs for "
@@ -659,15 +658,19 @@ msgstr ""
 "для корректной работы приложения. Обратитесь к логам, чтобы получить "
 "дополнительную информацию."
 
+#~ msgid "@APP_NAME@"
+#~ msgstr "@APP_NAME@"
+
 #~ msgid ""
-#~ "Additional setup is required after installation. See the applicable section "
-#~ "for your distribution. Once the setup is done, start Bouncer manually to "
-#~ "enable autostart. After that, it will start automatically when you log in."
+#~ "Additional setup is required after installation. See the applicable "
+#~ "section for your distribution. Once the setup is done, start Bouncer "
+#~ "manually to enable autostart. After that, it will start automatically "
+#~ "when you log in."
 #~ msgstr ""
 #~ "Требуется дополнительная настройка. Обратитесь к соответствующему разделу "
 #~ "для вашего дистрибутива. После завершения настройки запустите Bouncer "
-#~ "вручную для активации автозапуска. В дальнейшем программа будет запускаться "
-#~ "автоматически при входе в систему."
+#~ "вручную для активации автозапуска. В дальнейшем программа будет "
+#~ "запускаться автоматически при входе в систему."
 
 #~ msgid ""
 #~ "For Fedora, everything just works! Just remember to start Bouncer "
