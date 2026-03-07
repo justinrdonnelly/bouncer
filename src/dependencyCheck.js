@@ -222,7 +222,7 @@ export const DependencyCheck = GObject.registerClass(
                     }
                 }
             } catch {
-                console.log('Error in dependency checks. Not performing first run logic.');
+                console.error('Error in dependency checks. Not performing first run logic.');
             }
         }
 
