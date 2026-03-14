@@ -16,12 +16,12 @@ import GLibUnix from 'gi://GLibUnix?version=2.0';
 import GObject from 'gi://GObject'; // Required by GJS, version not necessary.
 import Gtk from 'gi://Gtk';
 
-import { BouncerWindow } from './bouncerWindow.js';
-import { ChooseZoneBox } from './chooseZoneBox.js';
+import { BouncerWindow } from './ui/bouncerWindow.js';
+import { ChooseZoneBox } from './ui/chooseZoneBox.js';
 import { config } from './config.js';
 import { ConnectionIdsSeen } from './connectionIdsSeen.js';
 import { DependencyCheck } from './dependencyCheck.js';
-import { DashboardBox } from './dashboardBox.js';
+import { DashboardBox } from './ui/dashboardBox.js';
 import { NetworkState } from './networkState.js';
 import { ZoneForConnection } from './zoneForConnection.js';
 import { ZoneInfo } from './zoneInfo.js';

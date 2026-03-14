@@ -15,7 +15,7 @@ import GObject from 'gi://GObject';
 export const BouncerWindow = GObject.registerClass(
     {
         GTypeName: 'BouncerWindow',
-        Template: 'resource:///io/github/justinrdonnelly/bouncer/bouncerWindow.ui',
+        Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/bouncerWindow.ui',
         InternalChildren: ['contentBox'],
     },
     class BouncerWindow extends Adw.ApplicationWindow {

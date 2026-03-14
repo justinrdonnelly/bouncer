@@ -17,7 +17,7 @@ import { MoreInfoDialog } from './moreInfo.js';
 export const ChooseZoneBox = GObject.registerClass(
     {
         GTypeName: 'ChooseZoneBox',
-        Template: 'resource:///io/github/justinrdonnelly/bouncer/chooseZoneBox.ui',
+        Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/chooseZoneBox.ui',
         InternalChildren: ['currentZone', 'defaultZone', 'connectionId', 'zoneDropDown', 'zoneList'],
         Signals: {
             'zone-selected': {

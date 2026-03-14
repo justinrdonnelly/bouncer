@@ -14,7 +14,7 @@ import GObject from 'gi://GObject';
 
 export const DependencyItem = GObject.registerClass({
     GTypeName: 'DependencyItem',
-    Template: 'resource:///io/github/justinrdonnelly/bouncer/dependencyItem.ui',
+    Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/dependencyItem.ui',
     InternalChildren: ['button', 'status'],
 }, class DependencyItem extends Adw.ActionRow {
     constructor(title, dependencyCheck, property, callbackFunction) {

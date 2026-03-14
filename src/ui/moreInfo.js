@@ -15,7 +15,7 @@ import GObject from 'gi://GObject';
 export const MoreInfoDialog = GObject.registerClass(
     {
         GTypeName: 'MoreInfoDialog',
-        Template: 'resource:///io/github/justinrdonnelly/bouncer/moreInfo.ui',
+        Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/moreInfo.ui',
     },
     class MoreInfoDialog extends Adw.Dialog {}
 );

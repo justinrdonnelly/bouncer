@@ -16,7 +16,7 @@ import { DependencyItem } from './dependencyItem.js';
 
 export const DashboardBox = GObject.registerClass({
     GTypeName: 'DashboardBox',
-    Template: 'resource:///io/github/justinrdonnelly/bouncer/dashboardBox.ui',
+    Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/dashboardBox.ui',
     InternalChildren: ['listBox', 'monitorButton', 'labelNotMonitoring', 'labelMonitoring'],
     Signals: {
         'monitor-network': {},
