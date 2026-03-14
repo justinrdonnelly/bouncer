@@ -227,7 +227,7 @@ export const BouncerApplication = GObject.registerClass(
                     license_type: Gtk.License.MPL_2_0,
                 };
                 const aboutDialog = new Adw.AboutDialog(aboutParams);
-                aboutDialog.present(this.#chooseZoneWindow);
+                aboutDialog.present(this.active_window);
             });
             this.add_action(this._showAboutAction);
         }
