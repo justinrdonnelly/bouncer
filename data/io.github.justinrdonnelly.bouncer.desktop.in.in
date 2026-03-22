@@ -1,5 +1,6 @@
 [Desktop Entry]
-_Name=@APP_NAME@
+# Translators: Do NOT translate @APP_NAME@!
+Name=@APP_NAME@
 Exec=@APP_ID@
 Icon=@APP_ID@
 Terminal=false
