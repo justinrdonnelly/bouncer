@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Bouncer 49.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 23:54-0500\n"
+"POT-Creation-Date: 2026-03-22 18:41-0400\n"
 "PO-Revision-Date: 2026-02-26 23:36+0100\n"
 "Last-Translator: Dawid Kulas <https://github.com/dawkagaming>\n"
 "Language-Team: \n"
@@ -18,8 +18,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.6\n"
 
+#. Translators: Do NOT translate @APP_NAME@!
+#: data/io.github.justinrdonnelly.bouncer.desktop.in.in:3
+msgid "@APP_NAME@"
+msgstr ""
+
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/io.github.justinrdonnelly.bouncer.desktop.in.in:10
+#: data/io.github.justinrdonnelly.bouncer.desktop.in.in:11
 msgid "firewall;network;Wi-Fi;"
 msgstr "zapora sieciowa;zapora ogniowa;sieć;Wi-Fi;"
 
@@ -184,15 +189,15 @@ msgstr "Dodano powiadomienie przy pierwszym poprawnym uruchomieniu"
 msgid "Initial release"
 msgstr "Wydanie wstępne"
 
-#: src/bouncerWindow.ui:27
+#: src/ui/bouncerWindow.ui:27
 msgid "Menu"
 msgstr ""
 
-#: src/bouncerWindow.ui:54
+#: src/ui/bouncerWindow.ui:54
 msgid "_About Bouncer"
 msgstr "_O Bouncer"
 
-#: src/chooseZoneBox.ui:25
+#: src/ui/chooseZoneBox.ui:25
 msgid ""
 "You have connected to a new Wi-Fi network. Please choose a firewall zone. "
 "What type of network is this?"
@@ -200,46 +205,46 @@ msgstr ""
 "Połączyłeś się z nową siecią Wi-Fi. Proszę wybrać strefę zapory. Jaki jest "
 "to typ sieci?"
 
-#: src/chooseZoneBox.ui:41
+#: src/ui/chooseZoneBox.ui:41
 msgid "Network"
 msgstr "Sieć"
 
-#: src/chooseZoneBox.ui:50
+#: src/ui/chooseZoneBox.ui:50
 msgid "Default Zone"
 msgstr "Domyślna strefa"
 
-#: src/chooseZoneBox.ui:59
+#: src/ui/chooseZoneBox.ui:59
 msgid "Current Zone"
 msgstr "Aktywna strefa"
 
 #. make the dropdown not span the entire box
-#: src/chooseZoneBox.ui:75
+#: src/ui/chooseZoneBox.ui:75
 msgid "Firewall Zone"
 msgstr "Strefa zapory"
 
-#: src/chooseZoneBox.ui:76
+#: src/ui/chooseZoneBox.ui:76
 msgid "Choose the firewall zone for this network."
 msgstr "Wybierz strefę dla tej sieci."
 
-#: src/chooseZoneBox.ui:79
+#: src/ui/chooseZoneBox.ui:79
 msgid "Zone"
 msgstr "Strefa"
 
-#: src/chooseZoneBox.ui:98
+#: src/ui/chooseZoneBox.ui:98
 msgid "Help"
 msgstr "Pomoc"
 
 #. min width
-#: src/chooseZoneBox.ui:110
+#: src/ui/chooseZoneBox.ui:110
 msgid "Get more information."
 msgstr "Zobacz więcej informacji."
 
-#: src/chooseZoneBox.ui:125
+#: src/ui/chooseZoneBox.ui:125
 msgid "Exit"
 msgstr "Wyjdź"
 
 #. min width
-#: src/chooseZoneBox.ui:137
+#: src/ui/chooseZoneBox.ui:137
 msgid ""
 "No change will be made. You will see this window again the next time you "
 "connect to this network."
@@ -247,35 +252,35 @@ msgstr ""
 "Nie wybrano żadnych zmian. Zobaczysz to okno ponownie następnym razem, gdy "
 "podłączysz się do tej sieci."
 
-#: src/chooseZoneBox.ui:152
+#: src/ui/chooseZoneBox.ui:152
 msgid "Choose"
 msgstr "Wybierz"
 
 #. min width
-#: src/chooseZoneBox.ui:167
+#: src/ui/chooseZoneBox.ui:167
 msgid ""
 "The selected firewall zone will be used every time you connect to this "
 "network."
 msgstr ""
 "Wybrana strefa będzie używana zawsze kiedy podłączysz się do tej sieci."
 
-#: src/dashboardBox.js:52
+#: src/ui/dashboardBox.js:52
 msgid "firewalld Running"
 msgstr "firewalld działa"
 
-#: src/dashboardBox.js:68
+#: src/ui/dashboardBox.js:68
 msgid "NetworkManager Running"
 msgstr "NetworkManager działa"
 
-#: src/dashboardBox.js:84
+#: src/ui/dashboardBox.js:84
 msgid "NetworkManager Permissions"
 msgstr "Uprawnienia NetworkManager'a"
 
-#: src/dashboardBox.js:93
+#: src/ui/dashboardBox.js:93
 msgid "Run on Startup"
 msgstr "Uruchom przy starcie systemu"
 
-#: src/dashboardBox.ui:23
+#: src/ui/dashboardBox.ui:23
 msgid ""
 "In order to function properly, Bouncer depends on multiple other system "
 "components and configurations. To help facilitate the correct setup, this "
@@ -285,21 +290,21 @@ msgstr ""
 "systemowych i konfiguracjach. Aby ułatwić poprawne ustawienia, ta strona "
 "pokazuje status wymaganych komponentów i ustawień."
 
-#: src/dashboardBox.ui:31
+#: src/ui/dashboardBox.ui:31
 msgid ""
 "You can close this window at any time without affecting network monitoring."
 msgstr ""
 "Możesz kiedykolwiek zamknąć to okna bez wpłynięcia na monitorowanie sieci."
 
-#: src/dashboardBox.ui:55
+#: src/ui/dashboardBox.ui:55
 msgid "Once everything is ready, click to begin using Bouncer."
 msgstr "Kiedy wszystko będzie gotowe, kliknij żeby zacząć używać Bouncer'a."
 
-#: src/dashboardBox.ui:64
+#: src/ui/dashboardBox.ui:64
 msgid "Bouncer is monitoring your Wi-Fi!"
 msgstr "Bouncer monitoruje twoje Wi-Fi!"
 
-#: src/dashboardBox.ui:70
+#: src/ui/dashboardBox.ui:70
 msgid "Monitor"
 msgstr "Monitoruj"
 
@@ -425,7 +430,7 @@ msgstr ""
 "NetworkManagerze. Bouncer może nie działać poprawnie. Sprawdź logi po więcej "
 "informacji."
 
-#: src/dependencyItem.ui:23
+#: src/ui/dependencyItem.ui:23
 msgid "Check Status"
 msgstr "Sprawdź status"
 
@@ -596,12 +601,12 @@ msgstr ""
 msgid "."
 msgstr ""
 
-#: src/moreInfo.ui:16
+#: src/ui/moreInfo.ui:16
 msgid "More Information"
 msgstr "Więcej informacji"
 
 #. Ignore the ugly formatting. New lines are literal.
-#: src/moreInfo.ui:34
+#: src/ui/moreInfo.ui:34
 msgid ""
 "You're using <a href=\"https://firewalld.org/\">firewalld</a> as your "
 "firewall. One of the nice features about firewalld is that it supports "

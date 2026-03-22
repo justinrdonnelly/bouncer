@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Bouncer 48\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 23:54-0500\n"
+"POT-Creation-Date: 2026-03-22 18:41-0400\n"
 "PO-Revision-Date: 2025-07-09 19:10-0400\n"
 "Last-Translator: Ariel Wang <ariel@netc.fr>\n"
 "Language-Team: \n"
@@ -17,8 +17,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#. Translators: Do NOT translate @APP_NAME@!
+#: data/io.github.justinrdonnelly.bouncer.desktop.in.in:3
+msgid "@APP_NAME@"
+msgstr "@APP_NAME@"
+
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/io.github.justinrdonnelly.bouncer.desktop.in.in:10
+#: data/io.github.justinrdonnelly.bouncer.desktop.in.in:11
 msgid "firewall;network;Wi-Fi;"
 msgstr "防火墙;网络;Wi-Fi;"
 
@@ -171,114 +176,114 @@ msgstr "包含首次运行成功的通知"
 msgid "Initial release"
 msgstr "初始版本"
 
-#: src/bouncerWindow.ui:27
+#: src/ui/bouncerWindow.ui:27
 msgid "Menu"
 msgstr "菜单"
 
-#: src/bouncerWindow.ui:54
+#: src/ui/bouncerWindow.ui:54
 msgid "_About Bouncer"
 msgstr "_关于 Bouncer"
 
-#: src/chooseZoneBox.ui:25
+#: src/ui/chooseZoneBox.ui:25
 msgid ""
 "You have connected to a new Wi-Fi network. Please choose a firewall zone. "
 "What type of network is this?"
 msgstr ""
 "您已连接到一个新的 Wi-Fi 网络。请选择一个防火墙区域。这是什么类型的网络？"
 
-#: src/chooseZoneBox.ui:41
+#: src/ui/chooseZoneBox.ui:41
 msgid "Network"
 msgstr "网络"
 
-#: src/chooseZoneBox.ui:50
+#: src/ui/chooseZoneBox.ui:50
 msgid "Default Zone"
 msgstr "默认区域"
 
-#: src/chooseZoneBox.ui:59
+#: src/ui/chooseZoneBox.ui:59
 msgid "Current Zone"
 msgstr "当前区域"
 
 #. make the dropdown not span the entire box
-#: src/chooseZoneBox.ui:75
+#: src/ui/chooseZoneBox.ui:75
 msgid "Firewall Zone"
 msgstr "防火墙区域"
 
-#: src/chooseZoneBox.ui:76
+#: src/ui/chooseZoneBox.ui:76
 msgid "Choose the firewall zone for this network."
 msgstr "为这个网络选择防火墙区域。"
 
-#: src/chooseZoneBox.ui:79
+#: src/ui/chooseZoneBox.ui:79
 msgid "Zone"
 msgstr "区域"
 
-#: src/chooseZoneBox.ui:98
+#: src/ui/chooseZoneBox.ui:98
 msgid "Help"
 msgstr "帮助"
 
 #. min width
-#: src/chooseZoneBox.ui:110
+#: src/ui/chooseZoneBox.ui:110
 msgid "Get more information."
 msgstr "获取更多信息。"
 
-#: src/chooseZoneBox.ui:125
+#: src/ui/chooseZoneBox.ui:125
 msgid "Exit"
 msgstr "退出"
 
 #. min width
-#: src/chooseZoneBox.ui:137
+#: src/ui/chooseZoneBox.ui:137
 msgid ""
 "No change will be made. You will see this window again the next time you "
 "connect to this network."
 msgstr "不会进行任何更改。下次您连接到此网络时，将再次看到此窗口。"
 
-#: src/chooseZoneBox.ui:152
+#: src/ui/chooseZoneBox.ui:152
 msgid "Choose"
 msgstr "选择"
 
 #. min width
-#: src/chooseZoneBox.ui:167
+#: src/ui/chooseZoneBox.ui:167
 msgid ""
 "The selected firewall zone will be used every time you connect to this "
 "network."
 msgstr "每次您连接到此网络时，将使用所选的防火墙区域。"
 
-#: src/dashboardBox.js:52
+#: src/ui/dashboardBox.js:52
 msgid "firewalld Running"
 msgstr ""
 
-#: src/dashboardBox.js:68
+#: src/ui/dashboardBox.js:68
 msgid "NetworkManager Running"
 msgstr ""
 
-#: src/dashboardBox.js:84
+#: src/ui/dashboardBox.js:84
 msgid "NetworkManager Permissions"
 msgstr ""
 
-#: src/dashboardBox.js:93
+#: src/ui/dashboardBox.js:93
 msgid "Run on Startup"
 msgstr ""
 
-#: src/dashboardBox.ui:23
+#: src/ui/dashboardBox.ui:23
 msgid ""
 "In order to function properly, Bouncer depends on multiple other system "
 "components and configurations. To help facilitate the correct setup, this "
 "page shows the status for those required components and configurations."
 msgstr ""
 
-#: src/dashboardBox.ui:31
+#: src/ui/dashboardBox.ui:31
 msgid ""
 "You can close this window at any time without affecting network monitoring."
 msgstr ""
 
-#: src/dashboardBox.ui:55
+#: src/ui/dashboardBox.ui:55
 msgid "Once everything is ready, click to begin using Bouncer."
 msgstr ""
 
-#: src/dashboardBox.ui:64
+#: src/ui/dashboardBox.ui:64
 msgid "Bouncer is monitoring your Wi-Fi!"
 msgstr ""
 
-#: src/dashboardBox.ui:70
+#: src/ui/dashboardBox.ui:70
 msgid "Monitor"
 msgstr ""
 
@@ -397,7 +402,7 @@ msgstr ""
 "无法确定您是否有权限更改 NetworkManager 中的连接区域。Bouncer 可能无法正常运"
 "行。请查看日志以获取更多信息。"
 
-#: src/dependencyItem.ui:23
+#: src/ui/dependencyItem.ui:23
 msgid "Check Status"
 msgstr ""
 
@@ -550,12 +555,12 @@ msgstr "。未来每次您连接到此网络时，防火墙区域将自动更改
 msgid "."
 msgstr "。"
 
-#: src/moreInfo.ui:16
+#: src/ui/moreInfo.ui:16
 msgid "More Information"
 msgstr "更多信息"
 
 #. Ignore the ugly formatting. New lines are literal.
-#: src/moreInfo.ui:34
+#: src/ui/moreInfo.ui:34
 msgid ""
 "You're using <a href=\"https://firewalld.org/\">firewalld</a> as your "
 "firewall. One of the nice features about firewalld is that it supports "
@@ -606,9 +611,6 @@ msgid ""
 msgstr ""
 "Bouncer 在确定网络状态时遇到了错误。这是应用程序正常运行所需的。请查看日志以"
 "获取更多信息。"
-
-#~ msgid "@APP_NAME@"
-#~ msgstr "@APP_NAME@"
 
 #~ msgid ""
 #~ "Additional setup is required after installation. See the applicable "
