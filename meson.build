@@ -1,6 +1,6 @@
 project(
   'bouncer',
-  version: '49.0.0',
+  version: '50.0.0',
   meson_version: '>= 1.9.0',
   default_options: [ 'warning_level=2', 'werror=false', ],
 )
