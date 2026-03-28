@@ -312,10 +312,11 @@ const NetworkManagerDevice = GObject.registerClass(
                         this.#deleteConnection(oldValue); // destroy old child
                         this.#addConnectionInfo(); // this will add the child
                     } else {
-                        console.error('Unexpected transition for ActiveConnection (inactive to inactive). Old: ' +
-                            `${oldValue}; New: ${value}`);
-                        // Although this is unexpected, it's not actually a big deal.
-                        // As above, don't call #deleteConnection on an old inactive value.
+                        console.debug(`debug 2 - connection changed from one inactive connection (${oldValue}) to ` +
+                            `another (${value})`);
+                        // Although uncommon, this happens when NetworkManager is stopped, and it's not actually a big
+                        // deal. In testing, this._proxyObj is null, but #addConnectionInfo can handle that. As above,
+                        // don't call #deleteConnection on an old inactive value.
                         this.#addConnectionInfo(); // this will add the child
                     }
                 }
@@ -337,6 +338,12 @@ const NetworkManagerDevice = GObject.registerClass(
         }
 
         #addConnectionInfo() {
+            // Sometimes this._proxyObj is null. In some cases (eg ActiveConnection transitioned from inactive to
+            // inactive), this is somewhat expected. But in others (eg ActiveConnection transitioned from inactive to
+            // active during a NetworkManager restart), it's not. Either way, there's nothing we can do.
+            if (this._proxyObj === null) {
+                return;
+            }
             // e.g. / (if not active), /org/freedesktop/NetworkManager/ActiveConnection/1 (if active)
             this.#activeConnection = this._proxyObj.ActiveConnection;
             console.debug(`debug 1 - Adding connection ${this.#activeConnection}`);
