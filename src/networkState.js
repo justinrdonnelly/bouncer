@@ -371,7 +371,10 @@ const NetworkManager = GObject.registerClass(
                 // When NetworkManager is no longer on dbus (eg, it has shut down), clean up all the child elements.
                 // This functionality is all in `super.destroy`. DO NOT CALL `this.destroy` because we want to continue
                 // watching the bus.
-                () => super.destroy()
+                () => {
+                    this.emitConnectionChanged('', ''); // no connection, so be sure the choose zone window is closed
+                    super.destroy();
+                }
             );
         }
 
