@@ -30,7 +30,7 @@ import { NetworkManagerProxy } from './networkManagerDbusInterfaces/networkManag
  * I prefer not to chance masking real errors. I trust that you can read from bottom to top.
  */
 
-// An absttract class with all the signals we need.
+// An abstract class with all the signals we need.
 const NetworkStateSignals = GObject.registerClass(
     {
         Signals: {
@@ -195,15 +195,10 @@ const NetworkManagerConnectionActive = GObject.registerClass(
                 }
             }
 
-            // IIUC this means that I would need to make another async call to get the updated devices. A better
-            // alternative would be to pass the GET_INVALIDATED_PROPERTIES flag during proxy construction. For now,
-            // this is considered a fatal error. Log it, and destroy as much as you can.
-            // see: https://gjs.guide/guides/gio/dbus.html#low-level-proxies
             for (const name of invalidated) {
                 if (name === 'Id') {
-                    console.error('Id is invalidated. This is not supported.');
-                    this._error();
-                    this.destroy();
+                    console.log('Id is invalidated. NetworkManager may have been shut down.');
+                    // We don't need to destroy children here. Everybody is becoming invalidated.
                     return;
                 }
             }
@@ -326,15 +321,10 @@ const NetworkManagerDevice = GObject.registerClass(
                 }
             }
 
-            // IIUC this means that I would need to make another async call to get the updated devices. A better
-            // alternative would be to pass the GET_INVALIDATED_PROPERTIES flag during proxy construction. For now, this
-            // is considered a fatal error. Log it, and destroy as much as you can.
-            // see: https://gjs.guide/guides/gio/dbus.html#low-level-proxies
             for (const name of invalidated) {
                 if (name === 'ActiveConnection') {
-                    console.error('ActiveConnection is invalidated. This is not supported.');
-                    this._error();
-                    this.destroy();
+                    console.log('ActiveConnection is invalidated. NetworkManager may have been shut down.');
+                    // We don't need to destroy children here. Everybody is becoming invalidated.
                     return;
                 }
             }
@@ -459,15 +449,10 @@ const NetworkManager = GObject.registerClass(
                 }
             }
 
-            // IIUC this means that I would need to make another async call to get the updated devices. A better
-            // alternative would be to pass the GET_INVALIDATED_PROPERTIES flag during proxy construction. For now, this
-            // is considered a fatal error. Log it, and destroy as much as you can.
-            // see: https://gjs.guide/guides/gio/dbus.html#low-level-proxies
             for (const name of invalidated) {
                 if (name === 'Devices') {
-                    console.error('Devices is invalidated. This is not supported.');
-                    this._error();
-                    this.destroy();
+                    console.log('Devices is invalidated. NetworkManager may have been shut down.');
+                    // We don't need to destroy children here. Everybody is becoming invalidated.
                     return;
                 }
             }
