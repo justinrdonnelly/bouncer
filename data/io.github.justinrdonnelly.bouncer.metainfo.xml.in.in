@@ -52,6 +52,18 @@
     <color type="primary" scheme_preference="dark">#9586b9</color>
   </branding>
   <releases>
+    <release version="50.0.0" date="2026-03-29">
+      <description>
+        <ul>
+          <li>Correctly show autostart status on dashboard</li>
+          <li>Include Italian translation</li>
+          <li>Track connection IDs seen per machine</li>
+          <li>Include Polish translation</li>
+          <li>Use GNOME 50 runtime</li>
+          <li>Handle NetworkManager restarts</li>
+        </ul>
+      </description>
+    </release>
     <release version="49.3.0" date="2026-01-29">
       <description>
         <ul>
