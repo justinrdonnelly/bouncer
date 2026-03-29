@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Bouncer 49.3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-22 18:41-0400\n"
-"PO-Revision-Date: 2026-01-31 21:02+0200\n"
+"PO-Revision-Date: 2026-03-29 22:02+0200\n"
 "Last-Translator:Albano Battistella <albanobattistella@gmail.com>\n"
 "Language-Team: Italian <LL@li.org>\n"
 "Language: it\n"
@@ -132,11 +132,11 @@ msgstr "Bouncer che richiede il tipo di rete"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:47
 msgid "Bouncer dashboard showing configuration status"
-msgstr ""
+msgstr "Dashboard di Bouncer che mostra lo stato della configurazione"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:58
 msgid "Include dashboard"
-msgstr ""
+msgstr "Includi dashboard"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:65
 msgid "Include additional desktop categories"
