@@ -27,13 +27,40 @@ export const DependencyItem = GObject.registerClass({
             'label',
             GObject.BindingFlags.SYNC_CREATE,
             // eslint-disable-next-line no-unused-vars
-            (binding, value) => [true, this.#convertStatus(value)],
+            (binding, value) => [true, this.#convertStatusToIcon(value)],
             null
         );
+
+        dependencyCheck.bind_property_full(
+            property,
+            this._status,
+            'tooltip-text',
+            GObject.BindingFlags.SYNC_CREATE,
+            // eslint-disable-next-line no-unused-vars
+            (binding, value) => [true, this.#convertStatusToText(value)],
+            null
+        );
+
         this._button.connect('clicked', callbackFunction);
     }
 
-    #convertStatus(status) {
+    #convertStatusToText(status) {
+     switch (status) {
+            case 0:
+                return _('Unknown');
+            case 1:
+                return _('Ready');
+            case 2:
+                return _('Not Ready');
+            case 3:
+                return _('Error');
+            default:
+                console.error(`Invalid DependencyItem status: ${status}`);
+                return 'Unknown';
+        }
+    }
+
+    #convertStatusToIcon(status) {
         switch (status) {
             case 0:
                 return '⚪';

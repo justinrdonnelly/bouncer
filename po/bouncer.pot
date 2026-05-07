@@ -553,3 +553,19 @@ msgid ""
 "Bouncer ran into an error determining network state. This is required for "
 "the application to work correctly. Please see logs for more information."
 msgstr ""
+
+#: src/ui/dependencyItem.js:50
+msgid "Unknown"
+msgstr ""
+
+#: src/ui/dependencyItem.js:52
+msgid "Ready"
+msgstr ""
+
+#: src/ui/dependencyItem.js:54
+msgid "Not Ready"
+msgstr ""
+
+#: src/ui/dependencyItem.js:56
+msgid "Error"
+msgstr ""
