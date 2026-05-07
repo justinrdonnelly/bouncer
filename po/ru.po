@@ -691,3 +691,19 @@ msgstr ""
 #~ "Для активации автозагрузки запустите Bouncer вручную. Вы увидите "
 #~ "уведомление, указывающее на корректную настройку системы для работы с "
 #~ "Bouncer."
+
+#: src/ui/dependencyItem.js:50
+msgid "Unknown"
+msgstr ""
+
+#: src/ui/dependencyItem.js:52
+msgid "Ready"
+msgstr ""
+
+#: src/ui/dependencyItem.js:54
+msgid "Not Ready"
+msgstr ""
+
+#: src/ui/dependencyItem.js:56
+msgid "Error"
+msgstr ""

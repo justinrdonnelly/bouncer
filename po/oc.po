@@ -705,3 +705,19 @@ msgstr ""
 #~ "Aviatz Bouncer manualament un còp per activar l'aviada automatica. "
 #~ "Deuriatz veire una notificacion qu'indica que lo sistèma es configurat "
 #~ "corrèctament per Bouncer."
+
+#: src/ui/dependencyItem.js:50
+msgid "Unknown"
+msgstr ""
+
+#: src/ui/dependencyItem.js:52
+msgid "Ready"
+msgstr ""
+
+#: src/ui/dependencyItem.js:54
+msgid "Not Ready"
+msgstr ""
+
+#: src/ui/dependencyItem.js:56
+msgid "Error"
+msgstr ""
