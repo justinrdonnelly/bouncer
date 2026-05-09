@@ -51,9 +51,9 @@ export const DependencyItem = GObject.registerClass({
             case 1:
                 return _('Ready');
             case 2:
-                return _('Not Ready');
+                return _('Suboptimal');
             case 3:
-                return _('Error');
+                return _('Not Ready');
             default:
                 console.error(`Invalid DependencyItem status: ${status}`);
                 return _('Unknown');
