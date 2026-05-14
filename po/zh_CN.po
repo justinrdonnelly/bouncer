@@ -638,16 +638,16 @@ msgstr ""
 
 #: src/ui/dependencyItem.js:50
 msgid "Unknown"
-msgstr ""
+msgstr "未知"
 
 #: src/ui/dependencyItem.js:52
 msgid "Ready"
-msgstr ""
+msgstr "就绪"
 
 #: src/ui/dependencyItem.js:54
-msgid "Not Ready"
-msgstr ""
+msgid "Suboptimal"
+msgstr "次优"
 
 #: src/ui/dependencyItem.js:56
-msgid "Suboptimal"
-msgstr ""
+msgid "Not Ready"
+msgstr "未就绪"

@@ -563,9 +563,9 @@ msgid "Ready"
 msgstr ""
 
 #: src/ui/dependencyItem.js:54
-msgid "Not Ready"
+msgid "Suboptimal"
 msgstr ""
 
 #: src/ui/dependencyItem.js:56
-msgid "Suboptimal"
+msgid "Not Ready"
 msgstr ""
