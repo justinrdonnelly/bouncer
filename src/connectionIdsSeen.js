@@ -31,24 +31,25 @@ export class ConnectionIdsSeen {
 
         if (data === null) {
             this.#connectionIdsSeen = [];
-            this.#allConnectionIdsSeen = {[machineId]: this.#connectionIdsSeen};
+            this.#allConnectionIdsSeen = new Map([[machineId, this.#connectionIdsSeen]]);
         } else {
-            this.#allConnectionIdsSeen = JSON.parse(data);
+            const parsedData = JSON.parse(data);
             // We'll have to migrate existing setups from purely array based to an object, where the key is the machine
             // ID, and the value is the array of connection IDs.
             // This code is temporary, and should be removed after we figure users have migrated to the new format.
-            if (Array.isArray(this.#allConnectionIdsSeen)) { // It's an array (old format). Convert it.
+            if (Array.isArray(parsedData)) { // It's an array (old format). Convert it.
                 console.log(`Migrating data format for ${ConnectionIdsSeen.#fileName}`);
-                this.#connectionIdsSeen = this.#allConnectionIdsSeen;
-                this.#allConnectionIdsSeen = {[machineId]: this.#connectionIdsSeen};
+                this.#connectionIdsSeen = parsedData;
+                this.#allConnectionIdsSeen = new Map([[machineId, this.#connectionIdsSeen]]);
                 // save it to update the format of the saved data
                 await this.save();
             } else {
-                const newMachine = !Object.hasOwn(this.#allConnectionIdsSeen, machineId);
+                this.#allConnectionIdsSeen = new Map(Object.entries(parsedData));
+                const newMachine = !this.#allConnectionIdsSeen.has(machineId);
                 if (newMachine) {
-                    this.#allConnectionIdsSeen[machineId] = [];
+                    this.#allConnectionIdsSeen.set(machineId, []);
                 }
-                this.#connectionIdsSeen = this.#allConnectionIdsSeen[machineId];
+                this.#connectionIdsSeen = this.#allConnectionIdsSeen.get(machineId);
             }
         }
     }
@@ -67,7 +68,7 @@ export class ConnectionIdsSeen {
 
     async save() {
         // Don't try/catch here. Allow errors to propagate.
-        const dataJSON = JSON.stringify(this.#allConnectionIdsSeen);
+        const dataJSON = JSON.stringify(Object.fromEntries(this.#allConnectionIdsSeen));
         this.#data.saveData(dataJSON);
     }
 
