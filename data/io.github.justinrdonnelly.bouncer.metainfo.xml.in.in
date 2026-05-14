@@ -52,6 +52,15 @@
     <color type="primary" scheme_preference="dark">#9586b9</color>
   </branding>
   <releases>
+    <release version="" date="">
+      <description>
+        <ul>
+          <li>Improve accessibility for dependency item status</li>
+          <li>Update Occitan translations</li>
+          <li>Update Italian translations</li>
+        </ul>
+      </description>
+    </release>
     <release version="50.0.0" date="2026-03-29">
       <description>
         <ul>
