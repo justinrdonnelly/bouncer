@@ -661,3 +661,19 @@ msgid ""
 msgstr ""
 "Bouncer napotkał problem przy ustalaniu stanu sieci. Jest to wymagane do "
 "poprawnego działania aplikacji. Sprawdź logi po więcej informacji."
+
+#: src/ui/dependencyItem.js:50
+msgid "Unknown"
+msgstr ""
+
+#: src/ui/dependencyItem.js:52
+msgid "Ready"
+msgstr ""
+
+#: src/ui/dependencyItem.js:54
+msgid "Suboptimal"
+msgstr ""
+
+#: src/ui/dependencyItem.js:56
+msgid "Not Ready"
+msgstr ""

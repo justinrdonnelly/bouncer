@@ -7,6 +7,7 @@ src/ui/dashboardBox.js
 src/ui/dashboardBox.ui
 src/dependencyCheck.js
 src/ui/dependencyItem.ui
+src/ui/dependencyItem.js
 src/main.js
 src/ui/moreInfo.ui
 src/networkState.js

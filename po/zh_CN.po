@@ -635,3 +635,19 @@ msgstr ""
 #~ msgstr ""
 #~ "手动启动 Bouncer 一次以启用自动启动。您应该会看到一个通知，表明您的系统已"
 #~ "正确配置为使用 Bouncer。"
+
+#: src/ui/dependencyItem.js:50
+msgid "Unknown"
+msgstr "未知"
+
+#: src/ui/dependencyItem.js:52
+msgid "Ready"
+msgstr "就绪"
+
+#: src/ui/dependencyItem.js:54
+msgid "Suboptimal"
+msgstr "次优"
+
+#: src/ui/dependencyItem.js:56
+msgid "Not Ready"
+msgstr "未就绪"

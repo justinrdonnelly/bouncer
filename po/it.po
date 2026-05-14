@@ -676,3 +676,19 @@ msgstr ""
 
 #~ msgid "D-Bus"
 #~ msgstr "D-Bus"
+
+#: src/ui/dependencyItem.js:50
+msgid "Unknown"
+msgstr ""
+
+#: src/ui/dependencyItem.js:52
+msgid "Ready"
+msgstr ""
+
+#: src/ui/dependencyItem.js:54
+msgid "Suboptimal"
+msgstr ""
+
+#: src/ui/dependencyItem.js:56
+msgid "Not Ready"
+msgstr ""
