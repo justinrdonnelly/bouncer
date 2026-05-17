@@ -326,10 +326,7 @@ export const BouncerApplication = GObject.registerClass(
                     zones,
                     activeConnectionSettings
                 );
-                this.#chooseZoneWindow = new BouncerWindow(
-                    this,
-                    chooseZoneBox
-                );
+                this.#chooseZoneWindow = new BouncerWindow(this, chooseZoneBox);
                 chooseZoneBox.window = this.#chooseZoneWindow;
             }
 

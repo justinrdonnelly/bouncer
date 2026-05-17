@@ -22,7 +22,7 @@ export const BouncerWindow = GObject.registerClass(
         content = null;
 
         constructor(application, content) {
-            super({ application});
+            super({ application });
             console.debug('Building window.');
             console.debug(`application: ${application}`);
             this.content = content;
