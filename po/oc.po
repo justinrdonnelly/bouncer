@@ -267,23 +267,23 @@ msgstr ""
 "La zòna de proteccion seleccionada serà utilizada cada còp que vos "
 "connectaretz a aquesta ret."
 
-#: src/ui/dashboardBox.js:52
+#: src/ui/dependencyBox.js:52
 msgid "firewalld Running"
 msgstr "parafuòc en execucion"
 
-#: src/ui/dashboardBox.js:68
+#: src/ui/dependencyBox.js:68
 msgid "NetworkManager Running"
 msgstr "NetworkManager en execucion"
 
-#: src/ui/dashboardBox.js:84
+#: src/ui/dependencyBox.js:84
 msgid "NetworkManager Permissions"
 msgstr "Autorizacions NetworkManager"
 
-#: src/ui/dashboardBox.js:93
+#: src/ui/dependencyBox.js:93
 msgid "Run on Startup"
 msgstr "Executar a l’aviada"
 
-#: src/ui/dashboardBox.ui:23
+#: src/ui/dependencyBox.ui:23
 msgid ""
 "In order to function properly, Bouncer depends on multiple other system "
 "components and configurations. To help facilitate the correct setup, this "
@@ -294,22 +294,22 @@ msgstr ""
 "corrècta, aquesta pagina mòstra l'estat d'aqueles components e "
 "configuracions requesits."
 
-#: src/ui/dashboardBox.ui:31
+#: src/ui/dependencyBox.ui:31
 msgid ""
 "You can close this window at any time without affecting network monitoring."
 msgstr ""
 "Podètz tampar aquesta fenèstra a tot moment sens afectar la susvelhança de "
 "la ret."
 
-#: src/ui/dashboardBox.ui:55
+#: src/ui/dependencyBox.ui:55
 msgid "Once everything is ready, click to begin using Bouncer."
 msgstr "Un còp que tot es prèst, clicatz per començar d’utilizar Bouncer."
 
-#: src/ui/dashboardBox.ui:64
+#: src/ui/dependencyBox.ui:64
 msgid "Bouncer is monitoring your Wi-Fi!"
 msgstr "Bouncer es a susvelhar vòstra connexion Wi-Fi !"
 
-#: src/ui/dashboardBox.ui:70
+#: src/ui/dependencyBox.ui:70
 msgid "Monitor"
 msgstr "Susvelhar"
 

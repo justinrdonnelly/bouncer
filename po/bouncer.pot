@@ -234,43 +234,43 @@ msgid ""
 "network."
 msgstr ""
 
-#: src/ui/dashboardBox.js:52
+#: src/ui/dependencyBox.js:52
 msgid "firewalld Running"
 msgstr ""
 
-#: src/ui/dashboardBox.js:68
+#: src/ui/dependencyBox.js:68
 msgid "NetworkManager Running"
 msgstr ""
 
-#: src/ui/dashboardBox.js:84
+#: src/ui/dependencyBox.js:84
 msgid "NetworkManager Permissions"
 msgstr ""
 
-#: src/ui/dashboardBox.js:93
+#: src/ui/dependencyBox.js:93
 msgid "Run on Startup"
 msgstr ""
 
-#: src/ui/dashboardBox.ui:23
+#: src/ui/dependencyBox.ui:23
 msgid ""
 "In order to function properly, Bouncer depends on multiple other system "
 "components and configurations. To help facilitate the correct setup, this "
 "page shows the status for those required components and configurations."
 msgstr ""
 
-#: src/ui/dashboardBox.ui:31
+#: src/ui/dependencyBox.ui:31
 msgid ""
 "You can close this window at any time without affecting network monitoring."
 msgstr ""
 
-#: src/ui/dashboardBox.ui:55
+#: src/ui/dependencyBox.ui:55
 msgid "Once everything is ready, click to begin using Bouncer."
 msgstr ""
 
-#: src/ui/dashboardBox.ui:64
+#: src/ui/dependencyBox.ui:64
 msgid "Bouncer is monitoring your Wi-Fi!"
 msgstr ""
 
-#: src/ui/dashboardBox.ui:70
+#: src/ui/dependencyBox.ui:70
 msgid "Monitor"
 msgstr ""
 

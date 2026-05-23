@@ -3,8 +3,8 @@ data/io.github.justinrdonnelly.bouncer.gschema.xml.in
 data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in
 src/ui/bouncerWindow.ui
 src/ui/chooseZoneBox.ui
-src/ui/dashboardBox.js
-src/ui/dashboardBox.ui
+src/ui/dependencyBox.js
+src/ui/dependencyBox.ui
 src/dependencyCheck.js
 src/ui/dependencyItem.ui
 src/ui/dependencyItem.js
