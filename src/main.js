@@ -21,6 +21,7 @@ import { ChooseZoneBox } from './ui/chooseZoneBox.js';
 import { config } from './config.js';
 import { ConnectionIdsSeen } from './connectionIdsSeen.js';
 import { DependencyCheck } from './dependencyCheck.js';
+import { Dashboard } from './ui/dashboard.js';
 import { DependencyBox } from './ui/dependencyBox.js';
 import { NetworkState } from './networkState.js';
 import { ZoneForConnection } from './zoneForConnection.js';
@@ -123,7 +124,7 @@ export const BouncerApplication = GObject.registerClass(
             // the application will exit
             const dependencyBox = new DependencyBox(this.#dependencyCheck, this.#monitoring);
             dependencyBox.connect('monitor-network', this.monitorNetworkAndCatch.bind(this));
-            this.#dashboardWindow = new BouncerWindow(this, dependencyBox);
+            this.#dashboardWindow = new Dashboard(this, dependencyBox);
             this.#dashboardWindow.connect('close-request', this.#handleDashboardWindowClose.bind(this));
             this.#dashboardWindow.present();
             await this.#dependencyCheck.runChecks(false);
