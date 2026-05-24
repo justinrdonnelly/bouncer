@@ -63,12 +63,12 @@ export const BouncerApplication = GObject.registerClass(
 
         // This will only run once. It runs on the primary instance, and will run early.
         vfunc_startup() {
+            super.vfunc_startup();
             console.log('Welcome to Bouncer! Starting up.');
             promisify();
             this.#createAboutAction();
             this.#handleSignals();
             this.#instantiateDependencyCheck();
-            return super.vfunc_startup();
         }
 
         vfunc_activate() {} // Required because Adw.Application extends GApplication.
