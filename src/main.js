@@ -181,7 +181,7 @@ export const BouncerApplication = GObject.registerClass(
                     this.#networkState.connect('error', this.#handleErrorSignal.bind(this));
                     this.#networkState.connect('connection-changed', this.#handleConnectionChangedSignal.bind(this));
                     // if the dashboard is open, tell it that we've begun monitoring
-                    this.#dashboardWindow?.content.beginMonitoring();
+                    this.#dashboardWindow?.dependencyBox.beginMonitoring();
                 }
             } catch (e) {
                 // Bail out here... There's nothing we can do without NetworkState.

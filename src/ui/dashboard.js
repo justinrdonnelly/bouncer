@@ -19,12 +19,12 @@ export const Dashboard = GObject.registerClass(
         InternalChildren: ['content', 'dependencyBox', 'splitView', 'stack'],
     },
     class Dashboard extends Adw.ApplicationWindow {
-        content = null;
+        dependencyBox = null;
 
         constructor(application, dependencyBox) {
             super({ application });
             console.debug('Building dashboard window.');
-            this.content = dependencyBox;
+            this.dependencyBox = dependencyBox;
             this._dependencyBox.append(dependencyBox);
             this.#setContentTitle();
         }
