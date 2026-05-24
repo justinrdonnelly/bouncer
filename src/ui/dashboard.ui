@@ -90,7 +90,7 @@
                     <child>
                       <object class="AdwViewStackPage">
                         <property name="title" translatable="yes">Dependencies</property>
-                        <property name="icon-name">radio-checked-symbolic</property>
+                        <property name="icon-name">traffic-lights-symbolic</property>
                         <property name="child">
                           <object class="GtkBox" id="dependencyBox"/> <!-- We'll append the dependencyBox here -->
                         </property>

@@ -7,5 +7,7 @@
     <file preprocess="xml-stripblanks">ui/dependencyBox.ui</file>
     <file preprocess="xml-stripblanks">ui/dependencyItem.ui</file>
     <file preprocess="xml-stripblanks">ui/moreInfo.ui</file>
+    <!-- icons -->
+    <file alias="icons/scalable/actions/traffic-lights-symbolic.svg">../data/icons/scalable/actions/traffic-lights-symbolic.svg</file>
   </gresource>
 </gresources>

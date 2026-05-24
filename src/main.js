@@ -10,6 +10,7 @@
  */
 
 import Adw from 'gi://Adw?version=1';
+import Gdk from 'gi://Gdk';
 import Gio from 'gi://Gio'; // Required by GJS, version not necessary.
 import GLib from 'gi://GLib'; // Required by GJS, version not necessary.
 import GLibUnix from 'gi://GLibUnix?version=2.0';
@@ -65,6 +66,8 @@ export const BouncerApplication = GObject.registerClass(
         vfunc_startup() {
             super.vfunc_startup();
             console.log('Welcome to Bouncer! Starting up.');
+            Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
+                .add_resource_path('/io/github/justinrdonnelly/bouncer/icons');
             promisify();
             this.#createAboutAction();
             this.#handleSignals();
