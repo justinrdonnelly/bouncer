@@ -16,7 +16,7 @@ export const Dashboard = GObject.registerClass(
     {
         GTypeName: 'Dashboard',
         Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/dashboard.ui',
-        InternalChildren: ['dependencyBox', 'splitView'],
+        InternalChildren: ['content', 'dependencyBox', 'splitView', 'stack'],
     },
     class Dashboard extends Adw.ApplicationWindow {
         content = null;
@@ -26,10 +26,17 @@ export const Dashboard = GObject.registerClass(
             console.debug('Building dashboard window.');
             this.content = dependencyBox;
             this._dependencyBox.append(dependencyBox);
+            this.#setContentTitle();
+        }
+
+        // set content title to match the selected page
+        #setContentTitle() {
+            this._content.title = this._stack.get_pages().get_selected_page().get_title();
         }
 
         sidebarActivatedCallback() {
             this._splitView.set_show_content(true);
+            this.#setContentTitle();
         }
     }
 );
