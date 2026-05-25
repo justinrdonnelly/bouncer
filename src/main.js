@@ -72,6 +72,7 @@ export const BouncerApplication = GObject.registerClass(
             this.#createAboutAction();
             this.#handleSignals();
             this.#instantiateDependencyCheck();
+            this.#connectionIdsSeen = new ConnectionIdsSeen();
         }
 
         vfunc_activate() {} // Required because Adw.Application extends GApplication.
@@ -154,10 +155,7 @@ export const BouncerApplication = GObject.registerClass(
             const emit = this.#dashboardWindow === null;
             await this.#dependencyCheck.runChecks(emit);
             try {
-                if (this.#connectionIdsSeen === null) {
-                    this.#connectionIdsSeen = new ConnectionIdsSeen();
-                    await this.#connectionIdsSeen.init();
-                }
+                await this.#connectionIdsSeen.init();
             } catch (e) {
                 // Bail out here... There's nothing we can reasonably do without knowing if a network has been seen.
                 console.error('Unable to initialize ConnectionIdsSeen.');
@@ -170,7 +168,6 @@ export const BouncerApplication = GObject.registerClass(
                         'more information.')
                 );
                 // clean up
-                this.#connectionIdsSeen = null
                 this.release();
                 this.#monitoring = false;
             }
@@ -194,7 +191,6 @@ export const BouncerApplication = GObject.registerClass(
                     _('There was a problem tracking network connection changes. Please see logs for more information.')
                 );
                 // clean up
-                this.#connectionIdsSeen = null
                 this.#networkState?.destroy();
                 this.#networkState = null
                 this.release();
