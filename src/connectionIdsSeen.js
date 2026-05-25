@@ -20,6 +20,7 @@ export class ConnectionIdsSeen {
     #connectionIdsSeen; // array of connection IDs for this machine
     #allConnectionIdsSeen; // map of machine ID to array of connection UUIDs for the machine
     #data;
+    #initialized = false; // whether `init` has been called
 
     constructor() {
         this.#data = new Data(ConnectionIdsSeen.#fileName);
@@ -27,6 +28,10 @@ export class ConnectionIdsSeen {
 
     // Always call init immediately after constructor.
     async init() {
+        if (this.#initialized) {
+            return;
+        }
+        console.log('Initializing ConnectionIdsSeen');
         // Don't try/catch here. Allow errors to propagate.
         const [data, machineId] = await Promise.all([this.#data.getData(), this.getMachineId()]);
 
@@ -48,6 +53,7 @@ export class ConnectionIdsSeen {
             }
             this.#connectionIdsSeen = this.#allConnectionIdsSeen.get(machineId);
         }
+        this.#initialized = true;
     }
 
     isConnectionNew(connectionUuid) {
