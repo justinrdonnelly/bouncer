@@ -124,14 +124,16 @@ export const BouncerApplication = GObject.registerClass(
                 console.log('Bouncer dashboard window is already showing.');
                 return;
             }
-            // We need to show the window right away (before `await`ing `this.#dependencyCheck.runChecks()`, or else
-            // the application will exit
+            // If we `await` anything without either showing the window or `hold`ing, the application will exit. We'll
+            // call `hold` until we show the window, then we'll call `release`.
+            this.hold();
+            await this.#dependencyCheck.runChecks(false);
             const dependencyBox = new DependencyBox(this.#dependencyCheck, this.#monitoring);
             dependencyBox.connect('monitor-network', this.monitorNetworkAndCatch.bind(this));
             this.#dashboardWindow = new Dashboard(this, dependencyBox);
             this.#dashboardWindow.connect('close-request', this.#handleDashboardWindowClose.bind(this));
             this.#dashboardWindow.present();
-            await this.#dependencyCheck.runChecks(false);
+            this.release();
         }
 
         monitorNetworkAndCatch() {
