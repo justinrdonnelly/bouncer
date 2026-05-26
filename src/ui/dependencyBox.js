@@ -88,7 +88,7 @@ export const DependencyBox = GObject.registerClass({
         );
         this._listBox.insert(dependencyItem, count++);
 
-        // NetworkManager Running
+        // Run on startup
         dependencyItem = new DependencyItem(
             _('Run on Startup'),
             dependencyCheck,
@@ -108,6 +108,7 @@ export const DependencyBox = GObject.registerClass({
                 this.#handleMonitoringRow();
             }
         );
+        this.#statusOverall = dependencyCheck['status-overall'];
         this.#handleMonitoringRow();
     } // end constructor
 
