@@ -17,7 +17,7 @@ import { migrateDataIfNecessary } from './dataMigration.js';
 
 export class ConnectionIdsSeen {
     static #fileName = 'connection-ids-seen.json';
-    #connectionIdsSeen; // array of connection IDs for this machine
+    connectionIdsSeen; // array of connection IDs for this machine
     #allConnectionIdsSeen; // map of machine ID to array of connection UUIDs for the machine
     #data;
     #initialized = false; // whether `init` has been called
@@ -36,8 +36,8 @@ export class ConnectionIdsSeen {
         const [data, machineId] = await Promise.all([this.#data.getData(), this.getMachineId()]);
 
         if (data === null) {
-            this.#connectionIdsSeen = [];
-            this.#allConnectionIdsSeen = new Map([['version', 3], [machineId, this.#connectionIdsSeen]]);
+            this.connectionIdsSeen = [];
+            this.#allConnectionIdsSeen = new Map([['version', 3], [machineId, this.connectionIdsSeen]]);
         } else {
             const parsedData = JSON.parse(data);
             const migratedData = await migrateDataIfNecessary(parsedData, machineId);
@@ -51,21 +51,21 @@ export class ConnectionIdsSeen {
             if (newMachine) {
                 this.#allConnectionIdsSeen.set(machineId, []);
             }
-            this.#connectionIdsSeen = this.#allConnectionIdsSeen.get(machineId);
+            this.connectionIdsSeen = this.#allConnectionIdsSeen.get(machineId);
         }
         this.#initialized = true;
     }
 
     isConnectionNew(connectionUuid) {
         console.log(`Checking to see if connection ${connectionUuid} is new.`);
-        const isNew = !this.#connectionIdsSeen.includes(connectionUuid);
+        const isNew = !this.connectionIdsSeen.includes(connectionUuid);
         console.log(`Connection ${connectionUuid} is ${isNew ? '' : 'not '}new.`);
         return isNew;
     }
 
     addConnectionIdToSeen(connectionUuid) {
         console.log(`Adding ${connectionUuid} to ${ConnectionIdsSeen.#fileName}.`);
-        this.#connectionIdsSeen.push(connectionUuid);
+        this.connectionIdsSeen.push(connectionUuid);
     }
 
     async save() {
