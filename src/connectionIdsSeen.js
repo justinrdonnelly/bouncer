@@ -54,16 +54,16 @@ export class ConnectionIdsSeen {
         }
     }
 
-    isConnectionNew(connectionName) {
-        console.log(`Checking to see if connection ${connectionName} is new.`);
-        const isNew = !this.#connectionIdsSeen.includes(connectionName);
-        console.log(`Connection ${connectionName} is ${isNew ? '' : 'not '}new.`);
+    isConnectionNew(connectionUuid) {
+        console.log(`Checking to see if connection ${connectionUuid} is new.`);
+        const isNew = !this.#connectionIdsSeen.includes(connectionUuid);
+        console.log(`Connection ${connectionUuid} is ${isNew ? '' : 'not '}new.`);
         return isNew;
     }
 
-    addConnectionIdToSeen(connectionName) {
-        console.log(`Adding ${connectionName} to ${ConnectionIdsSeen.#fileName}.`);
-        this.#connectionIdsSeen.push(connectionName);
+    addConnectionIdToSeen(connectionUuid) {
+        console.log(`Adding ${connectionUuid} to ${ConnectionIdsSeen.#fileName}.`);
+        this.#connectionIdsSeen.push(connectionUuid);
     }
 
     async save() {

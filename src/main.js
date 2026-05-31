@@ -277,10 +277,10 @@ export const BouncerApplication = GObject.registerClass(
                 this.#chooseZoneWindow?.close();
                 this.#chooseZoneWindow = null;
                 // bail out if there is no connection
-                if (connectionName === '')
+                if (connectionUuid === '')
                     return;
 
-                const isConnectionNew = this.#connectionIdsSeen.isConnectionNew(connectionName);
+                const isConnectionNew = this.#connectionIdsSeen.isConnectionNew(connectionUuid);
                 if (!isConnectionNew)
                     // The connection is not new. Don't open the window.
                     return;
@@ -290,7 +290,14 @@ export const BouncerApplication = GObject.registerClass(
                     ZoneInfo.getDefaultZone(),
                     ZoneForConnection.getZone(activeConnectionSettings),
                 ]);
-                this.#createWindow(connectionName, defaultZone, currentZone, zones, activeConnectionSettings);
+                this.#createWindow(
+                    connectionUuid,
+                    connectionName,
+                    defaultZone,
+                    currentZone,
+                    zones,
+                    activeConnectionSettings
+                );
             } catch (e) {
                 // We've hit an exception in the callback where we'd consider opening the window. Bail out and
                 // hope for better luck next time (unlikely).
@@ -307,11 +314,12 @@ export const BouncerApplication = GObject.registerClass(
             }
         }
 
-        #createWindow(connectionName, defaultZone, currentZone, zones, activeConnectionSettings) {
+        #createWindow(connectionUuid, connectionName, defaultZone, currentZone, zones, activeConnectionSettings) {
             // this.#chooseZoneWindow should always be null. Either this is the first creation, or we should have
             // already called this.#chooseZoneWindow?.close().
             if (!this.#chooseZoneWindow) {
                 const chooseZoneBox = new ChooseZoneBox(
+                    connectionUuid,
                     connectionName,
                     defaultZone,
                     currentZone,
@@ -329,9 +337,16 @@ export const BouncerApplication = GObject.registerClass(
             this.#chooseZoneWindow.present();
         }
 
-        // eslint-disable-next-line no-unused-vars
-        async #chooseClicked(emittingObject, connectionName, activeConnectionSettings, zone, defaultZone) {
-            console.log(`For connection ID ${connectionName}, setting zone to ` +
+        async #chooseClicked(
+            // eslint-disable-next-line no-unused-vars
+            emittingObject,
+            connectionUuid,
+            connectionName,
+            activeConnectionSettings,
+            zone,
+            defaultZone
+        ) {
+            console.log(`For connection ID ${connectionUuid} (${connectionName}), setting zone to ` +
                 `${zone ?? ChooseZoneBox.defaultZoneLabel}`);
             // Update the in-memory representation of seen connections before updating the zone. If the connection ID
             // hasn't been added to the list of seen connections when the zone is changed, the window will open again!
@@ -340,7 +355,7 @@ export const BouncerApplication = GObject.registerClass(
 
             // Update the in-memory representation of seen connections
             try {
-                this.#connectionIdsSeen.addConnectionIdToSeen(connectionName);
+                this.#connectionIdsSeen.addConnectionIdToSeen(connectionUuid);
             } catch (e) {
                 console.error('Error adding connection to seen connections. Not attempting to set zone for the ' +
                     'connection.');

@@ -22,6 +22,7 @@ export const ChooseZoneBox = GObject.registerClass(
         Signals: {
             'zone-selected': {
                 param_types: [
+                    GObject.TYPE_STRING, // connectionUuid
                     GObject.TYPE_STRING, // connectionName
                     GObject.TYPE_STRING, // activeConnectionSettings
                     GObject.TYPE_STRING, // zone
@@ -33,18 +34,21 @@ export const ChooseZoneBox = GObject.registerClass(
     class ChooseZoneBox extends Gtk.Box {
         static #simpleZoneList = ['public', 'home', 'work'];
         static defaultZoneLabel = '[DEFAULT]';
+        #connectionUuid;
         #connectionName;
         #defaultZone;
         #activeConnectionSettings;
         window;
 
-        constructor(connectionName, defaultZone, currentZone, allZones, activeConnectionSettings) {
+        constructor(connectionUuid, connectionName, defaultZone, currentZone, allZones, activeConnectionSettings) {
             super();
             console.debug('Building window.');
+            console.debug(`connectionUuid: ${connectionUuid}`);
             console.debug(`connectionName: ${connectionName}`);
             console.debug(`allZones: ${allZones}`);
             console.debug(`defaultZone: ${defaultZone}`);
             console.debug(`currentZone: ${currentZone}`);
+            this.#connectionUuid = connectionUuid;
             this.#connectionName = connectionName;
             this.#activeConnectionSettings = activeConnectionSettings;
             this.#defaultZone = defaultZone;
@@ -108,6 +112,7 @@ export const ChooseZoneBox = GObject.registerClass(
             console.log('Zone selected.');
             this.emit(
                 'zone-selected',
+                this.#connectionUuid,
                 this.#connectionName,
                 this.#activeConnectionSettings,
                 selectedItemValue,
