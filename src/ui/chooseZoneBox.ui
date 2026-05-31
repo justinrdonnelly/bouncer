@@ -27,7 +27,7 @@
       </object>
     </child>
 
-    <!-- Properties (connectionId, defaultZone, currentZone) -->
+    <!-- Properties (connectionName, defaultZone, currentZone) -->
     <child>
       <object class="GtkListBox">
         <property name="selection-mode">none</property>
@@ -37,7 +37,7 @@
           <class name="boxed-list"/>
         </style>
         <child>
-          <object class="AdwActionRow" id="connectionId">
+          <object class="AdwActionRow" id="connectionName">
             <property name="title" translatable="yes">Network</property>
             <property name="subtitle-selectable">True</property>
             <style>

@@ -271,16 +271,16 @@ export const BouncerApplication = GObject.registerClass(
         }
 
         // eslint-disable-next-line no-unused-vars
-        async #handleConnectionChangedSignal(emittingObject, connectionId, activeConnectionSettings) {
+        async #handleConnectionChangedSignal(emittingObject, connectionName, activeConnectionSettings) {
             try {
                 // close the existing window (if applicable)
                 this.#chooseZoneWindow?.close();
                 this.#chooseZoneWindow = null;
                 // bail out if there is no connection
-                if (connectionId === '')
+                if (connectionName === '')
                     return;
 
-                const isConnectionNew = this.#connectionIdsSeen.isConnectionNew(connectionId);
+                const isConnectionNew = this.#connectionIdsSeen.isConnectionNew(connectionName);
                 if (!isConnectionNew)
                     // The connection is not new. Don't open the window.
                     return;
@@ -290,7 +290,7 @@ export const BouncerApplication = GObject.registerClass(
                     ZoneInfo.getDefaultZone(),
                     ZoneForConnection.getZone(activeConnectionSettings),
                 ]);
-                this.#createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings);
+                this.#createWindow(connectionName, defaultZone, currentZone, zones, activeConnectionSettings);
             } catch (e) {
                 // We've hit an exception in the callback where we'd consider opening the window. Bail out and
                 // hope for better luck next time (unlikely).
@@ -307,12 +307,12 @@ export const BouncerApplication = GObject.registerClass(
             }
         }
 
-        #createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings) {
+        #createWindow(connectionName, defaultZone, currentZone, zones, activeConnectionSettings) {
             // this.#chooseZoneWindow should always be null. Either this is the first creation, or we should have
             // already called this.#chooseZoneWindow?.close().
             if (!this.#chooseZoneWindow) {
                 const chooseZoneBox = new ChooseZoneBox(
-                    connectionId,
+                    connectionName,
                     defaultZone,
                     currentZone,
                     zones,
@@ -330,8 +330,8 @@ export const BouncerApplication = GObject.registerClass(
         }
 
         // eslint-disable-next-line no-unused-vars
-        async #chooseClicked(emittingObject, connectionId, activeConnectionSettings, zone, defaultZone) {
-            console.log(`For connection ID ${connectionId}, setting zone to ` +
+        async #chooseClicked(emittingObject, connectionName, activeConnectionSettings, zone, defaultZone) {
+            console.log(`For connection ID ${connectionName}, setting zone to ` +
                 `${zone ?? ChooseZoneBox.defaultZoneLabel}`);
             // Update the in-memory representation of seen connections before updating the zone. If the connection ID
             // hasn't been added to the list of seen connections when the zone is changed, the window will open again!
@@ -340,7 +340,7 @@ export const BouncerApplication = GObject.registerClass(
 
             // Update the in-memory representation of seen connections
             try {
-                this.#connectionIdsSeen.addConnectionIdToSeen(connectionId);
+                this.#connectionIdsSeen.addConnectionIdToSeen(connectionName);
             } catch (e) {
                 console.error('Error adding connection to seen connections. Not attempting to set zone for the ' +
                     'connection.');
@@ -391,7 +391,7 @@ export const BouncerApplication = GObject.registerClass(
             // Everything worked. Generate a notification indicating what's happened.
             try {
                 const notification = new Gio.Notification();
-                notification.set_title(_('Firewall zone set for connection: ') + connectionId);
+                notification.set_title(_('Firewall zone set for connection: ') + connectionName);
                 if (zone === null) // this is the default zone
                     notification.set_body(_('Firewall zone for this connection has been set to the default zone ' +
                         '(currently ') + defaultZone + _('). Whenever you connect to this network in the future, the ' +

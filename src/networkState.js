@@ -36,15 +36,15 @@ const NetworkStateSignals = GObject.registerClass(
         Signals: {
             'connection-changed': {
                 param_types: [
-                    GObject.TYPE_STRING, // connection ID
+                    GObject.TYPE_STRING, // connection name (human-friendly)
                     GObject.TYPE_STRING, // settings object path (eg /org/freedesktop/NetworkManager/Settings/2)
                 ],
             },
         },
     },
     class NetworkStateSignals extends ErrorSignal {
-        emitConnectionChanged(connectionId, activeConnectionSettings) {
-            super.emit('connection-changed', connectionId, activeConnectionSettings);
+        emitConnectionChanged(connectionName, activeConnectionSettings) {
+            super.emit('connection-changed', connectionName, activeConnectionSettings);
         }
     }
 );
@@ -98,9 +98,9 @@ const NetworkManagerStateItem = GObject.registerClass(
 
         #relaySignalConnectionChanged(child) {
             // eslint-disable-next-line no-unused-vars
-            child.connect('connection-changed', (emittingObject, connectionId, activeConnectionSettings) => {
+            child.connect('connection-changed', (emittingObject, connectionName, activeConnectionSettings) => {
                 console.debug('relaying connection-changed signal from deeper down in NetworkState.');
-                this.emitConnectionChanged(connectionId, activeConnectionSettings);
+                this.emitConnectionChanged(connectionName, activeConnectionSettings);
             });
         }
 
@@ -510,9 +510,9 @@ export const NetworkState = GObject.registerClass(
             this.#networkManager.connect(
                 'connection-changed',
                 // eslint-disable-next-line no-unused-vars
-                (emittingObject, connectionId, activeConnectionSettings) => {
+                (emittingObject, connectionName, activeConnectionSettings) => {
                     console.debug('relaying error signal from deeper down in NetworkState.');
-                    this.emitConnectionChanged(connectionId, activeConnectionSettings);
+                    this.emitConnectionChanged(connectionName, activeConnectionSettings);
                 }
             );
         }

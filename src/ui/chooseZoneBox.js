@@ -18,11 +18,11 @@ export const ChooseZoneBox = GObject.registerClass(
     {
         GTypeName: 'ChooseZoneBox',
         Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/chooseZoneBox.ui',
-        InternalChildren: ['currentZone', 'defaultZone', 'connectionId', 'zoneDropDown', 'zoneList'],
+        InternalChildren: ['currentZone', 'defaultZone', 'connectionName', 'zoneDropDown', 'zoneList'],
         Signals: {
             'zone-selected': {
                 param_types: [
-                    GObject.TYPE_STRING, // connectionId
+                    GObject.TYPE_STRING, // connectionName
                     GObject.TYPE_STRING, // activeConnectionSettings
                     GObject.TYPE_STRING, // zone
                     GObject.TYPE_STRING, // defaultZone
@@ -33,24 +33,24 @@ export const ChooseZoneBox = GObject.registerClass(
     class ChooseZoneBox extends Gtk.Box {
         static #simpleZoneList = ['public', 'home', 'work'];
         static defaultZoneLabel = '[DEFAULT]';
-        #connectionId;
+        #connectionName;
         #defaultZone;
         #activeConnectionSettings;
         window;
 
-        constructor(connectionId, defaultZone, currentZone, allZones, activeConnectionSettings) {
+        constructor(connectionName, defaultZone, currentZone, allZones, activeConnectionSettings) {
             super();
             console.debug('Building window.');
-            console.debug(`connectionId: ${connectionId}`);
+            console.debug(`connectionName: ${connectionName}`);
             console.debug(`allZones: ${allZones}`);
             console.debug(`defaultZone: ${defaultZone}`);
             console.debug(`currentZone: ${currentZone}`);
-            this.#connectionId = connectionId;
+            this.#connectionName = connectionName;
             this.#activeConnectionSettings = activeConnectionSettings;
             this.#defaultZone = defaultZone;
             this._currentZone.subtitle = currentZone || ChooseZoneBox.defaultZoneLabel;
             this._defaultZone.subtitle = defaultZone;
-            this._connectionId.subtitle = connectionId;
+            this._connectionName.subtitle = connectionName;
 
             let selected = null;
             const zones = this.#generateZoneList(allZones, defaultZone, currentZone);
@@ -108,7 +108,7 @@ export const ChooseZoneBox = GObject.registerClass(
             console.log('Zone selected.');
             this.emit(
                 'zone-selected',
-                this.#connectionId,
+                this.#connectionName,
                 this.#activeConnectionSettings,
                 selectedItemValue,
                 this.#defaultZone
