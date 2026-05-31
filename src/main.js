@@ -273,7 +273,9 @@ export const BouncerApplication = GObject.registerClass(
         // eslint-disable-next-line no-unused-vars
         async #handleConnectionChangedSignal(emittingObject, connectionId, activeConnectionSettings) {
             try {
-                this.#closeWindowIfConnectionChanged(connectionId);
+                // close the existing window (if applicable)
+                this.#chooseZoneWindow?.close();
+                this.#chooseZoneWindow = null;
                 // bail out if there is no connection
                 if (connectionId === '')
                     return;
@@ -307,7 +309,7 @@ export const BouncerApplication = GObject.registerClass(
 
         #createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings) {
             // this.#chooseZoneWindow should always be null. Either this is the first creation, or we should have
-            // already called #closeWindowIfConnectionChanged.
+            // already called this.#chooseZoneWindow?.close().
             if (!this.#chooseZoneWindow) {
                 const chooseZoneBox = new ChooseZoneBox(
                     connectionId,
@@ -325,12 +327,6 @@ export const BouncerApplication = GObject.registerClass(
 
             this.#chooseZoneWindow.content.connect('zone-selected', this.#chooseClicked.bind(this));
             this.#chooseZoneWindow.present();
-        }
-
-        #closeWindowIfConnectionChanged(connectionId) {
-            if (this.#chooseZoneWindow?.content?.connectionId !== connectionId)
-                this.#chooseZoneWindow?.close();
-                this.#chooseZoneWindow = null;
         }
 
         // eslint-disable-next-line no-unused-vars
