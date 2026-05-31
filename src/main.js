@@ -271,7 +271,7 @@ export const BouncerApplication = GObject.registerClass(
         }
 
         // eslint-disable-next-line no-unused-vars
-        async #handleConnectionChangedSignal(emittingObject, connectionName, activeConnectionSettings) {
+        async #handleConnectionChangedSignal(emittingObject, connectionUuid, connectionName, activeConnectionSettings) {
             try {
                 // close the existing window (if applicable)
                 this.#chooseZoneWindow?.close();
