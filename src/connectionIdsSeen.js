@@ -69,7 +69,7 @@ export class ConnectionIdsSeen {
     async save() {
         // Don't try/catch here. Allow errors to propagate.
         const dataJSON = JSON.stringify(Object.fromEntries(this.#allConnectionIdsSeen));
-        this.#data.saveData(dataJSON);
+        await this.#data.saveData(dataJSON);
     }
 
     async getMachineId() {
