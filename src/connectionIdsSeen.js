@@ -13,6 +13,7 @@ import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 
 import { Data } from './data.js';
+import { migrateDataIfNecessary } from './dataMigration.js';
 
 export class ConnectionIdsSeen {
     static #fileName = 'connection-ids-seen.json';
@@ -34,23 +35,18 @@ export class ConnectionIdsSeen {
             this.#allConnectionIdsSeen = new Map([[machineId, this.#connectionIdsSeen]]);
         } else {
             const parsedData = JSON.parse(data);
-            // We'll have to migrate existing setups from purely array based to an object, where the key is the machine
-            // ID, and the value is the array of connection IDs.
-            // This code is temporary, and should be removed after we figure users have migrated to the new format.
-            if (Array.isArray(parsedData)) { // It's an array (old format). Convert it.
-                console.log(`Migrating data format for ${ConnectionIdsSeen.#fileName}`);
-                this.#connectionIdsSeen = parsedData;
-                this.#allConnectionIdsSeen = new Map([[machineId, this.#connectionIdsSeen]]);
-                // save it to update the format of the saved data
+            const migratedData = migrateDataIfNecessary(parsedData, machineId);
+            this.#allConnectionIdsSeen = new Map(Object.entries(migratedData));
+
+            if (migratedData !== parsedData) {
                 await this.save();
-            } else {
-                this.#allConnectionIdsSeen = new Map(Object.entries(parsedData));
-                const newMachine = !this.#allConnectionIdsSeen.has(machineId);
-                if (newMachine) {
-                    this.#allConnectionIdsSeen.set(machineId, []);
-                }
-                this.#connectionIdsSeen = this.#allConnectionIdsSeen.get(machineId);
             }
+
+            const newMachine = !this.#allConnectionIdsSeen.has(machineId);
+            if (newMachine) {
+                this.#allConnectionIdsSeen.set(machineId, []);
+            }
+            this.#connectionIdsSeen = this.#allConnectionIdsSeen.get(machineId);
         }
     }
 

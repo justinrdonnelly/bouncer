@@ -10,6 +10,7 @@
     <file>connectionIdsSeen.js</file>
     <file>ui/dashboardBox.js</file>
     <file>data.js</file>
+    <file>dataMigration.js</file>
     <file>dependencyCheck.js</file>
     <file>ui/dependencyItem.js</file>
     <file>errorSignal.js</file>
