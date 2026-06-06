@@ -18,7 +18,7 @@ import { migrateDataIfNecessary } from './dataMigration.js';
 export class ConnectionIdsSeen {
     static #fileName = 'connection-ids-seen.json';
     #connectionIdsSeen; // array of connection IDs for this machine
-    #allConnectionIdsSeen; // map of machine ID to array of connection IDs for the machine
+    #allConnectionIdsSeen; // map of machine ID to array of connection UUIDs for the machine
     #data;
 
     constructor() {
@@ -32,10 +32,10 @@ export class ConnectionIdsSeen {
 
         if (data === null) {
             this.#connectionIdsSeen = [];
-            this.#allConnectionIdsSeen = new Map([[machineId, this.#connectionIdsSeen]]);
+            this.#allConnectionIdsSeen = new Map([['version', 3], [machineId, this.#connectionIdsSeen]]);
         } else {
             const parsedData = JSON.parse(data);
-            const migratedData = migrateDataIfNecessary(parsedData, machineId);
+            const migratedData = await migrateDataIfNecessary(parsedData, machineId);
             this.#allConnectionIdsSeen = new Map(Object.entries(migratedData));
 
             if (migratedData !== parsedData) {
