@@ -23,9 +23,9 @@ const connectionChangedAction = new Gio.SimpleAction({
 connectionChangedAction.connect('activate', (action, parameter) => {
     // console.log(`${action.name} activated: ${parameter.deepUnpack()}`);
     const parameters = parameter.deepUnpack();
-    const connectionId = parameters[0];
+    const connectionName = parameters[0];
     const activeConnectionSettings = parameters[1];
-    console.log(`connectionId: ${connectionId}`);
+    console.log(`connectionName: ${connectionName}`);
     console.log(`activeConnectionSettings: ${activeConnectionSettings}`);
 });
 
