@@ -56,6 +56,7 @@
       <description>
         <ul>
           <li>Improve accessibility for dependency item status</li>
+          <li>Track connections by NetworkManager UUID</li>
           <li>Update Occitan translations</li>
           <li>Update Italian translations</li>
         </ul>
