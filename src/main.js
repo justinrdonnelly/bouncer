@@ -24,6 +24,7 @@ import { ConnectionIdsSeen } from './connectionIdsSeen.js';
 import { DependencyCheck } from './dependencyCheck.js';
 import { Dashboard } from './ui/dashboard.js';
 import { DependencyBox } from './ui/dependencyBox.js';
+import { NetworksBox } from './ui/networksBox.js';
 import { NetworkState } from './networkState.js';
 import { ZoneForConnection } from './zoneForConnection.js';
 import { ZoneInfo } from './zoneInfo.js';
@@ -127,10 +128,11 @@ export const BouncerApplication = GObject.registerClass(
             // If we `await` anything without either showing the window or `hold`ing, the application will exit. We'll
             // call `hold` until we show the window, then we'll call `release`.
             this.hold();
-            await this.#dependencyCheck.runChecks(false);
+            await Promise.all([this.#dependencyCheck.runChecks(false), this.#connectionIdsSeen.init()]);
             const dependencyBox = new DependencyBox(this.#dependencyCheck, this.#monitoring);
             dependencyBox.connect('monitor-network', this.monitorNetworkAndCatch.bind(this));
-            this.#dashboardWindow = new Dashboard(this, dependencyBox);
+            const networksBox = new NetworksBox();
+            this.#dashboardWindow = new Dashboard(this, dependencyBox, networksBox);
             this.#dashboardWindow.connect('close-request', this.#handleDashboardWindowClose.bind(this));
             this.#dashboardWindow.present();
             this.release();

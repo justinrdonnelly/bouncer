@@ -94,6 +94,15 @@
                         </property>
                       </object>
                     </child>
+                    <child>
+                      <object class="AdwViewStackPage">
+                        <property name="title" translatable="yes">Networks</property>
+                        <property name="icon-name">network-shield-symbolic</property>
+                        <property name="child">
+                          <object class="GtkBox" id="networksBox"/> <!-- We'll append the networksBox here -->
+                        </property>
+                      </object>
+                    </child>
                   </object>
                 </property>
               </object>

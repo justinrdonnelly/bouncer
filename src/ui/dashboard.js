@@ -16,16 +16,17 @@ export const Dashboard = GObject.registerClass(
     {
         GTypeName: 'Dashboard',
         Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/dashboard.ui',
-        InternalChildren: ['content', 'dependencyBox', 'splitView', 'stack'],
+        InternalChildren: ['content', 'dependencyBox', 'networksBox', 'splitView', 'stack'],
     },
     class Dashboard extends Adw.ApplicationWindow {
         dependencyBox = null;
 
-        constructor(application, dependencyBox) {
+        constructor(application, dependencyBox, networksBox) {
             super({ application });
             console.debug('Building dashboard window.');
             this.dependencyBox = dependencyBox;
             this._dependencyBox.append(dependencyBox);
+            this._networksBox.append(networksBox);
             this.#setContentTitle();
         }
 

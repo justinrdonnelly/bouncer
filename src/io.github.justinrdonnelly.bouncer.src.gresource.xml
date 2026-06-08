@@ -17,6 +17,7 @@
     <file>errorSignal.js</file>
     <file>main.js</file>
     <file>ui/moreInfo.js</file>
+    <file>ui/networksBox.js</file>
     <file>networkState.js</file>
     <file>promisify.js</file>
     <file>zoneInfo.js</file>
