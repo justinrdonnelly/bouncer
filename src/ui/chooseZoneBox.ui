@@ -86,88 +86,68 @@
       </object> <!-- end group -->
     </child>
 
-    <!-- Help button/label -->
+    <!-- Actions -->
     <child>
-      <object class="GtkBox">
-        <property name="orientation">horizontal</property>
-        <property name="margin-top">4</property>
-        <property name="margin-bottom">4</property>
-        <child>
-          <object class="GtkButton">
-            <property name="width-request">100</property>
-            <property name="label" translatable="yes">Help</property>
-            <property name="halign">center</property>
-            <signal name="clicked" handler="helpButtonClicked"/>
-          </object>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="margin-start">12</property>
-            <property name="margin-end">12</property>
-            <property name="xalign">0</property>
-            <property name="wrap">True</property>
-            <property name="width-chars">30</property> <!-- min width -->
-            <property name="label" translatable="yes">Get more information.</property>
-          </object> <!-- end GtkLabel -->
-        </child>
-      </object>
-    </child>
-
-    <!-- Exit button/label -->
-    <child>
-      <object class="GtkBox">
-        <property name="orientation">horizontal</property>
-        <property name="margin-top">4</property>
-        <property name="margin-bottom">4</property>
-        <child>
-          <object class="GtkButton">
-            <property name="width-request">100</property>
-            <property name="label" translatable="yes">Exit</property>
-            <property name="halign">center</property>
-            <signal name="clicked" handler="exitButtonClicked"/>
-          </object>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="margin-start">12</property>
-            <property name="margin-end">12</property>
-            <property name="xalign">0</property>
-            <property name="wrap">True</property>
-            <property name="width-chars">30</property> <!-- min width -->
-            <property name="label" translatable="yes">No change will be made. You will see this window again the next time you connect to this network.</property>
-          </object> <!-- end GtkLabel -->
-        </child>
-      </object>
-    </child>
-
-    <!-- Choose button/label -->
-    <child>
-      <object class="GtkBox">
-        <property name="orientation">horizontal</property>
+      <object class="GtkListBox">
+        <property name="selection-mode">none</property>
+        <property name="halign">GTK_ALIGN_START</property>
         <property name="margin-top">4</property>
         <property name="margin-bottom">12</property> <!-- add some extra margin since this is on the bottom of the window -->
+        <style>
+          <class name="boxed-list"/>
+        </style>
+        <!-- Help action -->
         <child>
-          <object class="GtkButton">
-            <property name="width-request">100</property>
-            <property name="label" translatable="yes">Choose</property>
-            <property name="halign">center</property>
-            <style>
-              <class name="suggested-action"/>
-            </style>
-            <signal name="clicked" handler="chooseButtonClicked"/>
+          <object class="AdwActionRow">
+            <property name="title" translatable="yes">More Information</property>
+            <property name="subtitle" translatable="yes">Get more information.</property>
+            <property name="subtitle-lines">0</property>
+            <child type="suffix">
+              <object class="GtkButton">
+                <property name="width-request">100</property>
+                <property name="valign">center</property>
+                <property name="label" translatable="yes">Help</property>
+                <signal name="clicked" handler="helpButtonClicked"/>
+              </object>
+            </child>
           </object>
         </child>
+        <!-- Exit action -->
         <child>
-          <object class="GtkLabel">
-            <property name="margin-start">12</property>
-            <property name="margin-end">12</property>
-            <property name="xalign">0</property>
-            <property name="wrap">True</property>
-            <property name="width-chars">30</property> <!-- min width -->
-            <property name="label" translatable="yes">The selected firewall zone will be used every time you connect to this network.</property>
-          </object> <!-- end GtkLabel -->
+          <object class="AdwActionRow">
+            <property name="title" translatable="yes">Skip for Now</property>
+            <property name="subtitle" translatable="yes">No change will be made. You will see this window again the next time you connect to this network.</property>
+            <property name="subtitle-lines">0</property>
+            <child type="suffix">
+              <object class="GtkButton">
+                <property name="width-request">100</property>
+                <property name="valign">center</property>
+                <property name="label" translatable="yes">Exit</property>
+                <signal name="clicked" handler="exitButtonClicked"/>
+              </object>
+            </child>
+          </object>
         </child>
-      </object>
+        <!-- Choose action -->
+        <child>
+          <object class="AdwActionRow">
+            <property name="title" translatable="yes">Save Zone</property>
+            <property name="subtitle" translatable="yes">The selected firewall zone will be used every time you connect to this network.</property>
+            <property name="subtitle-lines">0</property>
+            <child type="suffix">
+              <object class="GtkButton">
+                <property name="width-request">100</property>
+                <property name="valign">center</property>
+                <property name="label" translatable="yes">Choose</property>
+                <style>
+                  <class name="suggested-action"/>
+                </style>
+                <signal name="clicked" handler="chooseButtonClicked"/>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object> <!-- end GtkListBox -->
     </child>
   </template>
 </interface>
