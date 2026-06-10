@@ -17,7 +17,7 @@ import { DependencyItem } from './dependencyItem.js';
 export const DashboardBox = GObject.registerClass({
     GTypeName: 'DashboardBox',
     Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/dashboardBox.ui',
-    InternalChildren: ['listBox', 'monitorButton', 'labelNotMonitoring', 'labelMonitoring'],
+    InternalChildren: ['listBox', 'monitoringRow', 'monitorButton'],
     Signals: {
         'monitor-network': {},
     },
@@ -115,13 +115,11 @@ export const DashboardBox = GObject.registerClass({
         console.log('Updating dashboard monitoring row');
         if (this.#monitoring) { // already monitoring, disable button and show correct text
             this._monitorButton.sensitive = false;
-            this._labelNotMonitoring.visible = false;
-            this._labelMonitoring.visible = true;
+            this._monitoringRow.subtitle = _('Bouncer is monitoring your Wi-Fi!');
             return;
         }
         // We're not monitoring. Show the correct text.
-        this._labelNotMonitoring.visible = true;
-        this._labelMonitoring.visible = false;
+        this._monitoringRow.subtitle = _('Once everything is ready, click to begin using Bouncer.');
         if (this.#statusOverall) { // overall status is ready to go
             this._monitorButton.sensitive = true;
         } else { // overall status is not ready to go
