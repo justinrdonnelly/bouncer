@@ -107,7 +107,7 @@
                 <style>
                   <class name="pill"/>
                 </style>
-                <property name="width-request">100</property>
+                <property name="width-request">120</property>
                 <property name="valign">center</property>
                 <property name="label" translatable="yes">Help</property>
                 <signal name="clicked" handler="helpButtonClicked"/>
@@ -126,7 +126,7 @@
                 <style>
                   <class name="pill"/>
                 </style>
-                <property name="width-request">100</property>
+                <property name="width-request">120</property>
                 <property name="valign">center</property>
                 <property name="label" translatable="yes">Exit</property>
                 <signal name="clicked" handler="exitButtonClicked"/>
@@ -142,7 +142,7 @@
             <property name="subtitle-lines">0</property>
             <child type="suffix">
               <object class="GtkButton">
-                <property name="width-request">100</property>
+                <property name="width-request">120</property>
                 <property name="valign">center</property>
                 <property name="label" translatable="yes">Choose</property>
                 <style>
