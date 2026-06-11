@@ -55,6 +55,7 @@
     <release version="" date="">
       <description>
         <ul>
+          <li>UI cleanup</li>
           <li>Improve accessibility for dependency item status</li>
           <li>Track connections by NetworkManager UUID</li>
           <li>Update Occitan translations</li>
