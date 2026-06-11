@@ -41,6 +41,16 @@ export const DependencyItem = GObject.registerClass({
             null
         );
 
+        dependencyCheck.bind_property_full(
+            property,
+            this,
+            'subtitle',
+            GObject.BindingFlags.SYNC_CREATE,
+            // eslint-disable-next-line no-unused-vars
+            (binding, value) => [true, this.#convertStatusToText(value)],
+            null
+        );
+
         this._button.connect('clicked', callbackFunction);
     }
 
