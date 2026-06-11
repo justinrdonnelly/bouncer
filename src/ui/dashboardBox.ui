@@ -62,6 +62,7 @@
                 <property name="label" translatable="yes">Monitor</property>
                 <property name="sensitive">false</property> <!-- disabled by default -->
                 <style>
+                  <class name="pill"/>
                   <class name="suggested-action"/>
                 </style>
                 <signal name="clicked" handler="monitorButtonClicked"/>
