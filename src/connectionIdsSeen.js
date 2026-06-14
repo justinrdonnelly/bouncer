@@ -11,18 +11,31 @@
 
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
+import GObject from 'gi://GObject';
 
 import { Data } from './data.js';
 import { migrateDataIfNecessary } from './dataMigration.js';
 
-export class ConnectionIdsSeen {
+export const ConnectionIdsSeen = GObject.registerClass(
+    {
+        GTypeName: 'ConnectionIdsSeen',
+        Properties: {
+            'connection-ids-seen': GObject.ParamSpec.jsobject(
+                'connection-ids-seen',
+                'connection IDs seen',
+                'NetworkManager connection UUIDs already seen by Bouncer',
+                GObject.ParamFlags.READWRITE,
+            ),
+        },
+    },
+    class ConnectionIdsSeen extends GObject.Object {
     static #fileName = 'connection-ids-seen.json';
-    connectionIdsSeen; // array of connection IDs for this machine
     #allConnectionIdsSeen; // map of machine ID to array of connection UUIDs for the machine
     #data;
     #initialized = false; // whether `init` has been called
 
-    constructor() {
+    constructor(constructProperties = {}) {
+        super(constructProperties);
         this.#data = new Data(ConnectionIdsSeen.#fileName);
     }
 
@@ -64,8 +77,13 @@ export class ConnectionIdsSeen {
     }
 
     addConnectionIdToSeen(connectionUuid) {
+        if (this.connectionIdsSeen.includes(connectionUuid))
+            return;
+
         console.log(`Adding ${connectionUuid} to ${ConnectionIdsSeen.#fileName}.`);
         this.connectionIdsSeen.push(connectionUuid);
+        // Since we're changing this.connectionIdsSeen (not using a property setter), we need to call notify.
+        this.notify('connection-ids-seen');
     }
 
     async save() {
@@ -100,4 +118,4 @@ export class ConnectionIdsSeen {
         });
     }
 
-}
+});

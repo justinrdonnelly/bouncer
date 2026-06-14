@@ -132,7 +132,7 @@ export const BouncerApplication = GObject.registerClass(
             const dependencyBox = new DependencyBox(this.#dependencyCheck, this.#monitoring);
             dependencyBox.connect('monitor-network', this.monitorNetworkAndCatch.bind(this));
             const networksBox = new NetworksBox(this.#connectionIdsSeen);
-            await networksBox.init();
+            // Note that networksBox will populate networks asynchronously.
             this.#dashboardWindow = new Dashboard(this, dependencyBox, networksBox);
             this.#dashboardWindow.connect('close-request', this.#handleDashboardWindowClose.bind(this));
             this.#dashboardWindow.present();
