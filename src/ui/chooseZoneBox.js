@@ -13,6 +13,7 @@ import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk';
 
 import { MoreInfoDialog } from './moreInfo.js';
+import { getSelectedZone, getZoneDisplayName, populateZoneList } from '../zoneSelection.js';
 
 export const ChooseZoneBox = GObject.registerClass(
     {
@@ -32,8 +33,6 @@ export const ChooseZoneBox = GObject.registerClass(
         },
     },
     class ChooseZoneBox extends Gtk.Box {
-        static #simpleZoneList = ['public', 'home', 'work'];
-        static defaultZoneLabel = '[DEFAULT]';
         #connectionUuid;
         #connectionName;
         #defaultZone;
@@ -52,70 +51,25 @@ export const ChooseZoneBox = GObject.registerClass(
             this.#connectionName = connectionName;
             this.#activeConnectionSettings = activeConnectionSettings;
             this.#defaultZone = defaultZone;
-            this._currentZone.subtitle = currentZone || ChooseZoneBox.defaultZoneLabel;
+            this._currentZone.subtitle = getZoneDisplayName(currentZone);
             this._defaultZone.subtitle = defaultZone;
             this._connectionName.subtitle = connectionName;
 
-            let selected = null;
-            const zones = this.#generateZoneList(allZones, defaultZone, currentZone);
-            this._zoneList.append(ChooseZoneBox.defaultZoneLabel); // show the default first in the list
-            if (currentZone === null)
-                // null means default zone
-                selected = 0;
-            zones.forEach((zone, idx) => {
-                this._zoneList.append(zone);
-                if (zone === currentZone)
-                    // index 0 is the default zone, and was added before we started the loop
-                    selected = idx + 1;
-            });
+            const selected = populateZoneList(this._zoneList, allZones, defaultZone, currentZone);
             this._zoneDropDown.set_selected(selected);
             this._zoneDropDown.grab_focus();
         }
 
-        // By default, we want to keep things simple for the user and only show a subset of zones. See table for
-        // behavior. Later we may make this configurable.
-        /*
-         *        Simple zones (#simpleZoneList) all exist
-         *       /    Default zone in simple zones
-         *      /    /    Current zone in simple zones
-         *     /    /    /
-         * | SZE | DS | CS | Result                     |
-         * | --- | -- | -- | -------------------------- |
-         * |   F |  F |  F | All zones                  |
-         * |   F |  F |  T | All zones                  |
-         * |   F |  T |  F | All zones                  |
-         * |   F |  T |  T | All zones                  |
-         * |   T |  F |  F | Simple + Default + Current |
-         * |   T |  F |  T | Simple + Default           |
-         * |   T |  T |  F | Simple + Current           |
-         * |   T |  T |  T | Simple                     |
-         */
-        #generateZoneList(allZones, defaultZone, currentZone) {
-            const simpleZonesExist = ChooseZoneBox.#simpleZoneList.every((z) => allZones.includes(z));
-            if (!simpleZonesExist)
-                return allZones;
-            const zones = [...ChooseZoneBox.#simpleZoneList];
-            const defaultZoneSimple = ChooseZoneBox.#simpleZoneList.includes(defaultZone);
-            const currentZoneSimple = ChooseZoneBox.#simpleZoneList.includes(currentZone);
-            if (!defaultZoneSimple)
-                zones.push(defaultZone);
-            if (currentZone && !currentZoneSimple)
-                zones.push(currentZone);
-            return zones.sort();
-        }
-
         // eslint-disable-next-line no-unused-vars
         async chooseButtonClicked(_button) {
-            let selectedItemValue = this._zoneDropDown.get_selected_item().get_string();
-            if (selectedItemValue === ChooseZoneBox.defaultZoneLabel)
-                selectedItemValue = null; // default zone is represented by null
+            const selectedZone = getSelectedZone(this._zoneDropDown);
             console.log('Zone selected.');
             this.emit(
                 'zone-selected',
                 this.#connectionUuid,
                 this.#connectionName,
                 this.#activeConnectionSettings,
-                selectedItemValue,
+                selectedZone,
                 this.#defaultZone
             );
             this.window.close();

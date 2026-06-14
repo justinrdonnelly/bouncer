@@ -28,6 +28,7 @@ import { NetworksBox } from './ui/networksBox.js';
 import { NetworkState } from './networkState.js';
 import { ZoneForConnection } from './zoneForConnection.js';
 import { ZoneInfo } from './zoneInfo.js';
+import { defaultZoneLabel } from './zoneSelection.js';
 
 import promisify from './promisify.js';
 
@@ -349,7 +350,7 @@ export const BouncerApplication = GObject.registerClass(
             defaultZone
         ) {
             console.log(`For connection ID ${connectionUuid} (${connectionName}), setting zone to ` +
-                `${zone ?? ChooseZoneBox.defaultZoneLabel}`);
+                `${zone ?? defaultZoneLabel}`);
             // Update the in-memory representation of seen connections before updating the zone. If the connection ID
             // hasn't been added to the list of seen connections when the zone is changed, the window will open again!
             // But don't sync to disk until after the zone for the connection is set. That way, if there's an error in
