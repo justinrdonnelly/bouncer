@@ -18,7 +18,7 @@ export const NetworksBox = GObject.registerClass(
     {
         GTypeName: 'NetworksBox',
         Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/networksBox.ui',
-        InternalChildren: ['comboRow', 'currentZone', 'networks'],
+        InternalChildren: ['comboRow', 'currentZone', 'forgetButton', 'networks'],
         Properties: {
             'connection-ids-seen': GObject.ParamSpec.jsobject(
                 'connection-ids-seen',
@@ -29,12 +29,14 @@ export const NetworksBox = GObject.registerClass(
         },
     },
     class NetworksBox extends Gtk.Box {
+        #connectionIdsSeen; // ConnectionIdsSeen instance.
         #connectionUuidsSeen = []; // Local copy of the bound connection UUIDs.
         #networks = []; // Array of objects containing uuid, id, zone.
         #refreshNetworksSequence = 0; // Used to ignore stale refresh results that finish out of order.
 
         constructor(connectionIdsSeen) {
             super();
+            this.#connectionIdsSeen = connectionIdsSeen;
             this._comboRow.connect('notify::selected', this.#handleNetworkSelected.bind(this));
             connectionIdsSeen.bind_property(
                 'connection-ids-seen',
@@ -113,10 +115,12 @@ export const NetworksBox = GObject.registerClass(
             if (this.#networks.length > 0) {
                 const selected = this.#networks.findIndex((network) => network.uuid === selectedUuid);
                 this._comboRow.sensitive = true;
+                this._forgetButton.sensitive = true;
                 // Select the previously selected network. If it is no longer in the list, default to 0.
                 this._comboRow.set_selected(selected === -1 ? 0 : selected);
             } else {
                 this._comboRow.sensitive = false;
+                this._forgetButton.sensitive = false;
             }
             this.#handleNetworkSelected();
         }
@@ -139,5 +143,21 @@ export const NetworksBox = GObject.registerClass(
             this._currentZone.subtitle = network.zone ?? _('Default Zone');
         }
 
+        // eslint-disable-next-line no-unused-vars
+        async forgetButtonClicked(_button) {
+            const selected = this._comboRow.get_selected();
+            // eslint-disable-next-line security/detect-object-injection
+            const network = this.#networks[selected];
+            if (network === undefined)
+                return;
+
+            try {
+                await this.#connectionIdsSeen.forgetConnection(network.uuid);
+            } catch (e) {
+                console.error(`Unable to forget NetworkManager connection ${network.uuid}.`);
+                console.error(e.message);
+                return;
+            }
+        }
     }
 );

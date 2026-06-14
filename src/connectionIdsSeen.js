@@ -86,6 +86,33 @@ export const ConnectionIdsSeen = GObject.registerClass(
         this.notify('connection-ids-seen');
     }
 
+    async forgetConnection(connectionUuid) {
+        console.log(`Removing ${connectionUuid} from ${ConnectionIdsSeen.#fileName}.`);
+        // Copy (via spread) the previous version. This is used to determine whether we actually removed anything, and
+        // to restore the previous version in case the save fails.
+        const previousConnectionIdsSeen = [...this.connectionIdsSeen];
+        const updatedConnectionIdsSeen = this.connectionIdsSeen.filter((uuid) => uuid !== connectionUuid);
+
+        if (updatedConnectionIdsSeen.length === this.connectionIdsSeen.length) {
+            console.warn(`Connection ${connectionUuid} was not in ${ConnectionIdsSeen.#fileName}.`);
+            return;
+        }
+
+        // Don't just replace `this.connectionIdsSeen`. `this.#allConnectionIdsSeen` wouldn't be updated. It would also
+        // fire update notifications (via the `set` method) that we don't want yet.
+        this.connectionIdsSeen.splice(0, this.connectionIdsSeen.length, ...updatedConnectionIdsSeen);
+        try {
+            await this.save();
+            // Since we're changing this.connectionIdsSeen (not using a property setter), we need to call notify
+            // explicitly.
+            this.notify('connection-ids-seen');
+        } catch (e) {
+            // The save failed. Restore the in-memory representation.
+            this.connectionIdsSeen.splice(0, this.connectionIdsSeen.length, ...previousConnectionIdsSeen);
+            throw e;
+        }
+    }
+
     async save() {
         // Don't try/catch here. Allow errors to propagate.
         const dataJSON = JSON.stringify(Object.fromEntries(this.#allConnectionIdsSeen));

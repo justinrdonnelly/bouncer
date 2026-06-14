@@ -61,5 +61,38 @@
         </child>
       </object>
     </child>
+
+    <!-- Forget action -->
+    <child>
+      <object class="GtkListBox">
+        <property name="selection-mode">none</property>
+        <property name="width-request">450</property>
+        <property name="halign">GTK_ALIGN_START</property>
+        <property name="margin-top">4</property>
+        <property name="margin-bottom">12</property> <!-- Add some extra margin since this is on the bottom of the window. -->
+        <style>
+          <class name="boxed-list"/>
+        </style>
+        <child>
+          <object class="AdwActionRow">
+            <property name="title" translatable="yes">Forget Network</property>
+            <property name="subtitle" translatable="yes">Forget this network. You will be prompted to choose the firewall zone for this network the next time you connect to it.</property>
+            <property name="subtitle-lines">0</property>
+            <child type="suffix">
+              <object class="GtkButton" id="forgetButton">
+                <property name="width-request">120</property>
+                <property name="valign">center</property>
+                <property name="label" translatable="yes">Forget</property>
+                <style>
+                  <class name="pill"/>
+                  <class name="destructive-action"/>
+                </style>
+                <signal name="clicked" handler="forgetButtonClicked"/>
+              </object>
+            </child>
+          </object> <!-- end AdwActionRow -->
+        </child>
+      </object> <!-- end GtkListBox -->
+    </child>
   </template>
 </interface>
