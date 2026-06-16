@@ -17,9 +17,10 @@ const networkManagerSettingsObjectPath = '/org/freedesktop/NetworkManager/Settin
 const networkManagerSettingsInterface = 'org.freedesktop.NetworkManager.Settings';
 const networkManagerConnectionInterface = 'org.freedesktop.NetworkManager.Settings.Connection';
 
-export async function getNetworkManagerConnectionSettingsByUuid(connectionUuid) {
+export async function getNetworkManagerConnectionByUuid(connectionUuid) {
     const objectPath = await getNetworkManagerConnectionPathByUuid(connectionUuid);
-    return getNetworkManagerConnectionSettings(objectPath);
+    const settings = await getNetworkManagerConnectionSettings(objectPath);
+    return { objectPath, settings };
 }
 
 function getNetworkManagerConnectionPathByUuid(connectionUuid) {

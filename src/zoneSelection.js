@@ -69,7 +69,12 @@ export function populateZoneList(zoneList, allZones, defaultZone, currentZone) {
     return selected;
 }
 
+// Return undefined if nothing is selected, null if the default zone is selected, or the selected zone name.
 export function getSelectedZone(zoneDropDown) {
-    const selectedZone = zoneDropDown.get_selected_item().get_string();
+    const selectedItem = zoneDropDown.get_selected_item();
+    if (selectedItem === null)
+        return undefined;
+
+    const selectedZone = selectedItem.get_string();
     return selectedZone === defaultZoneLabel ? null : selectedZone;
 }

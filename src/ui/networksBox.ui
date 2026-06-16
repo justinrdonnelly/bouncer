@@ -62,7 +62,7 @@
       </object>
     </child>
 
-    <!-- Forget action -->
+    <!-- Actions -->
     <child>
       <object class="GtkListBox">
         <property name="selection-mode">none</property>
@@ -73,6 +73,31 @@
         <style>
           <class name="boxed-list"/>
         </style>
+        <!-- Change zone action -->
+        <child>
+          <object class="AdwComboRow" id="zoneDropDown">
+            <property name="title" translatable="yes">Change Zone</property>
+            <property name="sensitive">False</property>
+            <property name="model">
+              <object class="GtkStringList" id="zoneList"/>
+            </property>
+            <child type="suffix">
+              <object class="GtkButton" id="changeZoneButton">
+                <property name="margin-start">24</property> <!-- This forces the zone dropdown a little to the left away from the 'Change' button. -->
+                <property name="width-request">120</property>
+                <property name="valign">center</property>
+                <property name="sensitive">False</property>
+                <property name="label" translatable="yes">Change</property>
+                <style>
+                  <class name="pill"/>
+                  <class name="suggested-action"/>
+                </style>
+                <signal name="clicked" handler="changeZoneButtonClicked"/>
+              </object>
+            </child>
+          </object> <!-- end AdwComboRow -->
+        </child>
+        <!-- Forget action -->
         <child>
           <object class="AdwActionRow">
             <property name="title" translatable="yes">Forget Network</property>
