@@ -129,15 +129,28 @@ export const BouncerApplication = GObject.registerClass(
             // If we `await` anything without either showing the window or `hold`ing, the application will exit. We'll
             // call `hold` until we show the window, then we'll call `release`.
             this.hold();
-            await Promise.all([this.#dependencyCheck.runChecks(false), this.#connectionIdsSeen.init()]);
-            const dependencyBox = new DependencyBox(this.#dependencyCheck, this.#monitoring);
-            dependencyBox.connect('monitor-network', this.monitorNetworkAndCatch.bind(this));
-            const networksBox = new NetworksBox(this.#connectionIdsSeen);
-            // Note that networksBox will populate networks asynchronously.
-            this.#dashboardWindow = new Dashboard(this, dependencyBox, networksBox);
-            this.#dashboardWindow.connect('close-request', this.#handleDashboardWindowClose.bind(this));
-            this.#dashboardWindow.present();
-            this.release();
+            try {
+                await this.#dependencyCheck.runChecks(false);
+
+                let networksBox = null;
+                try {
+                    await this.#connectionIdsSeen.init();
+                    networksBox = new NetworksBox(this.#connectionIdsSeen);
+                } catch (e) {
+                    console.error('Unable to initialize ConnectionIdsSeen for dashboard.');
+                    console.error(e.message);
+                }
+
+                const dependencyBox = new DependencyBox(this.#dependencyCheck, this.#monitoring);
+                dependencyBox.connect('monitor-network', this.monitorNetworkAndCatch.bind(this));
+                // If networksBox is null, the normal 'Networks' tab contents will be replaced with an error message.
+                this.#dashboardWindow = new Dashboard(this, dependencyBox, networksBox);
+                this.#dashboardWindow.connect('close-request', this.#handleDashboardWindowClose.bind(this));
+                this.#dashboardWindow.present();
+            } finally {
+                this.release();
+            }
+
         }
 
         monitorNetworkAndCatch() {
