@@ -57,6 +57,7 @@ export const NetworksBox = GObject.registerClass(
             this.#refreshZoneInfo().catch((e) => {
                 console.error('Unable to get firewall zone information.');
                 console.error(e.message);
+                this.#handleZoneInfoUnavailable();
             });
         }
 
@@ -164,6 +165,12 @@ export const NetworksBox = GObject.registerClass(
             [this.#allZones, this.#defaultZone] = await Promise.all([ZoneInfo.getZones(), ZoneInfo.getDefaultZone()]);
             this.#zoneInfoLoaded = true;
             this.#updateZoneDropDown(this.#getSelectedNetwork());
+        }
+
+        // Explain why the zone-changing controls are disabled.
+        #handleZoneInfoUnavailable() {
+            this._zoneDropDown.subtitle = _('Firewall zone information could not be loaded.');
+            // this._zoneDropDown and this._changeZoneButton are already not sensitive.
         }
 
         // Update the zone dropdown based on the currently selected network.

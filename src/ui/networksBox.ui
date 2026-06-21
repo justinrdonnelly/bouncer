@@ -68,6 +68,7 @@
                 <child>
                   <object class="AdwComboRow" id="zoneDropDown">
                     <property name="title" translatable="yes">Change Zone</property>
+                    <property name="subtitle-lines">0</property>
                     <property name="sensitive">False</property>
                     <property name="model">
                       <object class="GtkStringList" id="zoneList"/>
