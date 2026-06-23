@@ -59,6 +59,7 @@
     <release version="" date="">
       <description>
         <ul>
+          <li>Include a networks tab on the dashboard</li>
           <li>UI cleanup</li>
           <li>Improve accessibility for dependency item status</li>
           <li>Track connections by NetworkManager UUID</li>
