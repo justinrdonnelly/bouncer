@@ -60,6 +60,7 @@
           <li>Track connections by NetworkManager UUID</li>
           <li>Update Occitan translations</li>
           <li>Update Italian translations</li>
+          <li>Include Danish translations</li>
         </ul>
       </description>
     </release>
