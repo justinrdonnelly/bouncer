@@ -56,7 +56,7 @@
     <color type="primary" scheme_preference="dark">#9586b9</color>
   </branding>
   <releases>
-    <release version="" date="">
+    <release version="50.1.0" date="2026-06-24">
       <description>
         <ul>
           <li>Include a networks tab on the dashboard</li>
