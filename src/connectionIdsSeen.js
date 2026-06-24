@@ -11,64 +11,112 @@
 
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
+import GObject from 'gi://GObject';
 
 import { Data } from './data.js';
+import { migrateDataIfNecessary } from './dataMigration.js';
 
-export class ConnectionIdsSeen {
+export const ConnectionIdsSeen = GObject.registerClass(
+    {
+        GTypeName: 'ConnectionIdsSeen',
+        Properties: {
+            'connection-ids-seen': GObject.ParamSpec.jsobject(
+                'connection-ids-seen',
+                'connection IDs seen',
+                'NetworkManager connection UUIDs already seen by Bouncer',
+                GObject.ParamFlags.READWRITE,
+            ),
+        },
+    },
+    class ConnectionIdsSeen extends GObject.Object {
     static #fileName = 'connection-ids-seen.json';
-    #connectionIdsSeen; // array of connection IDs for this machine
-    #allConnectionIdsSeen; // map of machine ID to array of connection IDs for the machine
+    #allConnectionIdsSeen; // map of machine ID to array of connection UUIDs for the machine
     #data;
+    #initialized = false; // whether `init` has been called
 
-    constructor() {
+    constructor(constructProperties = {}) {
+        super(constructProperties);
         this.#data = new Data(ConnectionIdsSeen.#fileName);
     }
 
     // Always call init immediately after constructor.
     async init() {
+        if (this.#initialized) {
+            return;
+        }
+        console.log('Initializing ConnectionIdsSeen');
         // Don't try/catch here. Allow errors to propagate.
         const [data, machineId] = await Promise.all([this.#data.getData(), this.getMachineId()]);
 
         if (data === null) {
-            this.#connectionIdsSeen = [];
-            this.#allConnectionIdsSeen = {[machineId]: this.#connectionIdsSeen};
+            this.connectionIdsSeen = [];
+            this.#allConnectionIdsSeen = new Map([['version', 3], [machineId, this.connectionIdsSeen]]);
         } else {
-            this.#allConnectionIdsSeen = JSON.parse(data);
-            // We'll have to migrate existing setups from purely array based to an object, where the key is the machine
-            // ID, and the value is the array of connection IDs.
-            // This code is temporary, and should be removed after we figure users have migrated to the new format.
-            if (Array.isArray(this.#allConnectionIdsSeen)) { // It's an array (old format). Convert it.
-                console.log(`Migrating data format for ${ConnectionIdsSeen.#fileName}`);
-                this.#connectionIdsSeen = this.#allConnectionIdsSeen;
-                this.#allConnectionIdsSeen = {[machineId]: this.#connectionIdsSeen};
-                // save it to update the format of the saved data
+            const parsedData = JSON.parse(data);
+            const migratedData = await migrateDataIfNecessary(parsedData, machineId);
+            this.#allConnectionIdsSeen = new Map(Object.entries(migratedData));
+
+            if (migratedData !== parsedData) {
                 await this.save();
-            } else {
-                const newMachine = !Object.hasOwn(this.#allConnectionIdsSeen, machineId);
-                if (newMachine) {
-                    this.#allConnectionIdsSeen[machineId] = [];
-                }
-                this.#connectionIdsSeen = this.#allConnectionIdsSeen[machineId];
             }
+
+            const newMachine = !this.#allConnectionIdsSeen.has(machineId);
+            if (newMachine) {
+                this.#allConnectionIdsSeen.set(machineId, []);
+            }
+            this.connectionIdsSeen = this.#allConnectionIdsSeen.get(machineId);
         }
+        this.#initialized = true;
     }
 
-    isConnectionNew(connectionId) {
-        console.log(`Checking to see if connection ${connectionId} is new.`);
-        const isNew = !this.#connectionIdsSeen.includes(connectionId);
-        console.log(`Connection ${connectionId} is ${isNew ? '' : 'not '}new.`);
+    isConnectionNew(connectionUuid) {
+        console.log(`Checking to see if connection ${connectionUuid} is new.`);
+        const isNew = !this.connectionIdsSeen.includes(connectionUuid);
+        console.log(`Connection ${connectionUuid} is ${isNew ? '' : 'not '}new.`);
         return isNew;
     }
 
-    addConnectionIdToSeen(connectionId) {
-        console.log(`Adding ${connectionId} to ${ConnectionIdsSeen.#fileName}.`);
-        this.#connectionIdsSeen.push(connectionId);
+    addConnectionIdToSeen(connectionUuid) {
+        if (this.connectionIdsSeen.includes(connectionUuid))
+            return;
+
+        console.log(`Adding ${connectionUuid} to ${ConnectionIdsSeen.#fileName}.`);
+        this.connectionIdsSeen.push(connectionUuid);
+        // Since we're changing this.connectionIdsSeen (not using a property setter), we need to call notify.
+        this.notify('connection-ids-seen');
+    }
+
+    async forgetConnection(connectionUuid) {
+        console.log(`Removing ${connectionUuid} from ${ConnectionIdsSeen.#fileName}.`);
+        // Copy (via spread) the previous version. This is used to determine whether we actually removed anything, and
+        // to restore the previous version in case the save fails.
+        const previousConnectionIdsSeen = [...this.connectionIdsSeen];
+        const updatedConnectionIdsSeen = this.connectionIdsSeen.filter((uuid) => uuid !== connectionUuid);
+
+        if (updatedConnectionIdsSeen.length === this.connectionIdsSeen.length) {
+            console.warn(`Connection ${connectionUuid} was not in ${ConnectionIdsSeen.#fileName}.`);
+            return;
+        }
+
+        // Don't just replace `this.connectionIdsSeen`. `this.#allConnectionIdsSeen` wouldn't be updated. It would also
+        // fire update notifications (via the `set` method) that we don't want yet.
+        this.connectionIdsSeen.splice(0, this.connectionIdsSeen.length, ...updatedConnectionIdsSeen);
+        try {
+            await this.save();
+            // Since we're changing this.connectionIdsSeen (not using a property setter), we need to call notify
+            // explicitly.
+            this.notify('connection-ids-seen');
+        } catch (e) {
+            // The save failed. Restore the in-memory representation.
+            this.connectionIdsSeen.splice(0, this.connectionIdsSeen.length, ...previousConnectionIdsSeen);
+            throw e;
+        }
     }
 
     async save() {
         // Don't try/catch here. Allow errors to propagate.
-        const dataJSON = JSON.stringify(this.#allConnectionIdsSeen);
-        this.#data.saveData(dataJSON);
+        const dataJSON = JSON.stringify(Object.fromEntries(this.#allConnectionIdsSeen));
+        await this.#data.saveData(dataJSON);
     }
 
     async getMachineId() {
@@ -97,4 +145,4 @@ export class ConnectionIdsSeen {
         });
     }
 
-}
+});

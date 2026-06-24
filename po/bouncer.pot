@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Bouncer 50.0.0\n"
+"Project-Id-Version: Bouncer 50.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-22 18:41-0400\n"
+"POT-Creation-Date: 2026-06-24 15:50-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -108,170 +108,116 @@ msgstr ""
 msgid "Bouncer dashboard showing configuration status"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:58
-msgid "Include dashboard"
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:51
+msgid "Bouncer dashboard showing network and zone information"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:62
+msgid "Include a networks tab on the dashboard"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:63
+msgid "UI cleanup"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:64
+msgid "Improve accessibility for dependency item status"
 msgstr ""
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:65
-msgid "Include additional desktop categories"
+msgid "Track connections by NetworkManager UUID"
 msgstr ""
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:66
+msgid "Update Occitan translations"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:67
+msgid "Update Italian translations"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:68
+msgid "Include Danish translations"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:75
+msgid "Correctly show autostart status on dashboard"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:76
+msgid "Include Italian translation"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:77
+msgid "Track connection IDs seen per machine"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:78
+msgid "Include Polish translation"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:79
+msgid "Use GNOME 50 runtime"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:80
+msgid "Handle NetworkManager restarts"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:87
+msgid "Include dashboard"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:94
+msgid "Include additional desktop categories"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:95
 msgid "Support command line arguments"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:73
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:102
 msgid "Added Russian translation"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:74
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:103
 msgid "Fixed metainfo formatting"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:81
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:110
 msgid "Added Occitan translation"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:82
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:111
 msgid "Added Simplified Chinese translation"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:83
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:112
 msgid "Fixed multiple instance support"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:84
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:113
 msgid "Use GNOME 49 runtime"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:91
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:120
 msgid "Critical bug fix for non-English language users"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:92
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:121
 msgid "Added Dutch translation"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:93
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:122
 msgid "Documentation cleanups"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:99
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:128
 msgid "Include a notification for first run success"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:104
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:133
 msgid "Initial release"
-msgstr ""
-
-#: src/ui/bouncerWindow.ui:27
-msgid "Menu"
-msgstr ""
-
-#: src/ui/bouncerWindow.ui:54
-msgid "_About Bouncer"
-msgstr ""
-
-#: src/ui/chooseZoneBox.ui:25
-msgid ""
-"You have connected to a new Wi-Fi network. Please choose a firewall zone. "
-"What type of network is this?"
-msgstr ""
-
-#: src/ui/chooseZoneBox.ui:41
-msgid "Network"
-msgstr ""
-
-#: src/ui/chooseZoneBox.ui:50
-msgid "Default Zone"
-msgstr ""
-
-#: src/ui/chooseZoneBox.ui:59
-msgid "Current Zone"
-msgstr ""
-
-#. make the dropdown not span the entire box
-#: src/ui/chooseZoneBox.ui:75
-msgid "Firewall Zone"
-msgstr ""
-
-#: src/ui/chooseZoneBox.ui:76
-msgid "Choose the firewall zone for this network."
-msgstr ""
-
-#: src/ui/chooseZoneBox.ui:79
-msgid "Zone"
-msgstr ""
-
-#: src/ui/chooseZoneBox.ui:98
-msgid "Help"
-msgstr ""
-
-#. min width
-#: src/ui/chooseZoneBox.ui:110
-msgid "Get more information."
-msgstr ""
-
-#: src/ui/chooseZoneBox.ui:125
-msgid "Exit"
-msgstr ""
-
-#. min width
-#: src/ui/chooseZoneBox.ui:137
-msgid ""
-"No change will be made. You will see this window again the next time you "
-"connect to this network."
-msgstr ""
-
-#: src/ui/chooseZoneBox.ui:152
-msgid "Choose"
-msgstr ""
-
-#. min width
-#: src/ui/chooseZoneBox.ui:167
-msgid ""
-"The selected firewall zone will be used every time you connect to this "
-"network."
-msgstr ""
-
-#: src/ui/dashboardBox.js:52
-msgid "firewalld Running"
-msgstr ""
-
-#: src/ui/dashboardBox.js:68
-msgid "NetworkManager Running"
-msgstr ""
-
-#: src/ui/dashboardBox.js:84
-msgid "NetworkManager Permissions"
-msgstr ""
-
-#: src/ui/dashboardBox.js:93
-msgid "Run on Startup"
-msgstr ""
-
-#: src/ui/dashboardBox.ui:23
-msgid ""
-"In order to function properly, Bouncer depends on multiple other system "
-"components and configurations. To help facilitate the correct setup, this "
-"page shows the status for those required components and configurations."
-msgstr ""
-
-#: src/ui/dashboardBox.ui:31
-msgid ""
-"You can close this window at any time without affecting network monitoring."
-msgstr ""
-
-#: src/ui/dashboardBox.ui:55
-msgid "Once everything is ready, click to begin using Bouncer."
-msgstr ""
-
-#: src/ui/dashboardBox.ui:64
-msgid "Bouncer is monitoring your Wi-Fi!"
-msgstr ""
-
-#: src/ui/dashboardBox.ui:70
-msgid "Monitor"
 msgstr ""
 
 #: src/dependencyCheck.js:237
@@ -373,46 +319,42 @@ msgid ""
 "more information."
 msgstr ""
 
-#: src/ui/dependencyItem.ui:23
-msgid "Check Status"
-msgstr ""
-
-#: src/main.js:58
+#: src/main.js:62
 msgid "Monitor Wi-Fi connections in the background"
 msgstr ""
 
-#: src/main.js:110
+#: src/main.js:117
 msgid "Unknown error"
 msgstr ""
 
-#: src/main.js:111
+#: src/main.js:118
 msgid ""
 "An unknown error occurred. Bouncer may not function correctly. Please see "
 "logs for more information."
 msgstr ""
 
-#: src/main.js:164
+#: src/main.js:185
 msgid "Can't find previously seen connections"
 msgstr ""
 
-#: src/main.js:165
+#: src/main.js:186
 msgid ""
 "There was a problem determining which connections have already been seen. "
 "Please see logs for more information."
 msgstr ""
 
-#: src/main.js:189
+#: src/main.js:209
 msgid "Can't determine network state"
 msgstr ""
 
-#: src/main.js:190
+#: src/main.js:210
 msgid ""
 "There was a problem tracking network connection changes. Please see logs for "
 "more information."
 msgstr ""
 
 #. details
-#: src/main.js:212
+#: src/main.js:231
 msgid ""
 "Bouncer is an application to help you choose the correct firewall zone for "
 "wireless connections. When you connect to a new network, Bouncer will open a "
@@ -423,60 +365,60 @@ msgstr ""
 
 #. Translators: Replace 'translator-credits' with your name/username, and optionally an email or
 #. URL.
-#: src/main.js:224
+#: src/main.js:243
 msgid "translator-credits"
 msgstr ""
 
-#: src/main.js:253
+#: src/main.js:272
 msgid " Bouncer is shutting down. You will need to restart manually."
 msgstr ""
 
-#: src/main.js:266
+#: src/main.js:285
 msgid "First run setup complete!"
 msgstr ""
 
-#: src/main.js:267
+#: src/main.js:286
 msgid ""
 "Your system is correctly configured for Bouncer. Bouncer will autostart on "
 "each login and will open when you connect to a new Wi-Fi network."
 msgstr ""
 
-#: src/main.js:301
+#: src/main.js:329
 msgid "Can't prompt for firewall zone"
 msgstr ""
 
-#: src/main.js:302
+#: src/main.js:330
 msgid ""
 "There was a problem getting information to prompt for the firewall zone. "
 "Please see logs for more information."
 msgstr ""
 
-#: src/main.js:355
+#: src/main.js:382
 msgid "Can't add connection to seen connections"
 msgstr ""
 
-#: src/main.js:356
+#: src/main.js:383
 msgid ""
 "There was a problem adding the connection to the list of seen connections. "
 "The firewall zone will not be set for this connection. Please see logs for "
 "more information."
 msgstr ""
 
-#: src/main.js:371
+#: src/main.js:398
 msgid "Can't set firewall zone for connection"
 msgstr ""
 
-#: src/main.js:372
+#: src/main.js:399
 msgid ""
 "There was a problem setting the firewall zone for the connection. Please see "
 "logs for more information."
 msgstr ""
 
-#: src/main.js:387
+#: src/main.js:414
 msgid "Can't save connection to seen connections"
 msgstr ""
 
-#: src/main.js:388
+#: src/main.js:415
 msgid ""
 "The zone has been set for the connection, but there was a problem saving the "
 "updated list of seen connections to disk. Once you restart Bouncer, you will "
@@ -484,39 +426,207 @@ msgid ""
 "logs for more information."
 msgstr ""
 
-#: src/main.js:398
+#: src/main.js:425
 msgid "Firewall zone set for connection: "
 msgstr ""
 
 #. this is the default zone
-#: src/main.js:400
+#: src/main.js:427
 msgid ""
 "Firewall zone for this connection has been set to the default zone "
 "(currently "
 msgstr ""
 
-#: src/main.js:401
+#: src/main.js:428
 msgid ""
 "). Whenever you connect to this network in the future, the firewall zone "
 "will automatically be changed to the default zone."
 msgstr ""
 
-#: src/main.js:405
+#: src/main.js:432
 msgid "Firewall zone for this connection has been set to "
 msgstr ""
 
-#: src/main.js:405
+#: src/main.js:432
 msgid ""
 ". Whenever you connect to this network in the future, the firewall zone will "
 "automatically be changed to "
 msgstr ""
 
-#: src/main.js:407
+#: src/main.js:434
 msgid "."
 msgstr ""
 
-#: src/ui/moreInfo.ui:16
+#: src/networkState.js:123
+msgid "Error determining network state"
+msgstr ""
+
+#: src/networkState.js:124
+msgid ""
+"Bouncer ran into an error determining network state. This is required for "
+"the application to work correctly. Please see logs for more information."
+msgstr ""
+
+#: src/ui/bouncerWindow.ui:27 src/ui/dashboard.ui:39
+msgid "Menu"
+msgstr ""
+
+#: src/ui/bouncerWindow.ui:54 src/ui/dashboard.ui:118
+msgid "_About Bouncer"
+msgstr ""
+
+#: src/ui/chooseZoneBox.ui:25
+msgid ""
+"You have connected to a new Wi-Fi network. Please choose a firewall zone. "
+"What type of network is this?"
+msgstr ""
+
+#: src/ui/chooseZoneBox.ui:41
+msgid "Network"
+msgstr ""
+
+#: src/ui/chooseZoneBox.ui:50
+msgid "Default Zone"
+msgstr ""
+
+#: src/ui/chooseZoneBox.ui:59 src/ui/networksBox.ui:53
+msgid "Current Zone"
+msgstr ""
+
+#. make the dropdown not span the entire box
+#: src/ui/chooseZoneBox.ui:75
+msgid "Firewall Zone"
+msgstr ""
+
+#: src/ui/chooseZoneBox.ui:76
+msgid "Choose the firewall zone for this network."
+msgstr ""
+
+#: src/ui/chooseZoneBox.ui:79
+msgid "Zone"
+msgstr ""
+
+#: src/ui/chooseZoneBox.ui:102 src/ui/moreInfo.ui:16
 msgid "More Information"
+msgstr ""
+
+#: src/ui/chooseZoneBox.ui:103
+msgid "Get more information."
+msgstr ""
+
+#: src/ui/chooseZoneBox.ui:112
+msgid "Help"
+msgstr ""
+
+#: src/ui/chooseZoneBox.ui:121
+msgid "Skip for Now"
+msgstr ""
+
+#: src/ui/chooseZoneBox.ui:122
+msgid ""
+"No change will be made. You will see this window again the next time you "
+"connect to this network."
+msgstr ""
+
+#: src/ui/chooseZoneBox.ui:131
+msgid "Exit"
+msgstr ""
+
+#: src/ui/chooseZoneBox.ui:140
+msgid "Save Zone"
+msgstr ""
+
+#: src/ui/chooseZoneBox.ui:141
+msgid ""
+"The selected firewall zone will be used every time you connect to this "
+"network."
+msgstr ""
+
+#: src/ui/chooseZoneBox.ui:147
+msgid "Choose"
+msgstr ""
+
+#: src/ui/dashboard.js:47
+msgid ""
+"Saved networks could not be loaded. Please see logs for more information."
+msgstr ""
+
+#: src/ui/dashboard.ui:30
+msgid "Dashboard"
+msgstr ""
+
+#: src/ui/dashboard.ui:90
+msgid "Dependencies"
+msgstr ""
+
+#: src/ui/dashboard.ui:99 src/ui/networksBox.ui:38
+msgid "Networks"
+msgstr ""
+
+#: src/ui/dependencyBox.js:52
+msgid "firewalld Running"
+msgstr ""
+
+#: src/ui/dependencyBox.js:68
+msgid "NetworkManager Running"
+msgstr ""
+
+#: src/ui/dependencyBox.js:84
+msgid "NetworkManager Permissions"
+msgstr ""
+
+#: src/ui/dependencyBox.js:93
+msgid "Run on Startup"
+msgstr ""
+
+#: src/ui/dependencyBox.js:119
+msgid "Bouncer is monitoring your Wi-Fi!"
+msgstr ""
+
+#. We're not monitoring. Show the correct text.
+#: src/ui/dependencyBox.js:123 src/ui/dependencyBox.ui:56
+msgid "Once everything is ready, click to begin using Bouncer."
+msgstr ""
+
+#: src/ui/dependencyBox.ui:24
+msgid ""
+"In order to function properly, Bouncer depends on multiple other system "
+"components and configurations. To help facilitate the correct setup, this "
+"page shows the status for those required components and configurations."
+msgstr ""
+
+#: src/ui/dependencyBox.ui:32
+msgid ""
+"You can close this window at any time without affecting network monitoring."
+msgstr ""
+
+#: src/ui/dependencyBox.ui:55
+msgid "Network Monitoring"
+msgstr ""
+
+#: src/ui/dependencyBox.ui:62
+msgid "Monitor"
+msgstr ""
+
+#: src/ui/dependencyItem.js:60 src/ui/dependencyItem.js:69
+#: src/ui/dependencyItem.ui:22
+msgid "Unknown"
+msgstr ""
+
+#: src/ui/dependencyItem.js:62
+msgid "Ready"
+msgstr ""
+
+#: src/ui/dependencyItem.js:64
+msgid "Suboptimal"
+msgstr ""
+
+#: src/ui/dependencyItem.js:66
+msgid "Not Ready"
+msgstr ""
+
+#: src/ui/dependencyItem.ui:33
+msgid "Check"
 msgstr ""
 
 #. Ignore the ugly formatting. New lines are literal.
@@ -544,12 +654,36 @@ msgid ""
 "bouncer\">here</a>."
 msgstr ""
 
-#: src/networkState.js:120
-msgid "Error determining network state"
+#: src/ui/networksBox.js:172
+msgid "Firewall zone information could not be loaded."
 msgstr ""
 
-#: src/networkState.js:121
+#: src/ui/networksBox.ui:34
+msgid "Manage Networks"
+msgstr ""
+
+#: src/ui/networksBox.ui:35
+msgid "Manage your configured networks from here."
+msgstr ""
+
+#: src/ui/networksBox.ui:70
+msgid "Change Zone"
+msgstr ""
+
+#: src/ui/networksBox.ui:82
+msgid "Change"
+msgstr ""
+
+#: src/ui/networksBox.ui:95
+msgid "Forget Network"
+msgstr ""
+
+#: src/ui/networksBox.ui:96
 msgid ""
-"Bouncer ran into an error determining network state. This is required for "
-"the application to work correctly. Please see logs for more information."
+"Forget this network. You will be prompted to choose the firewall zone for "
+"this network the next time you connect to it."
+msgstr ""
+
+#: src/ui/networksBox.ui:102
+msgid "Forget"
 msgstr ""

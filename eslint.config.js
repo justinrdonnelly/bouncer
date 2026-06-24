@@ -2,10 +2,12 @@
 // SPDX-FileCopyrightText: No rights reserved
 
 import js from '@eslint/js';
+import pluginSecurity from 'eslint-plugin-security';
 import stylistic from '@stylistic/eslint-plugin';
 
 export default [
     js.configs.recommended,
+    pluginSecurity.configs.recommended,
     {
         languageOptions: {
             globals: {

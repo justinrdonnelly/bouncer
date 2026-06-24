@@ -10,6 +10,7 @@
  */
 
 import Adw from 'gi://Adw?version=1';
+import Gdk from 'gi://Gdk';
 import Gio from 'gi://Gio'; // Required by GJS, version not necessary.
 import GLib from 'gi://GLib'; // Required by GJS, version not necessary.
 import GLibUnix from 'gi://GLibUnix?version=2.0';
@@ -21,10 +22,13 @@ import { ChooseZoneBox } from './ui/chooseZoneBox.js';
 import { config } from './config.js';
 import { ConnectionIdsSeen } from './connectionIdsSeen.js';
 import { DependencyCheck } from './dependencyCheck.js';
-import { DashboardBox } from './ui/dashboardBox.js';
+import { Dashboard } from './ui/dashboard.js';
+import { DependencyBox } from './ui/dependencyBox.js';
+import { NetworksBox } from './ui/networksBox.js';
 import { NetworkState } from './networkState.js';
 import { ZoneForConnection } from './zoneForConnection.js';
 import { ZoneInfo } from './zoneInfo.js';
+import { defaultZoneLabel } from './zoneSelection.js';
 
 import promisify from './promisify.js';
 
@@ -62,12 +66,15 @@ export const BouncerApplication = GObject.registerClass(
 
         // This will only run once. It runs on the primary instance, and will run early.
         vfunc_startup() {
+            super.vfunc_startup();
             console.log('Welcome to Bouncer! Starting up.');
+            Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
+                .add_resource_path('/io/github/justinrdonnelly/bouncer/icons');
             promisify();
             this.#createAboutAction();
             this.#handleSignals();
             this.#instantiateDependencyCheck();
-            return super.vfunc_startup();
+            this.#connectionIdsSeen = new ConnectionIdsSeen();
         }
 
         vfunc_activate() {} // Required because Adw.Application extends GApplication.
@@ -119,14 +126,31 @@ export const BouncerApplication = GObject.registerClass(
                 console.log('Bouncer dashboard window is already showing.');
                 return;
             }
-            // We need to show the window right away (before `await`ing `this.#dependencyCheck.runChecks()`, or else
-            // the application will exit
-            const dashboardBox = new DashboardBox(this.#dependencyCheck, this.#monitoring);
-            dashboardBox.connect('monitor-network', this.monitorNetworkAndCatch.bind(this));
-            this.#dashboardWindow = new BouncerWindow(this, dashboardBox);
-            this.#dashboardWindow.connect('close-request', this.#handleDashboardWindowClose.bind(this));
-            this.#dashboardWindow.present();
-            await this.#dependencyCheck.runChecks(false);
+            // If we `await` anything without either showing the window or `hold`ing, the application will exit. We'll
+            // call `hold` until we show the window, then we'll call `release`.
+            this.hold();
+            try {
+                await this.#dependencyCheck.runChecks(false);
+
+                let networksBox = null;
+                try {
+                    await this.#connectionIdsSeen.init();
+                    networksBox = new NetworksBox(this.#connectionIdsSeen);
+                } catch (e) {
+                    console.error('Unable to initialize ConnectionIdsSeen for dashboard.');
+                    console.error(e.message);
+                }
+
+                const dependencyBox = new DependencyBox(this.#dependencyCheck, this.#monitoring);
+                dependencyBox.connect('monitor-network', this.monitorNetworkAndCatch.bind(this));
+                // If networksBox is null, the normal 'Networks' tab contents will be replaced with an error message.
+                this.#dashboardWindow = new Dashboard(this, dependencyBox, networksBox);
+                this.#dashboardWindow.connect('close-request', this.#handleDashboardWindowClose.bind(this));
+                this.#dashboardWindow.present();
+            } finally {
+                this.release();
+            }
+
         }
 
         monitorNetworkAndCatch() {
@@ -150,10 +174,7 @@ export const BouncerApplication = GObject.registerClass(
             const emit = this.#dashboardWindow === null;
             await this.#dependencyCheck.runChecks(emit);
             try {
-                if (this.#connectionIdsSeen === null) {
-                    this.#connectionIdsSeen = new ConnectionIdsSeen();
-                    await this.#connectionIdsSeen.init();
-                }
+                await this.#connectionIdsSeen.init();
             } catch (e) {
                 // Bail out here... There's nothing we can reasonably do without knowing if a network has been seen.
                 console.error('Unable to initialize ConnectionIdsSeen.');
@@ -166,7 +187,6 @@ export const BouncerApplication = GObject.registerClass(
                         'more information.')
                 );
                 // clean up
-                this.#connectionIdsSeen = null
                 this.release();
                 this.#monitoring = false;
             }
@@ -177,7 +197,7 @@ export const BouncerApplication = GObject.registerClass(
                     this.#networkState.connect('error', this.#handleErrorSignal.bind(this));
                     this.#networkState.connect('connection-changed', this.#handleConnectionChangedSignal.bind(this));
                     // if the dashboard is open, tell it that we've begun monitoring
-                    this.#dashboardWindow?.content.beginMonitoring();
+                    this.#dashboardWindow?.dependencyBox.beginMonitoring();
                 }
             } catch (e) {
                 // Bail out here... There's nothing we can do without NetworkState.
@@ -190,7 +210,6 @@ export const BouncerApplication = GObject.registerClass(
                     _('There was a problem tracking network connection changes. Please see logs for more information.')
                 );
                 // clean up
-                this.#connectionIdsSeen = null
                 this.#networkState?.destroy();
                 this.#networkState = null
                 this.release();
@@ -271,14 +290,16 @@ export const BouncerApplication = GObject.registerClass(
         }
 
         // eslint-disable-next-line no-unused-vars
-        async #handleConnectionChangedSignal(emittingObject, connectionId, activeConnectionSettings) {
+        async #handleConnectionChangedSignal(emittingObject, connectionUuid, connectionName, activeConnectionSettings) {
             try {
-                this.#closeWindowIfConnectionChanged(connectionId);
+                // close the existing window (if applicable)
+                this.#chooseZoneWindow?.close();
+                this.#chooseZoneWindow = null;
                 // bail out if there is no connection
-                if (connectionId === '')
+                if (connectionUuid === '')
                     return;
 
-                const isConnectionNew = this.#connectionIdsSeen.isConnectionNew(connectionId);
+                const isConnectionNew = this.#connectionIdsSeen.isConnectionNew(connectionUuid);
                 if (!isConnectionNew)
                     // The connection is not new. Don't open the window.
                     return;
@@ -288,7 +309,14 @@ export const BouncerApplication = GObject.registerClass(
                     ZoneInfo.getDefaultZone(),
                     ZoneForConnection.getZone(activeConnectionSettings),
                 ]);
-                this.#createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings);
+                this.#createWindow(
+                    connectionUuid,
+                    connectionName,
+                    defaultZone,
+                    currentZone,
+                    zones,
+                    activeConnectionSettings
+                );
             } catch (e) {
                 // We've hit an exception in the callback where we'd consider opening the window. Bail out and
                 // hope for better luck next time (unlikely).
@@ -305,21 +333,19 @@ export const BouncerApplication = GObject.registerClass(
             }
         }
 
-        #createWindow(connectionId, defaultZone, currentZone, zones, activeConnectionSettings) {
+        #createWindow(connectionUuid, connectionName, defaultZone, currentZone, zones, activeConnectionSettings) {
             // this.#chooseZoneWindow should always be null. Either this is the first creation, or we should have
-            // already called #closeWindowIfConnectionChanged.
+            // already called this.#chooseZoneWindow?.close().
             if (!this.#chooseZoneWindow) {
                 const chooseZoneBox = new ChooseZoneBox(
-                    connectionId,
+                    connectionUuid,
+                    connectionName,
                     defaultZone,
                     currentZone,
                     zones,
                     activeConnectionSettings
                 );
-                this.#chooseZoneWindow = new BouncerWindow(
-                    this,
-                    chooseZoneBox
-                );
+                this.#chooseZoneWindow = new BouncerWindow(this, chooseZoneBox);
                 chooseZoneBox.window = this.#chooseZoneWindow;
             }
 
@@ -327,16 +353,17 @@ export const BouncerApplication = GObject.registerClass(
             this.#chooseZoneWindow.present();
         }
 
-        #closeWindowIfConnectionChanged(connectionId) {
-            if (this.#chooseZoneWindow?.content?.connectionId !== connectionId)
-                this.#chooseZoneWindow?.close();
-                this.#chooseZoneWindow = null;
-        }
-
-        // eslint-disable-next-line no-unused-vars
-        async #chooseClicked(emittingObject, connectionId, activeConnectionSettings, zone, defaultZone) {
-            console.log(`For connection ID ${connectionId}, setting zone to ` +
-                `${zone ?? ChooseZoneBox.defaultZoneLabel}`);
+        async #chooseClicked(
+            // eslint-disable-next-line no-unused-vars
+            emittingObject,
+            connectionUuid,
+            connectionName,
+            activeConnectionSettings,
+            zone,
+            defaultZone
+        ) {
+            console.log(`For connection ID ${connectionUuid} (${connectionName}), setting zone to ` +
+                `${zone ?? defaultZoneLabel}`);
             // Update the in-memory representation of seen connections before updating the zone. If the connection ID
             // hasn't been added to the list of seen connections when the zone is changed, the window will open again!
             // But don't sync to disk until after the zone for the connection is set. That way, if there's an error in
@@ -344,7 +371,7 @@ export const BouncerApplication = GObject.registerClass(
 
             // Update the in-memory representation of seen connections
             try {
-                this.#connectionIdsSeen.addConnectionIdToSeen(connectionId);
+                this.#connectionIdsSeen.addConnectionIdToSeen(connectionUuid);
             } catch (e) {
                 console.error('Error adding connection to seen connections. Not attempting to set zone for the ' +
                     'connection.');
@@ -395,7 +422,7 @@ export const BouncerApplication = GObject.registerClass(
             // Everything worked. Generate a notification indicating what's happened.
             try {
                 const notification = new Gio.Notification();
-                notification.set_title(_('Firewall zone set for connection: ') + connectionId);
+                notification.set_title(_('Firewall zone set for connection: ') + connectionName);
                 if (zone === null) // this is the default zone
                     notification.set_body(_('Firewall zone for this connection has been set to the default zone ' +
                         '(currently ') + defaultZone + _('). Whenever you connect to this network in the future, the ' +

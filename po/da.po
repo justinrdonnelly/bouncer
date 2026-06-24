@@ -1,35 +1,36 @@
-# Chinese (Simplified) translation file for Bouncer
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# DANISH TRANSLATION.
+# Copyright (C) 2026 Justin Donnelly
 # This file is distributed under the same license as the Bouncer package.
-# Translator Ariel Wang <ariel@netc.fr>, 2025.
+# Filip Kemuel <https://github.com/filipkemuel>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Bouncer 48\n"
+"Project-Id-Version: Bouncer 50.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-24 15:50-0400\n"
-"PO-Revision-Date: 2025-07-09 19:10-0400\n"
-"Last-Translator: Ariel Wang <ariel@netc.fr>\n"
-"Language-Team: \n"
-"Language: zh_CN\n"
+"PO-Revision-Date: 2026-06-14 08:04+0200\n"
+"Last-Translator: Filip Kemuel <https://github.com/filipkemuel>\n"
+"Language-Team: Danish\n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 50.0\n"
 
 #. Translators: Do NOT translate @APP_NAME@!
 #: data/io.github.justinrdonnelly.bouncer.desktop.in.in:3
 msgid "@APP_NAME@"
-msgstr "@APP_NAME@"
+msgstr ""
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/io.github.justinrdonnelly.bouncer.desktop.in.in:11
 msgid "firewall;network;Wi-Fi;"
-msgstr "防火墙;网络;Wi-Fi;"
+msgstr "firewall;netværk;Wifi;"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:8
 msgid "Keep the riffraff out"
-msgstr "阻止未经授权的访问"
+msgstr "Hold skidt og møg ude"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:13
 msgid ""
@@ -39,17 +40,21 @@ msgid ""
 "you choose the network type, it is associated with that network and "
 "automatically used in the future."
 msgstr ""
-"Bouncer 是一个帮助您为无线连接选择正确防火墙区域的应用程序。当您连接到一个新"
-"网络时，会弹出一个窗口，提示您选择网络类型（例如家庭、公共、工作）。当您选择"
-"网络类型后，它会与该网络关联，并在未来自动应用。"
+"Bouncer er et program, der hjælper dig med at vælge den rigtige firewall-"
+"zone til trådløse forbindelser. Når du opretter forbindelse til et nyt "
+"netværk, åbnes der et vindue, hvor du bliver bedt om at angive, hvilken type "
+"netværk der er tale om (f.eks. hjemme, offentligt, arbejde). Når du har "
+"valgt netværkstypen, knyttes den til det pågældende netværk og anvendes "
+"automatisk fremover."
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:14
 msgid ""
 "NetworkManager and firewalld are required. If you don't use those, you can't "
 "use Bouncer. Fedora uses both by default. Other distributions may not."
 msgstr ""
-"需要使用 NetworkManager 和 firewalld。如果您不使用这些，就无法使用 Bouncer。"
-"Fedora 默认使用这两者，其他发行版可能不是如此。"
+"NetworkManager og firewalld er påkrævet. Hvis du ikke bruger disse, kan du "
+"ikke bruge Bouncer. Fedora bruger begge dele som standard. Det er ikke "
+"sikkert, at andre distributioner gør det."
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:15
 msgid ""
@@ -58,29 +63,36 @@ msgid ""
 "your system is configured correctly. Then click the Monitor button to begin "
 "using Bouncer. After that, it will start automatically when you log in."
 msgstr ""
+"Der kræves yderligere opsætning efter installationen. Se det relevante "
+"afsnit for din distribution. Når opsætningen er færdig, skal du starte "
+"Bouncer og kontrollere, at dit system er konfigureret korrekt. Klik derefter "
+"på knappen »Overvåg« for at begynde at bruge Bouncer. Herefter starter "
+"programmet automatisk, når du logger ind."
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:16
 msgid "Fedora"
-msgstr "Fedora"
+msgstr ""
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:18
 msgid ""
 "For Fedora, everything just works! Just start Bouncer to confirm, and click "
 "the Monitor button to begin using Bouncer."
 msgstr ""
+"I Fedora fungerer alt bare! Start blot Bouncer for at tjekke det, og klik på "
+"knappen »Overvåg« for at komme i gang med at bruge Bouncer."
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:20
 msgid "Ubuntu"
-msgstr "Ubuntu"
+msgstr ""
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:22
 msgid "Uninstall ufw: <code>sudo apt remove ufw</code>"
-msgstr "卸载 ufw：<code>sudo apt remove ufw</code>"
+msgstr "Afinstaller ufw: <code>sudo apt remove ufw</code>"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:23
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:29
 msgid "Install firewalld: <code>sudo apt install firewalld</code>"
-msgstr "安装 firewalld：<code>sudo apt install firewalld</code>"
+msgstr "Installer firewalld: <code>sudo apt install firewalld</code>"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:24
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:30
@@ -93,12 +105,14 @@ msgid ""
 "(how to create custom polkit rules is beyond the scope of this document and "
 "is left as an exercise for the reader)."
 msgstr ""
-"默认情况下，polkit 配置为不允许普通用户设置连接的区域。最简单的更改方法是将用"
-"户添加到 <code>netdev</code> 组（例如 <code>usermod -a -G netdev justin</"
-"code>）。或者，您可以为 "
-"<code>org.freedesktop.NetworkManager.settings.modify.system</code> 操作创建自"
-"定义 polkit 规则（如何创建自定义 polkit 规则超出了本文档的范围，留给读者自行"
-"练习）。"
+"Som standard er polkit konfigureret til ikke at give almindelige brugere "
+"mulighed for at indstille zonen for en forbindelse. Den nemmeste måde at "
+"ændre dette på er at tilføje brugere til gruppen <code>netdev</code> (dvs. "
+"<code>usermod -a -G netdev justin</code>). Alternativt kan du oprette en "
+"brugerdefineret polkit-regel for handlingen "
+"<code>org.freedesktop.NetworkManager.settings.modify.system</code> (hvordan "
+"man opretter brugerdefinerede polkit-regler ligger uden for dette dokuments "
+"omfang og overlades som en øvelse til læseren)."
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:25
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:31
@@ -106,26 +120,30 @@ msgid ""
 "Start Bouncer and confirm your system is configured correctly. Then click "
 "the Monitor button to begin using Bouncer."
 msgstr ""
+"Start Bouncer, og kontroller, at dit system er konfigureret korrekt. Klik "
+"derefter på knappen »Overvåg« for at begynde at bruge Bouncer."
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:27
 msgid "Debian"
-msgstr "Debian"
+msgstr ""
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:43
 msgid "Bouncer prompting for the type of network"
-msgstr "Bouncer 提示选择网络类型"
+msgstr "Bouncer beder om angivelse af netværkstype"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:47
 msgid "Bouncer dashboard showing configuration status"
-msgstr ""
+msgstr "Bouncer-dashboard, der viser konfigurationsstatus"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:51
+#, fuzzy
 msgid "Bouncer dashboard showing network and zone information"
-msgstr ""
+msgstr "Bouncer-dashboard, der viser konfigurationsstatus"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:62
+#, fuzzy
 msgid "Include a networks tab on the dashboard"
-msgstr ""
+msgstr "Inkluder dashboard"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:63
 msgid "UI cleanup"
@@ -138,22 +156,22 @@ msgstr ""
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:65
 #, fuzzy
 msgid "Track connections by NetworkManager UUID"
-msgstr "找不到 NetworkManager"
+msgstr "Kan ikke finde NetworkManager"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:66
 #, fuzzy
 msgid "Update Occitan translations"
-msgstr "添加了荷兰语翻译"
+msgstr "Okcitansk oversættelse tilføjet"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:67
 #, fuzzy
 msgid "Update Italian translations"
-msgstr "添加了荷兰语翻译"
+msgstr "Russisk oversættelse tilføjet"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:68
 #, fuzzy
 msgid "Include Danish translations"
-msgstr "添加了荷兰语翻译"
+msgstr "Hollandsk oversættelse tilføjet"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:75
 msgid "Correctly show autostart status on dashboard"
@@ -162,7 +180,7 @@ msgstr ""
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:76
 #, fuzzy
 msgid "Include Italian translation"
-msgstr "添加了荷兰语翻译"
+msgstr "Russisk oversættelse tilføjet"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:77
 msgid "Track connection IDs seen per machine"
@@ -171,115 +189,117 @@ msgstr ""
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:78
 #, fuzzy
 msgid "Include Polish translation"
-msgstr "添加了荷兰语翻译"
+msgstr "Hollandsk oversættelse tilføjet"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:79
+#, fuzzy
 msgid "Use GNOME 50 runtime"
-msgstr ""
+msgstr "Brug GNOME 49 runtime"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:80
 #, fuzzy
 msgid "Handle NetworkManager restarts"
-msgstr "找不到 NetworkManager"
+msgstr "Kan ikke finde NetworkManager"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:87
 msgid "Include dashboard"
-msgstr ""
+msgstr "Inkluder dashboard"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:94
 msgid "Include additional desktop categories"
-msgstr ""
+msgstr "Tilføj yderligere skrivebordskategorier"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:95
 msgid "Support command line arguments"
-msgstr ""
+msgstr "Understøtter kommandolinjeargumenter"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:102
 msgid "Added Russian translation"
-msgstr ""
+msgstr "Russisk oversættelse tilføjet"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:103
-#, fuzzy
 msgid "Fixed metainfo formatting"
-msgstr "获取更多信息。"
+msgstr "Fixede metainfo formatering"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:110
 msgid "Added Occitan translation"
-msgstr ""
+msgstr "Okcitansk oversættelse tilføjet"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:111
 msgid "Added Simplified Chinese translation"
-msgstr ""
+msgstr "Forenklet kinesisk oversættelse tilføjet"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:112
 msgid "Fixed multiple instance support"
-msgstr ""
+msgstr "Fixed multiple instance support"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:113
 msgid "Use GNOME 49 runtime"
-msgstr ""
+msgstr "Brug GNOME 49 runtime"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:120
 msgid "Critical bug fix for non-English language users"
-msgstr "修复非英语用户的关键错误"
+msgstr "Vigtig fejlrettelse til brugere, der ikke taler engelsk"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:121
 msgid "Added Dutch translation"
-msgstr "添加了荷兰语翻译"
+msgstr "Hollandsk oversættelse tilføjet"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:122
 msgid "Documentation cleanups"
-msgstr "文档清理"
+msgstr "Oprydning i dokumentationen"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:128
 msgid "Include a notification for first run success"
-msgstr "包含首次运行成功的通知"
+msgstr "Indsæt en meddelelse om, at første kørsel er lykkedes"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:133
 msgid "Initial release"
-msgstr "初始版本"
+msgstr "Første udgave"
 
 #: src/dependencyCheck.js:237
 msgid "Bouncer must start on login"
-msgstr "Bouncer 必须在登录时启动"
+msgstr "Bouncer skal starte ved login"
 
 #: src/dependencyCheck.js:256
 msgid "Can't configure autostart"
-msgstr "无法配置自动启动"
+msgstr "Kan ikke konfigurere autostart"
 
 #: src/dependencyCheck.js:257
 msgid ""
 "Please make sure the portal is available from inside the flatpak sandbox. "
 "Please see logs for more information."
-msgstr "请确保在 flatpak 沙盒内门户可用。请查看日志以获取更多信息。"
+msgstr ""
+"Sørg for, at portalen er tilgængelig inde fra Flatpak-sandkassen. Se "
+"logfilerne for yderligere oplysninger."
 
 #: src/dependencyCheck.js:281
 msgid "Can't find D-Bus names"
-msgstr "找不到 D-Bus 名称"
+msgstr "Kan ikke finde D-Bus-navne"
 
 #: src/dependencyCheck.js:282
 msgid ""
 "Please make sure D-Bus is installed, running, and available inside the "
 "flatpak sandbox. Please see logs for more information."
 msgstr ""
-"请确保 D-Bus 已安装、正在运行且在 flatpak 沙盒内可用。请查看日志以获取更多信"
-"息。"
+"Sørg for, at D-Bus er installeret, kører og er tilgængeligt i Flatpak-"
+"sandkassen. Se logfilerne for yderligere oplysninger."
 
 #: src/dependencyCheck.js:312
 msgid "Can't find firewalld"
-msgstr "找不到 firewalld"
+msgstr "Kan ikke finde firewalld"
 
 #: src/dependencyCheck.js:313
 msgid ""
 "Please make sure firewalld is installed, running, and available inside the "
 "flatpak sandbox. Please see logs for more information."
 msgstr ""
-"请确保 firewalld 已安装、正在运行且在 flatpak 沙盒内可用。请查看日志以获取更"
-"多信息。"
+"Sørg for, at firewalld er installeret, kører og er tilgængeligt inden for "
+"Flatpak-sandkassen. Se logfilerne for yderligere oplysninger."
 
 #: src/dependencyCheck.js:332
 msgid "Can't get firewalld zones"
-msgstr "无法获取 firewalld 区域"
+msgstr "Kan ikke hente firewalld-zoner"
 
 #: src/dependencyCheck.js:333
 msgid ""
@@ -287,12 +307,13 @@ msgid ""
 "correct, and are not restricted inside the flatpak sandbox. Please see logs "
 "for more information."
 msgstr ""
-"无法获取 firewalld 区域。请确保 firewalld 权限正确，且在 flatpak 沙盒内未受限"
-"制。请查看日志以获取更多信息。"
+"Det er ikke muligt at hente firewalld-zoner. Sørg for, at firewalld-"
+"rettighederne er korrekte, og at de ikke er begrænset inden for Flatpak-"
+"sandkassen. Se logfilerne for yderligere oplysninger."
 
 #: src/dependencyCheck.js:349
 msgid "Can't get firewalld default zone"
-msgstr "无法获取 firewalld 默认区域"
+msgstr "Kan ikke få fat i firewallds standardzone"
 
 #: src/dependencyCheck.js:350
 msgid ""
@@ -300,24 +321,25 @@ msgid ""
 "are correct, and are not restricted inside the flatpak sandbox. Please see "
 "logs for more information."
 msgstr ""
-"无法获取 firewalld 默认区域。请确保 firewalld 权限正确，且在 flatpak 沙盒内未"
-"受限制。请查看日志以获取更多信息。"
+"Det er ikke muligt at hente firewallds standardzone. Sørg for, at firewallds "
+"tilladelser er korrekte og ikke er begrænset inden for Flatpak-sandkassen. "
+"Se logfilerne for yderligere oplysninger."
 
 #: src/dependencyCheck.js:380
 msgid "Can't find NetworkManager"
-msgstr "找不到 NetworkManager"
+msgstr "Kan ikke finde NetworkManager"
 
 #: src/dependencyCheck.js:381
 msgid ""
 "Please make sure NetworkManager is installed, running, and available inside "
 "the flatpak sandbox. Please see logs for more information."
 msgstr ""
-"请确保 NetworkManager 已安装、正在运行且在 flatpak 沙盒内可用。请查看日志以获"
-"取更多信息。"
+"Sørg for, at NetworkManager er installeret, kører og er tilgængeligt i "
+"Flatpak-sandkassen. Se logfilerne for yderligere oplysninger."
 
 #: src/dependencyCheck.js:432
 msgid "Authentication required to change NetworkManager connection zone"
-msgstr "更改 NetworkManager 连接区域需要身份验证"
+msgstr "Der kræves godkendelse for at ændre NetworkManager-forbindelseszonen"
 
 #: src/dependencyCheck.js:433
 msgid ""
@@ -325,12 +347,13 @@ msgid ""
 "be required to authenticate. This will work, but may be annoying. Please see "
 "logs for more information."
 msgstr ""
-"您有权限更改 NetworkManager 中的连接区域，但需要进行身份验证。这可以正常工"
-"作，但可能会有些烦人。请查看日志以获取更多信息。"
+"Du har tilladelse til at ændre forbindelseszonen i NetworkManager, men du "
+"bliver bedt om at logge ind. Det vil fungere, men kan være irriterende. Se "
+"logfilerne for yderligere oplysninger."
 
 #: src/dependencyCheck.js:446
 msgid "Not authorized to change NetworkManager connection zone"
-msgstr "无权限更改 NetworkManager 连接区域"
+msgstr "Har ikke tilladelse til at ændre NetworkManager-forbindelseszonen"
 
 #: src/dependencyCheck.js:447
 msgid ""
@@ -338,12 +361,13 @@ msgid ""
 "is required for Bouncer to function properly. Please see logs for more "
 "information."
 msgstr ""
-"您无权限更改 NetworkManager 中的连接区域。这是 Bouncer 正常运行所需的。请查看"
-"日志以获取更多信息。"
+"Du har ikke tilladelse til at ændre forbindelseszonen i NetworkManager. "
+"Dette er nødvendigt for, at Bouncer kan fungere korrekt. Se logfilerne for "
+"yderligere oplysninger."
 
 #: src/dependencyCheck.js:459
 msgid "Unexpected result from NetworkManager GetSettings: "
-msgstr "NetworkManager GetSettings 返回意外结果："
+msgstr "Uventet resultat fra NetworkManager GetSettings: "
 
 #: src/dependencyCheck.js:460
 msgid ""
@@ -351,43 +375,49 @@ msgid ""
 "in NetworkManager. Bouncer may not function properly. Please see logs for "
 "more information."
 msgstr ""
-"无法确定您是否有权限更改 NetworkManager 中的连接区域。Bouncer 可能无法正常运"
-"行。请查看日志以获取更多信息。"
+"Det kan ikke fastslås, om du har tilladelse til at ændre forbindelseszonen i "
+"NetworkManager. Bouncer fungerer muligvis ikke korrekt. Se logfilerne for "
+"yderligere oplysninger."
 
 #: src/main.js:62
 msgid "Monitor Wi-Fi connections in the background"
-msgstr ""
+msgstr "Overvåg Wifi-forbindelser i baggunden"
 
 #: src/main.js:117
 msgid "Unknown error"
-msgstr "未知错误"
+msgstr "Ukendt fejl"
 
 #: src/main.js:118
 msgid ""
 "An unknown error occurred. Bouncer may not function correctly. Please see "
 "logs for more information."
 msgstr ""
-"发生了一个未知错误。Bouncer 可能无法正常运行。请查看日志以获取更多信息。"
+"Der opstod en ukendt fejl. Bouncer fungerer muligvis ikke korrekt. Se "
+"logfilerne for yderligere oplysninger."
 
 #: src/main.js:185
 msgid "Can't find previously seen connections"
-msgstr "找不到之前见过的连接"
+msgstr "Kan ikke finde tidligere fundne forbindelser"
 
 #: src/main.js:186
 msgid ""
 "There was a problem determining which connections have already been seen. "
 "Please see logs for more information."
-msgstr "确定哪些连接已经被看到时出现了问题。请查看日志以获取更多信息。"
+msgstr ""
+"Der opstod et problem med at fastslå, hvilke forbindelser der allerede er "
+"blevet registreret. Se logfilerne for yderligere oplysninger."
 
 #: src/main.js:209
 msgid "Can't determine network state"
-msgstr "无法确定网络状态"
+msgstr "Det er ikke muligt at fastslå netværkets tilstand"
 
 #: src/main.js:210
 msgid ""
 "There was a problem tracking network connection changes. Please see logs for "
 "more information."
-msgstr "跟踪网络连接变化时出现了问题。请查看日志以获取更多信息。"
+msgstr ""
+"Der opstod et problem med at registrere ændringer i netværksforbindelsen. Se "
+"logfilerne for yderligere oplysninger."
 
 #. details
 #: src/main.js:231
@@ -398,45 +428,50 @@ msgid ""
 "When you choose the network type, it is associated with that network and "
 "automatically used in the future."
 msgstr ""
-"Bouncer 是一个帮助您为无线连接选择正确防火墙区域的应用程序。当您连接到一个新"
-"网络时，Bouncer 会弹出一个窗口，提示您选择网络类型（例如家庭、公共、工作）。"
-"当您选择网络类型后，它会与该网络关联，并在未来自动应用。"
+"Bouncer er et program, der hjælper dig med at vælge den rigtige firewall-"
+"zone til trådløse forbindelser. Når du opretter forbindelse til et nyt "
+"netværk, åbner Bouncer et vindue, hvor du bliver bedt om at angive, hvilken "
+"type netværk der er tale om (f.eks. hjemme, offentligt, arbejde). Når du har "
+"valgt netværkstypen, knyttes den til det pågældende netværk og anvendes "
+"automatisk fremover."
 
 #. Translators: Replace 'translator-credits' with your name/username, and optionally an email or
 #. URL.
 #: src/main.js:243
 msgid "translator-credits"
-msgstr "Ariel Wang <ariel@netc.fr>"
+msgstr "Filip Kemuel <https://github.com/filipkemuel>"
 
 #: src/main.js:272
 msgid " Bouncer is shutting down. You will need to restart manually."
-msgstr " Bouncer 正在关闭。您需要手动重启。"
+msgstr " Bouncer lukker ned. Du skal genstarte manuelt."
 
 #: src/main.js:285
 msgid "First run setup complete!"
-msgstr "首次运行设置完成！"
+msgstr "Første opsætning er afsluttet!"
 
 #: src/main.js:286
 msgid ""
 "Your system is correctly configured for Bouncer. Bouncer will autostart on "
 "each login and will open when you connect to a new Wi-Fi network."
 msgstr ""
-"您的系统已正确配置为使用 Bouncer。Bouncer 将在每次登录时自动启动，并在您连接"
-"到新的 Wi-Fi 网络时打开。"
+"Dit system er korrekt konfigureret til Bouncer. Bouncer starter automatisk "
+"ved hver login og åbnes, når du opretter forbindelse til et nyt Wifi-netværk."
 
 #: src/main.js:329
 msgid "Can't prompt for firewall zone"
-msgstr "无法提示选择防火墙区域"
+msgstr "Kan ikke anmode om valg af firewall-zone"
 
 #: src/main.js:330
 msgid ""
 "There was a problem getting information to prompt for the firewall zone. "
 "Please see logs for more information."
-msgstr "获取提示选择防火墙区域的信息时出现了问题。请查看日志以获取更多信息。"
+msgstr ""
+"Der opstod et problem med at hente oplysninger til valg af firewall-zone. Se "
+"logfilerne for yderligere oplysninger."
 
 #: src/main.js:382
 msgid "Can't add connection to seen connections"
-msgstr "无法将连接添加到已见过的连接列表"
+msgstr "Kan ikke tilføje forbindelse til de fundne forbindelser"
 
 #: src/main.js:383
 msgid ""
@@ -444,22 +479,25 @@ msgid ""
 "The firewall zone will not be set for this connection. Please see logs for "
 "more information."
 msgstr ""
-"将连接添加到已见过的连接列表时出现了问题。此连接的防火墙区域将不会被设置。请"
-"查看日志以获取更多信息。"
+"Der opstod et problem ved tilføjelsen af forbindelsen til listen over fundne "
+"forbindelser. Der vil ikke blive oprettet en firewallzone for denne "
+"forbindelse. Se logfilerne for yderligere oplysninger."
 
 #: src/main.js:398
 msgid "Can't set firewall zone for connection"
-msgstr "无法为连接设置防火墙区域"
+msgstr "Det er ikke muligt at angive en firewall-zone for forbindelsen"
 
 #: src/main.js:399
 msgid ""
 "There was a problem setting the firewall zone for the connection. Please see "
 "logs for more information."
-msgstr "为连接设置防火墙区域时出现了问题。请查看日志以获取更多信息。"
+msgstr ""
+"Der opstod et problem ved indstillingen af firewallzonen for forbindelsen. "
+"Se logfilerne for yderligere oplysninger."
 
 #: src/main.js:414
 msgid "Can't save connection to seen connections"
-msgstr "无法将连接保存到已见过的连接列表"
+msgstr "Kan ikke gemme forbindelsen til de fundne forbindelser"
 
 #: src/main.js:415
 msgid ""
@@ -468,104 +506,115 @@ msgid ""
 "again be prompted to choose a firewall zone for this connection. Please see "
 "logs for more information."
 msgstr ""
-"已为该连接设置了区域，但将更新的已见过的连接列表保存到磁盘时出现了问题。一旦"
-"您重启 Bouncer，您将再次被提示为该连接选择防火墙区域。请查看日志以获取更多信"
-"息。"
+"Zonen er blevet angivet for forbindelsen, men der opstod et problem ved "
+"lagring af den opdaterede liste over registrerede forbindelser på disken. "
+"Når du genstarter Bouncer, bliver du igen bedt om at vælge en firewall-zone "
+"til denne forbindelse. Se logfilerne for yderligere oplysninger."
 
 #: src/main.js:425
 msgid "Firewall zone set for connection: "
-msgstr "为连接设置的防火墙区域："
+msgstr "Indstillet firewallzone for forbindelsen: "
 
 #. this is the default zone
 #: src/main.js:427
 msgid ""
 "Firewall zone for this connection has been set to the default zone "
 "(currently "
-msgstr "此连接的防火墙区域已设置为默认区域（当前为 "
+msgstr ""
+"Firewall-zonen for denne forbindelse er indstillet til standardzonen (i "
+"øjeblikket "
 
 #: src/main.js:428
 msgid ""
 "). Whenever you connect to this network in the future, the firewall zone "
 "will automatically be changed to the default zone."
-msgstr "）。未来每次您连接到此网络时，防火墙区域将自动更改为默认区域。"
+msgstr ""
+"). Når du fremover opretter forbindelse til dette netværk, ændres "
+"firewallzonen automatisk til standardzonen."
 
 #: src/main.js:432
 msgid "Firewall zone for this connection has been set to "
-msgstr "此连接的防火墙区域已设置为 "
+msgstr "Firewall-zonen for denne forbindelse er indstillet til "
 
 #: src/main.js:432
 msgid ""
 ". Whenever you connect to this network in the future, the firewall zone will "
 "automatically be changed to "
-msgstr "。未来每次您连接到此网络时，防火墙区域将自动更改为 "
+msgstr ""
+". Hver gang du fremover opretter forbindelse til dette netværk, ændres "
+"firewall-zonen automatisk til "
 
 #: src/main.js:434
 msgid "."
-msgstr "。"
+msgstr "."
 
 #: src/networkState.js:123
 msgid "Error determining network state"
-msgstr "确定网络状态时出错"
+msgstr "Der opstod en fejl ved fastlæggelsen af netværksstatus"
 
 #: src/networkState.js:124
 msgid ""
 "Bouncer ran into an error determining network state. This is required for "
 "the application to work correctly. Please see logs for more information."
 msgstr ""
-"Bouncer 在确定网络状态时遇到了错误。这是应用程序正常运行所需的。请查看日志以"
-"获取更多信息。"
+"Bouncer stødte på en fejl under fastlæggelsen af netværksstatus. Dette er "
+"nødvendigt for, at applikationen kan fungere korrekt. Se logfilerne for "
+"yderligere oplysninger."
 
+# This is the same in danish
 #: src/ui/bouncerWindow.ui:27 src/ui/dashboard.ui:39
 msgid "Menu"
-msgstr "菜单"
+msgstr ""
 
 #: src/ui/bouncerWindow.ui:54 src/ui/dashboard.ui:118
 msgid "_About Bouncer"
-msgstr "_关于 Bouncer"
+msgstr "_Om Bouncer"
 
 #: src/ui/chooseZoneBox.ui:25
 msgid ""
 "You have connected to a new Wi-Fi network. Please choose a firewall zone. "
 "What type of network is this?"
 msgstr ""
-"您已连接到一个新的 Wi-Fi 网络。请选择一个防火墙区域。这是什么类型的网络？"
+"Du har oprettet forbindelse til et nyt Wifi-netværk. Vælg en firewall-zone. "
+"Hvilken type netværk er dette?"
 
 #: src/ui/chooseZoneBox.ui:41
 msgid "Network"
-msgstr "网络"
+msgstr "Netværk\t"
 
 #: src/ui/chooseZoneBox.ui:50
 msgid "Default Zone"
-msgstr "默认区域"
+msgstr "Standardzone"
 
 #: src/ui/chooseZoneBox.ui:59 src/ui/networksBox.ui:53
 msgid "Current Zone"
-msgstr "当前区域"
+msgstr "Nuværende zone"
 
 #. make the dropdown not span the entire box
 #: src/ui/chooseZoneBox.ui:75
 msgid "Firewall Zone"
-msgstr "防火墙区域"
+msgstr "Firewall zone"
 
 #: src/ui/chooseZoneBox.ui:76
 msgid "Choose the firewall zone for this network."
-msgstr "为这个网络选择防火墙区域。"
+msgstr "Vælg firewallzone for dette netværk."
 
+# This is the same in danish
 #: src/ui/chooseZoneBox.ui:79
 msgid "Zone"
-msgstr "区域"
+msgstr ""
 
 #: src/ui/chooseZoneBox.ui:102 src/ui/moreInfo.ui:16
 msgid "More Information"
-msgstr "更多信息"
+msgstr "Mere information"
 
 #: src/ui/chooseZoneBox.ui:103
 msgid "Get more information."
-msgstr "获取更多信息。"
+msgstr "Få mere information"
 
 #: src/ui/chooseZoneBox.ui:112
 msgid "Help"
-msgstr "帮助"
+msgstr "Hjælp"
 
 #: src/ui/chooseZoneBox.ui:121
 msgid "Skip for Now"
@@ -575,36 +624,42 @@ msgstr ""
 msgid ""
 "No change will be made. You will see this window again the next time you "
 "connect to this network."
-msgstr "不会进行任何更改。下次您连接到此网络时，将再次看到此窗口。"
+msgstr ""
+"Der foretages ingen ændringer. Du vil se dette vindue igen, næste gang du "
+"opretter forbindelse til dette netværk."
 
 #: src/ui/chooseZoneBox.ui:131
 msgid "Exit"
-msgstr "退出"
+msgstr "Afslut"
 
 #: src/ui/chooseZoneBox.ui:140
-#, fuzzy
 msgid "Save Zone"
-msgstr "区域"
+msgstr ""
 
 #: src/ui/chooseZoneBox.ui:141
 msgid ""
 "The selected firewall zone will be used every time you connect to this "
 "network."
-msgstr "每次您连接到此网络时，将使用所选的防火墙区域。"
+msgstr ""
+"Den valgte firewallzone vil blive anvendt, hver gang du opretter forbindelse "
+"til dette netværk."
 
 #: src/ui/chooseZoneBox.ui:147
 msgid "Choose"
-msgstr "选择"
+msgstr "Vælg"
 
 #: src/ui/dashboard.js:47
 #, fuzzy
 msgid ""
 "Saved networks could not be loaded. Please see logs for more information."
-msgstr "跟踪网络连接变化时出现了问题。请查看日志以获取更多信息。"
+msgstr ""
+"Der opstod et problem med at registrere ændringer i netværksforbindelsen. Se "
+"logfilerne for yderligere oplysninger."
 
 #: src/ui/dashboard.ui:30
+#, fuzzy
 msgid "Dashboard"
-msgstr ""
+msgstr "Inkluder dashboard"
 
 #: src/ui/dashboard.ui:90
 msgid "Dependencies"
@@ -613,32 +668,32 @@ msgstr ""
 #: src/ui/dashboard.ui:99 src/ui/networksBox.ui:38
 #, fuzzy
 msgid "Networks"
-msgstr "网络"
+msgstr "Netværk\t"
 
 #: src/ui/dependencyBox.js:52
 msgid "firewalld Running"
-msgstr ""
+msgstr "firewalld kører"
 
 #: src/ui/dependencyBox.js:68
 msgid "NetworkManager Running"
-msgstr ""
+msgstr "NetworkManager kører"
 
 #: src/ui/dependencyBox.js:84
 msgid "NetworkManager Permissions"
-msgstr ""
+msgstr "NetworkManager tilladelser"
 
 #: src/ui/dependencyBox.js:93
 msgid "Run on Startup"
-msgstr ""
+msgstr "Kør ved opstart"
 
 #: src/ui/dependencyBox.js:119
 msgid "Bouncer is monitoring your Wi-Fi!"
-msgstr ""
+msgstr "Bouncer overvåger dit Wifi!"
 
 #. We're not monitoring. Show the correct text.
 #: src/ui/dependencyBox.js:123 src/ui/dependencyBox.ui:56
 msgid "Once everything is ready, click to begin using Bouncer."
-msgstr ""
+msgstr "Når alt er klar, skal du klikke for at komme i gang med Bouncer."
 
 #: src/ui/dependencyBox.ui:24
 msgid ""
@@ -646,36 +701,43 @@ msgid ""
 "components and configurations. To help facilitate the correct setup, this "
 "page shows the status for those required components and configurations."
 msgstr ""
+"For at fungere korrekt er Bouncer afhængig af en række andre "
+"systemkomponenter og konfigurationer. For at gøre det lettere at foretage "
+"den korrekte opsætning viser denne side status for de pågældende nødvendige "
+"komponenter og konfigurationer."
 
 #: src/ui/dependencyBox.ui:32
 msgid ""
 "You can close this window at any time without affecting network monitoring."
 msgstr ""
+"Du kan til enhver tid lukke dette vindue uden at det påvirker "
+"netværksovervågningen."
 
 #: src/ui/dependencyBox.ui:55
+#, fuzzy
 msgid "Network Monitoring"
-msgstr ""
+msgstr "NetworkManager kører"
 
 #: src/ui/dependencyBox.ui:62
 msgid "Monitor"
-msgstr ""
+msgstr "Overvåg"
 
 #: src/ui/dependencyItem.js:60 src/ui/dependencyItem.js:69
 #: src/ui/dependencyItem.ui:22
 msgid "Unknown"
-msgstr "未知"
+msgstr "Ukendt"
 
 #: src/ui/dependencyItem.js:62
 msgid "Ready"
-msgstr "就绪"
+msgstr "Klar"
 
 #: src/ui/dependencyItem.js:64
 msgid "Suboptimal"
-msgstr "次优"
+msgstr "Ikke optimal"
 
 #: src/ui/dependencyItem.js:66
 msgid "Not Ready"
-msgstr "未就绪"
+msgstr "Ikke klar"
 
 #: src/ui/dependencyItem.ui:33
 msgid "Check"
@@ -705,32 +767,37 @@ msgid ""
 "You can read more about Bouncer <a href=\"https://github.com/justinrdonnelly/"
 "bouncer\">here</a>."
 msgstr ""
-"您正在使用 <a href=\"https://firewalld.org/\">firewalld</a> 作为防火墙。"
-"firewalld 的一个优点是它支持不同的区域（防火墙规则集）。您可能为家庭使用配置"
-"了一个防火墙区域，而为公共网络配置了另一个不同的区域。\n"
+"Du bruger <a href=\"https://firewalld.org/\">firewalld</a> som din firewall. "
+"En af de gode ting ved firewalld er, at den understøtter forskellige zoner "
+"(sæt af firewall-regler). Du har måske konfigureret en firewall-zone til "
+"brug derhjemme og en anden zone til offentlige netværk.\n"
 "\n"
-"您正在使用 <a href=\"https://networkmanager.dev/\">NetworkManager</a> 进行网"
-"络配置。NetworkManager 与 firewalld 集成良好，可以 <a href=\"https://"
-"firewalld.org/documentation/zone/connections-interfaces-and-sources.html\">根"
-"据连接为接口设置 firewalld 区域</a>。这意味着您的防火墙规则可以根据网络连接自"
-"动更改。\n"
+"Du bruger <a href=\"https://networkmanager.dev/\">NetworkManager</a> til "
+"netværkskonfiguration. NetworkManager integreres godt med firewalld og kan "
+"<a href=\"https://firewalld.org/documentation/zone/connections-interfaces-"
+"and-sources.html\">indstille firewalld-zonen for en grænseflade baseret på "
+"forbindelsen</a>. Det betyder, at dine firewall-regler automatisk kan ændres "
+"afhængigt af din netværksforbindelse.\n"
 "\n"
-"Bouncer 的设计旨在为您简化这一过程。当您连接到一个新网络时，它会打开一个窗"
-"口，让您选择适当的防火墙区域。如果您不确定选择什么，通常应选择与您所在位置匹"
-"配的选项。最安全的选项通常是“公共”。如果您不想更改任何内容，请点击“退出”。\n"
+"Bouncer er designet til at gøre dette lettere for dig. Det åbner et vindue, "
+"når du opretter forbindelse til et nyt netværk, så du kan vælge den passende "
+"firewall-zone. Hvis du ikke er sikker på, hvad du skal vælge, bør du "
+"sandsynligvis vælge den indstilling, der passer til, hvor du befinder dig. "
+"Den sikreste indstilling er normalt ›offentlig‹. Hvis du ikke ønsker at "
+"ændre noget, skal du klikke på ›Afslut‹.\n"
 "\n"
-"您可以在 <a href=\"https://github.com/justinrdonnelly/bouncer\">这里</a> 阅读"
-"更多关于 Bouncer 的信息。"
+"Du kan læse mere om Bouncer <a href=\"https://github.com/justinrdonnelly/"
+"bouncer\">her</a>."
 
 #: src/ui/networksBox.js:172
 #, fuzzy
 msgid "Firewall zone information could not be loaded."
-msgstr "此连接的防火墙区域已设置为 "
+msgstr "Firewall-zonen for denne forbindelse er indstillet til "
 
 #: src/ui/networksBox.ui:34
 #, fuzzy
 msgid "Manage Networks"
-msgstr "网络"
+msgstr "Netværk\t"
 
 #: src/ui/networksBox.ui:35
 msgid "Manage your configured networks from here."
@@ -739,7 +806,7 @@ msgstr ""
 #: src/ui/networksBox.ui:70
 #, fuzzy
 msgid "Change Zone"
-msgstr "当前区域"
+msgstr "Nuværende zone"
 
 #: src/ui/networksBox.ui:82
 msgid "Change"
@@ -748,39 +815,20 @@ msgstr ""
 #: src/ui/networksBox.ui:95
 #, fuzzy
 msgid "Forget Network"
-msgstr "网络"
+msgstr "Netværk\t"
 
 #: src/ui/networksBox.ui:96
 #, fuzzy
 msgid ""
 "Forget this network. You will be prompted to choose the firewall zone for "
 "this network the next time you connect to it."
-msgstr "不会进行任何更改。下次您连接到此网络时，将再次看到此窗口。"
+msgstr ""
+"Der foretages ingen ændringer. Du vil se dette vindue igen, næste gang du "
+"opretter forbindelse til dette netværk."
 
 #: src/ui/networksBox.ui:102
 msgid "Forget"
 msgstr ""
 
-#~ msgid ""
-#~ "Additional setup is required after installation. See the applicable "
-#~ "section for your distribution. Once the setup is done, start Bouncer "
-#~ "manually to enable autostart. After that, it will start automatically "
-#~ "when you log in."
-#~ msgstr ""
-#~ "安装后需要进行额外的设置。请查看适用于您发行版的相关部分。设置完成后，手动"
-#~ "启动 Bouncer 以启用自动启动。此后，每次登录时它将自动启动。"
-
-#~ msgid ""
-#~ "For Fedora, everything just works! Just remember to start Bouncer "
-#~ "manually once to enable autostart. You should see a notification "
-#~ "indicating your system is correctly configured for Bouncer."
-#~ msgstr ""
-#~ "对于 Fedora，一切都能正常运行！只需记住手动启动 Bouncer 一次以启用自动启"
-#~ "动。您应该会看到一个通知，表明您的系统已正确配置为使用 Bouncer。"
-
-#~ msgid ""
-#~ "Start Bouncer manually once to enable autostart. You should see a "
-#~ "notification indicating your system is correctly configured for Bouncer."
-#~ msgstr ""
-#~ "手动启动 Bouncer 一次以启用自动启动。您应该会看到一个通知，表明您的系统已"
-#~ "正确配置为使用 Bouncer。"
+#~ msgid "Check Status"
+#~ msgstr "Tjek status"

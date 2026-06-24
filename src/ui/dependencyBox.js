@@ -1,4 +1,4 @@
-/* dashboardBox.js
+/* dependencyBox.js
  *
  * Copyright 2025 Justin Donnelly
  *
@@ -14,14 +14,14 @@ import Gtk from 'gi://Gtk';
 
 import { DependencyItem } from './dependencyItem.js';
 
-export const DashboardBox = GObject.registerClass({
-    GTypeName: 'DashboardBox',
-    Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/dashboardBox.ui',
-    InternalChildren: ['listBox', 'monitorButton', 'labelNotMonitoring', 'labelMonitoring'],
+export const DependencyBox = GObject.registerClass({
+    GTypeName: 'DependencyBox',
+    Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/dependencyBox.ui',
+    InternalChildren: ['listBox', 'monitoringRow', 'monitorButton'],
     Signals: {
         'monitor-network': {},
     },
-}, class DashboardBox extends Gtk.Box {
+}, class DependencyBox extends Gtk.Box {
     #monitoring;
     #statusOverall;
 
@@ -88,7 +88,7 @@ export const DashboardBox = GObject.registerClass({
         );
         this._listBox.insert(dependencyItem, count++);
 
-        // NetworkManager Running
+        // Run on startup
         dependencyItem = new DependencyItem(
             _('Run on Startup'),
             dependencyCheck,
@@ -108,6 +108,7 @@ export const DashboardBox = GObject.registerClass({
                 this.#handleMonitoringRow();
             }
         );
+        this.#statusOverall = dependencyCheck['status-overall'];
         this.#handleMonitoringRow();
     } // end constructor
 
@@ -115,13 +116,11 @@ export const DashboardBox = GObject.registerClass({
         console.log('Updating dashboard monitoring row');
         if (this.#monitoring) { // already monitoring, disable button and show correct text
             this._monitorButton.sensitive = false;
-            this._labelNotMonitoring.visible = false;
-            this._labelMonitoring.visible = true;
+            this._monitoringRow.subtitle = _('Bouncer is monitoring your Wi-Fi!');
             return;
         }
         // We're not monitoring. Show the correct text.
-        this._labelNotMonitoring.visible = true;
-        this._labelMonitoring.visible = false;
+        this._monitoringRow.subtitle = _('Once everything is ready, click to begin using Bouncer.');
         if (this.#statusOverall) { // overall status is ready to go
             this._monitorButton.sensitive = true;
         } else { // overall status is not ready to go

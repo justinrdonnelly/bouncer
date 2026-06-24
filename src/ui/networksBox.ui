@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- networksBox.ui
+
+     Copyright 2026 Justin Donnelly
+
+     This Source Code Form is subject to the terms of the Mozilla Public
+     License, v. 2.0. If a copy of the MPL was not distributed with this
+     file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+     SPDX-License-Identifier: MPL-2.0
+-->
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.0"/>
+  <template class="NetworksBox" parent="GtkBox">
+    <property name="orientation">vertical</property>
+    <property name="margin-start">12</property>
+    <property name="margin-end">12</property>
+
+    <child>
+      <object class="AdwClamp">
+        <property name="maximum-size">450</property>
+        <property name="halign">GTK_ALIGN_START</property>
+        <property name="orientation">horizontal</property>
+        <property name="child">
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+
+            <!-- Network management -->
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="margin-top">24</property>
+                <property name="margin-bottom">12</property>
+                <property name="title" translatable="yes">Manage Networks</property>
+                <property name="description" translatable="yes">Manage your configured networks from here.</property>
+                <child>
+                  <object class="AdwComboRow" id="comboRow">
+                    <property name="title" translatable="yes">Networks</property>
+                    <property name="enable-search">True</property>
+                    <property name="search-match-mode">GTK_STRING_FILTER_MATCH_MODE_SUBSTRING</property>
+                    <property name="model">
+                      <object class="GtkStringList" id="networks">
+                        <items/>
+                      </object>
+                    </property>
+                    <property name="expression">
+                      <lookup type="GtkStringObject" name="string"/>
+                    </property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwActionRow" id="currentZone">
+                    <property name="title" translatable="yes">Current Zone</property>
+                    <property name="subtitle-selectable">True</property>
+                    <style>
+                      <class name="property"/>
+                    </style>
+                  </object>
+                </child>
+              </object>
+            </child>
+
+            <!-- Actions -->
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="margin-bottom">12</property> <!-- Add some extra margin since this is on the bottom of the window. -->
+                <!-- Change zone action -->
+                <child>
+                  <object class="AdwComboRow" id="zoneDropDown">
+                    <property name="title" translatable="yes">Change Zone</property>
+                    <property name="subtitle-lines">0</property>
+                    <property name="sensitive">False</property>
+                    <property name="model">
+                      <object class="GtkStringList" id="zoneList"/>
+                    </property>
+                    <child type="suffix">
+                      <object class="GtkButton" id="changeZoneButton">
+                        <property name="margin-start">12</property> <!-- This forces the zone dropdown a little to the left away from the 'Change' button. -->
+                        <property name="width-request">120</property>
+                        <property name="valign">center</property>
+                        <property name="sensitive">False</property>
+                        <property name="label" translatable="yes">Change</property>
+                        <style>
+                          <class name="pill"/>
+                          <class name="suggested-action"/>
+                        </style>
+                        <signal name="clicked" handler="changeZoneButtonClicked"/>
+                      </object>
+                    </child>
+                  </object> <!-- end AdwComboRow -->
+                </child>
+                <!-- Forget action -->
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="title" translatable="yes">Forget Network</property>
+                    <property name="subtitle" translatable="yes">Forget this network. You will be prompted to choose the firewall zone for this network the next time you connect to it.</property>
+                    <property name="subtitle-lines">0</property>
+                    <child type="suffix">
+                      <object class="GtkButton" id="forgetButton">
+                        <property name="width-request">120</property>
+                        <property name="valign">center</property>
+                        <property name="label" translatable="yes">Forget</property>
+                        <style>
+                          <class name="pill"/>
+                          <class name="destructive-action"/>
+                        </style>
+                        <signal name="clicked" handler="forgetButtonClicked"/>
+                      </object>
+                    </child>
+                  </object> <!-- end AdwActionRow -->
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </child>
+  </template>
+</interface>
