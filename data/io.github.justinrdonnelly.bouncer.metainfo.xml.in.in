@@ -39,12 +39,16 @@
   <url type="vcs-browser">https://github.com/justinrdonnelly/bouncer</url>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/justinrdonnelly/bouncer/7c7d0afea25a338361dad42f29d3433970798961/screenshots/bouncer-choose-zone-light.png</image>
+      <image>https://raw.githubusercontent.com/justinrdonnelly/bouncer/fa42ff1a6790ddfc5ce5db5caf94566cfc570894/screenshots/bouncer-choose-zone-light.png</image>
       <caption>Bouncer prompting for the type of network</caption>
     </screenshot>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/justinrdonnelly/bouncer/dfee30ba33a44031c2e4fad0a4cd796d91554ab4/screenshots/bouncer-dashboard-light.png</image>
+      <image>https://raw.githubusercontent.com/justinrdonnelly/bouncer/fa42ff1a6790ddfc5ce5db5caf94566cfc570894/screenshots/bouncer-dependencies-light.png</image>
       <caption>Bouncer dashboard showing configuration status</caption>
+    </screenshot>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/justinrdonnelly/bouncer/fa42ff1a6790ddfc5ce5db5caf94566cfc570894/screenshots/bouncer-networks-light.png</image>
+      <caption>Bouncer dashboard showing network and zone information</caption>
     </screenshot>
   </screenshots>
   <branding>
