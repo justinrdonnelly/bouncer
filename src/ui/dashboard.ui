@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- dashboard.ui
+
+     Copyright 2026 Justin Donnelly
+
+     This Source Code Form is subject to the terms of the Mozilla Public
+     License, v. 2.0. If a copy of the MPL was not distributed with this
+     file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+     SPDX-License-Identifier: MPL-2.0
+-->
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.0"/>
+  <template class="Dashboard" parent="AdwApplicationWindow">
+    <property name="title">Bouncer</property>
+    <property name="default-width">700</property>
+    <property name="default-height">550</property>
+    <child>
+      <object class="AdwBreakpoint">
+        <condition>max-width: 550sp</condition>
+        <setter object="splitView" property="collapsed">True</setter>
+      </object>
+    </child>
+    <property name="content">
+      <object class="AdwNavigationSplitView" id="splitView">
+        <property name="min-sidebar-width">175</property>
+        <property name="sidebar">
+          <object class="AdwNavigationPage">
+            <property name="title" translatable="yes">Dashboard</property>
+            <property name="child">
+              <object class="AdwToolbarView">
+                <child type="top">
+                  <object class="AdwHeaderBar">
+                    <child type="end">
+                      <object class="GtkMenuButton">
+                        <property name="primary">True</property>
+                        <property name="icon-name">open-menu-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Menu</property>
+                        <property name="menu-model">primary_menu</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <property name="content">
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <!-- Bouncer icon -->
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="margin-top">12</property>
+                            <property name="margin-start">12</property>
+                            <property name="margin-end">12</property>
+                            <property name="icon-name">io.github.justinrdonnelly.bouncer</property>
+                            <property name="pixel-size">64</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <!-- end Bouncer icon -->
+                    <child>
+                      <object class="AdwViewSwitcherSidebar">
+                        <property name="stack">stack</property>
+                        <signal name="activated" handler="sidebarActivatedCallback"/>
+                      </object>
+                    </child>
+                  </object>
+                  <!-- end box -->
+                </property>
+              </object>
+            </property>
+          </object>
+        </property>
+        <!-- end sidebar -->
+        <property name="content">
+          <object class="AdwNavigationPage" id="content">
+            <property name="child">
+              <object class="AdwToolbarView">
+                <child type="top">
+                  <object class="AdwHeaderBar">
+                  </object>
+                </child>
+                <property name="content">
+                  <object class="AdwViewStack" id="stack">
+                    <child>
+                      <object class="AdwViewStackPage">
+                        <property name="title" translatable="yes">Dependencies</property>
+                        <property name="icon-name">traffic-lights-symbolic</property>
+                        <property name="child">
+                          <object class="GtkBox" id="dependencyBox"/> <!-- We'll append the dependencyBox here -->
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwViewStackPage">
+                        <property name="title" translatable="yes">Networks</property>
+                        <property name="icon-name">network-shield-symbolic</property>
+                        <property name="child">
+                          <object class="GtkBox" id="networksBox"/> <!-- We'll append the networksBox here -->
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </property>
+          </object>
+        </property>
+      </object>
+    </property>
+  </template>
+  <menu id="primary_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_About Bouncer</attribute>
+        <attribute name="action">app.about</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

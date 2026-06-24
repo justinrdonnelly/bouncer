@@ -8,7 +8,8 @@
     <file>ui/chooseZoneBox.js</file>
     <file>config.js</file>
     <file>connectionIdsSeen.js</file>
-    <file>ui/dashboardBox.js</file>
+    <file>ui/dashboard.js</file>
+    <file>ui/dependencyBox.js</file>
     <file>data.js</file>
     <file>dataMigration.js</file>
     <file>dependencyCheck.js</file>
@@ -16,8 +17,11 @@
     <file>errorSignal.js</file>
     <file>main.js</file>
     <file>ui/moreInfo.js</file>
+    <file>ui/networksBox.js</file>
+    <file>networkManagerConnectionSettings.js</file>
     <file>networkState.js</file>
     <file>promisify.js</file>
+    <file>zoneSelection.js</file>
     <file>zoneInfo.js</file>
     <file>zoneForConnection.js</file>
   </gresource>
