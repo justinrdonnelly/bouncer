@@ -77,20 +77,21 @@ export const BouncerApplication = GObject.registerClass(
             this.#connectionIdsSeen = new ConnectionIdsSeen();
         }
 
-        vfunc_activate() {} // Required because Adw.Application extends GApplication.
+        vfunc_activate() {
+            console.log('Starting Bouncer in dashboard mode.');
+            this.#launchDashboard().catch((e) => {
+                console.error('Unhandled error in main launchDashboard. This is a bug!');
+                console.error(e);
+                }
+            );
+        }
 
         vfunc_command_line(gioApplicationCommandLine) {
             if (gioApplicationCommandLine.get_options_dict().contains('monitor')) {
                 console.log('Starting Bouncer in monitor mode.');
                 this.monitorNetworkAndCatch();
             } else {
-                console.log('Starting Bouncer in dashboard mode.');
-                this.#launchDashboard()
-                    .catch((e) => {
-                    console.error('Unhandled error in main launchDashboard. This is a bug!');
-                    console.error(e);
-                    }
-                );
+                this.activate();
             }
         }
 
