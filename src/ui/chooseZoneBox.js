@@ -41,7 +41,7 @@ export const ChooseZoneBox = GObject.registerClass(
 
         constructor(connectionUuid, connectionName, defaultZone, currentZone, allZones, activeConnectionSettings) {
             super();
-            console.debug('Building window.');
+            console.debug('Building choose zone box.');
             console.debug(`connectionUuid: ${connectionUuid}`);
             console.debug(`connectionName: ${connectionName}`);
             console.debug(`allZones: ${allZones}`);
