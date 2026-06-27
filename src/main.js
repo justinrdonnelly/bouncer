@@ -389,6 +389,9 @@ export const BouncerApplication = GObject.registerClass(
             // Set the zone for the connection
             try {
                 await ZoneForConnection.setZone(activeConnectionSettings, zone);
+                // The connection-ids-seen notification was emitted before NetworkManager's settings were updated.
+                // Notify again so consumers refresh using the newly selected zone.
+                this.#connectionIdsSeen.notify('connection-ids-seen');
             } catch (e) {
                 console.error('Error setting zone for connection.');
                 console.error(e.message);
