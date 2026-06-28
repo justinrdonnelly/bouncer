@@ -206,12 +206,13 @@ export const DependencyCheck = GObject.registerClass(
                     // All these methods must throw an error if they don't want first-run-setup-complete signal to be
                     // emitted (and the corresponding notification generated).
                     this.#data.getData(), // this will return null on the first run, true otherwise
-                    this.runOnStartup(emit),
                     this.checkListNames(emit),
                     this.checkFirewalld(emit),
                     this.checkNetworkManagerRunning(emit),
                     this.checkNetworkManagerPermissions(emit),
                 ]);
+                // Don't configure autostart unless all other dependency checks completed successfully.
+                await this.runOnStartup(emit);
                 if (firstRunData === null) {
                     this.emit('first-run-setup-complete');
                     // set a value so we don't do this again
@@ -222,6 +223,7 @@ export const DependencyCheck = GObject.registerClass(
                     }
                 }
             } catch {
+                this.statusStartup = 3; // Something went wrong. Make 'Run on Startup' red/'Not Ready'.
                 console.error('Error in dependency checks. Not performing first run logic.');
             }
         }
