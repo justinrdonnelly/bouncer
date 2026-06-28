@@ -84,7 +84,9 @@ export const DependencyBox = GObject.registerClass({
             _('NetworkManager Permissions'),
             dependencyCheck,
             'status-network-manager-permissions',
-            async () => dependencyCheck.checkNetworkManagerPermissions(false).catch(() => {})
+            async () => dependencyCheck.checkNetworkManagerPermissions(false).catch(() => {}),
+            'status-network-manager-running',
+            (status) => dependencyCheck.checkComponentStatus(status)
         );
         this._listBox.insert(dependencyItem, count++);
 
