@@ -267,11 +267,11 @@ msgstr "Impossible de configurar l’aviada auto"
 
 #: src/dependencyCheck.js:257
 msgid ""
-"Please make sure the portal is available from inside the flatpak sandbox. "
+"Please make sure the portal is available from inside the Flatpak sandbox. "
 "Please see logs for more information."
 msgstr ""
 "Asseguratz-vos que lo portal siá disponible dempuèi l'interior del nauc de "
-"sabla flatpak. Consultatz los jornals per mai d'informacions."
+"sabla Flatpak. Consultatz los jornals per mai d'informacions."
 
 #: src/dependencyCheck.js:281
 msgid "Can't find D-Bus names"
@@ -280,10 +280,10 @@ msgstr "Impossible de trobar los noms D-Bus"
 #: src/dependencyCheck.js:282
 msgid ""
 "Please make sure D-Bus is installed, running, and available inside the "
-"flatpak sandbox. Please see logs for more information."
+"Flatpak sandbox. Please see logs for more information."
 msgstr ""
 "Asseguratz-vos que D-Bus es installat, en cors d'execucion e disponible dins "
-"lo nauc de sabla flatpak. Consultatz los jornals per mai d'informacion."
+"lo nauc de sabla Flatpak. Consultatz los jornals per mai d'informacion."
 
 #: src/dependencyCheck.js:312
 msgid "Can't find firewalld"
@@ -292,10 +292,10 @@ msgstr "Impossible de trobar firewalld"
 #: src/dependencyCheck.js:313
 msgid ""
 "Please make sure firewalld is installed, running, and available inside the "
-"flatpak sandbox. Please see logs for more information."
+"Flatpak sandbox. Please see logs for more information."
 msgstr ""
 "Asseguratz-vos que firewalld es installat, en cors d'execucion e disponible "
-"dins lo nauc de sabla flatpak. Consultatz los jornals per mai d'informacion."
+"dins lo nauc de sabla Flatpak. Consultatz los jornals per mai d'informacion."
 
 #: src/dependencyCheck.js:332
 msgid "Can't get firewalld zones"
@@ -304,12 +304,12 @@ msgstr "Impossible de trobar las zònas firewalld"
 #: src/dependencyCheck.js:333
 msgid ""
 "Unable to get firewalld zones. Please make sure firewalld permissions are "
-"correct, and are not restricted inside the flatpak sandbox. Please see logs "
+"correct, and are not restricted inside the Flatpak sandbox. Please see logs "
 "for more information."
 msgstr ""
 "Impossible d'obténer las zònas de firewalld. Asseguratz-vos que las "
 "permissions de firewalld sián corrèctas e que son pas restrenchas dins lo "
-"nauc de sabla de flatpak. Consultatz los jornals per mai d'informacions."
+"nauc de sabla de Flatpak. Consultatz los jornals per mai d'informacions."
 
 #: src/dependencyCheck.js:349
 msgid "Can't get firewalld default zone"
@@ -318,12 +318,12 @@ msgstr "Impossible de trobar la zòna firewalld per defaut"
 #: src/dependencyCheck.js:350
 msgid ""
 "Unable to get firewalld default zone. Please make sure firewalld permissions "
-"are correct, and are not restricted inside the flatpak sandbox. Please see "
+"are correct, and are not restricted inside the Flatpak sandbox. Please see "
 "logs for more information."
 msgstr ""
 "Impossible d'obténer la zòna per defaut de firewalld. Asseguratz-vos que las "
 "permissions de firewalld sián corrèctas e que son pas restrenchas dins lo "
-"nauc de sabla flatpak. Consultatz los jornals per mai d'informacions."
+"nauc de sabla Flatpak. Consultatz los jornals per mai d'informacions."
 
 #: src/dependencyCheck.js:380
 msgid "Can't find NetworkManager"
@@ -332,10 +332,10 @@ msgstr "Impossible de trobar NetworkManager"
 #: src/dependencyCheck.js:381
 msgid ""
 "Please make sure NetworkManager is installed, running, and available inside "
-"the flatpak sandbox. Please see logs for more information."
+"the Flatpak sandbox. Please see logs for more information."
 msgstr ""
 "Asseguratz-vos que NetworkManager es installat, en cors d'execucion e "
-"disponible dins lo nauc de sabla flatpak. Consultatz los jornals per mai "
+"disponible dins lo nauc de sabla Flatpak. Consultatz los jornals per mai "
 "d'informacions."
 
 #: src/dependencyCheck.js:432
@@ -351,7 +351,7 @@ msgid ""
 "logs for more information."
 msgstr ""
 "Asseguratz-vos que NetworkManager es installat, en cors d'execucion e "
-"disponible dins lo nauc de sabla flatpak. Consultatz los jornals per mai "
+"disponible dins lo nauc de sabla Flatpak. Consultatz los jornals per mai "
 "d'informacions."
 
 #: src/dependencyCheck.js:446

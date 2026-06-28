@@ -249,9 +249,9 @@ msgstr "无法配置自动启动"
 
 #: src/dependencyCheck.js:257
 msgid ""
-"Please make sure the portal is available from inside the flatpak sandbox. "
+"Please make sure the portal is available from inside the Flatpak sandbox. "
 "Please see logs for more information."
-msgstr "请确保在 flatpak 沙盒内门户可用。请查看日志以获取更多信息。"
+msgstr "请确保在 Flatpak 沙盒内门户可用。请查看日志以获取更多信息。"
 
 #: src/dependencyCheck.js:281
 msgid "Can't find D-Bus names"
@@ -260,9 +260,9 @@ msgstr "找不到 D-Bus 名称"
 #: src/dependencyCheck.js:282
 msgid ""
 "Please make sure D-Bus is installed, running, and available inside the "
-"flatpak sandbox. Please see logs for more information."
+"Flatpak sandbox. Please see logs for more information."
 msgstr ""
-"请确保 D-Bus 已安装、正在运行且在 flatpak 沙盒内可用。请查看日志以获取更多信"
+"请确保 D-Bus 已安装、正在运行且在 Flatpak 沙盒内可用。请查看日志以获取更多信"
 "息。"
 
 #: src/dependencyCheck.js:312
@@ -272,9 +272,9 @@ msgstr "找不到 firewalld"
 #: src/dependencyCheck.js:313
 msgid ""
 "Please make sure firewalld is installed, running, and available inside the "
-"flatpak sandbox. Please see logs for more information."
+"Flatpak sandbox. Please see logs for more information."
 msgstr ""
-"请确保 firewalld 已安装、正在运行且在 flatpak 沙盒内可用。请查看日志以获取更"
+"请确保 firewalld 已安装、正在运行且在 Flatpak 沙盒内可用。请查看日志以获取更"
 "多信息。"
 
 #: src/dependencyCheck.js:332
@@ -284,10 +284,10 @@ msgstr "无法获取 firewalld 区域"
 #: src/dependencyCheck.js:333
 msgid ""
 "Unable to get firewalld zones. Please make sure firewalld permissions are "
-"correct, and are not restricted inside the flatpak sandbox. Please see logs "
+"correct, and are not restricted inside the Flatpak sandbox. Please see logs "
 "for more information."
 msgstr ""
-"无法获取 firewalld 区域。请确保 firewalld 权限正确，且在 flatpak 沙盒内未受限"
+"无法获取 firewalld 区域。请确保 firewalld 权限正确，且在 Flatpak 沙盒内未受限"
 "制。请查看日志以获取更多信息。"
 
 #: src/dependencyCheck.js:349
@@ -297,10 +297,10 @@ msgstr "无法获取 firewalld 默认区域"
 #: src/dependencyCheck.js:350
 msgid ""
 "Unable to get firewalld default zone. Please make sure firewalld permissions "
-"are correct, and are not restricted inside the flatpak sandbox. Please see "
+"are correct, and are not restricted inside the Flatpak sandbox. Please see "
 "logs for more information."
 msgstr ""
-"无法获取 firewalld 默认区域。请确保 firewalld 权限正确，且在 flatpak 沙盒内未"
+"无法获取 firewalld 默认区域。请确保 firewalld 权限正确，且在 Flatpak 沙盒内未"
 "受限制。请查看日志以获取更多信息。"
 
 #: src/dependencyCheck.js:380
@@ -310,9 +310,9 @@ msgstr "找不到 NetworkManager"
 #: src/dependencyCheck.js:381
 msgid ""
 "Please make sure NetworkManager is installed, running, and available inside "
-"the flatpak sandbox. Please see logs for more information."
+"the Flatpak sandbox. Please see logs for more information."
 msgstr ""
-"请确保 NetworkManager 已安装、正在运行且在 flatpak 沙盒内可用。请查看日志以获"
+"请确保 NetworkManager 已安装、正在运行且在 Flatpak 沙盒内可用。请查看日志以获"
 "取更多信息。"
 
 #: src/dependencyCheck.js:432

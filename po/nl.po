@@ -255,10 +255,10 @@ msgstr "Automatisch opstarten mislukt"
 
 #: src/dependencyCheck.js:257
 msgid ""
-"Please make sure the portal is available from inside the flatpak sandbox. "
+"Please make sure the portal is available from inside the Flatpak sandbox. "
 "Please see logs for more information."
 msgstr ""
-"Zorg dat het portaal beschikbaar is binnen de flatpak-sandbox. Bekijk voor "
+"Zorg dat het portaal beschikbaar is binnen de Flatpak-sandbox. Bekijk voor "
 "meer informatie het logboek."
 
 #: src/dependencyCheck.js:281
@@ -268,9 +268,9 @@ msgstr "Geen D-Bus-namen beschikbaar"
 #: src/dependencyCheck.js:282
 msgid ""
 "Please make sure D-Bus is installed, running, and available inside the "
-"flatpak sandbox. Please see logs for more information."
+"Flatpak sandbox. Please see logs for more information."
 msgstr ""
-"Zorg dat D-Bus geïnstalleerd en actief is, en beschikbaar binnen de flatpak-"
+"Zorg dat D-Bus geïnstalleerd en actief is, en beschikbaar binnen de Flatpak-"
 "sandbox. Bekijk voor meer informatie het logboek."
 
 #: src/dependencyCheck.js:312
@@ -280,10 +280,10 @@ msgstr "Firewalld is niet beschikbaar"
 #: src/dependencyCheck.js:313
 msgid ""
 "Please make sure firewalld is installed, running, and available inside the "
-"flatpak sandbox. Please see logs for more information."
+"Flatpak sandbox. Please see logs for more information."
 msgstr ""
 "Zorg dat firewalld geïnstalleerd en actief is, en beschikbaar binnen de "
-"flatpak-sandbox. Bekijk voor meer informatie het logboek."
+"Flatpak-sandbox. Bekijk voor meer informatie het logboek."
 
 #: src/dependencyCheck.js:332
 msgid "Can't get firewalld zones"
@@ -292,11 +292,11 @@ msgstr "Firewalld-zones zijn niet beschikbaar"
 #: src/dependencyCheck.js:333
 msgid ""
 "Unable to get firewalld zones. Please make sure firewalld permissions are "
-"correct, and are not restricted inside the flatpak sandbox. Please see logs "
+"correct, and are not restricted inside the Flatpak sandbox. Please see logs "
 "for more information."
 msgstr ""
 "De firewalld-zones kunnen niet worden opgevraagd. Zorg dat de rechten juist "
-"zijn ingesteld en niet beperkt zijn binnen de flatpak-sandbox. Bekijk voor "
+"zijn ingesteld en niet beperkt zijn binnen de Flatpak-sandbox. Bekijk voor "
 "meer informatie het logboek."
 
 #: src/dependencyCheck.js:349
@@ -306,11 +306,11 @@ msgstr "Standaard firewalld-zone is niet beschikbaar"
 #: src/dependencyCheck.js:350
 msgid ""
 "Unable to get firewalld default zone. Please make sure firewalld permissions "
-"are correct, and are not restricted inside the flatpak sandbox. Please see "
+"are correct, and are not restricted inside the Flatpak sandbox. Please see "
 "logs for more information."
 msgstr ""
 "De standaard firewalld-zone kan niet worden opgevraagd. Zorg dat de rechten "
-"juist zijn ingesteld en niet beperkt zijn binnen de flatpak-sandbox. Bekijk "
+"juist zijn ingesteld en niet beperkt zijn binnen de Flatpak-sandbox. Bekijk "
 "voor meer informatie het logboek."
 
 #: src/dependencyCheck.js:380
@@ -320,10 +320,10 @@ msgstr "NetworkManager is niet beschikbaar"
 #: src/dependencyCheck.js:381
 msgid ""
 "Please make sure NetworkManager is installed, running, and available inside "
-"the flatpak sandbox. Please see logs for more information."
+"the Flatpak sandbox. Please see logs for more information."
 msgstr ""
 "Zorg dat NetworkManager geïnstalleerd en actief is, en beschikbaar binnen de "
-"flatpak-sandbox. Bekijk voor meer informatie het logboek."
+"Flatpak-sandbox. Bekijk voor meer informatie het logboek."
 
 #: src/dependencyCheck.js:432
 msgid "Authentication required to change NetworkManager connection zone"

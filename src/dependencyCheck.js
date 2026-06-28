@@ -254,7 +254,7 @@ export const DependencyCheck = GObject.registerClass(
                         false,
                         'dependency-error-autostart',
                         _('Can\'t configure autostart'),
-                        _('Please make sure the portal is available from inside the flatpak sandbox. Please see logs ' +
+                        _('Please make sure the portal is available from inside the Flatpak sandbox. Please see logs ' +
                             'for more information.')
                     );
                 }
@@ -279,7 +279,7 @@ export const DependencyCheck = GObject.registerClass(
                         true,
                         'dependency-error-names',
                         _('Can\'t find D-Bus names'),
-                        _('Please make sure D-Bus is installed, running, and available inside the flatpak sandbox. ' +
+                        _('Please make sure D-Bus is installed, running, and available inside the Flatpak sandbox. ' +
                             'Please see logs for more information.')
                     );
                 }
@@ -310,7 +310,7 @@ export const DependencyCheck = GObject.registerClass(
                         true,
                         'dependency-error-firewalld',
                         _('Can\'t find firewalld'),
-                        _('Please make sure firewalld is installed, running, and available inside the flatpak ' +
+                        _('Please make sure firewalld is installed, running, and available inside the Flatpak ' +
                             'sandbox. Please see logs for more information.')
                     );
                 }
@@ -331,7 +331,7 @@ export const DependencyCheck = GObject.registerClass(
                         'dependency-error-firewalld',
                         _('Can\'t get firewalld zones'),
                         _('Unable to get firewalld zones. Please make sure firewalld permissions are correct, and ' +
-                            'are not restricted inside the flatpak sandbox. Please see logs for more information.')
+                            'are not restricted inside the Flatpak sandbox. Please see logs for more information.')
                     );
                 }
                 throw e;
@@ -348,7 +348,7 @@ export const DependencyCheck = GObject.registerClass(
                         'dependency-error-firewalld',
                         _('Can\'t get firewalld default zone'),
                         _('Unable to get firewalld default zone. Please make sure firewalld permissions are correct, ' +
-                            'and are not restricted inside the flatpak sandbox. Please see logs for more information.')
+                            'and are not restricted inside the Flatpak sandbox. Please see logs for more information.')
                     );
                 }
                 throw e;
@@ -378,7 +378,7 @@ export const DependencyCheck = GObject.registerClass(
                         true,
                         'dependency-error-networkmanager',
                         _('Can\'t find NetworkManager'),
-                        _('Please make sure NetworkManager is installed, running, and available inside the flatpak ' +
+                        _('Please make sure NetworkManager is installed, running, and available inside the Flatpak ' +
                             'sandbox. Please see logs for more information.')
                     );
                 }

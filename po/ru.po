@@ -259,10 +259,10 @@ msgstr "Невозможно настроить автозапуск"
 
 #: src/dependencyCheck.js:257
 msgid ""
-"Please make sure the portal is available from inside the flatpak sandbox. "
+"Please make sure the portal is available from inside the Flatpak sandbox. "
 "Please see logs for more information."
 msgstr ""
-"Пожалуйста, убедитесь, что портал доступен из песочницы flatpak. Обратитесь "
+"Пожалуйста, убедитесь, что портал доступен из песочницы Flatpak. Обратитесь "
 "к логам, чтобы получить дополнительную информацию."
 
 #: src/dependencyCheck.js:281
@@ -272,10 +272,10 @@ msgstr "Имена D-Bus не найдены"
 #: src/dependencyCheck.js:282
 msgid ""
 "Please make sure D-Bus is installed, running, and available inside the "
-"flatpak sandbox. Please see logs for more information."
+"Flatpak sandbox. Please see logs for more information."
 msgstr ""
 "Пожалуйста, убедитесь, что D-Bus установлен, запущен и доступен из песочницы "
-"flatpak. Обратитесь к логам, чтобы получить дополнительную информацию."
+"Flatpak. Обратитесь к логам, чтобы получить дополнительную информацию."
 
 #: src/dependencyCheck.js:312
 msgid "Can't find firewalld"
@@ -284,10 +284,10 @@ msgstr "firewalld не найден"
 #: src/dependencyCheck.js:313
 msgid ""
 "Please make sure firewalld is installed, running, and available inside the "
-"flatpak sandbox. Please see logs for more information."
+"Flatpak sandbox. Please see logs for more information."
 msgstr ""
 "Пожалуйста, убедитесь, что firewalld установлен, запущен и доступен из "
-"песочницы flatpak. Обратитесь к логам, чтобы получить дополнительную "
+"песочницы Flatpak. Обратитесь к логам, чтобы получить дополнительную "
 "информацию."
 
 #: src/dependencyCheck.js:332
@@ -297,11 +297,11 @@ msgstr "Не удалось получить зоны firewalld"
 #: src/dependencyCheck.js:333
 msgid ""
 "Unable to get firewalld zones. Please make sure firewalld permissions are "
-"correct, and are not restricted inside the flatpak sandbox. Please see logs "
+"correct, and are not restricted inside the Flatpak sandbox. Please see logs "
 "for more information."
 msgstr ""
 "Не удалось получить зоны firewalld. Пожалуйста, удостоверьтесь, что "
-"firewalld выданы корректные разрешения, а внутри песочницы flatpak нет "
+"firewalld выданы корректные разрешения, а внутри песочницы Flatpak нет "
 "ограничений. Обратитесь к логам, чтобы получить дополнительную информацию."
 
 #: src/dependencyCheck.js:349
@@ -311,11 +311,11 @@ msgstr "Не удалось получить зону firewalld по умолч�
 #: src/dependencyCheck.js:350
 msgid ""
 "Unable to get firewalld default zone. Please make sure firewalld permissions "
-"are correct, and are not restricted inside the flatpak sandbox. Please see "
+"are correct, and are not restricted inside the Flatpak sandbox. Please see "
 "logs for more information."
 msgstr ""
 "Не удалось получить зону firewalld по умолчанию. Пожалуйста, удостоверьтесь, "
-"что firewalld выданы корректные разрешения, а внутри песочницы flatpak нет "
+"что firewalld выданы корректные разрешения, а внутри песочницы Flatpak нет "
 "ограничений. Обратитесь к логам, чтобы получить дополнительную информацию."
 
 #: src/dependencyCheck.js:380
@@ -325,10 +325,10 @@ msgstr "NetworkManager не найден"
 #: src/dependencyCheck.js:381
 msgid ""
 "Please make sure NetworkManager is installed, running, and available inside "
-"the flatpak sandbox. Please see logs for more information."
+"the Flatpak sandbox. Please see logs for more information."
 msgstr ""
 "Пожалуйста, убедитесь, что NetworkManager установлен, запущен и доступен из "
-"песочницы flatpak. Обратитесь к логам, чтобы получить дополнительную "
+"песочницы Flatpak. Обратитесь к логам, чтобы получить дополнительную "
 "информацию."
 
 #: src/dependencyCheck.js:432
