@@ -17,7 +17,14 @@ export const DependencyItem = GObject.registerClass({
     Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/dependencyItem.ui',
     InternalChildren: ['button', 'status'],
 }, class DependencyItem extends Adw.ActionRow {
-    constructor(title, dependencyCheck, property, callbackFunction) {
+    constructor(
+        title,
+        dependencyCheck,
+        property,
+        callbackFunction,
+        buttonSensitiveProperty = null,
+        buttonSensitiveTransformFunction = null
+    ) {
         super();
         this.title = title;
 
@@ -52,6 +59,20 @@ export const DependencyItem = GObject.registerClass({
         );
 
         this._button.connect('clicked', callbackFunction);
+        if (buttonSensitiveProperty !== null) {
+            dependencyCheck.bind_property_full(
+                buttonSensitiveProperty,
+                this._button,
+                'sensitive',
+                GObject.BindingFlags.SYNC_CREATE,
+                // eslint-disable-next-line no-unused-vars
+                (binding, value) => [
+                    true,
+                    buttonSensitiveTransformFunction === null ? value : buttonSensitiveTransformFunction(value),
+                ],
+                null
+            );
+        }
     }
 
     #convertStatusToText(status) {
