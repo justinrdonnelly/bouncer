@@ -141,6 +141,9 @@ export const DependencyCheck = GObject.registerClass(
                 return;
             this.#statusNetworkManagerRunning = status;
             this.notify('status-network-manager-running');
+            // If NetworkManager isn't running, set the permissions to 'Unknown'.
+            if (!this.checkComponentStatus(status))
+                this.statusNetworkManagerPermissions = 0;
             this.checkOverallStatus();
         }
 
@@ -221,8 +224,7 @@ export const DependencyCheck = GObject.registerClass(
                     this.#data.getData(), // this will return null on the first run, true otherwise
                     this.checkListNames(emit),
                     this.checkFirewalld(emit),
-                    this.checkNetworkManagerRunning(emit),
-                    this.checkNetworkManagerPermissions(emit),
+                    this.#checkNetworkManager(emit),
                 ]);
                 // Don't configure autostart unless all other dependency checks completed successfully.
                 await this.runOnStartup(emit);
@@ -239,6 +241,14 @@ export const DependencyCheck = GObject.registerClass(
                 this.statusStartup = 3; // Something went wrong. Make 'Run on Startup' red/'Not Ready'.
                 console.error('Error in dependency checks. Not performing first run logic.');
             }
+        }
+
+        // Don't check NetworkManager permissions unless NetworkManager is running.
+        async #checkNetworkManager(emit) {
+            await this.checkNetworkManagerRunning(emit);
+            if (this.checkComponentStatus(this.#statusNetworkManagerRunning))
+                await this.checkNetworkManagerPermissions(emit);
+            // If NetworkManager isn't running, leave NetworkManager Permissions unknown.
         }
 
         // This is not really a dependency. But we need to run on startup to actually be useful.
