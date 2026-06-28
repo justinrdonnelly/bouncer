@@ -141,7 +141,7 @@ msgstr "Bouncer qu’aficha lo tablèu de bòrd ret e las informacions de zòna"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:62
 msgid "Include a networks tab on the dashboard"
-msgstr "Inclure un onglet ret din lo tablèu de bòrd"
+msgstr "Inclure un onglet ret dins lo tablèu de bòrd"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:63
 msgid "UI cleanup"
