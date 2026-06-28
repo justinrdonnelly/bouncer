@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: bouncer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-24 15:50-0400\n"
-"PO-Revision-Date: 2026-04-10 18:46+0200\n"
+"PO-Revision-Date: 2026-06-28 13:23+0200\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: \n"
 "Language: oc\n"
@@ -136,70 +136,60 @@ msgid "Bouncer dashboard showing configuration status"
 msgstr "Bouncer qu’aficha lo tablèu de bòrd amb los estats de configuracion"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:51
-#, fuzzy
 msgid "Bouncer dashboard showing network and zone information"
-msgstr "Bouncer qu’aficha lo tablèu de bòrd amb los estats de configuracion"
+msgstr "Bouncer qu’aficha lo tablèu de bòrd ret e las informacions de zòna"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:62
-#, fuzzy
 msgid "Include a networks tab on the dashboard"
-msgstr "Inclure lo tablèu de bòrd"
+msgstr "Inclure un onglet ret din lo tablèu de bòrd"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:63
 msgid "UI cleanup"
-msgstr ""
+msgstr "Netejatge de l’interfàcia utilizaire"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:64
 msgid "Improve accessibility for dependency item status"
-msgstr ""
+msgstr "Accessibilitat melhorada pels estatuts dels elements de dependéncias"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:65
-#, fuzzy
 msgid "Track connections by NetworkManager UUID"
-msgstr "Impossible de trobar NetworkManager"
+msgstr "Seguir las connexion per UUID de NetworkManager"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:66
-#, fuzzy
 msgid "Update Occitan translations"
-msgstr "Traduccion en occitan aponduda"
+msgstr "Traduccions en occitan actualizadas"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:67
-#, fuzzy
 msgid "Update Italian translations"
-msgstr "Traduccion en rus aponduda"
+msgstr "Traduccions en italian actualizadas"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:68
-#, fuzzy
 msgid "Include Danish translations"
-msgstr "Traduccion en neerlandés"
+msgstr "Traduccions en danés inclusas"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:75
 msgid "Correctly show autostart status on dashboard"
-msgstr ""
+msgstr "Afichatge corrèct de l’estatut d’aviada auto sul panèl"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:76
-#, fuzzy
 msgid "Include Italian translation"
-msgstr "Traduccion en rus aponduda"
+msgstr "Traduccions en italian inclusas"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:77
 msgid "Track connection IDs seen per machine"
-msgstr ""
+msgstr "Seguir los ID de connexion vistes per maquina"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:78
-#, fuzzy
 msgid "Include Polish translation"
-msgstr "Traduccion en neerlandés"
+msgstr "Traduccions en polonés inlusas"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:79
-#, fuzzy
 msgid "Use GNOME 50 runtime"
-msgstr "Utilizar l’environament d’execucion GNOME version 49"
+msgstr "Utilizar l’environament d’execucion GNOME version 50"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:80
-#, fuzzy
 msgid "Handle NetworkManager restarts"
-msgstr "Impossible de trobar NetworkManager"
+msgstr "Gestion de las reaviadas de NetworkManager"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:87
 msgid "Include dashboard"
@@ -622,7 +612,7 @@ msgstr "Ajuda"
 
 #: src/ui/chooseZoneBox.ui:121
 msgid "Skip for Now"
-msgstr ""
+msgstr "Sautar per ara"
 
 #: src/ui/chooseZoneBox.ui:122
 msgid ""
@@ -637,9 +627,8 @@ msgid "Exit"
 msgstr "Sortir"
 
 #: src/ui/chooseZoneBox.ui:140
-#, fuzzy
 msgid "Save Zone"
-msgstr "Zòna"
+msgstr "Enregistrar la zòna"
 
 #: src/ui/chooseZoneBox.ui:141
 msgid ""
@@ -654,26 +643,23 @@ msgid "Choose"
 msgstr "Causir"
 
 #: src/ui/dashboard.js:47
-#, fuzzy
 msgid ""
 "Saved networks could not be loaded. Please see logs for more information."
 msgstr ""
-"I a agut un problèma amb lo seguiment dels cambiaments de connexion ret. "
-"Consultatz los jornals per mai d'informacions."
+"Se podiá pas cargar las rets enregistradas. Consultatz los jornals per mai "
+"d'informacions."
 
 #: src/ui/dashboard.ui:30
-#, fuzzy
 msgid "Dashboard"
-msgstr "Inclure lo tablèu de bòrd"
+msgstr "Tablèu de bòrd"
 
 #: src/ui/dashboard.ui:90
 msgid "Dependencies"
-msgstr ""
+msgstr "Dependéncias"
 
 #: src/ui/dashboard.ui:99 src/ui/networksBox.ui:38
-#, fuzzy
 msgid "Networks"
-msgstr "Ret"
+msgstr "Rets"
 
 #: src/ui/dependencyBox.js:52
 msgid "firewalld Running"
@@ -719,9 +705,8 @@ msgstr ""
 "la ret."
 
 #: src/ui/dependencyBox.ui:55
-#, fuzzy
 msgid "Network Monitoring"
-msgstr "NetworkManager en execucion"
+msgstr "Susvelhança ret"
 
 #: src/ui/dependencyBox.ui:62
 msgid "Monitor"
@@ -730,23 +715,23 @@ msgstr "Susvelhar"
 #: src/ui/dependencyItem.js:60 src/ui/dependencyItem.js:69
 #: src/ui/dependencyItem.ui:22
 msgid "Unknown"
-msgstr ""
+msgstr "Desconegut"
 
 #: src/ui/dependencyItem.js:62
 msgid "Ready"
-msgstr ""
+msgstr "Prèst"
 
 #: src/ui/dependencyItem.js:64
 msgid "Suboptimal"
-msgstr ""
+msgstr "Mai qu’optimal"
 
 #: src/ui/dependencyItem.js:66
 msgid "Not Ready"
-msgstr ""
+msgstr "Non prèst"
 
 #: src/ui/dependencyItem.ui:33
 msgid "Check"
-msgstr ""
+msgstr "Verificar"
 
 #. Ignore the ugly formatting. New lines are literal.
 #: src/ui/moreInfo.ui:34
@@ -795,45 +780,40 @@ msgstr ""
 "justinrdonnelly/bouncer\">aicí</a>."
 
 #: src/ui/networksBox.js:172
-#, fuzzy
 msgid "Firewall zone information could not be loaded."
-msgstr "La zòna de proteccion per aquesta connexion es estada configurada sus "
+msgstr "Las informacions sus la zòna de proteccion se podiá pas cargar."
 
 #: src/ui/networksBox.ui:34
-#, fuzzy
 msgid "Manage Networks"
-msgstr "Ret"
+msgstr "Gerir las rets"
 
 #: src/ui/networksBox.ui:35
 msgid "Manage your configured networks from here."
-msgstr ""
+msgstr "Gerissètz vòstras rets configuradas d’aicí estant."
 
 #: src/ui/networksBox.ui:70
-#, fuzzy
 msgid "Change Zone"
-msgstr "Zòna actuala"
+msgstr "Cambiar la zòna"
 
 #: src/ui/networksBox.ui:82
 msgid "Change"
-msgstr ""
+msgstr "Cambiar"
 
 #: src/ui/networksBox.ui:95
-#, fuzzy
 msgid "Forget Network"
-msgstr "Ret"
+msgstr "Oblidar la ret"
 
 #: src/ui/networksBox.ui:96
-#, fuzzy
 msgid ""
 "Forget this network. You will be prompted to choose the firewall zone for "
 "this network the next time you connect to it."
 msgstr ""
-"Cap de cambiament serà pas fach. Veiretz tornamai aquesta fenèstra lo còp "
-"que ven que vos connectaretz a aquesta ret."
+"Oblidar aquesta ret. Veiretz tornamai aquesta fenèstra lo còp que ven que "
+"vos connectaretz a aquesta ret."
 
 #: src/ui/networksBox.ui:102
 msgid "Forget"
-msgstr ""
+msgstr "Oblidar"
 
 #~ msgid "Check Status"
 #~ msgstr "Verificacion d’estat"
