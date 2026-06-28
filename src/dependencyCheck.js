@@ -440,7 +440,14 @@ export const DependencyCheck = GObject.registerClass(
             });
             // GetSettings doesn't require any permissions. Update requires
             // 'org.freedesktop.NetworkManager.settings.modify.system'.
-            const modifyPermission = (await permissions)['org.freedesktop.NetworkManager.settings.modify.system'];
+            let permissionResults;
+            try {
+                permissionResults = await permissions;
+            } catch (e) {
+                this.statusNetworkManagerPermissions = 0;
+                throw e;
+            }
+            const modifyPermission = permissionResults['org.freedesktop.NetworkManager.settings.modify.system'];
             console.log(`NetworkManager modify permission: ${modifyPermission}`);
             switch (modifyPermission) {
                 case 'yes': // authorized, without requiring authentication
