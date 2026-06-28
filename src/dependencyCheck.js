@@ -70,6 +70,16 @@ export const DependencyCheck = GObject.registerClass(
                 3,
                 0,
             ),
+            // All dependencies except `#statusStartup`. We'll use this to determine whether autostart can be enabled.
+            'dependencies-ready': GObject.ParamSpec.boolean(
+                'dependencies-ready',
+                'dependencies ready',
+                'Whether dependencies required before configuring startup are ready',
+                GObject.ParamFlags.READWRITE,
+                false,
+            ),
+            // All dependencies (including `#statusStartup`). We'll use this to determine whether monitoring can be
+            // enabled.
             'status-overall': GObject.ParamSpec.boolean(
                 'status-overall',
                 'status overall',
@@ -159,11 +169,14 @@ export const DependencyCheck = GObject.registerClass(
         }
 
         checkOverallStatus() {
-            this.statusOverall = (
+            this.dependenciesReady = (
                 this.checkComponentStatus(this.#statusDbus) &&
                 this.checkComponentStatus(this.#statusFirewalldRunning) &&
                 this.checkComponentStatus(this.#statusNetworkManagerRunning) &&
-                this.checkComponentStatus(this.#statusNetworkManagerPermissions) &&
+                this.checkComponentStatus(this.#statusNetworkManagerPermissions)
+            );
+            this.statusOverall = (
+                this.dependenciesReady &&
                 this.checkComponentStatus(this.#statusStartup)
             );
         }

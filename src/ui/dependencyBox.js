@@ -93,7 +93,8 @@ export const DependencyBox = GObject.registerClass({
             _('Run on Startup'),
             dependencyCheck,
             'status-startup',
-            async () => dependencyCheck.runOnStartup(false).catch(() => {})
+            async () => dependencyCheck.runOnStartup(false).catch(() => {}),
+            'dependencies-ready'
         );
         this._listBox.insert(dependencyItem, count++);
 
