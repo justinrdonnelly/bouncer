@@ -723,7 +723,7 @@ msgstr "Prèst"
 
 #: src/ui/dependencyItem.js:64
 msgid "Suboptimal"
-msgstr "Mai qu’optimal"
+msgstr "Degalhat"
 
 #: src/ui/dependencyItem.js:66
 msgid "Not Ready"
