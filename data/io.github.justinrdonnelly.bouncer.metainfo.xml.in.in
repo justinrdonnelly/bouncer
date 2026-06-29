@@ -56,6 +56,13 @@
     <color type="primary" scheme_preference="dark">#9586b9</color>
   </branding>
   <releases>
+    <release version="" date="">
+      <description>
+        <ul>
+          <li>Update Occitan translations</li>
+        </ul>
+      </description>
+    </release>
     <release version="50.1.0" date="2026-06-24">
       <description>
         <ul>
