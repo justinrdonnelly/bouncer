@@ -59,6 +59,7 @@
     <release version="" date="">
       <description>
         <ul>
+          <li>Clean up dashboard dependency tab</li>
           <li>Update Occitan translations</li>
         </ul>
       </description>
