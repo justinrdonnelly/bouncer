@@ -93,6 +93,7 @@ export const BouncerApplication = GObject.registerClass(
             } else {
                 this.activate();
             }
+            return 0;
         }
 
         // eslint-disable-next-line no-unused-vars
