@@ -17,7 +17,7 @@ import Xdp from 'gi://Xdp';
 import { config } from './config.js';
 import { Data } from './data.js';
 import { ErrorSignal } from './errorSignal.js';
-import { ZoneInfo } from './zoneInfo.js';
+import * as ZoneInfo from './zoneInfo.js';
 
 export const DependencyCheck = GObject.registerClass(
     {

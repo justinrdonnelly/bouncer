@@ -26,8 +26,8 @@ import { Dashboard } from './ui/dashboard.js';
 import { DependencyBox } from './ui/dependencyBox.js';
 import { NetworksBox } from './ui/networksBox.js';
 import { NetworkState } from './networkState.js';
-import { ZoneForConnection } from './zoneForConnection.js';
-import { ZoneInfo } from './zoneInfo.js';
+import * as ZoneForConnection from './zoneForConnection.js';
+import * as ZoneInfo from './zoneInfo.js';
 import { defaultZoneLabel } from './zoneSelection.js';
 
 import promisify from './promisify.js';

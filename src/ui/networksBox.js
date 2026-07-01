@@ -13,8 +13,8 @@ import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk';
 
 import { getNetworkManagerConnectionByUuid } from '../networkManagerConnectionSettings.js';
-import { ZoneForConnection } from '../zoneForConnection.js';
-import { ZoneInfo } from '../zoneInfo.js';
+import * as ZoneForConnection from '../zoneForConnection.js';
+import * as ZoneInfo from '../zoneInfo.js';
 import { getSelectedZone, getZoneDisplayName, populateZoneList } from '../zoneSelection.js';
 
 export const NetworksBox = GObject.registerClass(

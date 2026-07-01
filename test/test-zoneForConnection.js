@@ -11,7 +11,7 @@
 
 import GLib from 'gi://GLib';
 
-import { ZoneForConnection } from '../src/zoneForConnection.js';
+import * as ZoneForConnection from '../src/zoneForConnection.js';
 
 /**
  *
