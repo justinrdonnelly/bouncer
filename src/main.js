@@ -133,7 +133,8 @@ export const BouncerApplication = GObject.registerClass(
 
         async #launchDashboard() {
             if (this.#dashboardWindow !== null) {
-                console.log('Bouncer dashboard window is already showing.');
+                console.log('Bouncer dashboard window already exists.');
+                this.#dashboardWindow.present();
                 return;
             }
             // If we `await` anything without either showing the window or `hold`ing, the application will exit. We'll
