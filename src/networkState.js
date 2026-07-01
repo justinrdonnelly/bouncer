@@ -111,8 +111,8 @@ const NetworkManagerStateItem = GObject.registerClass(
             console.debug(`debug 1 - Destroying ${this.constructor.name} with object path: ${this.objectPath}`);
             this._proxyObj = null;
             // handle children
-            Array.from(this._childNetworkManagerStateItems.values()).forEach((child) => {
-                this._destroyChild(child);
+            Array.from(this._childNetworkManagerStateItems.keys()).forEach((childObjectPath) => {
+                this._destroyChild(childObjectPath);
             });
         }
 
