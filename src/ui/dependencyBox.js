@@ -101,7 +101,7 @@ export const DependencyBox = GObject.registerClass({
         this._listBox.insert(dependencyItem, count++);
 
         // when the dependencyCheck status-overall property changes, update the "monitor" portion
-        dependencyCheck.connect(
+        const statusOverallHandlerId = dependencyCheck.connect(
             'notify::status-overall',
             // eslint-disable-next-line no-unused-vars
             (object, _pspec) => {
@@ -111,6 +111,9 @@ export const DependencyBox = GObject.registerClass({
                 this.#handleMonitoringRow();
             }
         );
+        this.connect('destroy', () => {
+            dependencyCheck.disconnect(statusOverallHandlerId);
+        });
         this.#statusOverall = dependencyCheck['status-overall'];
         this.#handleMonitoringRow();
     } // end constructor
