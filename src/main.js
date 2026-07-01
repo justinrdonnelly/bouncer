@@ -105,7 +105,7 @@ export const BouncerApplication = GObject.registerClass(
         }
 
         // eslint-disable-next-line no-unused-vars
-        #handleDashboardWindowClose(emittingObject) {
+        #handleDashboardWindowDestroyed(emittingObject) {
             this.#dashboardWindow = null;
         }
 
@@ -156,7 +156,7 @@ export const BouncerApplication = GObject.registerClass(
                 dependencyBox.connect('monitor-network', this.monitorNetworkAndCatch.bind(this));
                 // If networksBox is null, the normal 'Networks' tab contents will be replaced with an error message.
                 this.#dashboardWindow = new Dashboard(this, dependencyBox, networksBox);
-                this.#dashboardWindow.connect('close-request', this.#handleDashboardWindowClose.bind(this));
+                this.#dashboardWindow.connect('destroy', this.#handleDashboardWindowDestroyed.bind(this));
                 this.#dashboardWindow.present();
             } finally {
                 this.release();
