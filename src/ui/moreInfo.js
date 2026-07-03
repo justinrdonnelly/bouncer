@@ -12,10 +12,26 @@
 import Adw from 'gi://Adw';
 import GObject from 'gi://GObject';
 
+const firewalldUrl = 'https://firewalld.org/';
+const networkManagerUrl = 'https://networkmanager.dev/';
+const firewalldConnectionsUrl = 'https://firewalld.org/documentation/zone/connections-interfaces-and-sources.html';
+const bouncerUrl = 'https://github.com/justinrdonnelly/bouncer';
+
 export const MoreInfoDialog = GObject.registerClass(
     {
         GTypeName: 'MoreInfoDialog',
         Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/moreInfo.ui',
+        InternalChildren: ['moreInfoLabel'],
     },
-    class MoreInfoDialog extends Adw.Dialog {}
+    class MoreInfoDialog extends Adw.Dialog {
+        constructor() {
+            super();
+            this._moreInfoLabel.label = this._moreInfoLabel.label.format(
+                firewalldUrl,
+                networkManagerUrl,
+                firewalldConnectionsUrl,
+                bouncerUrl
+            );
+        }
+    }
 );
