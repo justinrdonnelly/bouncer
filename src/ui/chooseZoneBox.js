@@ -37,7 +37,6 @@ export const ChooseZoneBox = GObject.registerClass(
         #connectionName;
         #defaultZone;
         #activeConnectionSettings;
-        window;
 
         constructor(connectionUuid, connectionName, defaultZone, currentZone, allZones, activeConnectionSettings) {
             super();
@@ -72,7 +71,7 @@ export const ChooseZoneBox = GObject.registerClass(
                 selectedZone,
                 this.#defaultZone
             );
-            this.window.close();
+            this.get_root().close();
         }
 
         // eslint-disable-next-line no-unused-vars
@@ -84,7 +83,7 @@ export const ChooseZoneBox = GObject.registerClass(
         // eslint-disable-next-line no-unused-vars
         exitButtonClicked(_button) {
             console.log('Exiting without selecting a zone.');
-            this.window.close();
+            this.get_root().close();
         }
     }
 );

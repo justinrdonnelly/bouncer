@@ -93,10 +93,19 @@ export const BouncerApplication = GObject.registerClass(
             } else {
                 this.activate();
             }
+            return 0;
+        }
+
+        vfunc_shutdown() {
+            this.#sourceIds?.forEach((id) => GLib.Source.remove(id));
+            this.#networkState?.destroy();
+            this.#networkState = null;
+            this.#dependencyCheck = null;
+            super.vfunc_shutdown();
         }
 
         // eslint-disable-next-line no-unused-vars
-        #handleDashboardWindowClose(emittingObject) {
+        #handleDashboardWindowDestroyed(emittingObject) {
             this.#dashboardWindow = null;
         }
 
@@ -124,7 +133,8 @@ export const BouncerApplication = GObject.registerClass(
 
         async #launchDashboard() {
             if (this.#dashboardWindow !== null) {
-                console.log('Bouncer dashboard window is already showing.');
+                console.log('Bouncer dashboard window already exists.');
+                this.#dashboardWindow.present();
                 return;
             }
             // If we `await` anything without either showing the window or `hold`ing, the application will exit. We'll
@@ -146,7 +156,7 @@ export const BouncerApplication = GObject.registerClass(
                 dependencyBox.connect('monitor-network', this.monitorNetworkAndCatch.bind(this));
                 // If networksBox is null, the normal 'Networks' tab contents will be replaced with an error message.
                 this.#dashboardWindow = new Dashboard(this, dependencyBox, networksBox);
-                this.#dashboardWindow.connect('close-request', this.#handleDashboardWindowClose.bind(this));
+                this.#dashboardWindow.connect('destroy', this.#handleDashboardWindowDestroyed.bind(this));
                 this.#dashboardWindow.present();
             } finally {
                 this.release();
@@ -257,7 +267,8 @@ export const BouncerApplication = GObject.registerClass(
             signals.forEach((signal) => {
                 const gsourceSignal = GLibUnix.signal_source_new(signal);
                 gsourceSignal.set_callback(() => {
-                    this.quit(signal);
+                    this.#requestQuit(signal);
+                    return GLib.SOURCE_CONTINUE;
                 });
                 this.#sourceIds.push(gsourceSignal.attach(null));
             });
@@ -276,7 +287,7 @@ export const BouncerApplication = GObject.registerClass(
             notification.set_body(message);
             this.send_notification(id, notification);
             if (fatal) {
-                this.quit(null);
+                this.#requestQuit();
             }
         }
 
@@ -347,7 +358,6 @@ export const BouncerApplication = GObject.registerClass(
                     activeConnectionSettings
                 );
                 this.#chooseZoneWindow = new BouncerWindow(this, chooseZoneBox);
-                chooseZoneBox.window = this.#chooseZoneWindow;
             }
 
             this.#chooseZoneWindow.content.connect('zone-selected', this.#chooseClicked.bind(this));
@@ -444,8 +454,7 @@ export const BouncerApplication = GObject.registerClass(
             }
         }
 
-        // Don't make this private because it's an override
-        quit(signal) {
+        #requestQuit(signal = null) {
             if (this.#quitting) {
                 console.log('Skipping duplicate attempt to quit');
                 return; // We are already quitting. Trying again will cause problems.
@@ -455,11 +464,7 @@ export const BouncerApplication = GObject.registerClass(
                 console.log('quitting with no signal!');
             else
                 console.log(`quitting due to signal ${signal}!`);
-            this.#sourceIds?.forEach((id) => GLib.Source.remove(id));
-            this.#networkState?.destroy();
-            this.#networkState = null;
-            this.#dependencyCheck = null;
-            super.quit(); // this ends up calling vfunc_shutdown()
+            this.quit(); // inherited Gio.Application method which ends up calling vfunc_shutdown()
         }
     }
 );
