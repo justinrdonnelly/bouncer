@@ -26,7 +26,22 @@ export const MoreInfoDialog = GObject.registerClass(
     class MoreInfoDialog extends Adw.Dialog {
         constructor() {
             super();
-            this._moreInfoLabel.label = this._moreInfoLabel.label.format(
+            // Translators: Do not translate or modify %1$s, %2$s, %3$s, or %4$s. They are replaced with the
+            // firewalld, NetworkManager, firewalld connection documentation, and Bouncer URLs, respectively.
+            this._moreInfoLabel.label = _('You\'re using <a href="%1$s">firewalld</a> as your firewall. ' +
+                'One of the nice features about ' +
+                'firewalld is that it supports different zones (sets of firewall rules). You may have a firewall ' +
+                'zone configured for home use, and a different zone for public networks.\n\n' +
+                'You\'re using <a href="%2$s">NetworkManager</a> for network configuration. NetworkManager ' +
+                'integrates well with firewalld and can <a href="%3$s">set the firewalld zone for an interface based ' +
+                'on the connection</a>. This means your firewall rules can automatically change depending on your ' +
+                'network connection.\n\n' +
+                'Bouncer is designed to make this easier for you. It opens a window when you connect to a new ' +
+                'network, allowing you to choose the appropriate firewall zone. If you\'re not sure what to choose, ' +
+                'you should probably choose the option that matches where you are. The safest option is usually ' +
+                '\'public\'. If you don\'t want to change anything, click \'Exit\'.\n\n' +
+                'You can read more about Bouncer <a href="%4$s">here</a>.'
+            ).format(
                 firewalldUrl,
                 networkManagerUrl,
                 firewalldConnectionsUrl,

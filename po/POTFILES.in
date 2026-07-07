@@ -11,6 +11,7 @@ src/ui/dependencyBox.js
 src/ui/dependencyBox.ui
 src/ui/dependencyItem.js
 src/ui/dependencyItem.ui
+src/ui/moreInfo.js
 src/ui/moreInfo.ui
 src/ui/networksBox.js
 src/ui/networksBox.ui
