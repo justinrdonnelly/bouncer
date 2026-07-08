@@ -10,7 +10,7 @@
     "eslint": "^10.6.0",
     "eslint-plugin-security": "^4.0.1",
     "husky": "^9.1.0",
-    "prettier": "^3.8.0"
+    "prettier": "3.9.4"
   },
   "scripts": {
     "prepare": "husky"
