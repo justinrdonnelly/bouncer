@@ -24,6 +24,7 @@ export const ErrorSignal = GObject.registerClass(
             },
         },
     },
+    // eslint-disable-next-line no-shadow
     class ErrorSignal extends GObject.Object {
         emitError(fatal, errorId, errorTitle, errorMessage) {
             super.emit('error', fatal, errorId, errorTitle, errorMessage);

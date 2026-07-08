@@ -21,6 +21,7 @@ export const DependencyBox = GObject.registerClass({
     Signals: {
         'monitor-network': {},
     },
+// eslint-disable-next-line no-shadow
 }, class DependencyBox extends Gtk.Box {
     #monitoring;
     #statusOverall;

@@ -89,6 +89,7 @@ export const DependencyCheck = GObject.registerClass(
             ),
         },
     },
+    // eslint-disable-next-line no-shadow
     class DependencyCheck extends ErrorSignal {
         static #fileName = 'first-run-complete';
 

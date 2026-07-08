@@ -23,6 +23,7 @@ export const MoreInfoDialog = GObject.registerClass(
         Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/moreInfo.ui',
         InternalChildren: ['moreInfoLabel'],
     },
+    // eslint-disable-next-line no-shadow
     class MoreInfoDialog extends Adw.Dialog {
         constructor() {
             super();

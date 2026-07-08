@@ -19,6 +19,7 @@ export const Dashboard = GObject.registerClass(
         Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/dashboard.ui',
         InternalChildren: ['content', 'dependencyBox', 'networksBox', 'splitView', 'stack'],
     },
+    // eslint-disable-next-line no-shadow
     class Dashboard extends Adw.ApplicationWindow {
         dependencyBox = null;
 
