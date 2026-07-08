@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bouncer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-07 06:16-0400\n"
+"POT-Creation-Date: 2026-07-08 19:13-0400\n"
 "PO-Revision-Date: 2025-06-16 10:52+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: \n"
@@ -134,131 +134,135 @@ msgid "Clean up dashboard dependency tab"
 msgstr ""
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:63
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:74
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:75
 #, fuzzy
 msgid "Update Occitan translations"
 msgstr "Nieuw: Nederlandse vertaling"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:70
-msgid "Include a networks tab on the dashboard"
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:64
+msgid "Update JavaScript development tooling"
 msgstr ""
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:71
-msgid "UI cleanup"
+msgid "Include a networks tab on the dashboard"
 msgstr ""
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:72
-msgid "Improve accessibility for dependency item status"
+msgid "UI cleanup"
 msgstr ""
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:73
+msgid "Improve accessibility for dependency item status"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:74
 #, fuzzy
 msgid "Track connections by NetworkManager UUID"
 msgstr "NetworkManager is niet beschikbaar"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:75
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:76
 #, fuzzy
 msgid "Update Italian translations"
 msgstr "Nieuw: Nederlandse vertaling"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:76
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:77
 #, fuzzy
 msgid "Include Danish translations"
 msgstr "Nieuw: Nederlandse vertaling"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:83
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:84
 msgid "Correctly show autostart status on dashboard"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:84
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:85
 #, fuzzy
 msgid "Include Italian translation"
 msgstr "Nieuw: Nederlandse vertaling"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:85
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:86
 msgid "Track connection IDs seen per machine"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:86
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:87
 #, fuzzy
 msgid "Include Polish translation"
 msgstr "Nieuw: Nederlandse vertaling"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:87
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:88
 msgid "Use GNOME 50 runtime"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:88
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:89
 #, fuzzy
 msgid "Handle NetworkManager restarts"
 msgstr "NetworkManager is niet beschikbaar"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:95
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:96
 msgid "Include dashboard"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:102
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:103
 msgid "Include additional desktop categories"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:103
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:104
 msgid "Support command line arguments"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:110
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:111
 msgid "Added Russian translation"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:111
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:112
 #, fuzzy
 msgid "Fixed metainfo formatting"
 msgstr "Bekijk meer informatie."
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:118
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:119
 msgid "Added Occitan translation"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:119
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:120
 msgid "Added Simplified Chinese translation"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:120
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:121
 msgid "Fixed multiple instance support"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:121
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:122
 msgid "Use GNOME 49 runtime"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:128
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:129
 msgid "Critical bug fix for non-English language users"
 msgstr "Opgelost: kritieke bug opgelost voor niet-Engelssprekenden"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:129
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:130
 msgid "Added Dutch translation"
 msgstr "Nieuw: Nederlandse vertaling"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:130
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:131
 msgid "Documentation cleanups"
 msgstr "Verbeterd: documentatie"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:136
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:137
 msgid "Include a notification for first run success"
 msgstr "Nieuw: melding na eerste keer opstarten"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:141
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:142
 msgid "Initial release"
 msgstr "De allereerste versie"
 
-#: src/dependencyCheck.js:262
+#: src/dependencyCheck.js:263
 msgid "Bouncer must start on login"
 msgstr "Bouncer dient automatisch op te starten"
 
-#: src/dependencyCheck.js:281
+#: src/dependencyCheck.js:282
 msgid "Can't configure autostart"
 msgstr "Automatisch opstarten mislukt"
 
-#: src/dependencyCheck.js:282
+#: src/dependencyCheck.js:283
 msgid ""
 "Please make sure the portal is available from inside the Flatpak sandbox. "
 "Please see logs for more information."
@@ -266,11 +270,11 @@ msgstr ""
 "Zorg dat het portaal beschikbaar is binnen de Flatpak-sandbox. Bekijk voor "
 "meer informatie het logboek."
 
-#: src/dependencyCheck.js:306
+#: src/dependencyCheck.js:307
 msgid "Can't find D-Bus names"
 msgstr "Geen D-Bus-namen beschikbaar"
 
-#: src/dependencyCheck.js:307
+#: src/dependencyCheck.js:308
 msgid ""
 "Please make sure D-Bus is installed, running, and available inside the "
 "Flatpak sandbox. Please see logs for more information."
@@ -278,11 +282,11 @@ msgstr ""
 "Zorg dat D-Bus geïnstalleerd en actief is, en beschikbaar binnen de Flatpak-"
 "sandbox. Bekijk voor meer informatie het logboek."
 
-#: src/dependencyCheck.js:337
+#: src/dependencyCheck.js:338
 msgid "Can't find firewalld"
 msgstr "Firewalld is niet beschikbaar"
 
-#: src/dependencyCheck.js:338
+#: src/dependencyCheck.js:339
 msgid ""
 "Please make sure firewalld is installed, running, and available inside the "
 "Flatpak sandbox. Please see logs for more information."
@@ -290,11 +294,11 @@ msgstr ""
 "Zorg dat firewalld geïnstalleerd en actief is, en beschikbaar binnen de "
 "Flatpak-sandbox. Bekijk voor meer informatie het logboek."
 
-#: src/dependencyCheck.js:357
+#: src/dependencyCheck.js:358
 msgid "Can't get firewalld zones"
 msgstr "Firewalld-zones zijn niet beschikbaar"
 
-#: src/dependencyCheck.js:358
+#: src/dependencyCheck.js:359
 msgid ""
 "Unable to get firewalld zones. Please make sure firewalld permissions are "
 "correct, and are not restricted inside the Flatpak sandbox. Please see logs "
@@ -304,11 +308,11 @@ msgstr ""
 "zijn ingesteld en niet beperkt zijn binnen de Flatpak-sandbox. Bekijk voor "
 "meer informatie het logboek."
 
-#: src/dependencyCheck.js:374
+#: src/dependencyCheck.js:375
 msgid "Can't get firewalld default zone"
 msgstr "Standaard firewalld-zone is niet beschikbaar"
 
-#: src/dependencyCheck.js:375
+#: src/dependencyCheck.js:376
 msgid ""
 "Unable to get firewalld default zone. Please make sure firewalld permissions "
 "are correct, and are not restricted inside the Flatpak sandbox. Please see "
@@ -318,11 +322,11 @@ msgstr ""
 "juist zijn ingesteld en niet beperkt zijn binnen de Flatpak-sandbox. Bekijk "
 "voor meer informatie het logboek."
 
-#: src/dependencyCheck.js:405
+#: src/dependencyCheck.js:406
 msgid "Can't find NetworkManager"
 msgstr "NetworkManager is niet beschikbaar"
 
-#: src/dependencyCheck.js:406
+#: src/dependencyCheck.js:407
 msgid ""
 "Please make sure NetworkManager is installed, running, and available inside "
 "the Flatpak sandbox. Please see logs for more information."
@@ -330,11 +334,11 @@ msgstr ""
 "Zorg dat NetworkManager geïnstalleerd en actief is, en beschikbaar binnen de "
 "Flatpak-sandbox. Bekijk voor meer informatie het logboek."
 
-#: src/dependencyCheck.js:464
+#: src/dependencyCheck.js:465
 msgid "Authentication required to change NetworkManager connection zone"
 msgstr "Verificatie vereist om de verbindingszone te wĳzigen"
 
-#: src/dependencyCheck.js:465
+#: src/dependencyCheck.js:466
 msgid ""
 "You are authorized to change the connection zone in NetworkManager, but will "
 "be required to authenticate. This will work, but may be annoying. Please see "
@@ -344,11 +348,11 @@ msgstr ""
 "vereist. Dit is een werkbare doch mogelijk licht irritante oplossing. Bekijk "
 "voor meer informatie het logboek."
 
-#: src/dependencyCheck.js:478
+#: src/dependencyCheck.js:479
 msgid "Not authorized to change NetworkManager connection zone"
 msgstr "Niet bevoegd om de verbindingszone te wĳzigen"
 
-#: src/dependencyCheck.js:479
+#: src/dependencyCheck.js:480
 msgid ""
 "You are not authorized to change the connection zone in NetworkManager. This "
 "is required for Bouncer to function properly. Please see logs for more "
@@ -358,11 +362,11 @@ msgstr ""
 "vereist om Bouncer goed te laten werken. Bekijk voor meer informatie het "
 "logboek."
 
-#: src/dependencyCheck.js:491
+#: src/dependencyCheck.js:492
 msgid "Unexpected result from NetworkManager GetSettings: "
 msgstr "Onverwacht resultaat uit NetworkManager GetSettings: "
 
-#: src/dependencyCheck.js:492
+#: src/dependencyCheck.js:493
 msgid ""
 "Unable to determine whether you are authorized to change the connection zone "
 "in NetworkManager. Bouncer may not function properly. Please see logs for "
@@ -372,15 +376,15 @@ msgstr ""
 "verbindingszone te wĳzigen. Bouncer werkt hierdoor mogelijk niet naar "
 "behoren. Bekijk voor meer informatie het logboek."
 
-#: src/main.js:62
+#: src/main.js:63
 msgid "Monitor Wi-Fi connections in the background"
 msgstr ""
 
-#: src/main.js:127
+#: src/main.js:128
 msgid "Unknown error"
 msgstr "Onbekende fout"
 
-#: src/main.js:128
+#: src/main.js:129
 msgid ""
 "An unknown error occurred. Bouncer may not function correctly. Please see "
 "logs for more information."
@@ -388,11 +392,11 @@ msgstr ""
 "Er is een onbekende fout opgetreden - Bouncer werkt mogelijk niet naar "
 "behoren. Bekijk voor meer informatie het logboek."
 
-#: src/main.js:196
+#: src/main.js:197
 msgid "Can't find previously seen connections"
 msgstr "Geen eerdere verbindingen aangetroffen"
 
-#: src/main.js:197
+#: src/main.js:198
 msgid ""
 "There was a problem determining which connections have already been seen. "
 "Please see logs for more information."
@@ -400,11 +404,11 @@ msgstr ""
 "Er is een probleem opgetreden tijdens het vaststellen van eerdere "
 "verbindingshandelingen. Bekijk voor meer informatie het logboek."
 
-#: src/main.js:220
+#: src/main.js:221
 msgid "Can't determine network state"
 msgstr "Netwerkstatus niet beschikbaar"
 
-#: src/main.js:221
+#: src/main.js:222
 msgid ""
 "There was a problem tracking network connection changes. Please see logs for "
 "more information."
@@ -413,7 +417,7 @@ msgstr ""
 "informatie het logboek."
 
 #. details
-#: src/main.js:242
+#: src/main.js:243
 msgid ""
 "Bouncer is an application to help you choose the correct firewall zone for "
 "wireless connections. When you connect to a new network, Bouncer will open a "
@@ -430,19 +434,19 @@ msgstr ""
 
 #. Translators: Replace 'translator-credits' with your name/username, and optionally an email or
 #. URL.
-#: src/main.js:254
+#: src/main.js:255
 msgid "translator-credits"
 msgstr "Heimen Stoffels <vistausss@fastmail.com>"
 
-#: src/main.js:284
+#: src/main.js:285
 msgid " Bouncer is shutting down. You will need to restart manually."
 msgstr " Bouncer wordt afgesloten - herstart de toepassing handmatig."
 
-#: src/main.js:297
+#: src/main.js:298
 msgid "First run setup complete!"
 msgstr "Instelhulp afgerond!"
 
-#: src/main.js:298
+#: src/main.js:299
 msgid ""
 "Your system is correctly configured for Bouncer. Bouncer will autostart on "
 "each login and will open when you connect to a new Wi-Fi network."
@@ -450,11 +454,11 @@ msgstr ""
 "Uw systeem is juist afgesteld. Bouncer zal automatisch worden opgestart en "
 "een actiescherm tonen zodra u verbinding maakt met een nieuw wifinetwerk."
 
-#: src/main.js:341
+#: src/main.js:342
 msgid "Can't prompt for firewall zone"
 msgstr "Firewallzonevraag mislukt"
 
-#: src/main.js:342
+#: src/main.js:343
 msgid ""
 "There was a problem getting information to prompt for the firewall zone. "
 "Please see logs for more information."
@@ -462,11 +466,11 @@ msgstr ""
 "Er is een probleem opgetreden tijdens het opvragen van de firewallzone. "
 "Bekijk voor meer informatie het logboek."
 
-#: src/main.js:393
+#: src/main.js:394
 msgid "Can't add connection to seen connections"
 msgstr "Verbinding toevoegen aan eerdere mislukt"
 
-#: src/main.js:394
+#: src/main.js:395
 msgid ""
 "There was a problem adding the connection to the list of seen connections. "
 "The firewall zone will not be set for this connection. Please see logs for "
@@ -476,11 +480,11 @@ msgstr ""
 "lijst met eerdere verbindingen. De firewallzone kan hierdoor niet worden "
 "ingesteld. Bekijk voor meer informatie het logboek."
 
-#: src/main.js:412
+#: src/main.js:413
 msgid "Can't set firewall zone for connection"
 msgstr "Firewallzone instellen mislukt"
 
-#: src/main.js:413
+#: src/main.js:414
 msgid ""
 "There was a problem setting the firewall zone for the connection. Please see "
 "logs for more information."
@@ -488,11 +492,11 @@ msgstr ""
 "Er is een probleem opgetreden tijdens het instellen van de firewallzone. "
 "Bekijk voor meer informatie het logboek."
 
-#: src/main.js:428
+#: src/main.js:429
 msgid "Can't save connection to seen connections"
 msgstr "Verbinding toevoegen aan eerdere mislukt"
 
-#: src/main.js:429
+#: src/main.js:430
 msgid ""
 "The zone has been set for the connection, but there was a problem saving the "
 "updated list of seen connections to disk. Once you restart Bouncer, you will "
@@ -504,18 +508,18 @@ msgstr ""
 "wordt u daarom opnieuw gevraagd om een firewallzone te kiezen. Bekijk voor "
 "meer informatie het logboek."
 
-#: src/main.js:439
+#: src/main.js:440
 msgid "Firewall zone set for connection: "
 msgstr "Firewallzone ingesteld voor: "
 
 #. this is the default zone
-#: src/main.js:441
+#: src/main.js:442
 msgid ""
 "Firewall zone for this connection has been set to the default zone "
 "(currently "
 msgstr "De firewallzone is ingesteld op de standaardzone (momenteel: "
 
-#: src/main.js:442
+#: src/main.js:443
 msgid ""
 "). Whenever you connect to this network in the future, the firewall zone "
 "will automatically be changed to the default zone."
@@ -523,11 +527,11 @@ msgstr ""
 "). Als u later opnieuw verbinding maakt met dit netwerk, zal de firewallzone "
 "automatisch worden ingesteld op de standaardzone."
 
-#: src/main.js:446
+#: src/main.js:447
 msgid "Firewall zone for this connection has been set to "
 msgstr "De firewall is ingesteld op "
 
-#: src/main.js:446
+#: src/main.js:447
 msgid ""
 ". Whenever you connect to this network in the future, the firewall zone will "
 "automatically be changed to "
@@ -535,15 +539,15 @@ msgstr ""
 ". Als u later opnieuw verbinding maakt met dit netwerk, zal de firewallzone "
 "automatisch worden ingesteld op "
 
-#: src/main.js:448
+#: src/main.js:449
 msgid "."
 msgstr "."
 
-#: src/networkState.js:123
+#: src/networkState.js:125
 msgid "Error determining network state"
 msgstr "Netwerkstatus niet beschikbaar"
 
-#: src/networkState.js:124
+#: src/networkState.js:126
 msgid ""
 "Bouncer ran into an error determining network state. This is required for "
 "the application to work correctly. Please see logs for more information."
@@ -637,7 +641,7 @@ msgstr ""
 msgid "Choose"
 msgstr "Kiezen"
 
-#: src/ui/dashboard.js:47
+#: src/ui/dashboard.js:48
 #, fuzzy
 msgid ""
 "Saved networks could not be loaded. Please see logs for more information."
@@ -658,28 +662,28 @@ msgstr ""
 msgid "Networks"
 msgstr "Netwerk"
 
-#: src/ui/dependencyBox.js:52
+#: src/ui/dependencyBox.js:53
 msgid "firewalld Running"
 msgstr ""
 
-#: src/ui/dependencyBox.js:68
+#: src/ui/dependencyBox.js:69
 msgid "NetworkManager Running"
 msgstr ""
 
-#: src/ui/dependencyBox.js:84
+#: src/ui/dependencyBox.js:85
 msgid "NetworkManager Permissions"
 msgstr ""
 
-#: src/ui/dependencyBox.js:95
+#: src/ui/dependencyBox.js:96
 msgid "Run on Startup"
 msgstr ""
 
-#: src/ui/dependencyBox.js:125
+#: src/ui/dependencyBox.js:128
 msgid "Bouncer is monitoring your Wi-Fi!"
 msgstr ""
 
 #. We're not monitoring. Show the correct text.
-#: src/ui/dependencyBox.js:129 src/ui/dependencyBox.ui:56
+#: src/ui/dependencyBox.js:132 src/ui/dependencyBox.ui:56
 msgid "Once everything is ready, click to begin using Bouncer."
 msgstr ""
 
@@ -703,20 +707,20 @@ msgstr ""
 msgid "Monitor"
 msgstr ""
 
-#: src/ui/dependencyItem.js:81 src/ui/dependencyItem.js:90
+#: src/ui/dependencyItem.js:82 src/ui/dependencyItem.js:91
 #: src/ui/dependencyItem.ui:22
 msgid "Unknown"
 msgstr ""
 
-#: src/ui/dependencyItem.js:83
+#: src/ui/dependencyItem.js:84
 msgid "Ready"
 msgstr ""
 
-#: src/ui/dependencyItem.js:85
+#: src/ui/dependencyItem.js:86
 msgid "Suboptimal"
 msgstr ""
 
-#: src/ui/dependencyItem.js:87
+#: src/ui/dependencyItem.js:88
 msgid "Not Ready"
 msgstr ""
 
@@ -726,7 +730,7 @@ msgstr ""
 
 #. Translators: Do not translate or modify %1$s, %2$s, %3$s, or %4$s. They are replaced with the
 #. firewalld, NetworkManager, firewalld connection documentation, and Bouncer URLs, respectively.
-#: src/ui/moreInfo.js:31
+#: src/ui/moreInfo.js:32
 #, javascript-format
 msgid ""
 "You're using <a href=\"%1$s\">firewalld</a> as your firewall. One of the "
@@ -769,7 +773,7 @@ msgstr ""
 "Meer informatie over Bouncer is te vinden op <a href=\"%4$s\">deze pagina</"
 "a>."
 
-#: src/ui/networksBox.js:172
+#: src/ui/networksBox.js:173
 #, fuzzy
 msgid "Firewall zone information could not be loaded."
 msgstr "De firewall is ingesteld op "
