@@ -98,6 +98,8 @@ export const DependencyBox = GObject.registerClass({
             async () => dependencyCheck.runOnStartup(false).catch(() => {}),
             'dependencies-ready'
         );
+        // We'll increment count here even though it's not currently used again. Just follow the pattern.
+        // eslint-disable-next-line no-useless-assignment
         this._listBox.insert(dependencyItem, count++);
 
         // when the dependencyCheck status-overall property changes, update the "monitor" portion
