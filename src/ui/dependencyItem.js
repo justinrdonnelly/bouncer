@@ -16,6 +16,7 @@ export const DependencyItem = GObject.registerClass({
     GTypeName: 'DependencyItem',
     Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/dependencyItem.ui',
     InternalChildren: ['button', 'status'],
+// eslint-disable-next-line no-shadow
 }, class DependencyItem extends Adw.ActionRow {
     constructor(
         title,

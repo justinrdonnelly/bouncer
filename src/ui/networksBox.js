@@ -33,6 +33,7 @@ export const NetworksBox = GObject.registerClass(
             ),
         },
     },
+    // eslint-disable-next-line no-shadow
     class NetworksBox extends Gtk.Box {
         #connectionIdsSeen; // ConnectionIdsSeen instance.
         #connectionUuidsSeen = []; // Local copy of the bound connection UUIDs.

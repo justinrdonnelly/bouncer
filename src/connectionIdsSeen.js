@@ -28,6 +28,7 @@ export const ConnectionIdsSeen = GObject.registerClass(
             ),
         },
     },
+    // eslint-disable-next-line no-shadow
     class ConnectionIdsSeen extends GObject.Object {
     static #fileName = 'connection-ids-seen.json';
     #allConnectionIdsSeen; // map of machine ID to array of connection UUIDs for the machine

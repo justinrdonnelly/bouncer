@@ -18,6 +18,7 @@ export const BouncerWindow = GObject.registerClass(
         Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/bouncerWindow.ui',
         InternalChildren: ['contentBox'],
     },
+    // eslint-disable-next-line no-shadow
     class BouncerWindow extends Adw.ApplicationWindow {
         content = null;
 

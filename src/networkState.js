@@ -43,6 +43,7 @@ const NetworkStateSignals = GObject.registerClass(
             },
         },
     },
+    // eslint-disable-next-line no-shadow
     class NetworkStateSignals extends ErrorSignal {
         emitConnectionChanged(connectionUuid, connectionName, activeConnectionSettings) {
             super.emit('connection-changed', connectionUuid, connectionName, activeConnectionSettings);
@@ -53,6 +54,7 @@ const NetworkStateSignals = GObject.registerClass(
 // An abstract class to hold a dbus proxy object. We will make multiple dbus calls based on the results of earlier
 // calls, building a hierarchy.
 const NetworkManagerStateItem = GObject.registerClass(
+    // eslint-disable-next-line no-shadow
     class NetworkManagerStateItem extends NetworkStateSignals {
         // conceptually, the static variables below are 'protected'
         static _wellKnownName = 'org.freedesktop.NetworkManager';
@@ -131,6 +133,7 @@ const NetworkManagerStateItem = GObject.registerClass(
 
 
 const NetworkManagerConnectionActive = GObject.registerClass(
+    // eslint-disable-next-line no-shadow
     class NetworkManagerConnectionActive extends NetworkManagerStateItem {
         constructor(objectPath) {
             // example objectPath: /org/freedesktop/NetworkManager/ActiveConnection/1
@@ -210,6 +213,7 @@ const NetworkManagerConnectionActive = GObject.registerClass(
 );
 
 const NetworkManagerDevice = GObject.registerClass(
+    // eslint-disable-next-line no-shadow
     class NetworkManagerDevice extends NetworkManagerStateItem {
         // from https://developer-old.gnome.org/NetworkManager/stable/nm-dbus-types.html#NMDeviceType
         static #NM_DEVICE_TYPE_WIFI = 2;
@@ -360,6 +364,7 @@ const NetworkManagerDevice = GObject.registerClass(
 );
 
 const NetworkManager = GObject.registerClass(
+    // eslint-disable-next-line no-shadow
     class NetworkManager extends NetworkManagerStateItem {
         #busWatchId;
 
@@ -497,6 +502,7 @@ const NetworkManager = GObject.registerClass(
 );
 
 export const NetworkState = GObject.registerClass(
+    // eslint-disable-next-line no-shadow
     class NetworkState extends NetworkStateSignals {
         #networkManager;
 

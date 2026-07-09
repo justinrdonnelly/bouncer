@@ -32,6 +32,7 @@ export const ChooseZoneBox = GObject.registerClass(
             },
         },
     },
+    // eslint-disable-next-line no-shadow
     class ChooseZoneBox extends Gtk.Box {
         #connectionUuid;
         #connectionName;

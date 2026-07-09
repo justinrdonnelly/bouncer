@@ -39,6 +39,7 @@ pkg.initGettext();
 pkg.initFormat();
 
 export const BouncerApplication = GObject.registerClass(
+    // eslint-disable-next-line no-shadow
     class BouncerApplication extends Adw.Application {
         #monitoring = false; // whether we're monitoring
         #networkState = null;
