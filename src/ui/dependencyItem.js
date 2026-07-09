@@ -12,99 +12,102 @@
 import Adw from 'gi://Adw';
 import GObject from 'gi://GObject';
 
-export const DependencyItem = GObject.registerClass({
-    GTypeName: 'DependencyItem',
-    Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/dependencyItem.ui',
-    InternalChildren: ['button', 'status'],
-// eslint-disable-next-line no-shadow
-}, class DependencyItem extends Adw.ActionRow {
-    constructor(
-        title,
-        dependencyCheck,
-        property,
-        callbackFunction,
-        buttonSensitiveProperty = null,
-        buttonSensitiveTransformFunction = null
-    ) {
-        super();
-        this.title = title;
-
-        dependencyCheck.bind_property_full(
+export const DependencyItem = GObject.registerClass(
+    {
+        GTypeName: 'DependencyItem',
+        Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/dependencyItem.ui',
+        InternalChildren: ['button', 'status'],
+    },
+    // eslint-disable-next-line no-shadow
+    class DependencyItem extends Adw.ActionRow {
+        constructor(
+            title,
+            dependencyCheck,
             property,
-            this._status,
-            'label',
-            GObject.BindingFlags.SYNC_CREATE,
-            // eslint-disable-next-line no-unused-vars
-            (binding, value) => [true, this.#convertStatusToIcon(value)],
-            null
-        );
+            callbackFunction,
+            buttonSensitiveProperty = null,
+            buttonSensitiveTransformFunction = null
+        ) {
+            super();
+            this.title = title;
 
-        dependencyCheck.bind_property_full(
-            property,
-            this._status,
-            'tooltip-text',
-            GObject.BindingFlags.SYNC_CREATE,
-            // eslint-disable-next-line no-unused-vars
-            (binding, value) => [true, this.#convertStatusToText(value)],
-            null
-        );
-
-        dependencyCheck.bind_property_full(
-            property,
-            this,
-            'subtitle',
-            GObject.BindingFlags.SYNC_CREATE,
-            // eslint-disable-next-line no-unused-vars
-            (binding, value) => [true, this.#convertStatusToText(value)],
-            null
-        );
-
-        this._button.connect('clicked', callbackFunction);
-        if (buttonSensitiveProperty !== null) {
             dependencyCheck.bind_property_full(
-                buttonSensitiveProperty,
-                this._button,
-                'sensitive',
+                property,
+                this._status,
+                'label',
                 GObject.BindingFlags.SYNC_CREATE,
                 // eslint-disable-next-line no-unused-vars
-                (binding, value) => [
-                    true,
-                    buttonSensitiveTransformFunction === null ? value : buttonSensitiveTransformFunction(value),
-                ],
+                (binding, value) => [true, this.#convertStatusToIcon(value)],
                 null
             );
-        }
-    }
 
-    #convertStatusToText(status) {
-     switch (status) {
-            case 0:
-                return _('Unknown');
-            case 1:
-                return _('Ready');
-            case 2:
-                return _('Suboptimal');
-            case 3:
-                return _('Not Ready');
-            default:
-                console.error(`Invalid DependencyItem status: ${status}`);
-                return _('Unknown');
-        }
-    }
+            dependencyCheck.bind_property_full(
+                property,
+                this._status,
+                'tooltip-text',
+                GObject.BindingFlags.SYNC_CREATE,
+                // eslint-disable-next-line no-unused-vars
+                (binding, value) => [true, this.#convertStatusToText(value)],
+                null
+            );
 
-    #convertStatusToIcon(status) {
-        switch (status) {
-            case 0:
-                return '⚪';
-            case 1:
-                return '🟢';
-            case 2:
-                return '🟡';
-            case 3:
-                return '🔴';
-            default:
-                console.error(`Invalid DependencyItem status: ${status}`);
-                return '⚪';
+            dependencyCheck.bind_property_full(
+                property,
+                this,
+                'subtitle',
+                GObject.BindingFlags.SYNC_CREATE,
+                // eslint-disable-next-line no-unused-vars
+                (binding, value) => [true, this.#convertStatusToText(value)],
+                null
+            );
+
+            this._button.connect('clicked', callbackFunction);
+            if (buttonSensitiveProperty !== null) {
+                dependencyCheck.bind_property_full(
+                    buttonSensitiveProperty,
+                    this._button,
+                    'sensitive',
+                    GObject.BindingFlags.SYNC_CREATE,
+                    // eslint-disable-next-line no-unused-vars
+                    (binding, value) => [
+                        true,
+                        buttonSensitiveTransformFunction === null ? value : buttonSensitiveTransformFunction(value),
+                    ],
+                    null
+                );
+            }
+        }
+
+        #convertStatusToText(status) {
+            switch (status) {
+                case 0:
+                    return _('Unknown');
+                case 1:
+                    return _('Ready');
+                case 2:
+                    return _('Suboptimal');
+                case 3:
+                    return _('Not Ready');
+                default:
+                    console.error(`Invalid DependencyItem status: ${status}`);
+                    return _('Unknown');
+            }
+        }
+
+        #convertStatusToIcon(status) {
+            switch (status) {
+                case 0:
+                    return '⚪';
+                case 1:
+                    return '🟢';
+                case 2:
+                    return '🟡';
+                case 3:
+                    return '🔴';
+                default:
+                    console.error(`Invalid DependencyItem status: ${status}`);
+                    return '⚪';
+            }
         }
     }
-});
+);
