@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Bouncer 50.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-08 19:13-0400\n"
-"PO-Revision-Date: 2026-06-14 08:04+0200\n"
+"PO-Revision-Date: 2026-07-09 22:50+0200\n"
 "Last-Translator: Filip Kemuel <https://github.com/filipkemuel>\n"
 "Language-Team: Danish\n"
 "Language: da\n"
@@ -136,79 +136,69 @@ msgid "Bouncer dashboard showing configuration status"
 msgstr "Bouncer-dashboard, der viser konfigurationsstatus"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:51
-#, fuzzy
 msgid "Bouncer dashboard showing network and zone information"
-msgstr "Bouncer-dashboard, der viser konfigurationsstatus"
+msgstr "Bouncer-dashboard, der viser netværk og zone information"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:62
 msgid "Clean up dashboard dependency tab"
-msgstr ""
+msgstr "Rens dashboard afhængigheds-fane"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:63
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:75
-#, fuzzy
 msgid "Update Occitan translations"
-msgstr "Okcitansk oversættelse tilføjet"
+msgstr "Okcitansk oversættelse opdateret"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:64
 msgid "Update JavaScript development tooling"
-msgstr ""
+msgstr "Javaskript udviklingsværktøj opdateret"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:71
-#, fuzzy
 msgid "Include a networks tab on the dashboard"
-msgstr "Inkluder dashboard"
+msgstr "Inkluder en netværks fane på dashboard'et"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:72
 msgid "UI cleanup"
-msgstr ""
+msgstr "UI oprydning"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:73
 msgid "Improve accessibility for dependency item status"
-msgstr ""
+msgstr "Forbedring af tilgængeligheden for status på afhængige elementer"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:74
-#, fuzzy
 msgid "Track connections by NetworkManager UUID"
-msgstr "Kan ikke finde NetworkManager"
+msgstr "Spor forbindelser via NetworkManager-UUID"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:76
-#, fuzzy
 msgid "Update Italian translations"
-msgstr "Russisk oversættelse tilføjet"
+msgstr "Italiensk oversættelse opdateret"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:77
-#, fuzzy
 msgid "Include Danish translations"
-msgstr "Hollandsk oversættelse tilføjet"
+msgstr "Dansk oversættelse tilføjet"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:84
 msgid "Correctly show autostart status on dashboard"
-msgstr ""
+msgstr "Vis autostart-status korrekt på instrumentbrættet"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:85
-#, fuzzy
 msgid "Include Italian translation"
-msgstr "Russisk oversættelse tilføjet"
+msgstr "Itaiensk oversættelse tilføjet"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:86
 msgid "Track connection IDs seen per machine"
-msgstr ""
+msgstr "Spor forbindelses-ID’er, registreret pr. maskine"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:87
-#, fuzzy
 msgid "Include Polish translation"
-msgstr "Hollandsk oversættelse tilføjet"
+msgstr "Polsk oversættelse tilføjet"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:88
-#, fuzzy
 msgid "Use GNOME 50 runtime"
-msgstr "Brug GNOME 49 runtime"
+msgstr "Brug GNOME 50 runtime"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:89
-#, fuzzy
 msgid "Handle NetworkManager restarts"
-msgstr "Kan ikke finde NetworkManager"
+msgstr "Håndter NetworkManager genstarter"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:96
 msgid "Include dashboard"
@@ -627,7 +617,7 @@ msgstr "Hjælp"
 
 #: src/ui/chooseZoneBox.ui:121
 msgid "Skip for Now"
-msgstr ""
+msgstr "Spring over indtil videre"
 
 #: src/ui/chooseZoneBox.ui:122
 msgid ""
@@ -643,7 +633,7 @@ msgstr "Afslut"
 
 #: src/ui/chooseZoneBox.ui:140
 msgid "Save Zone"
-msgstr ""
+msgstr "Gem Zone"
 
 #: src/ui/chooseZoneBox.ui:141
 msgid ""
@@ -658,26 +648,23 @@ msgid "Choose"
 msgstr "Vælg"
 
 #: src/ui/dashboard.js:48
-#, fuzzy
 msgid ""
 "Saved networks could not be loaded. Please see logs for more information."
 msgstr ""
-"Der opstod et problem med at registrere ændringer i netværksforbindelsen. Se "
-"logfilerne for yderligere oplysninger."
+"De gemte netværk kunne ikke indlæses. Se logfilerne for yderligere "
+"oplysninger."
 
 #: src/ui/dashboard.ui:30
-#, fuzzy
 msgid "Dashboard"
-msgstr "Inkluder dashboard"
+msgstr "Dashboard"
 
 #: src/ui/dashboard.ui:90
 msgid "Dependencies"
-msgstr ""
+msgstr "Afhængigheder"
 
 #: src/ui/dashboard.ui:99 src/ui/networksBox.ui:38
-#, fuzzy
 msgid "Networks"
-msgstr "Netværk\t"
+msgstr "Netværk"
 
 #: src/ui/dependencyBox.js:53
 msgid "firewalld Running"
@@ -723,9 +710,8 @@ msgstr ""
 "netværksovervågningen."
 
 #: src/ui/dependencyBox.ui:55
-#, fuzzy
 msgid "Network Monitoring"
-msgstr "NetworkManager kører"
+msgstr "Netværksovervågning"
 
 #: src/ui/dependencyBox.ui:62
 msgid "Monitor"
@@ -750,7 +736,7 @@ msgstr "Ikke klar"
 
 #: src/ui/dependencyItem.ui:33
 msgid "Check"
-msgstr ""
+msgstr "Tjek"
 
 #. Translators: Do not translate or modify %1$s, %2$s, %3$s, or %4$s. They are replaced with the
 #. firewalld, NetworkManager, firewalld connection documentation, and Bouncer URLs, respectively.
@@ -797,45 +783,40 @@ msgstr ""
 "Du kan læse mere om Bouncer <a href=\"%4$s\">her</a>."
 
 #: src/ui/networksBox.js:173
-#, fuzzy
 msgid "Firewall zone information could not be loaded."
-msgstr "Firewall-zonen for denne forbindelse er indstillet til "
+msgstr "Firewall-zone information kunne ikke indlæses."
 
 #: src/ui/networksBox.ui:34
-#, fuzzy
 msgid "Manage Networks"
-msgstr "Netværk\t"
+msgstr "Håndter netværk"
 
 #: src/ui/networksBox.ui:35
 msgid "Manage your configured networks from here."
-msgstr ""
+msgstr "Håndter dine konfigurerede netværk herfra."
 
 #: src/ui/networksBox.ui:70
-#, fuzzy
 msgid "Change Zone"
-msgstr "Nuværende zone"
+msgstr "Skift zone"
 
 #: src/ui/networksBox.ui:82
 msgid "Change"
-msgstr ""
+msgstr "Skift"
 
 #: src/ui/networksBox.ui:95
-#, fuzzy
 msgid "Forget Network"
-msgstr "Netværk\t"
+msgstr "Glem Netværk"
 
 #: src/ui/networksBox.ui:96
-#, fuzzy
 msgid ""
 "Forget this network. You will be prompted to choose the firewall zone for "
 "this network the next time you connect to it."
 msgstr ""
-"Der foretages ingen ændringer. Du vil se dette vindue igen, næste gang du "
-"opretter forbindelse til dette netværk."
+"Glem dette netværk. Næste gang du opretter forbindelse til det, bliver du "
+"bedt om at vælge en firewall-zone for dette netværk."
 
 #: src/ui/networksBox.ui:102
 msgid "Forget"
-msgstr ""
+msgstr "Glem"
 
 #~ msgid "Check Status"
 #~ msgstr "Tjek status"
