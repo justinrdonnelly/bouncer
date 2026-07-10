@@ -15,7 +15,7 @@
   <template class="Dashboard" parent="AdwApplicationWindow">
     <property name="title">Bouncer</property>
     <property name="default-width">700</property>
-    <property name="default-height">550</property>
+    <property name="default-height">525</property>
     <child>
       <object class="AdwBreakpoint">
         <condition>max-width: 550sp</condition>
@@ -90,7 +90,15 @@
                         <property name="title" translatable="yes">Dependencies</property>
                         <property name="icon-name">traffic-lights-symbolic</property>
                         <property name="child">
-                          <object class="GtkBox" id="dependencyBox"/> <!-- We'll append the dependencyBox here -->
+                          <object class="GtkScrolledWindow">
+                            <property name="hscrollbar-policy">never</property>
+                            <property name="vscrollbar-policy">automatic</property>
+                            <property name="child">
+                              <object class="GtkBox" id="dependencyBox"> <!-- We'll append the dependencyBox here -->
+                                <property name="orientation">vertical</property>
+                              </object>
+                            </property>
+                          </object>
                         </property>
                       </object>
                     </child>
@@ -99,7 +107,15 @@
                         <property name="title" translatable="yes">Networks</property>
                         <property name="icon-name">network-shield-symbolic</property>
                         <property name="child">
-                          <object class="GtkBox" id="networksBox"/> <!-- We'll append the networksBox here -->
+                          <object class="GtkScrolledWindow">
+                            <property name="hscrollbar-policy">never</property>
+                            <property name="vscrollbar-policy">automatic</property>
+                            <property name="child">
+                              <object class="GtkBox" id="networksBox"> <!-- We'll append the networksBox here -->
+                                <property name="orientation">vertical</property>
+                              </object>
+                            </property>
+                          </object>
                         </property>
                       </object>
                     </child>
