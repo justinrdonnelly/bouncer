@@ -170,7 +170,7 @@ msgstr "Spor forbindelser via NetworkManager-UUID"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:76
 msgid "Update Italian translations"
-msgstr "Russisk oversættelse opdateret"
+msgstr "Italiensk oversættelse opdateret"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:77
 msgid "Include Danish translations"
