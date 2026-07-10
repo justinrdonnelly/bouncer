@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: bouncer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-08 19:13-0400\n"
-"PO-Revision-Date: 2026-06-28 13:23+0200\n"
+"PO-Revision-Date: 2026-07-10 17:27+0200\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: \n"
 "Language: oc\n"
@@ -141,7 +141,7 @@ msgstr "Bouncer qu’aficha lo tablèu de bòrd ret e las informacions de zòna"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:62
 msgid "Clean up dashboard dependency tab"
-msgstr ""
+msgstr "Netejar l'onglet de dependéncia del tablèu de bòrd"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:63
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:75
@@ -150,7 +150,7 @@ msgstr "Traduccions en occitan actualizadas"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:64
 msgid "Update JavaScript development tooling"
-msgstr ""
+msgstr "Metre a jorn de las aisinas de desvolopament JavaScript"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:71
 msgid "Include a networks tab on the dashboard"
