@@ -114,6 +114,8 @@ export const NetworksBox = GObject.registerClass(
             if (refreshNetworksSequence !== this.#refreshNetworksSequence)
                 return;
 
+            // Sort the displayed networks without changing the stored UUID order.
+            networks.sort((first, second) => first.id.localeCompare(second.id));
             this.#networks = networks;
             // Now that we have all the info, use it to repopulate the networks dropdown.
             this.#updateNetworkList(selectedUuid);
