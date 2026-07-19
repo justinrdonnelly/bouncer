@@ -9,6 +9,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
+import Adw from 'gi://Adw';
 import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk';
 
@@ -31,6 +32,11 @@ export const NetworksBox = GObject.registerClass(
                 'NetworkManager connection UUIDs to show in the networks list',
                 GObject.ParamFlags.READWRITE,
             ),
+        },
+        Signals: {
+            'toast-requested': {
+                param_types: [Adw.Toast.$gtype],
+            },
         },
     },
     // eslint-disable-next-line no-shadow
@@ -244,6 +250,27 @@ export const NetworksBox = GObject.registerClass(
                 console.error(e.message);
                 return;
             }
+
+            const toast = new Adw.Toast({
+                // Translators: %s is the NetworkManager connection name.
+                title: _('Network forgotten: %s').format(network.id),
+                button_label: _('_Undo'),
+                use_markup: false,
+            });
+            toast.connect('button-clicked', () => this.#restoreConnection(network));
+            this.emit('toast-requested', toast);
+        }
+
+        #restoreConnection(network) {
+            this.#connectionIdsSeen.restoreConnection(network.uuid).catch((e) => {
+                console.error(`Unable to restore NetworkManager connection ${network.uuid}.`);
+                console.error(e.message);
+                this.emit('toast-requested', new Adw.Toast({
+                    title: _('Network could not be restored'),
+                    priority: Adw.ToastPriority.HIGH,
+                    use_markup: false,
+                }));
+            });
         }
     }
 );

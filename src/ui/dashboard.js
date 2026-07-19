@@ -17,7 +17,7 @@ export const Dashboard = GObject.registerClass(
     {
         GTypeName: 'Dashboard',
         Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/dashboard.ui',
-        InternalChildren: ['content', 'dependencyBox', 'networksBox', 'splitView', 'stack'],
+        InternalChildren: ['content', 'dependencyBox', 'networksBox', 'splitView', 'stack', 'toastOverlay'],
     },
     // eslint-disable-next-line no-shadow
     class Dashboard extends Adw.ApplicationWindow {
@@ -28,11 +28,17 @@ export const Dashboard = GObject.registerClass(
             console.debug('Building dashboard window.');
             this.dependencyBox = dependencyBox;
             this._dependencyBox.append(dependencyBox);
-            if (networksBox)
+            if (networksBox) {
+                networksBox.connect('toast-requested', this.#showToast.bind(this));
                 this._networksBox.append(networksBox);
-            else
+            } else
                 this._networksBox.append(this.#createNetworksUnavailableBox());
             this.#setContentTitle();
+        }
+
+        // eslint-disable-next-line no-unused-vars
+        #showToast(_networksBox, toast) {
+            this._toastOverlay.add_toast(toast);
         }
 
         // Create and return a GTK box with a label indicating there has been a problem.
