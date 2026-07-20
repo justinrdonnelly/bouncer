@@ -269,12 +269,16 @@ export const NetworksBox = GObject.registerClass(
             this.#connectionIdsSeen.restoreConnection(network.uuid).catch((e) => {
                 console.error(`Unable to restore NetworkManager connection ${network.uuid}.`);
                 console.error(e.message);
-                this.emit('toast-requested', new Adw.Toast({
-                    title: _('Network could not be restored'),
-                    priority: Adw.ToastPriority.HIGH,
-                    use_markup: false,
-                }));
+                this.#requestErrorToast(_('Network could not be restored'));
             });
+        }
+
+        #requestErrorToast(title) {
+            this.emit('toast-requested', new Adw.Toast({
+                title,
+                priority: Adw.ToastPriority.HIGH,
+                use_markup: false,
+            }));
         }
     }
 );
