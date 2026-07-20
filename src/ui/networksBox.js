@@ -229,9 +229,13 @@ export const NetworksBox = GObject.registerClass(
                 return;
             }
 
-            const updatedNetwork = this.#networks.find((currentNetwork) => currentNetwork.uuid === network.uuid);
-            if (updatedNetwork !== undefined)
-                updatedNetwork.zone = selectedZone;
+            this.#updateNetworkZone(network.uuid, selectedZone);
+        }
+
+        #updateNetworkZone(connectionUuid, zone) {
+            const network = this.#networks.find((currentNetwork) => currentNetwork.uuid === connectionUuid);
+            if (network !== undefined)
+                network.zone = zone;
             this.#handleNetworkSelected();
         }
 
