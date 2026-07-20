@@ -48,6 +48,7 @@ export const NetworksBox = GObject.registerClass(
         #defaultZone = null; // This will later be the default zone (eg public).
         #zoneInfoLoaded = false; // This will become true once #allZones and #defaultZone are populated.
         #refreshNetworksSequence = 0; // Used to ignore stale refresh results that finish out of order.
+        #zoneChangeToast = null; // The toast offering to undo the most recent zone change.
 
         constructor(connectionIdsSeen) {
             super();
@@ -217,6 +218,7 @@ export const NetworksBox = GObject.registerClass(
             const selectedZone = getSelectedZone(this._zoneDropDown);
             if (network === undefined || selectedZone === undefined)
                 return;
+            const previousZone = network.zone;
 
             this._zoneDropDown.sensitive = false;
             this._changeZoneButton.sensitive = false;
@@ -230,6 +232,7 @@ export const NetworksBox = GObject.registerClass(
             }
 
             this.#updateNetworkZone(network.uuid, selectedZone);
+            this.#showZoneChangeToast(network.uuid, previousZone, selectedZone);
         }
 
         #updateNetworkZone(connectionUuid, zone) {
@@ -237,6 +240,48 @@ export const NetworksBox = GObject.registerClass(
             if (network !== undefined)
                 network.zone = zone;
             this.#handleNetworkSelected();
+        }
+
+        #showZoneChangeToast(connectionUuid, previousZone, selectedZone) {
+            this.#zoneChangeToast?.dismiss();
+
+            const toast = new Adw.Toast({
+                // Translators: %s is the name of a firewall zone.
+                title: _('Zone changed to %s').format(getZoneDisplayName(selectedZone)),
+                button_label: _('_Undo'),
+                use_markup: false,
+            });
+            toast.connect('button-clicked', () => {
+                this.#undoZoneChange(connectionUuid, previousZone, selectedZone);
+            });
+            toast.connect('dismissed', () => {
+                if (this.#zoneChangeToast === toast)
+                    this.#zoneChangeToast = null;
+            });
+            this.#zoneChangeToast = toast;
+            this.emit('toast-requested', toast);
+        }
+
+        async #undoZoneChange(connectionUuid, previousZone, selectedZone) {
+            try {
+                const { objectPath, settings } = await getNetworkManagerConnectionByUuid(connectionUuid);
+                // Confirm the zone hasn't been changed outside of Bouncer
+                const currentZone = settings.connection?.zone ?? null;
+                if (currentZone !== selectedZone) {
+                    console.warn(`Not undoing zone change for NetworkManager connection ${connectionUuid}. ` +
+                        `The zone has changed from ${selectedZone} to ${currentZone}.`);
+                    this.#updateNetworkZone(connectionUuid, currentZone);
+                    this.#requestErrorToast(_('Unable to undo because the zone changed again'));
+                    return;
+                }
+
+                await ZoneForConnection.setZone(objectPath, previousZone);
+                this.#updateNetworkZone(connectionUuid, previousZone);
+            } catch (e) {
+                console.error(`Unable to undo zone change for NetworkManager connection ${connectionUuid}.`);
+                console.error(e.message);
+                this.#requestErrorToast(_('Zone change could not be undone'));
+            }
         }
 
         // eslint-disable-next-line no-unused-vars
