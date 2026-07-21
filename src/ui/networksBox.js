@@ -48,8 +48,9 @@ export const NetworksBox = GObject.registerClass(
         #defaultZone = null; // This will later be the default zone (eg public).
         #zoneInfoLoaded = false; // This will become true once #allZones and #defaultZone are populated.
         #refreshNetworksSequence = 0; // Used to ignore stale refresh results that finish out of order.
+        #networkActionQueue = Promise.resolve(); // Tail of the network action queue.
+        #networkActionsPending = 0; // Number of queued or running network actions.
         #zoneChangeToast = null; // The toast offering to undo the most recent zone change.
-        #networkActionInProgress = false; // Whether a network action is currently running.
 
         constructor(connectionIdsSeen) {
             super();
@@ -157,12 +158,13 @@ export const NetworksBox = GObject.registerClass(
         #updateControlSensitivity() {
             const network = this.#getSelectedNetwork();
             const hasNetworks = this.#networks.length > 0;
-            const networkControlsAvailable = hasNetworks && !this.#networkActionInProgress;
+            const networkActionPending = this.#networkActionsPending > 0;
+            const networkControlsAvailable = hasNetworks && !networkActionPending;
             const zoneControlsAvailable =
                 network !== undefined &&
                 network !== null &&
                 this.#zoneInfoLoaded &&
-                !this.#networkActionInProgress;
+                !networkActionPending;
             const selectedZone = getSelectedZone(this._zoneDropDown);
 
             this._comboRow.sensitive = networkControlsAvailable;
@@ -221,19 +223,22 @@ export const NetworksBox = GObject.registerClass(
             this.#updateControlSensitivity();
         }
 
-        // Prevent multiple network actions from running at the same time.
-        async #runNetworkAction(action) {
-            if (this.#networkActionInProgress)
-                return;
-
-            this.#networkActionInProgress = true;
+        // Queue a network action and keep controls disabled until all pending actions finish.
+        #queueNetworkAction(action) {
+            this.#networkActionsPending++;
             this.#updateControlSensitivity();
-            try {
-                await action();
-            } finally {
-                this.#networkActionInProgress = false;
-                this.#updateControlSensitivity();
-            }
+
+            const queuedAction = this.#networkActionQueue.then(async () => {
+                try {
+                    await action();
+                } finally {
+                    this.#networkActionsPending--;
+                    this.#updateControlSensitivity();
+                }
+            });
+            // A failed action should not prevent the next queued action from running.
+            this.#networkActionQueue = queuedAction.catch(() => {});
+            return queuedAction;
         }
 
         // eslint-disable-next-line no-unused-vars
@@ -244,7 +249,7 @@ export const NetworksBox = GObject.registerClass(
                 return;
             const previousZone = network.zone;
 
-            await this.#runNetworkAction(async () => {
+            await this.#queueNetworkAction(async () => {
                 try {
                     await ZoneForConnection.setZone(network.objectPath, selectedZone);
                 } catch (e) {
@@ -277,7 +282,7 @@ export const NetworksBox = GObject.registerClass(
                 use_markup: false,
             });
             toast.connect('button-clicked', () => {
-                this.#undoZoneChange(connectionUuid, previousZone, selectedZone);
+                this.#queueNetworkAction(() => this.#undoZoneChange(connectionUuid, previousZone, selectedZone));
             });
             toast.connect('dismissed', () => {
                 if (this.#zoneChangeToast === toast)
@@ -317,7 +322,7 @@ export const NetworksBox = GObject.registerClass(
             if (network === undefined)
                 return;
 
-            await this.#runNetworkAction(async () => {
+            await this.#queueNetworkAction(async () => {
                 try {
                     await this.#connectionIdsSeen.forgetConnection(network.uuid);
                 } catch (e) {
@@ -333,17 +338,21 @@ export const NetworksBox = GObject.registerClass(
                     button_label: _('_Undo'),
                     use_markup: false,
                 });
-                toast.connect('button-clicked', () => this.#restoreConnection(network));
+                toast.connect('button-clicked', () => {
+                    this.#queueNetworkAction(() => this.#restoreConnection(network));
+                });
                 this.emit('toast-requested', toast);
             });
         }
 
-        #restoreConnection(network) {
-            this.#connectionIdsSeen.restoreConnection(network.uuid).catch((e) => {
+        async #restoreConnection(network) {
+            try {
+                await this.#connectionIdsSeen.restoreConnection(network.uuid);
+            } catch (e) {
                 console.error(`Unable to restore NetworkManager connection ${network.uuid}.`);
                 console.error(e.message);
                 this.#requestErrorToast(_('Network could not be restored'));
-            });
+            }
         }
 
         #requestErrorToast(title) {
