@@ -234,6 +234,7 @@ export const NetworksBox = GObject.registerClass(
                 console.error(`Unable to set zone for NetworkManager connection ${network.uuid}.`);
                 console.error(e.message);
                 this.#handleNetworkSelected();
+                this.#requestErrorToast(_('Zone could not be changed'));
                 return;
             }
 
@@ -303,6 +304,7 @@ export const NetworksBox = GObject.registerClass(
             } catch (e) {
                 console.error(`Unable to forget NetworkManager connection ${network.uuid}.`);
                 console.error(e.message);
+                this.#requestErrorToast(_('Network could not be forgotten'));
                 return;
             }
 
