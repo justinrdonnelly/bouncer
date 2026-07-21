@@ -139,13 +139,8 @@ export const NetworksBox = GObject.registerClass(
 
             if (this.#networks.length > 0) {
                 const selected = this.#networks.findIndex((network) => network.uuid === selectedUuid);
-                this._comboRow.sensitive = true;
-                this._forgetButton.sensitive = true;
                 // Select the previously selected network. If it is no longer in the list, default to 0.
                 this._comboRow.set_selected(selected === -1 ? 0 : selected);
-            } else {
-                this._comboRow.sensitive = false;
-                this._forgetButton.sensitive = false;
             }
             this.#handleNetworkSelected();
         }
@@ -155,6 +150,26 @@ export const NetworksBox = GObject.registerClass(
             const selected = this._comboRow.get_selected();
             // eslint-disable-next-line security/detect-object-injection
             return this.#networks[selected];
+        }
+
+        // Update control sensitivity based on the currently available network and zone information.
+        #updateControlSensitivity(zoneChangeInProgress = false) {
+            const network = this.#getSelectedNetwork();
+            const hasNetworks = this.#networks.length > 0;
+            const zoneControlsAvailable =
+                network !== undefined &&
+                network !== null &&
+                this.#zoneInfoLoaded &&
+                !zoneChangeInProgress;
+            const selectedZone = getSelectedZone(this._zoneDropDown);
+
+            this._comboRow.sensitive = hasNetworks;
+            this._forgetButton.sensitive = hasNetworks;
+            this._zoneDropDown.sensitive = zoneControlsAvailable;
+            this._changeZoneButton.sensitive =
+                zoneControlsAvailable &&
+                selectedZone !== undefined &&
+                selectedZone !== network.zone;
         }
 
         // Update the displayed zone info when the selected connection changes.
@@ -188,14 +203,12 @@ export const NetworksBox = GObject.registerClass(
             this._zoneList.splice(0, this._zoneList.get_n_items(), []);
 
             if (network === undefined || network === null || !this.#zoneInfoLoaded) {
-                this._zoneDropDown.sensitive = false;
-                this._changeZoneButton.sensitive = false;
+                this.#updateControlSensitivity();
                 return;
             }
 
             // Populate `this._zoneList` and set `selected` to the index of the zone that should be selected.
             const selected = populateZoneList(this._zoneList, this.#allZones, this.#defaultZone, network.zone);
-            this._zoneDropDown.sensitive = true;
             this._zoneDropDown.set_selected(selected);
             this.#handleZoneSelectionChanged();
         }
@@ -203,13 +216,7 @@ export const NetworksBox = GObject.registerClass(
         // Enable/disable the 'Change' button based on whether the selected zone in the dropdown is different than the
         // zone that is already associated with the network.
         #handleZoneSelectionChanged() {
-            const network = this.#getSelectedNetwork();
-            const selectedZone = getSelectedZone(this._zoneDropDown);
-            this._changeZoneButton.sensitive =
-                this.#zoneInfoLoaded &&
-                network !== undefined &&
-                selectedZone !== undefined &&
-                selectedZone !== network.zone;
+            this.#updateControlSensitivity();
         }
 
         // eslint-disable-next-line no-unused-vars
@@ -220,8 +227,7 @@ export const NetworksBox = GObject.registerClass(
                 return;
             const previousZone = network.zone;
 
-            this._zoneDropDown.sensitive = false;
-            this._changeZoneButton.sensitive = false;
+            this.#updateControlSensitivity(true);
             try {
                 await ZoneForConnection.setZone(network.objectPath, selectedZone);
             } catch (e) {
