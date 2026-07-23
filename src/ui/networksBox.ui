@@ -25,11 +25,12 @@
         <property name="child">
           <object class="GtkBox">
             <property name="orientation">vertical</property>
+            <property name="margin-top">24</property>
+            <property name="margin-bottom">12</property>
 
             <!-- Network management -->
             <child>
               <object class="AdwPreferencesGroup">
-                <property name="margin-top">24</property>
                 <property name="margin-bottom">12</property>
                 <property name="title" translatable="yes">Manage Networks</property>
                 <property name="description" translatable="yes">Manage your configured networks from here.</property>
@@ -63,7 +64,6 @@
             <!-- Actions -->
             <child>
               <object class="AdwPreferencesGroup">
-                <property name="margin-bottom">12</property> <!-- Add some extra margin since this is on the bottom of the window. -->
                 <!-- Change zone action -->
                 <child>
                   <object class="AdwComboRow" id="zoneDropDown">

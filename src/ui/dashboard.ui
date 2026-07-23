@@ -15,7 +15,7 @@
   <template class="Dashboard" parent="AdwApplicationWindow">
     <property name="title">Bouncer</property>
     <property name="default-width">700</property>
-    <property name="default-height">525</property>
+    <property name="default-height">575</property>
     <child>
       <object class="AdwBreakpoint">
         <condition>max-width: 550sp</condition>
