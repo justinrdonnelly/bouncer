@@ -103,8 +103,7 @@
             <property name="subtitle" translatable="yes">Get more information.</property>
             <property name="subtitle-lines">0</property>
             <child type="suffix">
-              <object class="GtkButton">
-                <property name="width-request">120</property>
+              <object class="GtkButton" id="helpButton">
                 <property name="valign">center</property>
                 <property name="label" translatable="yes">Help</property>
                 <signal name="clicked" handler="helpButtonClicked"/>
@@ -119,8 +118,7 @@
             <property name="subtitle" translatable="yes">No change will be made. You will see this window again the next time you connect to this network.</property>
             <property name="subtitle-lines">0</property>
             <child type="suffix">
-              <object class="GtkButton">
-                <property name="width-request">120</property>
+              <object class="GtkButton" id="exitButton">
                 <property name="valign">center</property>
                 <property name="label" translatable="yes">Exit</property>
                 <signal name="clicked" handler="exitButtonClicked"/>
@@ -135,8 +133,7 @@
             <property name="subtitle" translatable="yes">The selected firewall zone will be used every time you connect to this network.</property>
             <property name="subtitle-lines">0</property>
             <child type="suffix">
-              <object class="GtkButton">
-                <property name="width-request">120</property>
+              <object class="GtkButton" id="chooseButton">
                 <property name="valign">center</property>
                 <property name="label" translatable="yes">Choose</property>
                 <style>
@@ -150,4 +147,12 @@
       </object> <!-- end GtkListBox -->
     </child>
   </template>
+  <object class="GtkSizeGroup">
+    <property name="mode">horizontal</property>
+    <widgets>
+      <widget name="helpButton"/>
+      <widget name="exitButton"/>
+      <widget name="chooseButton"/>
+    </widgets>
+  </object>
 </interface>

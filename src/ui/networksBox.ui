@@ -76,7 +76,6 @@
                     <child type="suffix">
                       <object class="GtkButton" id="changeZoneButton">
                         <property name="margin-start">12</property> <!-- This forces the zone dropdown a little to the left away from the 'Change' button. -->
-                        <property name="width-request">120</property>
                         <property name="valign">center</property>
                         <property name="sensitive">False</property>
                         <property name="label" translatable="yes">Change</property>
@@ -93,7 +92,6 @@
                     <property name="subtitle-lines">0</property>
                     <child type="suffix">
                       <object class="GtkButton" id="forgetButton">
-                        <property name="width-request">120</property>
                         <property name="valign">center</property>
                         <property name="label" translatable="yes">Forget</property>
                         <style>
@@ -111,4 +109,11 @@
       </object>
     </child>
   </template>
+  <object class="GtkSizeGroup">
+    <property name="mode">horizontal</property>
+    <widgets>
+      <widget name="changeZoneButton"/>
+      <widget name="forgetButton"/>
+    </widgets>
+  </object>
 </interface>
