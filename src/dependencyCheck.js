@@ -70,11 +70,19 @@ export const DependencyCheck = GObject.registerClass(
                 3,
                 0,
             ),
-            // All dependencies except `#statusStartup`. We'll use this to determine whether autostart can be enabled.
+            // All dependencies except `#statusStartup`. These must be ready before autostart can be enabled.
             'dependencies-ready': GObject.ParamSpec.boolean(
                 'dependencies-ready',
                 'dependencies ready',
                 'Whether dependencies required before configuring startup are ready',
+                GObject.ParamFlags.READWRITE,
+                false,
+            ),
+            // Autostart can be enabled only when its prerequisites are ready and it is not already configured.
+            'can-enable-startup': GObject.ParamSpec.boolean(
+                'can-enable-startup',
+                'can enable startup',
+                'Whether startup can currently be enabled',
                 GObject.ParamFlags.READWRITE,
                 false,
             ),
@@ -178,6 +186,10 @@ export const DependencyCheck = GObject.registerClass(
                 this.checkComponentStatus(this.#statusFirewalldRunning) &&
                 this.checkComponentStatus(this.#statusNetworkManagerRunning) &&
                 this.checkComponentStatus(this.#statusNetworkManagerPermissions)
+            );
+            this.canEnableStartup = (
+                this.dependenciesReady &&
+                !this.checkComponentStatus(this.#statusStartup)
             );
             this.statusOverall = (
                 this.dependenciesReady &&

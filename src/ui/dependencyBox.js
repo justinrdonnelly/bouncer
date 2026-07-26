@@ -115,8 +115,9 @@ export const DependencyBox = GObject.registerClass(
                 'status-startup',
                 async () => dependencyCheck.runOnStartup(false).catch(() => {}),
                 {
+                    buttonLabel: _('Enable'),
                     buttonSizeGroup,
-                    buttonSensitiveProperty: 'dependencies-ready',
+                    buttonSensitiveProperty: 'can-enable-startup',
                 }
             );
             // We'll increment count here even though it's not currently used again. Just follow the pattern.
