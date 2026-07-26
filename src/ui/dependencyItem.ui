@@ -14,10 +14,12 @@
   <requires lib="gtk" version="4.0"/>
   <template class="DependencyItem" parent="AdwActionRow">
     <child type="suffix">
-      <object class="GtkLabel" id="status">
+      <object class="GtkImage" id="status">
         <property name="margin-start">12</property>
         <property name="margin-end">6</property>
-        <property name="label">⚪</property> <!-- default value will be "unknown" status -->
+        <property name="valign">center</property>
+        <property name="pixel-size">16</property>
+        <property name="icon-name">dialog-question-symbolic</property> <!-- default value will be "unknown" status -->
         <property name="has-tooltip">true</property>
         <property name="tooltip-text" translatable="yes">Unknown</property>
       </object>

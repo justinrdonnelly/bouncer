@@ -34,10 +34,20 @@ export const DependencyItem = GObject.registerClass(
             dependencyCheck.bind_property_full(
                 property,
                 this._status,
-                'label',
+                'icon-name',
                 GObject.BindingFlags.SYNC_CREATE,
                 // eslint-disable-next-line no-unused-vars
                 (binding, value) => [true, this.#convertStatusToIcon(value)],
+                null
+            );
+
+            dependencyCheck.bind_property_full(
+                property,
+                this._status,
+                'css-classes',
+                GObject.BindingFlags.SYNC_CREATE,
+                // eslint-disable-next-line no-unused-vars
+                (binding, value) => [true, [this.#convertStatusToCssClass(value)]],
                 null
             );
 
@@ -97,16 +107,32 @@ export const DependencyItem = GObject.registerClass(
         #convertStatusToIcon(status) {
             switch (status) {
                 case 0:
-                    return '⚪';
+                    return 'dialog-question-symbolic';
                 case 1:
-                    return '🟢';
+                    return 'object-select-symbolic';
                 case 2:
-                    return '🟡';
+                    return 'dialog-warning-symbolic';
                 case 3:
-                    return '🔴';
+                    return 'dialog-error-symbolic';
                 default:
                     console.error(`Invalid DependencyItem status: ${status}`);
-                    return '⚪';
+                    return 'dialog-question-symbolic';
+            }
+        }
+
+        #convertStatusToCssClass(status) {
+            switch (status) {
+                case 0:
+                    return 'dimmed';
+                case 1:
+                    return 'success';
+                case 2:
+                    return 'warning';
+                case 3:
+                    return 'error';
+                default:
+                    console.error(`Invalid DependencyItem status: ${status}`);
+                    return 'dimmed';
             }
         }
     }
