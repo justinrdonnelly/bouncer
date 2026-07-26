@@ -25,8 +25,12 @@ export const DependencyItem = GObject.registerClass(
             dependencyCheck,
             property,
             callbackFunction,
-            buttonSensitiveProperty = null,
-            buttonSensitiveTransformFunction = null
+            {
+                buttonLabel = null,
+                buttonSizeGroup = null,
+                buttonSensitiveProperty = null,
+                buttonSensitiveTransformFunction = null,
+            } = {}
         ) {
             super();
             this.title = title;
@@ -71,6 +75,9 @@ export const DependencyItem = GObject.registerClass(
                 null
             );
 
+            if (buttonLabel !== null)
+                this._button.label = buttonLabel;
+            buttonSizeGroup?.add_widget(this._button);
             this._button.connect('clicked', callbackFunction);
             if (buttonSensitiveProperty !== null) {
                 dependencyCheck.bind_property_full(

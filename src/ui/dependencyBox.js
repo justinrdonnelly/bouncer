@@ -33,6 +33,9 @@ export const DependencyBox = GObject.registerClass(
             this.#monitoring = monitoring;
             let count = 0;
             let dependencyItem;
+            const buttonSizeGroup = new Gtk.SizeGroup({
+                mode: Gtk.SizeGroupMode.HORIZONTAL,
+            });
 
             // D-Bus
             dependencyItem = new DependencyItem(
@@ -46,6 +49,9 @@ export const DependencyBox = GObject.registerClass(
                         await dependencyCheck.checkListNames(false);
                     // eslint-disable-next-line no-empty
                     } catch {}
+                },
+                {
+                    buttonSizeGroup,
                 }
             );
             this._listBox.insert(dependencyItem, count++);
@@ -62,6 +68,9 @@ export const DependencyBox = GObject.registerClass(
                         await dependencyCheck.checkFirewalld(false);
                     // eslint-disable-next-line no-empty
                     } catch {}
+                },
+                {
+                    buttonSizeGroup,
                 }
             );
             this._listBox.insert(dependencyItem, count++);
@@ -78,6 +87,9 @@ export const DependencyBox = GObject.registerClass(
                         await dependencyCheck.checkNetworkManagerRunning(false);
                     // eslint-disable-next-line no-empty
                     } catch {}
+                },
+                {
+                    buttonSizeGroup,
                 }
             );
             this._listBox.insert(dependencyItem, count++);
@@ -88,8 +100,11 @@ export const DependencyBox = GObject.registerClass(
                 dependencyCheck,
                 'status-network-manager-permissions',
                 async () => dependencyCheck.checkNetworkManagerPermissions(false).catch(() => {}),
-                'status-network-manager-running',
-                (status) => dependencyCheck.checkComponentStatus(status)
+                {
+                    buttonSizeGroup,
+                    buttonSensitiveProperty: 'status-network-manager-running',
+                    buttonSensitiveTransformFunction: (status) => dependencyCheck.checkComponentStatus(status),
+                }
             );
             this._listBox.insert(dependencyItem, count++);
 
@@ -99,7 +114,10 @@ export const DependencyBox = GObject.registerClass(
                 dependencyCheck,
                 'status-startup',
                 async () => dependencyCheck.runOnStartup(false).catch(() => {}),
-                'dependencies-ready'
+                {
+                    buttonSizeGroup,
+                    buttonSensitiveProperty: 'dependencies-ready',
+                }
             );
             // We'll increment count here even though it's not currently used again. Just follow the pattern.
             // eslint-disable-next-line no-useless-assignment
