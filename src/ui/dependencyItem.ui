@@ -26,9 +26,6 @@
     </child>
     <child type="suffix">
       <object class="GtkButton" id="button">
-        <style>
-          <class name="pill"/>
-        </style>
         <property name="margin-start">6</property>
         <property name="margin-end">12</property>
         <property name="valign">center</property>

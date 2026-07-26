@@ -104,9 +104,6 @@
             <property name="subtitle-lines">0</property>
             <child type="suffix">
               <object class="GtkButton">
-                <style>
-                  <class name="pill"/>
-                </style>
                 <property name="width-request">120</property>
                 <property name="valign">center</property>
                 <property name="label" translatable="yes">Help</property>
@@ -123,9 +120,6 @@
             <property name="subtitle-lines">0</property>
             <child type="suffix">
               <object class="GtkButton">
-                <style>
-                  <class name="pill"/>
-                </style>
                 <property name="width-request">120</property>
                 <property name="valign">center</property>
                 <property name="label" translatable="yes">Exit</property>
@@ -146,7 +140,6 @@
                 <property name="valign">center</property>
                 <property name="label" translatable="yes">Choose</property>
                 <style>
-                  <class name="pill"/>
                   <class name="suggested-action"/>
                 </style>
                 <signal name="clicked" handler="chooseButtonClicked"/>

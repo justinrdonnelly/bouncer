@@ -80,10 +80,6 @@
                         <property name="valign">center</property>
                         <property name="sensitive">False</property>
                         <property name="label" translatable="yes">Change</property>
-                        <style>
-                          <class name="pill"/>
-                          <class name="suggested-action"/>
-                        </style>
                         <signal name="clicked" handler="changeZoneButtonClicked"/>
                       </object>
                     </child>
@@ -101,7 +97,6 @@
                         <property name="valign">center</property>
                         <property name="label" translatable="yes">Forget</property>
                         <style>
-                          <class name="pill"/>
                           <class name="destructive-action"/>
                         </style>
                         <signal name="clicked" handler="forgetButtonClicked"/>
