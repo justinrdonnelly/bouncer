@@ -87,7 +87,7 @@
                 <!-- Forget action -->
                 <child>
                   <object class="AdwActionRow">
-                    <property name="title" translatable="yes">Forget Network</property>
+                    <property name="title" translatable="yes">Forget Zone Choice</property>
                     <property name="subtitle" translatable="yes">Forget this network. You will be prompted to choose the firewall zone for this network the next time you connect to it.</property>
                     <property name="subtitle-lines">0</property>
                     <child type="suffix">

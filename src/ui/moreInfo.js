@@ -40,7 +40,7 @@ export const MoreInfoDialog = GObject.registerClass(
                 'Bouncer is designed to make this easier for you. It opens a window when you connect to a new ' +
                 'network, allowing you to choose the appropriate firewall zone. If you\'re not sure what to choose, ' +
                 'you should probably choose the option that matches where you are. The safest option is usually ' +
-                '\'public\'. If you don\'t want to change anything, click \'Exit\'.\n\n' +
+                '\'public\'. If you don\'t want to change anything, click \'Skip\'.\n\n' +
                 'You can read more about Bouncer <a href="%4$s">here</a>.'
             ).format(
                 firewalldUrl,
