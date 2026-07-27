@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-import Adw from 'gi://Adw';
+import Adw from 'gi://Adw?version=1';
 import GObject from 'gi://GObject';
 
 export const DependencyItem = GObject.registerClass(

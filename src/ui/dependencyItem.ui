@@ -10,7 +10,6 @@
      SPDX-License-Identifier: MPL-2.0
 -->
 <interface>
-  <requires lib="Adw" version="1.0"/>
   <requires lib="gtk" version="4.0"/>
   <template class="DependencyItem" parent="AdwActionRow">
     <child type="suffix">

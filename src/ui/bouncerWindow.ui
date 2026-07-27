@@ -11,7 +11,6 @@
 -->
 <interface>
   <requires lib="gtk" version="4.0"/>
-  <requires lib="Adw" version="1.0"/>
   <template class="BouncerWindow" parent="AdwApplicationWindow">
     <property name="title">Bouncer</property>
     <property name="default-width">600</property>

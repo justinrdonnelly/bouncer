@@ -9,9 +9,9 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-import Adw from 'gi://Adw';
+import Adw from 'gi://Adw?version=1';
 import GObject from 'gi://GObject';
-import Gtk from 'gi://Gtk';
+import Gtk from 'gi://Gtk?version=4.0';
 
 import { getNetworkManagerConnectionByUuid } from '../networkManagerConnectionSettings.js';
 import * as ZoneForConnection from '../zoneForConnection.js';
