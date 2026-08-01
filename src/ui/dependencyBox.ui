@@ -11,66 +11,77 @@
 -->
 <interface>
   <requires lib="gtk" version="4.0"/>
-  <requires lib="Adw" version="1.0"/>
   <template class="DependencyBox" parent="GtkBox">
     <property name="orientation">vertical</property>
     <property name="margin-start">12</property>
     <property name="margin-end">12</property>
     <child>
-      <object class="GtkLabel">
-        <property name="xalign">0</property>
-        <property name="margin-bottom">12</property>
-        <property name="wrap">True</property>
-        <property name="label" translatable="yes">In order to function properly, Bouncer depends on multiple other system components and configurations. To help facilitate the correct setup, this page shows the status for those required components and configurations.</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkLabel">
-        <property name="xalign">0</property>
-        <property name="margin-bottom">12</property>
-        <property name="wrap">True</property>
-        <property name="label" translatable="yes">You can close this window at any time without affecting network monitoring.</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkListBox" id="listBox">
-        <property name="selection-mode">none</property>
-        <style>
-          <class name="boxed-list"/>
-        </style>
-      </object>
-    </child>
-
-    <!-- Monitor action -->
-    <child>
-      <object class="GtkListBox">
-        <property name="selection-mode">none</property>
-        <property name="margin-top">12</property>
-        <property name="margin-bottom">12</property> <!-- add some extra margin since this is on the bottom of the window -->
-        <style>
-          <class name="boxed-list"/>
-        </style>
-        <child>
-          <object class="AdwActionRow" id="monitoringRow">
-            <property name="title" translatable="yes">Network Monitoring</property>
-            <property name="subtitle" translatable="yes">Once everything is ready, click to begin using Bouncer.</property>
-            <property name="subtitle-lines">0</property>
-            <child type="suffix">
-              <object class="GtkButton" id="monitorButton">
-                <property name="width-request">100</property>
-                <property name="valign">center</property>
-                <property name="label" translatable="yes">Monitor</property>
-                <property name="sensitive">false</property> <!-- disabled by default -->
-                <style>
-                  <class name="pill"/>
-                  <class name="suggested-action"/>
-                </style>
-                <signal name="clicked" handler="monitorButtonClicked"/>
-              </object> <!-- end GtkButton -->
+      <object class="AdwClamp">
+        <property name="maximum-size">450</property>
+        <property name="halign">GTK_ALIGN_START</property>
+        <property name="orientation">horizontal</property>
+        <property name="child">
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <property name="margin-top">24</property>
+            <property name="margin-bottom">12</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="xalign">0</property>
+                <property name="margin-bottom">12</property>
+                <property name="wrap">True</property>
+                <property name="label" translatable="yes">In order to function properly, Bouncer depends on multiple other system components and configurations. To help facilitate the correct setup, this page shows the status for those required components and configurations.</property>
+              </object>
             </child>
-          </object> <!-- end AdwActionRow -->
-        </child>
-      </object> <!-- end GtkListBox -->
+            <child>
+              <object class="GtkLabel">
+                <property name="xalign">0</property>
+                <property name="margin-bottom">12</property>
+                <property name="wrap">True</property>
+                <property name="label" translatable="yes">You can close this window at any time without affecting network monitoring.</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkListBox" id="listBox">
+                <property name="selection-mode">none</property>
+                <style>
+                  <class name="boxed-list"/>
+                </style>
+              </object>
+            </child>
+
+            <!-- Monitor action -->
+            <child>
+              <object class="GtkListBox">
+                <property name="selection-mode">none</property>
+                <property name="margin-top">12</property>
+                <style>
+                  <class name="boxed-list"/>
+                </style>
+                <child>
+                  <object class="AdwActionRow" id="monitoringRow">
+                    <property name="title" translatable="yes">Network Monitoring</property>
+                    <property name="subtitle" translatable="yes">Once everything is ready, click to begin using Bouncer.</property>
+                    <property name="subtitle-lines">0</property>
+                    <child type="suffix">
+                      <object class="GtkButton" id="monitorButton">
+                        <property name="width-request">100</property>
+                        <property name="valign">center</property>
+                        <property name="label" translatable="yes">Monitor</property>
+                        <property name="sensitive">false</property> <!-- disabled by default -->
+                        <style>
+                          <class name="suggested-action"/>
+                        </style>
+                        <signal name="clicked" handler="monitorButtonClicked"/>
+                      </object> <!-- end GtkButton -->
+                    </child>
+                  </object> <!-- end AdwActionRow -->
+                </child>
+              </object> <!-- end GtkListBox -->
+            </child>
+          </object>
+        </property>
+      </object>
     </child>
   </template>
 </interface>

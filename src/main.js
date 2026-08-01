@@ -10,12 +10,12 @@
  */
 
 import Adw from 'gi://Adw?version=1';
-import Gdk from 'gi://Gdk';
+import Gdk from 'gi://Gdk?version=4.0';
 import Gio from 'gi://Gio'; // Required by GJS, version not necessary.
 import GLib from 'gi://GLib'; // Required by GJS, version not necessary.
 import GLibUnix from 'gi://GLibUnix?version=2.0';
 import GObject from 'gi://GObject'; // Required by GJS, version not necessary.
-import Gtk from 'gi://Gtk';
+import Gtk from 'gi://Gtk?version=4.0';
 
 import { BouncerWindow } from './ui/bouncerWindow.js';
 import { ChooseZoneBox } from './ui/chooseZoneBox.js';

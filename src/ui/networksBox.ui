@@ -11,7 +11,6 @@
 -->
 <interface>
   <requires lib="gtk" version="4.0"/>
-  <requires lib="Adw" version="1.0"/>
   <template class="NetworksBox" parent="GtkBox">
     <property name="orientation">vertical</property>
     <property name="margin-start">12</property>
@@ -25,11 +24,12 @@
         <property name="child">
           <object class="GtkBox">
             <property name="orientation">vertical</property>
+            <property name="margin-top">24</property>
+            <property name="margin-bottom">12</property>
 
             <!-- Network management -->
             <child>
               <object class="AdwPreferencesGroup">
-                <property name="margin-top">24</property>
                 <property name="margin-bottom">12</property>
                 <property name="title" translatable="yes">Manage Networks</property>
                 <property name="description" translatable="yes">Manage your configured networks from here.</property>
@@ -63,7 +63,6 @@
             <!-- Actions -->
             <child>
               <object class="AdwPreferencesGroup">
-                <property name="margin-bottom">12</property> <!-- Add some extra margin since this is on the bottom of the window. -->
                 <!-- Change zone action -->
                 <child>
                   <object class="AdwComboRow" id="zoneDropDown">
@@ -76,14 +75,9 @@
                     <child type="suffix">
                       <object class="GtkButton" id="changeZoneButton">
                         <property name="margin-start">12</property> <!-- This forces the zone dropdown a little to the left away from the 'Change' button. -->
-                        <property name="width-request">120</property>
                         <property name="valign">center</property>
                         <property name="sensitive">False</property>
                         <property name="label" translatable="yes">Change</property>
-                        <style>
-                          <class name="pill"/>
-                          <class name="suggested-action"/>
-                        </style>
                         <signal name="clicked" handler="changeZoneButtonClicked"/>
                       </object>
                     </child>
@@ -92,16 +86,14 @@
                 <!-- Forget action -->
                 <child>
                   <object class="AdwActionRow">
-                    <property name="title" translatable="yes">Forget Network</property>
+                    <property name="title" translatable="yes">Forget Zone Choice</property>
                     <property name="subtitle" translatable="yes">Forget this network. You will be prompted to choose the firewall zone for this network the next time you connect to it.</property>
                     <property name="subtitle-lines">0</property>
                     <child type="suffix">
                       <object class="GtkButton" id="forgetButton">
-                        <property name="width-request">120</property>
                         <property name="valign">center</property>
                         <property name="label" translatable="yes">Forget</property>
                         <style>
-                          <class name="pill"/>
                           <class name="destructive-action"/>
                         </style>
                         <signal name="clicked" handler="forgetButtonClicked"/>
@@ -116,4 +108,11 @@
       </object>
     </child>
   </template>
+  <object class="GtkSizeGroup">
+    <property name="mode">horizontal</property>
+    <widgets>
+      <widget name="changeZoneButton"/>
+      <widget name="forgetButton"/>
+    </widgets>
+  </object>
 </interface>

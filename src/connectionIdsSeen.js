@@ -114,6 +114,27 @@ export const ConnectionIdsSeen = GObject.registerClass(
         }
     }
 
+    // undo a `forgetConnection`
+    async restoreConnection(connectionUuid) {
+        if (this.connectionIdsSeen.includes(connectionUuid))
+            return;
+
+        console.log(`Restoring ${connectionUuid} to ${ConnectionIdsSeen.#fileName}.`);
+        this.connectionIdsSeen.push(connectionUuid);
+        try {
+            await this.save();
+            // Since we're changing this.connectionIdsSeen (not using a property setter), we need to call notify
+            // explicitly.
+            this.notify('connection-ids-seen');
+        } catch (e) {
+            // The save failed. Remove the restored connection from the in-memory representation.
+            const restoredConnectionIndex = this.connectionIdsSeen.indexOf(connectionUuid);
+            if (restoredConnectionIndex !== -1)
+                this.connectionIdsSeen.splice(restoredConnectionIndex, 1);
+            throw e;
+        }
+    }
+
     async save() {
         // Don't try/catch here. Allow errors to propagate.
         const dataJSON = JSON.stringify(Object.fromEntries(this.#allConnectionIdsSeen));

@@ -11,7 +11,6 @@
 -->
 <interface>
   <requires lib="gtk" version="4.0"/>
-  <requires lib="Adw" version="1.0"/>
   <template class="ChooseZoneBox" parent="GtkBox">
     <property name="orientation">vertical</property>
     <property name="margin-start">12</property>
@@ -103,13 +102,9 @@
             <property name="subtitle" translatable="yes">Get more information.</property>
             <property name="subtitle-lines">0</property>
             <child type="suffix">
-              <object class="GtkButton">
-                <style>
-                  <class name="pill"/>
-                </style>
-                <property name="width-request">120</property>
+              <object class="GtkButton" id="helpButton">
                 <property name="valign">center</property>
-                <property name="label" translatable="yes">Help</property>
+                <property name="label" translatable="yes">Learn More</property>
                 <signal name="clicked" handler="helpButtonClicked"/>
               </object>
             </child>
@@ -122,13 +117,9 @@
             <property name="subtitle" translatable="yes">No change will be made. You will see this window again the next time you connect to this network.</property>
             <property name="subtitle-lines">0</property>
             <child type="suffix">
-              <object class="GtkButton">
-                <style>
-                  <class name="pill"/>
-                </style>
-                <property name="width-request">120</property>
+              <object class="GtkButton" id="exitButton">
                 <property name="valign">center</property>
-                <property name="label" translatable="yes">Exit</property>
+                <property name="label" translatable="yes">Skip</property>
                 <signal name="clicked" handler="exitButtonClicked"/>
               </object>
             </child>
@@ -137,16 +128,14 @@
         <!-- Choose action -->
         <child>
           <object class="AdwActionRow">
-            <property name="title" translatable="yes">Save Zone</property>
+            <property name="title" translatable="yes">Choose Zone</property>
             <property name="subtitle" translatable="yes">The selected firewall zone will be used every time you connect to this network.</property>
             <property name="subtitle-lines">0</property>
             <child type="suffix">
-              <object class="GtkButton">
-                <property name="width-request">120</property>
+              <object class="GtkButton" id="chooseButton">
                 <property name="valign">center</property>
                 <property name="label" translatable="yes">Choose</property>
                 <style>
-                  <class name="pill"/>
                   <class name="suggested-action"/>
                 </style>
                 <signal name="clicked" handler="chooseButtonClicked"/>
@@ -157,4 +146,12 @@
       </object> <!-- end GtkListBox -->
     </child>
   </template>
+  <object class="GtkSizeGroup">
+    <property name="mode">horizontal</property>
+    <widgets>
+      <widget name="helpButton"/>
+      <widget name="exitButton"/>
+      <widget name="chooseButton"/>
+    </widgets>
+  </object>
 </interface>

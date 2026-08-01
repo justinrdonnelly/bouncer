@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bouncer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-08 19:13-0400\n"
+"POT-Creation-Date: 2026-08-01 15:02+0000\n"
 "PO-Revision-Date: 2026-07-10 17:27+0200\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: \n"
@@ -140,131 +140,140 @@ msgid "Bouncer dashboard showing network and zone information"
 msgstr "Bouncer qu’aficha lo tablèu de bòrd ret e las informacions de zòna"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:62
+msgid "UI/UX enhancements"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:63
 msgid "Clean up dashboard dependency tab"
 msgstr "Netejar l'onglet de dependéncia del tablèu de bòrd"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:63
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:75
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:64
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:77
 msgid "Update Occitan translations"
 msgstr "Traduccions en occitan actualizadas"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:64
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:65
+#, fuzzy
+msgid "Update Danish translations"
+msgstr "Traduccions en danés inclusas"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:66
 msgid "Update JavaScript development tooling"
 msgstr "Metre a jorn de las aisinas de desvolopament JavaScript"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:71
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:73
 msgid "Include a networks tab on the dashboard"
 msgstr "Inclure un onglet ret dins lo tablèu de bòrd"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:72
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:74
 msgid "UI cleanup"
 msgstr "Netejatge de l’interfàcia utilizaire"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:73
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:75
 msgid "Improve accessibility for dependency item status"
 msgstr "Accessibilitat melhorada pels estatuts dels elements de dependéncias"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:74
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:76
 msgid "Track connections by NetworkManager UUID"
 msgstr "Seguir las connexion per UUID de NetworkManager"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:76
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:78
 msgid "Update Italian translations"
 msgstr "Traduccions en italian actualizadas"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:77
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:79
 msgid "Include Danish translations"
 msgstr "Traduccions en danés inclusas"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:84
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:86
 msgid "Correctly show autostart status on dashboard"
 msgstr "Afichatge corrèct de l’estatut d’aviada auto sul panèl"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:85
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:87
 msgid "Include Italian translation"
 msgstr "Traduccions en italian inclusas"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:86
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:88
 msgid "Track connection IDs seen per machine"
 msgstr "Seguir los ID de connexion vistes per maquina"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:87
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:89
 msgid "Include Polish translation"
 msgstr "Traduccions en polonés inlusas"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:88
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:90
 msgid "Use GNOME 50 runtime"
 msgstr "Utilizar l’environament d’execucion GNOME version 50"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:89
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:91
 msgid "Handle NetworkManager restarts"
 msgstr "Gestion de las reaviadas de NetworkManager"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:96
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:98
 msgid "Include dashboard"
 msgstr "Inclure lo tablèu de bòrd"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:103
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:105
 msgid "Include additional desktop categories"
 msgstr "Categorias de burèu suplementàrias apondudas"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:104
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:106
 msgid "Support command line arguments"
 msgstr "Presa en carga de paramètres via linha de comanda"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:111
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:113
 msgid "Added Russian translation"
 msgstr "Traduccion en rus aponduda"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:112
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:114
 msgid "Fixed metainfo formatting"
 msgstr "Correccion del formatatge metainfo"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:119
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:121
 msgid "Added Occitan translation"
 msgstr "Traduccion en occitan aponduda"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:120
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:122
 msgid "Added Simplified Chinese translation"
 msgstr "Traduccion en mandari simplificat aponduda"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:121
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:123
 msgid "Fixed multiple instance support"
 msgstr "Correccion de la presa en carga de mantuna instància"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:122
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:124
 msgid "Use GNOME 49 runtime"
 msgstr "Utilizar l’environament d’execucion GNOME version 49"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:129
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:131
 msgid "Critical bug fix for non-English language users"
 msgstr "Correccion de bug critica per los utilizaires de lengas non anglesas"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:130
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:132
 msgid "Added Dutch translation"
 msgstr "Traduccion en neerlandés"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:131
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:133
 msgid "Documentation cleanups"
 msgstr "Netejatge de la documentacion"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:137
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:139
 msgid "Include a notification for first run success"
 msgstr "Inclure una notificacion per la capitada de la primièra execucion"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:142
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:144
 msgid "Initial release"
 msgstr "Primièra version"
 
-#: src/dependencyCheck.js:263
+#: src/dependencyCheck.js:275
 msgid "Bouncer must start on login"
 msgstr "Bouncer deu se lançar a l’inicializacion de session"
 
-#: src/dependencyCheck.js:282
+#: src/dependencyCheck.js:294
 msgid "Can't configure autostart"
 msgstr "Impossible de configurar l’aviada auto"
 
-#: src/dependencyCheck.js:283
+#: src/dependencyCheck.js:295
 msgid ""
 "Please make sure the portal is available from inside the Flatpak sandbox. "
 "Please see logs for more information."
@@ -272,11 +281,11 @@ msgstr ""
 "Asseguratz-vos que lo portal siá disponible dempuèi l'interior del nauc de "
 "sabla Flatpak. Consultatz los jornals per mai d'informacions."
 
-#: src/dependencyCheck.js:307
+#: src/dependencyCheck.js:319
 msgid "Can't find D-Bus names"
 msgstr "Impossible de trobar los noms D-Bus"
 
-#: src/dependencyCheck.js:308
+#: src/dependencyCheck.js:320
 msgid ""
 "Please make sure D-Bus is installed, running, and available inside the "
 "Flatpak sandbox. Please see logs for more information."
@@ -284,11 +293,11 @@ msgstr ""
 "Asseguratz-vos que D-Bus es installat, en cors d'execucion e disponible dins "
 "lo nauc de sabla Flatpak. Consultatz los jornals per mai d'informacion."
 
-#: src/dependencyCheck.js:338
+#: src/dependencyCheck.js:350
 msgid "Can't find firewalld"
 msgstr "Impossible de trobar firewalld"
 
-#: src/dependencyCheck.js:339
+#: src/dependencyCheck.js:351
 msgid ""
 "Please make sure firewalld is installed, running, and available inside the "
 "Flatpak sandbox. Please see logs for more information."
@@ -296,11 +305,11 @@ msgstr ""
 "Asseguratz-vos que firewalld es installat, en cors d'execucion e disponible "
 "dins lo nauc de sabla Flatpak. Consultatz los jornals per mai d'informacion."
 
-#: src/dependencyCheck.js:358
+#: src/dependencyCheck.js:370
 msgid "Can't get firewalld zones"
 msgstr "Impossible de trobar las zònas firewalld"
 
-#: src/dependencyCheck.js:359
+#: src/dependencyCheck.js:371
 msgid ""
 "Unable to get firewalld zones. Please make sure firewalld permissions are "
 "correct, and are not restricted inside the Flatpak sandbox. Please see logs "
@@ -310,11 +319,11 @@ msgstr ""
 "permissions de firewalld sián corrèctas e que son pas restrenchas dins lo "
 "nauc de sabla de Flatpak. Consultatz los jornals per mai d'informacions."
 
-#: src/dependencyCheck.js:375
+#: src/dependencyCheck.js:387
 msgid "Can't get firewalld default zone"
 msgstr "Impossible de trobar la zòna firewalld per defaut"
 
-#: src/dependencyCheck.js:376
+#: src/dependencyCheck.js:388
 msgid ""
 "Unable to get firewalld default zone. Please make sure firewalld permissions "
 "are correct, and are not restricted inside the Flatpak sandbox. Please see "
@@ -324,11 +333,11 @@ msgstr ""
 "permissions de firewalld sián corrèctas e que son pas restrenchas dins lo "
 "nauc de sabla Flatpak. Consultatz los jornals per mai d'informacions."
 
-#: src/dependencyCheck.js:406
+#: src/dependencyCheck.js:418
 msgid "Can't find NetworkManager"
 msgstr "Impossible de trobar NetworkManager"
 
-#: src/dependencyCheck.js:407
+#: src/dependencyCheck.js:419
 msgid ""
 "Please make sure NetworkManager is installed, running, and available inside "
 "the Flatpak sandbox. Please see logs for more information."
@@ -337,13 +346,13 @@ msgstr ""
 "disponible dins lo nauc de sabla Flatpak. Consultatz los jornals per mai "
 "d'informacions."
 
-#: src/dependencyCheck.js:465
+#: src/dependencyCheck.js:477
 msgid "Authentication required to change NetworkManager connection zone"
 msgstr ""
 "Autentificacion requesida per modificar las zònas de connexions de "
 "NetworkManager"
 
-#: src/dependencyCheck.js:466
+#: src/dependencyCheck.js:478
 msgid ""
 "You are authorized to change the connection zone in NetworkManager, but will "
 "be required to authenticate. This will work, but may be annoying. Please see "
@@ -353,13 +362,13 @@ msgstr ""
 "disponible dins lo nauc de sabla Flatpak. Consultatz los jornals per mai "
 "d'informacions."
 
-#: src/dependencyCheck.js:479
+#: src/dependencyCheck.js:491
 msgid "Not authorized to change NetworkManager connection zone"
 msgstr ""
 "Avètz pas las autorizacions per cambiar las zònas de connexion de "
 "NetworkManager"
 
-#: src/dependencyCheck.js:480
+#: src/dependencyCheck.js:492
 msgid ""
 "You are not authorized to change the connection zone in NetworkManager. This "
 "is required for Bouncer to function properly. Please see logs for more "
@@ -369,11 +378,11 @@ msgstr ""
 "es necessari per que Bouncer foncione corrèctament. Consultatz los jornals "
 "per mai d'informacions."
 
-#: src/dependencyCheck.js:492
+#: src/dependencyCheck.js:504
 msgid "Unexpected result from NetworkManager GetSettings: "
 msgstr "Resultat inesperat de NetworkManager GetSettings : "
 
-#: src/dependencyCheck.js:493
+#: src/dependencyCheck.js:505
 msgid ""
 "Unable to determine whether you are authorized to change the connection zone "
 "in NetworkManager. Bouncer may not function properly. Please see logs for "
@@ -566,15 +575,15 @@ msgstr ""
 "necessari per que l'aplicacion foncione corrèctament. Mercés de consultar "
 "los jornals per mai d'informacions."
 
-#: src/ui/bouncerWindow.ui:27 src/ui/dashboard.ui:39
+#: src/ui/bouncerWindow.ui:26 src/ui/dashboard.ui:38
 msgid "Menu"
 msgstr "Menú"
 
-#: src/ui/bouncerWindow.ui:54 src/ui/dashboard.ui:118
+#: src/ui/bouncerWindow.ui:59 src/ui/dashboard.ui:137
 msgid "_About Bouncer"
 msgstr "_A prepaus de Bouncer"
 
-#: src/ui/chooseZoneBox.ui:25
+#: src/ui/chooseZoneBox.ui:24
 msgid ""
 "You have connected to a new Wi-Fi network. Please choose a firewall zone. "
 "What type of network is this?"
@@ -582,48 +591,48 @@ msgstr ""
 "Vos sètz connectat a una ret Wi-Fi novèl. Mercés de causir una zòna de "
 "proteccion. Qual tipe de ret es aquò ?"
 
-#: src/ui/chooseZoneBox.ui:41
+#: src/ui/chooseZoneBox.ui:40
 msgid "Network"
 msgstr "Ret"
 
-#: src/ui/chooseZoneBox.ui:50
+#: src/ui/chooseZoneBox.ui:49
 msgid "Default Zone"
 msgstr "Zòna per defaut"
 
-#: src/ui/chooseZoneBox.ui:59 src/ui/networksBox.ui:53
+#: src/ui/chooseZoneBox.ui:58 src/ui/networksBox.ui:53
 msgid "Current Zone"
 msgstr "Zòna actuala"
 
 #. make the dropdown not span the entire box
-#: src/ui/chooseZoneBox.ui:75
+#: src/ui/chooseZoneBox.ui:74
 msgid "Firewall Zone"
 msgstr "Zòna del parafuòc"
 
-#: src/ui/chooseZoneBox.ui:76
+#: src/ui/chooseZoneBox.ui:75
 msgid "Choose the firewall zone for this network."
 msgstr "Causir una zòna de proteccion per aquesta ret."
 
-#: src/ui/chooseZoneBox.ui:79
+#: src/ui/chooseZoneBox.ui:78
 msgid "Zone"
 msgstr "Zòna"
 
-#: src/ui/chooseZoneBox.ui:102 src/ui/moreInfo.ui:16
+#: src/ui/chooseZoneBox.ui:101 src/ui/moreInfo.ui:15
 msgid "More Information"
 msgstr "Mai d'informacions"
 
-#: src/ui/chooseZoneBox.ui:103
+#: src/ui/chooseZoneBox.ui:102
 msgid "Get more information."
 msgstr "Obténer mai d’informacions."
 
-#: src/ui/chooseZoneBox.ui:112
-msgid "Help"
-msgstr "Ajuda"
+#: src/ui/chooseZoneBox.ui:107
+msgid "Learn More"
+msgstr ""
 
-#: src/ui/chooseZoneBox.ui:121
+#: src/ui/chooseZoneBox.ui:116
 msgid "Skip for Now"
 msgstr "Sautar per ara"
 
-#: src/ui/chooseZoneBox.ui:122
+#: src/ui/chooseZoneBox.ui:117
 msgid ""
 "No change will be made. You will see this window again the next time you "
 "connect to this network."
@@ -631,15 +640,16 @@ msgstr ""
 "Cap de cambiament serà pas fach. Veiretz tornamai aquesta fenèstra lo còp "
 "que ven que vos connectaretz a aquesta ret."
 
+#: src/ui/chooseZoneBox.ui:122
+msgid "Skip"
+msgstr ""
+
 #: src/ui/chooseZoneBox.ui:131
-msgid "Exit"
-msgstr "Sortir"
+#, fuzzy
+msgid "Choose Zone"
+msgstr "Cambiar la zòna"
 
-#: src/ui/chooseZoneBox.ui:140
-msgid "Save Zone"
-msgstr "Enregistrar la zòna"
-
-#: src/ui/chooseZoneBox.ui:141
+#: src/ui/chooseZoneBox.ui:132
 msgid ""
 "The selected firewall zone will be used every time you connect to this "
 "network."
@@ -647,55 +657,59 @@ msgstr ""
 "La zòna de proteccion seleccionada serà utilizada cada còp que vos "
 "connectaretz a aquesta ret."
 
-#: src/ui/chooseZoneBox.ui:147
+#: src/ui/chooseZoneBox.ui:137
 msgid "Choose"
 msgstr "Causir"
 
-#: src/ui/dashboard.js:48
+#: src/ui/dashboard.js:54
 msgid ""
 "Saved networks could not be loaded. Please see logs for more information."
 msgstr ""
 "Se podiá pas cargar las rets enregistradas. Consultatz los jornals per mai "
 "d'informacions."
 
-#: src/ui/dashboard.ui:30
+#: src/ui/dashboard.ui:29
 msgid "Dashboard"
 msgstr "Tablèu de bòrd"
 
-#: src/ui/dashboard.ui:90
+#: src/ui/dashboard.ui:91
 msgid "Dependencies"
 msgstr "Dependéncias"
 
-#: src/ui/dashboard.ui:99 src/ui/networksBox.ui:38
+#: src/ui/dashboard.ui:108 src/ui/networksBox.ui:38
 msgid "Networks"
 msgstr "Rets"
 
-#: src/ui/dependencyBox.js:53
+#: src/ui/dependencyBox.js:61
 msgid "firewalld Running"
 msgstr "parafuòc en execucion"
 
-#: src/ui/dependencyBox.js:69
+#: src/ui/dependencyBox.js:80
 msgid "NetworkManager Running"
 msgstr "NetworkManager en execucion"
 
-#: src/ui/dependencyBox.js:85
+#: src/ui/dependencyBox.js:99
 msgid "NetworkManager Permissions"
 msgstr "Autorizacions NetworkManager"
 
-#: src/ui/dependencyBox.js:96
+#: src/ui/dependencyBox.js:113
 msgid "Run on Startup"
 msgstr "Executar a l’aviada"
 
-#: src/ui/dependencyBox.js:128
+#: src/ui/dependencyBox.js:118
+msgid "Enable"
+msgstr ""
+
+#: src/ui/dependencyBox.js:149
 msgid "Bouncer is monitoring your Wi-Fi!"
 msgstr "Bouncer es a susvelhar vòstra connexion Wi-Fi !"
 
 #. We're not monitoring. Show the correct text.
-#: src/ui/dependencyBox.js:132 src/ui/dependencyBox.ui:56
+#: src/ui/dependencyBox.js:153 src/ui/dependencyBox.ui:64
 msgid "Once everything is ready, click to begin using Bouncer."
 msgstr "Un còp que tot es prèst, clicatz per començar d’utilizar Bouncer."
 
-#: src/ui/dependencyBox.ui:24
+#: src/ui/dependencyBox.ui:33
 msgid ""
 "In order to function properly, Bouncer depends on multiple other system "
 "components and configurations. To help facilitate the correct setup, this "
@@ -706,46 +720,46 @@ msgstr ""
 "corrècta, aquesta pagina mòstra l'estat d'aqueles components e "
 "configuracions requesits."
 
-#: src/ui/dependencyBox.ui:32
+#: src/ui/dependencyBox.ui:41
 msgid ""
 "You can close this window at any time without affecting network monitoring."
 msgstr ""
 "Podètz tampar aquesta fenèstra a tot moment sens afectar la susvelhança de "
 "la ret."
 
-#: src/ui/dependencyBox.ui:55
+#: src/ui/dependencyBox.ui:63
 msgid "Network Monitoring"
 msgstr "Susvelhança ret"
 
-#: src/ui/dependencyBox.ui:62
+#: src/ui/dependencyBox.ui:70
 msgid "Monitor"
 msgstr "Susvelhar"
 
-#: src/ui/dependencyItem.js:82 src/ui/dependencyItem.js:91
-#: src/ui/dependencyItem.ui:22
+#: src/ui/dependencyItem.js:101 src/ui/dependencyItem.js:110
+#: src/ui/dependencyItem.ui:23
 msgid "Unknown"
 msgstr "Desconegut"
 
-#: src/ui/dependencyItem.js:84
+#: src/ui/dependencyItem.js:103
 msgid "Ready"
 msgstr "Prèst"
 
-#: src/ui/dependencyItem.js:86
+#: src/ui/dependencyItem.js:105
 msgid "Suboptimal"
 msgstr "Degalhat"
 
-#: src/ui/dependencyItem.js:88
+#: src/ui/dependencyItem.js:107
 msgid "Not Ready"
 msgstr "Non prèst"
 
-#: src/ui/dependencyItem.ui:33
+#: src/ui/dependencyItem.ui:31
 msgid "Check"
 msgstr "Verificar"
 
 #. Translators: Do not translate or modify %1$s, %2$s, %3$s, or %4$s. They are replaced with the
 #. firewalld, NetworkManager, firewalld connection documentation, and Bouncer URLs, respectively.
 #: src/ui/moreInfo.js:32
-#, javascript-format
+#, fuzzy, javascript-format
 msgid ""
 "You're using <a href=\"%1$s\">firewalld</a> as your firewall. One of the "
 "nice features about firewalld is that it supports different zones (sets of "
@@ -762,7 +776,7 @@ msgid ""
 "connect to a new network, allowing you to choose the appropriate firewall "
 "zone. If you're not sure what to choose, you should probably choose the "
 "option that matches where you are. The safest option is usually 'public'. If "
-"you don't want to change anything, click 'Exit'.\n"
+"you don't want to change anything, click 'Skip'.\n"
 "\n"
 "You can read more about Bouncer <a href=\"%4$s\">here</a>."
 msgstr ""
@@ -786,9 +800,45 @@ msgstr ""
 "\n"
 "Ne podètz legir mai tocant Bouncer <a href=\"%4$s\">aicí</a>."
 
-#: src/ui/networksBox.js:173
+#: src/ui/networksBox.js:201
 msgid "Firewall zone information could not be loaded."
 msgstr "Las informacions sus la zòna de proteccion se podiá pas cargar."
+
+#: src/ui/networksBox.js:259
+msgid "Zone could not be changed"
+msgstr ""
+
+#. Translators: %s is the name of a firewall zone.
+#: src/ui/networksBox.js:280
+#, javascript-format
+msgid "Zone changed to %s"
+msgstr ""
+
+#: src/ui/networksBox.js:281 src/ui/networksBox.js:338
+msgid "_Undo"
+msgstr ""
+
+#: src/ui/networksBox.js:304
+msgid "Unable to undo because the zone changed again"
+msgstr ""
+
+#: src/ui/networksBox.js:313
+msgid "Zone change could not be undone"
+msgstr ""
+
+#: src/ui/networksBox.js:331
+msgid "Network could not be forgotten"
+msgstr ""
+
+#. Translators: %s is the NetworkManager connection name.
+#: src/ui/networksBox.js:337
+#, javascript-format
+msgid "Network forgotten: %s"
+msgstr ""
+
+#: src/ui/networksBox.js:354
+msgid "Network could not be restored"
+msgstr ""
 
 #: src/ui/networksBox.ui:34
 msgid "Manage Networks"
@@ -798,19 +848,19 @@ msgstr "Gerir las rets"
 msgid "Manage your configured networks from here."
 msgstr "Gerissètz vòstras rets configuradas d’aicí estant."
 
-#: src/ui/networksBox.ui:70
+#: src/ui/networksBox.ui:69
 msgid "Change Zone"
 msgstr "Cambiar la zòna"
 
-#: src/ui/networksBox.ui:82
+#: src/ui/networksBox.ui:80
 msgid "Change"
 msgstr "Cambiar"
 
-#: src/ui/networksBox.ui:95
-msgid "Forget Network"
-msgstr "Oblidar la ret"
+#: src/ui/networksBox.ui:89
+msgid "Forget Zone Choice"
+msgstr ""
 
-#: src/ui/networksBox.ui:96
+#: src/ui/networksBox.ui:90
 msgid ""
 "Forget this network. You will be prompted to choose the firewall zone for "
 "this network the next time you connect to it."
@@ -818,9 +868,21 @@ msgstr ""
 "Oblidar aquesta ret. Veiretz tornamai aquesta fenèstra lo còp que ven que "
 "vos connectaretz a aquesta ret."
 
-#: src/ui/networksBox.ui:102
+#: src/ui/networksBox.ui:95
 msgid "Forget"
 msgstr "Oblidar"
+
+#~ msgid "Help"
+#~ msgstr "Ajuda"
+
+#~ msgid "Exit"
+#~ msgstr "Sortir"
+
+#~ msgid "Save Zone"
+#~ msgstr "Enregistrar la zòna"
+
+#~ msgid "Forget Network"
+#~ msgstr "Oblidar la ret"
 
 #~ msgid "Check Status"
 #~ msgstr "Verificacion d’estat"

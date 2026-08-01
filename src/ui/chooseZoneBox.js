@@ -10,7 +10,7 @@
  */
 
 import GObject from 'gi://GObject';
-import Gtk from 'gi://Gtk';
+import Gtk from 'gi://Gtk?version=4.0';
 
 import { MoreInfoDialog } from './moreInfo.js';
 import { getSelectedZone, getZoneDisplayName, populateZoneList } from '../zoneSelection.js';

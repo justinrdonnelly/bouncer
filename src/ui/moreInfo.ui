@@ -10,10 +10,11 @@
      SPDX-License-Identifier: MPL-2.0
 -->
 <interface>
-  <requires lib="gtk" version="4.10"/>
-  <requires lib="libadwaita" version="1.4"/>
+  <requires lib="gtk" version="4.0"/>
   <template class="MoreInfoDialog" parent="AdwDialog">
     <property name="title" translatable="yes">More Information</property>
+    <property name="content-width">500</property>
+    <property name="content-height">500</property>
     <child>
       <object class="AdwToolbarView">
         <child type="top">
@@ -21,15 +22,21 @@
           </object>
         </child>
         <property name="content">
-          <!-- text label -->
-          <object class="GtkLabel" id="moreInfoLabel">
-            <property name="use-markup">True</property>
-            <property name="xalign">0</property>
-            <property name="margin-top">12</property>
-            <property name="margin-bottom">12</property>
-            <property name="margin-start">12</property>
-            <property name="margin-end">12</property>
-            <property name="wrap">True</property>
+          <object class="GtkScrolledWindow">
+            <property name="hscrollbar-policy">never</property>
+            <property name="vscrollbar-policy">automatic</property>
+            <property name="child">
+              <!-- text label -->
+              <object class="GtkLabel" id="moreInfoLabel">
+                <property name="use-markup">True</property>
+                <property name="xalign">0</property>
+                <property name="margin-top">12</property>
+                <property name="margin-bottom">12</property>
+                <property name="margin-start">12</property>
+                <property name="margin-end">12</property>
+                <property name="wrap">True</property>
+              </object>
+            </property>
           </object>
         </property>
       </object>

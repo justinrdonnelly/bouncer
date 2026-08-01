@@ -9,8 +9,9 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
+import Adw from 'gi://Adw?version=1';
 import GObject from 'gi://GObject';
-import Gtk from 'gi://Gtk';
+import Gtk from 'gi://Gtk?version=4.0';
 
 import { getNetworkManagerConnectionByUuid } from '../networkManagerConnectionSettings.js';
 import * as ZoneForConnection from '../zoneForConnection.js';
@@ -32,6 +33,11 @@ export const NetworksBox = GObject.registerClass(
                 GObject.ParamFlags.READWRITE,
             ),
         },
+        Signals: {
+            'toast-requested': {
+                param_types: [Adw.Toast.$gtype],
+            },
+        },
     },
     // eslint-disable-next-line no-shadow
     class NetworksBox extends Gtk.Box {
@@ -42,6 +48,9 @@ export const NetworksBox = GObject.registerClass(
         #defaultZone = null; // This will later be the default zone (eg public).
         #zoneInfoLoaded = false; // This will become true once #allZones and #defaultZone are populated.
         #refreshNetworksSequence = 0; // Used to ignore stale refresh results that finish out of order.
+        #networkActionQueue = Promise.resolve(); // Tail of the network action queue.
+        #networkActionsPending = 0; // Number of queued or running network actions.
+        #zoneChangeToast = null; // The toast offering to undo the most recent zone change.
 
         constructor(connectionIdsSeen) {
             super();
@@ -114,6 +123,8 @@ export const NetworksBox = GObject.registerClass(
             if (refreshNetworksSequence !== this.#refreshNetworksSequence)
                 return;
 
+            // Sort the displayed networks without changing the stored UUID order.
+            networks.sort((first, second) => first.id.localeCompare(second.id));
             this.#networks = networks;
             // Now that we have all the info, use it to repopulate the networks dropdown.
             this.#updateNetworkList(selectedUuid);
@@ -130,13 +141,8 @@ export const NetworksBox = GObject.registerClass(
 
             if (this.#networks.length > 0) {
                 const selected = this.#networks.findIndex((network) => network.uuid === selectedUuid);
-                this._comboRow.sensitive = true;
-                this._forgetButton.sensitive = true;
                 // Select the previously selected network. If it is no longer in the list, default to 0.
                 this._comboRow.set_selected(selected === -1 ? 0 : selected);
-            } else {
-                this._comboRow.sensitive = false;
-                this._forgetButton.sensitive = false;
             }
             this.#handleNetworkSelected();
         }
@@ -146,6 +152,28 @@ export const NetworksBox = GObject.registerClass(
             const selected = this._comboRow.get_selected();
             // eslint-disable-next-line security/detect-object-injection
             return this.#networks[selected];
+        }
+
+        // Update control sensitivity based on the currently available network and zone information.
+        #updateControlSensitivity() {
+            const network = this.#getSelectedNetwork();
+            const hasNetworks = this.#networks.length > 0;
+            const networkActionPending = this.#networkActionsPending > 0;
+            const networkControlsAvailable = hasNetworks && !networkActionPending;
+            const zoneControlsAvailable =
+                network !== undefined &&
+                network !== null &&
+                this.#zoneInfoLoaded &&
+                !networkActionPending;
+            const selectedZone = getSelectedZone(this._zoneDropDown);
+
+            this._comboRow.sensitive = networkControlsAvailable;
+            this._forgetButton.sensitive = networkControlsAvailable;
+            this._zoneDropDown.sensitive = zoneControlsAvailable;
+            this._changeZoneButton.sensitive =
+                zoneControlsAvailable &&
+                selectedZone !== undefined &&
+                selectedZone !== network.zone;
         }
 
         // Update the displayed zone info when the selected connection changes.
@@ -179,14 +207,12 @@ export const NetworksBox = GObject.registerClass(
             this._zoneList.splice(0, this._zoneList.get_n_items(), []);
 
             if (network === undefined || network === null || !this.#zoneInfoLoaded) {
-                this._zoneDropDown.sensitive = false;
-                this._changeZoneButton.sensitive = false;
+                this.#updateControlSensitivity();
                 return;
             }
 
             // Populate `this._zoneList` and set `selected` to the index of the zone that should be selected.
             const selected = populateZoneList(this._zoneList, this.#allZones, this.#defaultZone, network.zone);
-            this._zoneDropDown.sensitive = true;
             this._zoneDropDown.set_selected(selected);
             this.#handleZoneSelectionChanged();
         }
@@ -194,13 +220,25 @@ export const NetworksBox = GObject.registerClass(
         // Enable/disable the 'Change' button based on whether the selected zone in the dropdown is different than the
         // zone that is already associated with the network.
         #handleZoneSelectionChanged() {
-            const network = this.#getSelectedNetwork();
-            const selectedZone = getSelectedZone(this._zoneDropDown);
-            this._changeZoneButton.sensitive =
-                this.#zoneInfoLoaded &&
-                network !== undefined &&
-                selectedZone !== undefined &&
-                selectedZone !== network.zone;
+            this.#updateControlSensitivity();
+        }
+
+        // Queue a network action and keep controls disabled until all pending actions finish.
+        #queueNetworkAction(action) {
+            this.#networkActionsPending++;
+            this.#updateControlSensitivity();
+
+            const queuedAction = this.#networkActionQueue.then(async () => {
+                try {
+                    await action();
+                } finally {
+                    this.#networkActionsPending--;
+                    this.#updateControlSensitivity();
+                }
+            });
+            // A failed action should not prevent the next queued action from running.
+            this.#networkActionQueue = queuedAction.catch(() => {});
+            return queuedAction;
         }
 
         // eslint-disable-next-line no-unused-vars
@@ -209,22 +247,71 @@ export const NetworksBox = GObject.registerClass(
             const selectedZone = getSelectedZone(this._zoneDropDown);
             if (network === undefined || selectedZone === undefined)
                 return;
+            const previousZone = network.zone;
 
-            this._zoneDropDown.sensitive = false;
-            this._changeZoneButton.sensitive = false;
-            try {
-                await ZoneForConnection.setZone(network.objectPath, selectedZone);
-            } catch (e) {
-                console.error(`Unable to set zone for NetworkManager connection ${network.uuid}.`);
-                console.error(e.message);
-                this.#handleNetworkSelected();
-                return;
-            }
+            await this.#queueNetworkAction(async () => {
+                try {
+                    await ZoneForConnection.setZone(network.objectPath, selectedZone);
+                } catch (e) {
+                    console.error(`Unable to set zone for NetworkManager connection ${network.uuid}.`);
+                    console.error(e.message);
+                    this.#handleNetworkSelected();
+                    this.#requestErrorToast(_('Zone could not be changed'));
+                    return;
+                }
 
-            const updatedNetwork = this.#networks.find((currentNetwork) => currentNetwork.uuid === network.uuid);
-            if (updatedNetwork !== undefined)
-                updatedNetwork.zone = selectedZone;
+                this.#updateNetworkZone(network.uuid, selectedZone);
+                this.#showZoneChangeToast(network.uuid, previousZone, selectedZone);
+            });
+        }
+
+        #updateNetworkZone(connectionUuid, zone) {
+            const network = this.#networks.find((currentNetwork) => currentNetwork.uuid === connectionUuid);
+            if (network !== undefined)
+                network.zone = zone;
             this.#handleNetworkSelected();
+        }
+
+        #showZoneChangeToast(connectionUuid, previousZone, selectedZone) {
+            this.#zoneChangeToast?.dismiss();
+
+            const toast = new Adw.Toast({
+                // Translators: %s is the name of a firewall zone.
+                title: _('Zone changed to %s').format(getZoneDisplayName(selectedZone)),
+                button_label: _('_Undo'),
+                use_markup: false,
+            });
+            toast.connect('button-clicked', () => {
+                this.#queueNetworkAction(() => this.#undoZoneChange(connectionUuid, previousZone, selectedZone));
+            });
+            toast.connect('dismissed', () => {
+                if (this.#zoneChangeToast === toast)
+                    this.#zoneChangeToast = null;
+            });
+            this.#zoneChangeToast = toast;
+            this.emit('toast-requested', toast);
+        }
+
+        async #undoZoneChange(connectionUuid, previousZone, selectedZone) {
+            try {
+                const { objectPath, settings } = await getNetworkManagerConnectionByUuid(connectionUuid);
+                // Confirm the zone hasn't been changed outside of Bouncer
+                const currentZone = settings.connection?.zone ?? null;
+                if (currentZone !== selectedZone) {
+                    console.warn(`Not undoing zone change for NetworkManager connection ${connectionUuid}. ` +
+                        `The zone has changed from ${selectedZone} to ${currentZone}.`);
+                    this.#updateNetworkZone(connectionUuid, currentZone);
+                    this.#requestErrorToast(_('Unable to undo because the zone changed again'));
+                    return;
+                }
+
+                await ZoneForConnection.setZone(objectPath, previousZone);
+                this.#updateNetworkZone(connectionUuid, previousZone);
+            } catch (e) {
+                console.error(`Unable to undo zone change for NetworkManager connection ${connectionUuid}.`);
+                console.error(e.message);
+                this.#requestErrorToast(_('Zone change could not be undone'));
+            }
         }
 
         // eslint-disable-next-line no-unused-vars
@@ -235,13 +322,45 @@ export const NetworksBox = GObject.registerClass(
             if (network === undefined)
                 return;
 
+            await this.#queueNetworkAction(async () => {
+                try {
+                    await this.#connectionIdsSeen.forgetConnection(network.uuid);
+                } catch (e) {
+                    console.error(`Unable to forget NetworkManager connection ${network.uuid}.`);
+                    console.error(e.message);
+                    this.#requestErrorToast(_('Network could not be forgotten'));
+                    return;
+                }
+
+                const toast = new Adw.Toast({
+                    // Translators: %s is the NetworkManager connection name.
+                    title: _('Network forgotten: %s').format(network.id),
+                    button_label: _('_Undo'),
+                    use_markup: false,
+                });
+                toast.connect('button-clicked', () => {
+                    this.#queueNetworkAction(() => this.#restoreConnection(network));
+                });
+                this.emit('toast-requested', toast);
+            });
+        }
+
+        async #restoreConnection(network) {
             try {
-                await this.#connectionIdsSeen.forgetConnection(network.uuid);
+                await this.#connectionIdsSeen.restoreConnection(network.uuid);
             } catch (e) {
-                console.error(`Unable to forget NetworkManager connection ${network.uuid}.`);
+                console.error(`Unable to restore NetworkManager connection ${network.uuid}.`);
                 console.error(e.message);
-                return;
+                this.#requestErrorToast(_('Network could not be restored'));
             }
+        }
+
+        #requestErrorToast(title) {
+            this.emit('toast-requested', new Adw.Toast({
+                title,
+                priority: Adw.ToastPriority.HIGH,
+                use_markup: false,
+            }));
         }
     }
 );

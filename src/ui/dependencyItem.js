@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-import Adw from 'gi://Adw';
+import Adw from 'gi://Adw?version=1';
 import GObject from 'gi://GObject';
 
 export const DependencyItem = GObject.registerClass(
@@ -25,8 +25,12 @@ export const DependencyItem = GObject.registerClass(
             dependencyCheck,
             property,
             callbackFunction,
-            buttonSensitiveProperty = null,
-            buttonSensitiveTransformFunction = null
+            {
+                buttonLabel = null,
+                buttonSizeGroup = null,
+                buttonSensitiveProperty = null,
+                buttonSensitiveTransformFunction = null,
+            } = {}
         ) {
             super();
             this.title = title;
@@ -34,10 +38,20 @@ export const DependencyItem = GObject.registerClass(
             dependencyCheck.bind_property_full(
                 property,
                 this._status,
-                'label',
+                'icon-name',
                 GObject.BindingFlags.SYNC_CREATE,
                 // eslint-disable-next-line no-unused-vars
                 (binding, value) => [true, this.#convertStatusToIcon(value)],
+                null
+            );
+
+            dependencyCheck.bind_property_full(
+                property,
+                this._status,
+                'css-classes',
+                GObject.BindingFlags.SYNC_CREATE,
+                // eslint-disable-next-line no-unused-vars
+                (binding, value) => [true, [this.#convertStatusToCssClass(value)]],
                 null
             );
 
@@ -61,6 +75,9 @@ export const DependencyItem = GObject.registerClass(
                 null
             );
 
+            if (buttonLabel !== null)
+                this._button.label = buttonLabel;
+            buttonSizeGroup?.add_widget(this._button);
             this._button.connect('clicked', callbackFunction);
             if (buttonSensitiveProperty !== null) {
                 dependencyCheck.bind_property_full(
@@ -97,16 +114,32 @@ export const DependencyItem = GObject.registerClass(
         #convertStatusToIcon(status) {
             switch (status) {
                 case 0:
-                    return '⚪';
+                    return 'dialog-question-symbolic';
                 case 1:
-                    return '🟢';
+                    return 'object-select-symbolic';
                 case 2:
-                    return '🟡';
+                    return 'dialog-warning-symbolic';
                 case 3:
-                    return '🔴';
+                    return 'dialog-error-symbolic';
                 default:
                     console.error(`Invalid DependencyItem status: ${status}`);
-                    return '⚪';
+                    return 'dialog-question-symbolic';
+            }
+        }
+
+        #convertStatusToCssClass(status) {
+            switch (status) {
+                case 0:
+                    return 'dimmed';
+                case 1:
+                    return 'success';
+                case 2:
+                    return 'warning';
+                case 3:
+                    return 'error';
+                default:
+                    console.error(`Invalid DependencyItem status: ${status}`);
+                    return 'dimmed';
             }
         }
     }
