@@ -67,6 +67,7 @@ const NetworkManagerStateItem = GObject.registerClass(
 
         // conceptually, the variables below are 'protected'
         _proxyObj = null;
+        _destroyed = false;
         // map of object path to object for each related child NetworkManagerStateItem
         _childNetworkManagerStateItems = new Map();
         _handlerId;
@@ -171,6 +172,8 @@ const NetworkManagerConnectionActive = GObject.registerClass(
                 NetworkManagerStateItem._wellKnownName,
                 this.objectPath,
                 (sourceObj, error) => {
+                    if (this._destroyed)
+                        return;
                     if (error !== null) {
                         // error is [GLib.Error](https://docs.gtk.org/glib/struct.Error.html)
                         if (error instanceof Gio.DBusError)
@@ -194,8 +197,9 @@ const NetworkManagerConnectionActive = GObject.registerClass(
             );
         }
 
-        // eslint-disable-next-line no-unused-vars
         #proxyUpdated(proxy, changed, invalidated) {
+            if (this._destroyed || proxy !== this._proxyObj)
+                return;
             console.debug('debug 1 - Proxy updated - NetworkManagerConnectionActive');
             // The only property I care about has a getter that accesses the proxy directly. No need to do anything here
             // besides signal if necessary. There are no children to worry about either.
@@ -221,6 +225,11 @@ const NetworkManagerConnectionActive = GObject.registerClass(
                     return;
                 }
             }
+        }
+
+        destroy() {
+            this._destroyed = true;
+            super.destroy();
         }
     }
 );
@@ -261,6 +270,8 @@ const NetworkManagerDevice = GObject.registerClass(
                 NetworkManagerStateItem._wellKnownName,
                 this.objectPath,
                 (proxy, error) => {
+                    if (this._destroyed)
+                        return;
                     if (error !== null) {
                         // error is [GLib.Error](https://docs.gtk.org/glib/struct.Error.html)
                         if (error instanceof Gio.DBusError)
@@ -287,8 +298,9 @@ const NetworkManagerDevice = GObject.registerClass(
             );
         }
 
-        // eslint-disable-next-line no-unused-vars
         #proxyUpdated(proxy, changed, invalidated) {
+            if (this._destroyed || proxy !== this._proxyObj)
+                return;
             console.debug('debug 1 - Proxy updated - NetworkManagerDevice');
             // NetworkManagerDevice doesn't have any state of its own. Just see if there are new children to add, or old
             // children to remove.
@@ -329,6 +341,7 @@ const NetworkManagerDevice = GObject.registerClass(
                         console.debug(`debug 2 - connection changed from one active connection (${oldValue}) to ` +
                             `another (${value})`);
                         this.#deleteConnection(oldValue); // destroy old child
+                        this.emitConnectionChanged(oldValue, '', '', '');
                         this.#addConnectionInfo(); // this will add the child
                     } else {
                         console.debug(`debug 2 - connection changed from one inactive connection (${oldValue}) to ` +
@@ -372,6 +385,13 @@ const NetworkManagerDevice = GObject.registerClass(
                 this._addChild(this.#activeConnection, networkManagerConnectionActive);
             }
         }
+
+        destroy() {
+            this._destroyed = true;
+            if (NetworkManagerDevice.#isConnectionActive(this.#activeConnection))
+                this.emitConnectionChanged(this.#activeConnection, '', '', '');
+            super.destroy();
+        }
     }
 );
 
@@ -379,6 +399,7 @@ const NetworkManager = GObject.registerClass(
     // eslint-disable-next-line no-shadow
     class NetworkManager extends NetworkManagerStateItem {
         #busWatchId;
+        #proxyGeneration = 0;
 
         constructor(objectPath) {
             // example objectPath: /org/freedesktop/NetworkManager (this is always what it is)
@@ -392,6 +413,9 @@ const NetworkManager = GObject.registerClass(
                 // This functionality is all in `super.destroy`. DO NOT CALL `this.destroy` because we want to continue
                 // watching the bus.
                 () => {
+                    this.#proxyGeneration++;
+                    if (this._destroyed)
+                        return;
                     // no connection, so be sure the choose zone window is closed
                     this.emitConnectionChanged('', '', '', '');
                     super.destroy();
@@ -400,6 +424,8 @@ const NetworkManager = GObject.registerClass(
         }
 
         destroy() {
+            this._destroyed = true;
+            this.#proxyGeneration++;
             this.#unwatchBus();
             super.destroy();
         }
@@ -421,11 +447,16 @@ const NetworkManager = GObject.registerClass(
          * networkManagerProxy as a property, but... see point #1.
          */
         #getDbusProxyObject() {
+            if (this._destroyed)
+                return;
+            const proxyGeneration = ++this.#proxyGeneration;
             NetworkManagerProxy(
                 Gio.DBus.system,
                 NetworkManagerStateItem._wellKnownName,
                 this.objectPath,
                 (proxy, error) => {
+                    if (this._destroyed || proxyGeneration !== this.#proxyGeneration)
+                        return;
                     if (error !== null) {
                         // error is [GLib.Error](https://docs.gtk.org/glib/struct.Error.html)
                         if (error instanceof Gio.DBusError)
@@ -445,8 +476,9 @@ const NetworkManager = GObject.registerClass(
             );
         }
 
-        // eslint-disable-next-line no-unused-vars
         #proxyUpdated(proxy, changed, invalidated) {
+            if (this._destroyed || proxy !== this._proxyObj)
+                return;
             console.debug('debug 1 - Proxy updated - NetworkManager');
             // NetworkManager doesn't have any state of its own. Just see if there are new children to add, or old
             // children to remove.
