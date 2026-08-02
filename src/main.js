@@ -319,23 +319,8 @@ export const BouncerApplication = GObject.registerClass(
                 if (connectionUuid === '')
                     return;
 
-                const isConnectionNew = this.#connectionIdsSeen.isConnectionNew(connectionUuid);
-                if (!isConnectionNew)
-                    // The connection is not new. Don't open the window.
-                    return;
-
-                const [zones, defaultZone, currentZone] = await Promise.all([
-                    ZoneInfo.getZones(),
-                    ZoneInfo.getDefaultZone(),
-                    ZoneForConnection.getZone(activeConnectionSettings),
-                ]);
-                this.#createWindow(
-                    connectionUuid,
-                    connectionName,
-                    defaultZone,
-                    currentZone,
-                    zones,
-                    activeConnectionSettings
+                await this.#connectionActivated(
+                    connectionUuid, connectionName, activeConnectionSettings
                 );
             } catch (e) {
                 // We've hit an exception in the callback where we'd consider opening the window. Bail out and
@@ -351,6 +336,27 @@ export const BouncerApplication = GObject.registerClass(
                         'more information.')
                 );
             }
+        }
+
+        async #connectionActivated(connectionUuid, connectionName, activeConnectionSettings) {
+            const isConnectionNew = this.#connectionIdsSeen.isConnectionNew(connectionUuid);
+            if (!isConnectionNew)
+                // The connection is not new. Don't open the window.
+                return;
+
+            const [zones, defaultZone, currentZone] = await Promise.all([
+                ZoneInfo.getZones(),
+                ZoneInfo.getDefaultZone(),
+                ZoneForConnection.getZone(activeConnectionSettings),
+            ]);
+            this.#createWindow(
+                connectionUuid,
+                connectionName,
+                defaultZone,
+                currentZone,
+                zones,
+                activeConnectionSettings
+            );
         }
 
         #createWindow(connectionUuid, connectionName, defaultZone, currentZone, zones, activeConnectionSettings) {
