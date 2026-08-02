@@ -168,7 +168,7 @@ const NetworkManagerConnectionActive = GObject.registerClass(
                         return;
                     }
                     this._proxyObj = sourceObj;
-                    console.debug(`Wireless connection ID: ${this._proxyObj.Id}`); // e.g. Wired Connection 1
+                    console.debug(`Network connection ID: ${this._proxyObj.Id}`); // e.g. Wired Connection 1
                     // e.g. /org/freedesktop/NetworkManager/Settings/5
                     console.debug(`Settings object path: ${this._proxyObj.Connection}`);
 
@@ -215,10 +215,10 @@ const NetworkManagerConnectionActive = GObject.registerClass(
 const NetworkManagerDevice = GObject.registerClass(
     // eslint-disable-next-line no-shadow
     class NetworkManagerDevice extends NetworkManagerStateItem {
-        // from https://developer-old.gnome.org/NetworkManager/stable/nm-dbus-types.html#NMDeviceType
+        // from https://networkmanager.dev/docs/api/latest/nm-dbus-types.html#NMDeviceType
         static #NM_DEVICE_TYPE_WIFI = 2;
         #activeConnection;
-        isWifiDevice = false;
+        isSupportedDevice = false;
 
         static #isConnectionActive(connectionValue) {
             return !(connectionValue === undefined || connectionValue === null || connectionValue === '/');
@@ -257,10 +257,9 @@ const NetworkManagerDevice = GObject.registerClass(
                         this._error();
                         return;
                     }
-                    // Use DeviceType to decide whether to continue. We will only track wireless devices. For wireless,
-                    // the device type is NM_DEVICE_TYPE_WIFI (2).
+                    // Use DeviceType to decide whether to continue. We currently track Wi-Fi devices.
                     if (proxy.DeviceType === NetworkManagerDevice.#NM_DEVICE_TYPE_WIFI) {
-                        this.isWifiDevice = true;
+                        this.isSupportedDevice = true;
                         this._proxyObj = proxy;
                         this.#addConnectionInfo();
                         // monitor for property changes
@@ -393,7 +392,8 @@ const NetworkManager = GObject.registerClass(
         }
 
         get networkDevices() {
-            return Array.from(this._childNetworkManagerStateItems.values()).filter((device) => device.isWifiDevice);
+            return Array.from(this._childNetworkManagerStateItems.values())
+                .filter((device) => device.isSupportedDevice);
         }
 
         #unwatchBus() {
