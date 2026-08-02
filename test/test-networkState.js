@@ -9,27 +9,25 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 
 import { NetworkState } from '../src/networkState.js';
 
-const connectionChangedAction = new Gio.SimpleAction({
-    name: 'connectionChangedAction',
-    parameter_type: new GLib.VariantType('as'),
-});
-
-// eslint-disable-next-line no-unused-vars
-connectionChangedAction.connect('activate', (action, parameter) => {
-    // console.log(`${action.name} activated: ${parameter.deepUnpack()}`);
-    const parameters = parameter.deepUnpack();
-    const connectionName = parameters[0];
-    const activeConnectionSettings = parameters[1];
+const networkState = new NetworkState();
+networkState.connect('connection-changed', (
+    // eslint-disable-next-line no-unused-vars
+    emittingObject,
+    activeConnection,
+    connectionUuid,
+    connectionName,
+    activeConnectionSettings
+) => {
+    console.log(`activeConnection: ${activeConnection}`);
+    console.log(`connectionUuid: ${connectionUuid}`);
     console.log(`connectionName: ${connectionName}`);
     console.log(`activeConnectionSettings: ${activeConnectionSettings}`);
 });
 
-const networkState = new NetworkState(connectionChangedAction);
 const loop = GLib.MainLoop.new(null, false);
 
 setTimeout(() => {

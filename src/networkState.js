@@ -36,6 +36,7 @@ const NetworkStateSignals = GObject.registerClass(
         Signals: {
             'connection-changed': {
                 param_types: [
+                    GObject.TYPE_STRING, // active connection object path
                     GObject.TYPE_STRING, // connection UUID
                     GObject.TYPE_STRING, // connection name (human-friendly)
                     GObject.TYPE_STRING, // settings object path (eg /org/freedesktop/NetworkManager/Settings/2)
@@ -45,8 +46,10 @@ const NetworkStateSignals = GObject.registerClass(
     },
     // eslint-disable-next-line no-shadow
     class NetworkStateSignals extends ErrorSignal {
-        emitConnectionChanged(connectionUuid, connectionName, activeConnectionSettings) {
-            super.emit('connection-changed', connectionUuid, connectionName, activeConnectionSettings);
+        emitConnectionChanged(activeConnection, connectionUuid, connectionName, activeConnectionSettings) {
+            super.emit(
+                'connection-changed', activeConnection, connectionUuid, connectionName, activeConnectionSettings
+            );
         }
     }
 );
@@ -101,10 +104,18 @@ const NetworkManagerStateItem = GObject.registerClass(
 
         #relaySignalConnectionChanged(child) {
             child.connect(
-                // eslint-disable-next-line no-unused-vars
-                'connection-changed', (emittingObject, connectionUuid, connectionName, activeConnectionSettings) => {
+                'connection-changed', (
+                    // eslint-disable-next-line no-unused-vars
+                    emittingObject,
+                    activeConnection,
+                    connectionUuid,
+                    connectionName,
+                    activeConnectionSettings
+                ) => {
                     console.debug('relaying connection-changed signal from deeper down in NetworkState.');
-                    this.emitConnectionChanged(connectionUuid, connectionName, activeConnectionSettings);
+                    this.emitConnectionChanged(
+                        activeConnection, connectionUuid, connectionName, activeConnectionSettings
+                    );
                 }
             );
         }
@@ -142,7 +153,9 @@ const NetworkManagerConnectionActive = GObject.registerClass(
         }
 
         #connectionChanged() {
-            this.emitConnectionChanged(this._proxyObj.Uuid, this._proxyObj.Id, this._proxyObj.Connection);
+            this.emitConnectionChanged(
+                this.objectPath, this._proxyObj.Uuid, this._proxyObj.Id, this._proxyObj.Connection
+            );
         }
 
         /**
@@ -299,7 +312,7 @@ const NetworkManagerDevice = GObject.registerClass(
                         this.#addConnectionInfo(); // this will add the child ('/' in this case)
                         // Emit here because we won't have a child that can emit. It has been destroyed. Use empty
                         // string to indicate no connection.
-                        this.emitConnectionChanged('', '', '')
+                        this.emitConnectionChanged(oldValue, '', '', '')
                     } else if (!NetworkManagerDevice.#isConnectionActive(oldValue) &&
                         NetworkManagerDevice.#isConnectionActive(value)) {
                         // connection has toggled from inactive to active
@@ -380,7 +393,7 @@ const NetworkManager = GObject.registerClass(
                 // watching the bus.
                 () => {
                     // no connection, so be sure the choose zone window is closed
-                    this.emitConnectionChanged('', '', '');
+                    this.emitConnectionChanged('', '', '', '');
                     super.destroy();
                 }
             );
@@ -520,9 +533,11 @@ export const NetworkState = GObject.registerClass(
             this.#networkManager.connect(
                 'connection-changed',
                 // eslint-disable-next-line no-unused-vars
-                (emittingObject, connectionUuid, connectionName, activeConnectionSettings) => {
-                    console.debug('relaying error signal from deeper down in NetworkState.');
-                    this.emitConnectionChanged(connectionUuid, connectionName, activeConnectionSettings);
+                (emittingObject, activeConnection, connectionUuid, connectionName, activeConnectionSettings) => {
+                    console.debug('relaying connection-changed signal from deeper down in NetworkState.');
+                    this.emitConnectionChanged(
+                        activeConnection, connectionUuid, connectionName, activeConnectionSettings
+                    );
                 }
             );
         }
