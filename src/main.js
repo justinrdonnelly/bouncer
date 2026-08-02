@@ -46,7 +46,10 @@ export const BouncerApplication = GObject.registerClass(
         #sourceIds = [];
         #connectionIdsSeen = null;
         #quitting = false;
-        #chooseZoneWindow = null
+        #activeConnectionUuids = new Map(); // active-connection object path to UUID
+        // Keep prompt state after its window closes until every active path deactivates. This prevents repeated
+        // NetworkManager signals from reopening the prompt.
+        #chooseZonePrompts = new Map(); // UUID to prompt state
         #dependencyCheck = null
         #dashboardWindow = null
 
@@ -305,22 +308,21 @@ export const BouncerApplication = GObject.registerClass(
         async #handleConnectionChangedSignal(
             // eslint-disable-next-line no-unused-vars
             emittingObject,
-            // eslint-disable-next-line no-unused-vars
             activeConnection,
             connectionUuid,
             connectionName,
             activeConnectionSettings
         ) {
-            try {
-                // close the existing window (if applicable)
-                this.#chooseZoneWindow?.close();
-                this.#chooseZoneWindow = null;
-                // bail out if there is no connection
-                if (connectionUuid === '')
-                    return;
+            // An empty UUID signals deactivation. An empty active-connection path means NetworkManager disappeared and
+            // all prompt state is stale.
+            if (connectionUuid === '') {
+                this.#connectionDeactivated(activeConnection);
+                return;
+            }
 
+            try {
                 await this.#connectionActivated(
-                    connectionUuid, connectionName, activeConnectionSettings
+                    activeConnection, connectionUuid, connectionName, activeConnectionSettings
                 );
             } catch (e) {
                 // We've hit an exception in the callback where we'd consider opening the window. Bail out and
@@ -338,18 +340,112 @@ export const BouncerApplication = GObject.registerClass(
             }
         }
 
-        async #connectionActivated(connectionUuid, connectionName, activeConnectionSettings) {
+        async #connectionActivated(
+            activeConnection,
+            connectionUuid,
+            connectionName,
+            activeConnectionSettings
+        ) {
+            const previousConnectionUuid = this.#activeConnectionUuids.get(activeConnection);
+            // Remove a stale UUID association before reusing an active-connection path.
+            if (previousConnectionUuid !== undefined && previousConnectionUuid !== connectionUuid)
+                this.#connectionDeactivated(activeConnection);
+
+            this.#activeConnectionUuids.set(activeConnection, connectionUuid);
+
+            const existingPrompt = this.#chooseZonePrompts.get(connectionUuid);
+            if (existingPrompt !== undefined) {
+                // We're already tracking a prompt for this UUID. Associate this active connection with it instead of
+                // starting another prompt.
+                existingPrompt.activeConnections.add(activeConnection);
+                return;
+            }
+
             const isConnectionNew = this.#connectionIdsSeen.isConnectionNew(connectionUuid);
             if (!isConnectionNew)
-                // The connection is not new. Don't open the window.
                 return;
 
-            const [zones, defaultZone, currentZone] = await Promise.all([
-                ZoneInfo.getZones(),
-                ZoneInfo.getDefaultZone(),
-                ZoneForConnection.getZone(activeConnectionSettings),
-            ]);
+            // prompt is an object containing the set of active connection object paths, and a reference to the Choose
+            // Zone window.
+            const prompt = {
+                // Use a set here because multiple active-connection paths for the same UUID should share one window.
+                activeConnections: new Set([activeConnection]),
+                window: null,
+            };
+            // Register the prompt before loading zone information so repeated signals cannot start duplicate
+            // asynchronous work for this UUID.
+            this.#chooseZonePrompts.set(connectionUuid, prompt);
+
+            let zones;
+            let defaultZone;
+            let currentZone;
+            try {
+                [zones, defaultZone, currentZone] = await Promise.all([
+                    ZoneInfo.getZones(),
+                    ZoneInfo.getDefaultZone(),
+                    ZoneForConnection.getZone(activeConnectionSettings),
+                ]);
+            } catch (e) {
+                // Do not report failures from a prompt that was cancelled or replaced while zone information was
+                // loading.
+                if (this.#chooseZonePrompts.get(connectionUuid) !== prompt)
+                    return;
+                throw e;
+            }
+
+            // Do not create a window for a prompt that was cancelled, replaced, or no longer has active connections.
+            if (this.#chooseZonePrompts.get(connectionUuid) !== prompt || prompt.activeConnections.size === 0)
+                return;
+
             this.#createWindow(
+                connectionUuid,
+                connectionName,
+                defaultZone,
+                currentZone,
+                zones,
+                activeConnectionSettings,
+                prompt
+            );
+        }
+
+        #connectionDeactivated(activeConnection) {
+            if (activeConnection === '') {
+                const windows = Array.from(this.#chooseZonePrompts.values())
+                    .map((prompt) => prompt.window)
+                    .filter((window) => window !== null);
+                this.#activeConnectionUuids.clear();
+                this.#chooseZonePrompts.clear();
+                windows.forEach((window) => window.close());
+                return;
+            }
+
+            const connectionUuid = this.#activeConnectionUuids.get(activeConnection);
+            if (connectionUuid === undefined)
+                return;
+
+            this.#activeConnectionUuids.delete(activeConnection);
+            const prompt = this.#chooseZonePrompts.get(connectionUuid);
+            if (prompt === undefined)
+                return;
+
+            prompt.activeConnections.delete(activeConnection);
+            if (prompt.activeConnections.size > 0)
+                return;
+
+            this.#chooseZonePrompts.delete(connectionUuid);
+            prompt.window?.close();
+        }
+
+        #createWindow(
+            connectionUuid,
+            connectionName,
+            defaultZone,
+            currentZone,
+            zones,
+            activeConnectionSettings,
+            prompt
+        ) {
+            const chooseZoneBox = new ChooseZoneBox(
                 connectionUuid,
                 connectionName,
                 defaultZone,
@@ -357,25 +453,14 @@ export const BouncerApplication = GObject.registerClass(
                 zones,
                 activeConnectionSettings
             );
-        }
-
-        #createWindow(connectionUuid, connectionName, defaultZone, currentZone, zones, activeConnectionSettings) {
-            // this.#chooseZoneWindow should always be null. Either this is the first creation, or we should have
-            // already called this.#chooseZoneWindow?.close().
-            if (!this.#chooseZoneWindow) {
-                const chooseZoneBox = new ChooseZoneBox(
-                    connectionUuid,
-                    connectionName,
-                    defaultZone,
-                    currentZone,
-                    zones,
-                    activeConnectionSettings
-                );
-                this.#chooseZoneWindow = new BouncerWindow(this, chooseZoneBox);
-            }
-
-            this.#chooseZoneWindow.content.connect('zone-selected', this.#chooseClicked.bind(this));
-            this.#chooseZoneWindow.present();
+            const chooseZoneWindow = new BouncerWindow(this, chooseZoneBox);
+            prompt.window = chooseZoneWindow;
+            chooseZoneWindow.connect('destroy', () => {
+                if (this.#chooseZonePrompts.get(connectionUuid) === prompt)
+                    prompt.window = null;
+            });
+            chooseZoneWindow.content.connect('zone-selected', this.#chooseClicked.bind(this));
+            chooseZoneWindow.present();
         }
 
         async #chooseClicked(

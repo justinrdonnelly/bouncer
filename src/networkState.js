@@ -416,7 +416,7 @@ const NetworkManager = GObject.registerClass(
                     this.#proxyGeneration++;
                     if (this._destroyed)
                         return;
-                    // no connection, so be sure the choose zone window is closed
+                    // No connections remain, so close all Choose Zone windows.
                     this.emitConnectionChanged('', '', '', '');
                     super.destroy();
                 }
