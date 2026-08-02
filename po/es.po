@@ -1,0 +1,861 @@
+# SPANISH TRANSLATION
+# Copyright (C) 2026 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the bouncer package.
+# GUILLERMO THEMSEL <themselg@tuta.io>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: bouncer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-01 15:02+0000\n"
+"PO-Revision-Date: 2026-08-01 20:09-0006\n"
+"Last-Translator: GUILLERMO THEMSEL <themselg@tuta.io>\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Translators: Do NOT translate @APP_NAME@!
+#: data/io.github.justinrdonnelly.bouncer.desktop.in.in:3
+msgid "@APP_NAME@"
+msgstr "@APP_NAME@"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/io.github.justinrdonnelly.bouncer.desktop.in.in:11
+msgid "firewall;network;Wi-Fi;"
+msgstr "firewall;network;Wi-Fi;cortafuegos;red;inalámbrica;"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:8
+msgid "Keep the riffraff out"
+msgstr "Mantén a la chusma fuera"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:13
+msgid ""
+"Bouncer is an application to help you choose the correct firewall zone for "
+"wireless connections. When you connect to a new network, a window opens "
+"prompting you for what kind of network (eg home, public, work) it is. When "
+"you choose the network type, it is associated with that network and "
+"automatically used in the future."
+msgstr ""
+"Bouncer es una aplicación que te ayuda a elegir la zona de cortafuegos "
+"correcta para las conexiones inalámbricas. Cuando te conectas a una red "
+"nueva, se abre una ventana que te pregunta qué tipo de red es (p. ej., "
+"hogar, pública, trabajo). Cuando eliges el tipo de red, se asocia con esa "
+"red y se usará automáticamente en el futuro."
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:14
+msgid ""
+"NetworkManager and firewalld are required. If you don't use those, you can't "
+"use Bouncer. Fedora uses both by default. Other distributions may not."
+msgstr ""
+"NetworkManager y firewalld son necesarios. Si no los usas, no puedes usar "
+"Bouncer. Fedora usa ambos de forma predeterminada. Es posible que otras "
+"distribuciones no lo hagan."
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:15
+msgid ""
+"Additional setup is required after installation. See the applicable section "
+"for your distribution. Once the setup is done, start Bouncer and confirm "
+"your system is configured correctly. Then click the Monitor button to begin "
+"using Bouncer. After that, it will start automatically when you log in."
+msgstr ""
+"Se requiere configuración adicional después de la instalación. Consulta la "
+"sección correspondiente a tu distribución. Una vez completada la "
+"configuración, inicia Bouncer y confirma que tu sistema esté configurado "
+"correctamente. Luego haz clic en el botón Monitorear para empezar a usar "
+"Bouncer. Después de eso, se iniciará automáticamente cuando inicies sesión."
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:16
+msgid "Fedora"
+msgstr "Fedora"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:18
+msgid ""
+"For Fedora, everything just works! Just start Bouncer to confirm, and click "
+"the Monitor button to begin using Bouncer."
+msgstr ""
+"¡Para Fedora, todo simplemente funciona! Solo inicia Bouncer para "
+"confirmarlo, y haz clic en el botón Monitorear para empezar a usar Bouncer."
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:20
+msgid "Ubuntu"
+msgstr "Ubuntu"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:22
+msgid "Uninstall ufw: <code>sudo apt remove ufw</code>"
+msgstr "Desinstala ufw: <code>sudo apt remove ufw</code>"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:23
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:29
+msgid "Install firewalld: <code>sudo apt install firewalld</code>"
+msgstr "Instala firewalld: <code>sudo apt install firewalld</code>"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:24
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:30
+msgid ""
+"By default, polkit is configured to not let regular users set the zone for a "
+"connection. The simplest way to change this is to add users to the "
+"<code>netdev</code> group (eg <code>usermod -a -G netdev justin</code>). "
+"Alternatively, you can create a custom polkit rule for the "
+"<code>org.freedesktop.NetworkManager.settings.modify.system</code> action "
+"(how to create custom polkit rules is beyond the scope of this document and "
+"is left as an exercise for the reader)."
+msgstr ""
+"De forma predeterminada, polkit está configurado para no permitir que los "
+"usuarios normales establezcan la zona de una conexión. La forma más sencilla "
+"de cambiar esto es añadir a los usuarios al grupo <code>netdev</code> (p. "
+"ej., <code>usermod -a -G netdev justin</code>). Alternativamente, puedes "
+"crear una regla personalizada de polkit para la acción "
+"<code>org.freedesktop.NetworkManager.settings.modify.system</code> (cómo "
+"crear reglas personalizadas de polkit está fuera del alcance de este "
+"documento y se deja como ejercicio para el lector)."
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:25
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:31
+msgid ""
+"Start Bouncer and confirm your system is configured correctly. Then click "
+"the Monitor button to begin using Bouncer."
+msgstr ""
+"Inicia Bouncer y confirma que tu sistema esté configurado correctamente. "
+"Luego haz clic en el botón Monitorear para empezar a usar Bouncer."
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:27
+msgid "Debian"
+msgstr "Debian"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:43
+msgid "Bouncer prompting for the type of network"
+msgstr "Bouncer preguntando el tipo de red"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:47
+msgid "Bouncer dashboard showing configuration status"
+msgstr "Panel de Bouncer mostrando el estado de la configuración"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:51
+msgid "Bouncer dashboard showing network and zone information"
+msgstr "Panel de Bouncer mostrando información de redes y zonas"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:62
+msgid "UI/UX enhancements"
+msgstr "Mejoras de UI/UX"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:63
+msgid "Clean up dashboard dependency tab"
+msgstr "Limpieza de la pestaña de dependencias del panel"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:64
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:77
+msgid "Update Occitan translations"
+msgstr "Actualización de las traducciones al occitano"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:65
+msgid "Update Danish translations"
+msgstr "Actualización de las traducciones al danés"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:66
+msgid "Update JavaScript development tooling"
+msgstr "Actualización de las herramientas de desarrollo de JavaScript"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:73
+msgid "Include a networks tab on the dashboard"
+msgstr "Se incluyó una pestaña de redes en el panel"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:74
+msgid "UI cleanup"
+msgstr "Limpieza de la interfaz"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:75
+msgid "Improve accessibility for dependency item status"
+msgstr "Mejora de la accesibilidad del estado de los elementos de dependencia"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:76
+msgid "Track connections by NetworkManager UUID"
+msgstr "Seguimiento de conexiones por UUID de NetworkManager"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:78
+msgid "Update Italian translations"
+msgstr "Actualización de las traducciones al italiano"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:79
+msgid "Include Danish translations"
+msgstr "Se incluyeron las traducciones al danés"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:86
+msgid "Correctly show autostart status on dashboard"
+msgstr "Se corrigió la visualización del estado de inicio automático en el panel"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:87
+msgid "Include Italian translation"
+msgstr "Se incluyó la traducción al italiano"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:88
+msgid "Track connection IDs seen per machine"
+msgstr "Seguimiento de los ID de conexión vistos por equipo"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:89
+msgid "Include Polish translation"
+msgstr "Se incluyó la traducción al polaco"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:90
+msgid "Use GNOME 50 runtime"
+msgstr "Uso del runtime de GNOME 50"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:91
+msgid "Handle NetworkManager restarts"
+msgstr "Gestión de los reinicios de NetworkManager"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:98
+msgid "Include dashboard"
+msgstr "Se incluyó el panel"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:105
+msgid "Include additional desktop categories"
+msgstr "Se incluyeron categorías de escritorio adicionales"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:106
+msgid "Support command line arguments"
+msgstr "Compatibilidad con argumentos de línea de comandos"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:113
+msgid "Added Russian translation"
+msgstr "Se añadió la traducción al ruso"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:114
+msgid "Fixed metainfo formatting"
+msgstr "Se corrigió el formato del metainfo"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:121
+msgid "Added Occitan translation"
+msgstr "Se añadió la traducción al occitano"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:122
+msgid "Added Simplified Chinese translation"
+msgstr "Se añadió la traducción al chino simplificado"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:123
+msgid "Fixed multiple instance support"
+msgstr "Se corrigió la compatibilidad con múltiples instancias"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:124
+msgid "Use GNOME 49 runtime"
+msgstr "Uso del runtime de GNOME 49"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:131
+msgid "Critical bug fix for non-English language users"
+msgstr "Corrección crítica para usuarios de idiomas distintos al inglés"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:132
+msgid "Added Dutch translation"
+msgstr "Se añadió la traducción al neerlandés"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:133
+msgid "Documentation cleanups"
+msgstr "Limpieza de la documentación"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:139
+msgid "Include a notification for first run success"
+msgstr "Se incluyó una notificación de éxito en la primera ejecución"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:144
+msgid "Initial release"
+msgstr "Versión inicial"
+
+#: src/dependencyCheck.js:275
+msgid "Bouncer must start on login"
+msgstr "Bouncer debe iniciarse al iniciar sesión"
+
+#: src/dependencyCheck.js:294
+msgid "Can't configure autostart"
+msgstr "No se puede configurar el inicio automático"
+
+#: src/dependencyCheck.js:295
+msgid ""
+"Please make sure the portal is available from inside the Flatpak sandbox. "
+"Please see logs for more information."
+msgstr ""
+"Asegúrate de que el portal esté disponible dentro del sandbox de Flatpak. "
+"Consulta los registros para más información."
+
+#: src/dependencyCheck.js:319
+msgid "Can't find D-Bus names"
+msgstr "No se pueden encontrar los nombres de D-Bus"
+
+#: src/dependencyCheck.js:320
+msgid ""
+"Please make sure D-Bus is installed, running, and available inside the "
+"Flatpak sandbox. Please see logs for more information."
+msgstr ""
+"Asegúrate de que D-Bus esté instalado, en ejecución y disponible dentro del "
+"sandbox de Flatpak. Consulta los registros para más información."
+
+#: src/dependencyCheck.js:350
+msgid "Can't find firewalld"
+msgstr "No se puede encontrar firewalld"
+
+#: src/dependencyCheck.js:351
+msgid ""
+"Please make sure firewalld is installed, running, and available inside the "
+"Flatpak sandbox. Please see logs for more information."
+msgstr ""
+"Asegúrate de que firewalld esté instalado, en ejecución y disponible dentro "
+"del sandbox de Flatpak. Consulta los registros para más información."
+
+#: src/dependencyCheck.js:370
+msgid "Can't get firewalld zones"
+msgstr "No se pueden obtener las zonas de firewalld"
+
+#: src/dependencyCheck.js:371
+msgid ""
+"Unable to get firewalld zones. Please make sure firewalld permissions are "
+"correct, and are not restricted inside the Flatpak sandbox. Please see logs "
+"for more information."
+msgstr ""
+"No se pudieron obtener las zonas de firewalld. Asegúrate de que los permisos "
+"de firewalld sean correctos y no estén restringidos dentro del sandbox de "
+"Flatpak. Consulta los registros para más información."
+
+#: src/dependencyCheck.js:387
+msgid "Can't get firewalld default zone"
+msgstr "No se puede obtener la zona predeterminada de firewalld"
+
+#: src/dependencyCheck.js:388
+msgid ""
+"Unable to get firewalld default zone. Please make sure firewalld permissions "
+"are correct, and are not restricted inside the Flatpak sandbox. Please see "
+"logs for more information."
+msgstr ""
+"No se pudo obtener la zona predeterminada de firewalld. Asegúrate de que los "
+"permisos de firewalld sean correctos y no estén restringidos dentro del "
+"sandbox de Flatpak. Consulta los registros para más información."
+
+#: src/dependencyCheck.js:418
+msgid "Can't find NetworkManager"
+msgstr "No se puede encontrar NetworkManager"
+
+#: src/dependencyCheck.js:419
+msgid ""
+"Please make sure NetworkManager is installed, running, and available inside "
+"the Flatpak sandbox. Please see logs for more information."
+msgstr ""
+"Asegúrate de que NetworkManager esté instalado, en ejecución y disponible "
+"dentro del sandbox de Flatpak. Consulta los registros para más información."
+
+#: src/dependencyCheck.js:477
+msgid "Authentication required to change NetworkManager connection zone"
+msgstr "Se requiere autenticación para cambiar la zona de conexión de NetworkManager"
+
+#: src/dependencyCheck.js:478
+msgid ""
+"You are authorized to change the connection zone in NetworkManager, but will "
+"be required to authenticate. This will work, but may be annoying. Please see "
+"logs for more information."
+msgstr ""
+"Estás autorizado para cambiar la zona de conexión en NetworkManager, pero se "
+"te pedirá que te autentiques. Esto funcionará, pero puede resultar molesto. "
+"Consulta los registros para más información."
+
+#: src/dependencyCheck.js:491
+msgid "Not authorized to change NetworkManager connection zone"
+msgstr "No autorizado para cambiar la zona de conexión de NetworkManager"
+
+#: src/dependencyCheck.js:492
+msgid ""
+"You are not authorized to change the connection zone in NetworkManager. This "
+"is required for Bouncer to function properly. Please see logs for more "
+"information."
+msgstr ""
+"No estás autorizado para cambiar la zona de conexión en NetworkManager. Esto "
+"es necesario para que Bouncer funcione correctamente. Consulta los registros "
+"para más información."
+
+#: src/dependencyCheck.js:504
+msgid "Unexpected result from NetworkManager GetSettings: "
+msgstr "Resultado inesperado de GetSettings de NetworkManager: "
+
+#: src/dependencyCheck.js:505
+msgid ""
+"Unable to determine whether you are authorized to change the connection zone "
+"in NetworkManager. Bouncer may not function properly. Please see logs for "
+"more information."
+msgstr ""
+"No se pudo determinar si estás autorizado para cambiar la zona de conexión "
+"en NetworkManager. Es posible que Bouncer no funcione correctamente. "
+"Consulta los registros para más información."
+
+#: src/main.js:63
+msgid "Monitor Wi-Fi connections in the background"
+msgstr "Monitorear las conexiones Wi-Fi en segundo plano"
+
+#: src/main.js:128
+msgid "Unknown error"
+msgstr "Error desconocido"
+
+#: src/main.js:129
+msgid ""
+"An unknown error occurred. Bouncer may not function correctly. Please see "
+"logs for more information."
+msgstr ""
+"Ocurrió un error desconocido. Es posible que Bouncer no funcione "
+"correctamente. Consulta los registros para más información."
+
+#: src/main.js:197
+msgid "Can't find previously seen connections"
+msgstr "No se pueden encontrar las conexiones vistas anteriormente"
+
+#: src/main.js:198
+msgid ""
+"There was a problem determining which connections have already been seen. "
+"Please see logs for more information."
+msgstr ""
+"Hubo un problema al determinar qué conexiones ya se habían visto. Consulta "
+"los registros para más información."
+
+#: src/main.js:221
+msgid "Can't determine network state"
+msgstr "No se puede determinar el estado de la red"
+
+#: src/main.js:222
+msgid ""
+"There was a problem tracking network connection changes. Please see logs for "
+"more information."
+msgstr ""
+"Hubo un problema al rastrear los cambios en las conexiones de red. Consulta "
+"los registros para más información."
+
+#. details
+#: src/main.js:243
+msgid ""
+"Bouncer is an application to help you choose the correct firewall zone for "
+"wireless connections. When you connect to a new network, Bouncer will open a "
+"window prompting you for what kind of network (eg home, public, work) it is. "
+"When you choose the network type, it is associated with that network and "
+"automatically used in the future."
+msgstr ""
+"Bouncer es una aplicación que te ayuda a elegir la zona de cortafuegos "
+"correcta para las conexiones inalámbricas. Cuando te conectas a una red "
+"nueva, Bouncer abrirá una ventana que te preguntará qué tipo de red es (p. "
+"ej., hogar, pública, trabajo). Cuando eliges el tipo de red, se asocia con "
+"esa red y se usará automáticamente en el futuro."
+
+#. Translators: Replace 'translator-credits' with your name/username, and optionally an email or
+#. URL.
+#: src/main.js:255
+msgid "translator-credits"
+msgstr "Guillermo Themsel <themselg@tuta.io>"
+
+#: src/main.js:285
+msgid " Bouncer is shutting down. You will need to restart manually."
+msgstr " Bouncer se está cerrando. Deberás reiniciarlo manualmente."
+
+#: src/main.js:298
+msgid "First run setup complete!"
+msgstr "¡Configuración inicial completa!"
+
+#: src/main.js:299
+msgid ""
+"Your system is correctly configured for Bouncer. Bouncer will autostart on "
+"each login and will open when you connect to a new Wi-Fi network."
+msgstr ""
+"Tu sistema está correctamente configurado para Bouncer. Bouncer se iniciará "
+"automáticamente en cada inicio de sesión y se abrirá cuando te conectes a "
+"una red Wi-Fi nueva."
+
+#: src/main.js:342
+msgid "Can't prompt for firewall zone"
+msgstr "No se puede solicitar la zona de cortafuegos"
+
+#: src/main.js:343
+msgid ""
+"There was a problem getting information to prompt for the firewall zone. "
+"Please see logs for more information."
+msgstr ""
+"Hubo un problema al obtener la información para solicitar la zona de "
+"cortafuegos. Consulta los registros para más información."
+
+#: src/main.js:394
+msgid "Can't add connection to seen connections"
+msgstr "No se puede añadir la conexión a las conexiones vistas"
+
+#: src/main.js:395
+msgid ""
+"There was a problem adding the connection to the list of seen connections. "
+"The firewall zone will not be set for this connection. Please see logs for "
+"more information."
+msgstr ""
+"Hubo un problema al añadir la conexión a la lista de conexiones vistas. No "
+"se establecerá la zona de cortafuegos para esta conexión. Consulta los "
+"registros para más información."
+
+#: src/main.js:413
+msgid "Can't set firewall zone for connection"
+msgstr "No se puede establecer la zona de cortafuegos para la conexión"
+
+#: src/main.js:414
+msgid ""
+"There was a problem setting the firewall zone for the connection. Please see "
+"logs for more information."
+msgstr ""
+"Hubo un problema al establecer la zona de cortafuegos para la conexión. "
+"Consulta los registros para más información."
+
+#: src/main.js:429
+msgid "Can't save connection to seen connections"
+msgstr "No se puede guardar la conexión en las conexiones vistas"
+
+#: src/main.js:430
+msgid ""
+"The zone has been set for the connection, but there was a problem saving the "
+"updated list of seen connections to disk. Once you restart Bouncer, you will "
+"again be prompted to choose a firewall zone for this connection. Please see "
+"logs for more information."
+msgstr ""
+"Se estableció la zona para la conexión, pero hubo un problema al guardar en "
+"disco la lista actualizada de conexiones vistas. Cuando reinicies Bouncer, "
+"se te volverá a pedir que elijas una zona de cortafuegos para esta conexión. "
+"Consulta los registros para más información."
+
+#: src/main.js:440
+msgid "Firewall zone set for connection: "
+msgstr "Zona de cortafuegos establecida para la conexión: "
+
+#. this is the default zone
+#: src/main.js:442
+msgid ""
+"Firewall zone for this connection has been set to the default zone "
+"(currently "
+msgstr ""
+"La zona de cortafuegos para esta conexión se estableció en la zona "
+"predeterminada (actualmente "
+
+#: src/main.js:443
+msgid ""
+"). Whenever you connect to this network in the future, the firewall zone "
+"will automatically be changed to the default zone."
+msgstr ""
+"). Cada vez que te conectes a esta red en el futuro, la zona de cortafuegos "
+"cambiará automáticamente a la zona predeterminada."
+
+#: src/main.js:447
+msgid "Firewall zone for this connection has been set to "
+msgstr "La zona de cortafuegos para esta conexión se estableció en "
+
+#: src/main.js:447
+msgid ""
+". Whenever you connect to this network in the future, the firewall zone will "
+"automatically be changed to "
+msgstr ""
+". Cada vez que te conectes a esta red en el futuro, la zona de cortafuegos "
+"cambiará automáticamente a "
+
+#: src/main.js:449
+msgid "."
+msgstr "."
+
+#: src/networkState.js:125
+msgid "Error determining network state"
+msgstr "Error al determinar el estado de la red"
+
+#: src/networkState.js:126
+msgid ""
+"Bouncer ran into an error determining network state. This is required for "
+"the application to work correctly. Please see logs for more information."
+msgstr ""
+"Bouncer encontró un error al determinar el estado de la red. Esto es "
+"necesario para que la aplicación funcione correctamente. Consulta los "
+"registros para más información."
+
+#: src/ui/bouncerWindow.ui:26 src/ui/dashboard.ui:38
+msgid "Menu"
+msgstr "Menú"
+
+#: src/ui/bouncerWindow.ui:59 src/ui/dashboard.ui:137
+msgid "_About Bouncer"
+msgstr "_Acerca de Bouncer"
+
+#: src/ui/chooseZoneBox.ui:24
+msgid ""
+"You have connected to a new Wi-Fi network. Please choose a firewall zone. "
+"What type of network is this?"
+msgstr ""
+"Te has conectado a una red Wi-Fi nueva. Elige una zona de cortafuegos. ¿Qué "
+"tipo de red es esta?"
+
+#: src/ui/chooseZoneBox.ui:40
+msgid "Network"
+msgstr "Red"
+
+#: src/ui/chooseZoneBox.ui:49
+msgid "Default Zone"
+msgstr "Zona predeterminada"
+
+#: src/ui/chooseZoneBox.ui:58 src/ui/networksBox.ui:53
+msgid "Current Zone"
+msgstr "Zona actual"
+
+#. make the dropdown not span the entire box
+#: src/ui/chooseZoneBox.ui:74
+msgid "Firewall Zone"
+msgstr "Zona de cortafuegos"
+
+#: src/ui/chooseZoneBox.ui:75
+msgid "Choose the firewall zone for this network."
+msgstr "Elige la zona de cortafuegos para esta red."
+
+#: src/ui/chooseZoneBox.ui:78
+msgid "Zone"
+msgstr "Zona"
+
+#: src/ui/chooseZoneBox.ui:101 src/ui/moreInfo.ui:15
+msgid "More Information"
+msgstr "Más información"
+
+#: src/ui/chooseZoneBox.ui:102
+msgid "Get more information."
+msgstr "Obtén más información."
+
+#: src/ui/chooseZoneBox.ui:107
+msgid "Learn More"
+msgstr "Saber más"
+
+#: src/ui/chooseZoneBox.ui:116
+msgid "Skip for Now"
+msgstr "Omitir por ahora"
+
+#: src/ui/chooseZoneBox.ui:117
+msgid ""
+"No change will be made. You will see this window again the next time you "
+"connect to this network."
+msgstr ""
+"No se hará ningún cambio. Verás esta ventana de nuevo la próxima vez que te "
+"conectes a esta red."
+
+#: src/ui/chooseZoneBox.ui:122
+msgid "Skip"
+msgstr "Omitir"
+
+#: src/ui/chooseZoneBox.ui:131
+msgid "Choose Zone"
+msgstr "Elegir zona"
+
+#: src/ui/chooseZoneBox.ui:132
+msgid ""
+"The selected firewall zone will be used every time you connect to this "
+"network."
+msgstr ""
+"La zona de cortafuegos seleccionada se usará cada vez que te conectes a "
+"esta red."
+
+#: src/ui/chooseZoneBox.ui:137
+msgid "Choose"
+msgstr "Elegir"
+
+#: src/ui/dashboard.js:54
+msgid ""
+"Saved networks could not be loaded. Please see logs for more information."
+msgstr ""
+"No se pudieron cargar las redes guardadas. Consulta los registros para más "
+"información."
+
+#: src/ui/dashboard.ui:29
+msgid "Dashboard"
+msgstr "Panel"
+
+#: src/ui/dashboard.ui:91
+msgid "Dependencies"
+msgstr "Dependencias"
+
+#: src/ui/dashboard.ui:108 src/ui/networksBox.ui:38
+msgid "Networks"
+msgstr "Redes"
+
+#: src/ui/dependencyBox.js:61
+msgid "firewalld Running"
+msgstr "firewalld en ejecución"
+
+#: src/ui/dependencyBox.js:80
+msgid "NetworkManager Running"
+msgstr "NetworkManager en ejecución"
+
+#: src/ui/dependencyBox.js:99
+msgid "NetworkManager Permissions"
+msgstr "Permisos de NetworkManager"
+
+#: src/ui/dependencyBox.js:113
+msgid "Run on Startup"
+msgstr "Ejecutar al iniciar el sistema"
+
+#: src/ui/dependencyBox.js:118
+msgid "Enable"
+msgstr "Habilitar"
+
+#: src/ui/dependencyBox.js:149
+msgid "Bouncer is monitoring your Wi-Fi!"
+msgstr "¡Bouncer está monitoreando tu Wi-Fi!"
+
+#. We're not monitoring. Show the correct text.
+#: src/ui/dependencyBox.js:153 src/ui/dependencyBox.ui:64
+msgid "Once everything is ready, click to begin using Bouncer."
+msgstr "Cuando todo esté listo, haz clic para empezar a usar Bouncer."
+
+#: src/ui/dependencyBox.ui:33
+msgid ""
+"In order to function properly, Bouncer depends on multiple other system "
+"components and configurations. To help facilitate the correct setup, this "
+"page shows the status for those required components and configurations."
+msgstr ""
+"Para funcionar correctamente, Bouncer depende de varios otros componentes y "
+"configuraciones del sistema. Para facilitar la configuración correcta, esta "
+"página muestra el estado de esos componentes y configuraciones necesarios."
+
+#: src/ui/dependencyBox.ui:41
+msgid ""
+"You can close this window at any time without affecting network monitoring."
+msgstr ""
+"Puedes cerrar esta ventana en cualquier momento sin afectar el monitoreo de "
+"la red."
+
+#: src/ui/dependencyBox.ui:63
+msgid "Network Monitoring"
+msgstr "Monitoreo de red"
+
+#: src/ui/dependencyBox.ui:70
+msgid "Monitor"
+msgstr "Monitorear"
+
+#: src/ui/dependencyItem.js:101 src/ui/dependencyItem.js:110
+#: src/ui/dependencyItem.ui:23
+msgid "Unknown"
+msgstr "Desconocido"
+
+#: src/ui/dependencyItem.js:103
+msgid "Ready"
+msgstr "Listo"
+
+#: src/ui/dependencyItem.js:105
+msgid "Suboptimal"
+msgstr "No óptimo"
+
+#: src/ui/dependencyItem.js:107
+msgid "Not Ready"
+msgstr "No listo"
+
+#: src/ui/dependencyItem.ui:31
+msgid "Check"
+msgstr "Comprobar"
+
+#. Translators: Do not translate or modify %1$s, %2$s, %3$s, or %4$s. They are replaced with the
+#. firewalld, NetworkManager, firewalld connection documentation, and Bouncer URLs, respectively.
+#: src/ui/moreInfo.js:32
+#, javascript-format
+msgid ""
+"You're using <a href=\"%1$s\">firewalld</a> as your firewall. One of the "
+"nice features about firewalld is that it supports different zones (sets of "
+"firewall rules). You may have a firewall zone configured for home use, and a "
+"different zone for public networks.\n"
+"\n"
+"You're using <a href=\"%2$s\">NetworkManager</a> for network configuration. "
+"NetworkManager integrates well with firewalld and can <a href=\"%3$s\">set "
+"the firewalld zone for an interface based on the connection</a>. This means "
+"your firewall rules can automatically change depending on your network "
+"connection.\n"
+"\n"
+"Bouncer is designed to make this easier for you. It opens a window when you "
+"connect to a new network, allowing you to choose the appropriate firewall "
+"zone. If you're not sure what to choose, you should probably choose the "
+"option that matches where you are. The safest option is usually 'public'. If "
+"you don't want to change anything, click 'Skip'.\n"
+"\n"
+"You can read more about Bouncer <a href=\"%4$s\">here</a>."
+msgstr ""
+"Estás usando <a href=\"%1$s\">firewalld</a> como cortafuegos. Una de las "
+"ventajas de firewalld es que admite diferentes zonas (conjuntos de reglas de "
+"cortafuegos). Puedes tener una zona configurada para uso doméstico y otra "
+"distinta para redes públicas.\n"
+"\n"
+"Estás usando <a href=\"%2$s\">NetworkManager</a> para la configuración de "
+"red. NetworkManager se integra bien con firewalld y puede <a href=\"%3$s"
+"\">establecer la zona de firewalld para una interfaz según la conexión</a>. "
+"Esto significa que tus reglas de cortafuegos pueden cambiar automáticamente "
+"según tu conexión de red.\n"
+"\n"
+"Bouncer está diseñado para facilitarte esto. Abre una ventana cuando te "
+"conectas a una red nueva, permitiéndote elegir la zona de cortafuegos "
+"adecuada. Si no estás seguro de qué elegir, probablemente deberías elegir la "
+"opción que coincida con dónde te encuentras. La opción más segura suele ser "
+"«pública». Si no quieres cambiar nada, haz clic en «Omitir».\n"
+"\n"
+"Puedes leer más sobre Bouncer <a href=\"%4$s\">aquí</a>."
+
+#: src/ui/networksBox.js:201
+msgid "Firewall zone information could not be loaded."
+msgstr "No se pudo cargar la información de la zona de cortafuegos."
+
+#: src/ui/networksBox.js:259
+msgid "Zone could not be changed"
+msgstr "No se pudo cambiar la zona"
+
+#. Translators: %s is the name of a firewall zone.
+#: src/ui/networksBox.js:280
+#, javascript-format
+msgid "Zone changed to %s"
+msgstr "Zona cambiada a %s"
+
+#: src/ui/networksBox.js:281 src/ui/networksBox.js:338
+msgid "_Undo"
+msgstr "_Deshacer"
+
+#: src/ui/networksBox.js:304
+msgid "Unable to undo because the zone changed again"
+msgstr "No se puede deshacer porque la zona volvió a cambiar"
+
+#: src/ui/networksBox.js:313
+msgid "Zone change could not be undone"
+msgstr "No se pudo deshacer el cambio de zona"
+
+#: src/ui/networksBox.js:331
+msgid "Network could not be forgotten"
+msgstr "No se pudo olvidar la red"
+
+#. Translators: %s is the NetworkManager connection name.
+#: src/ui/networksBox.js:337
+#, javascript-format
+msgid "Network forgotten: %s"
+msgstr "Red olvidada: %s"
+
+#: src/ui/networksBox.js:354
+msgid "Network could not be restored"
+msgstr "No se pudo restaurar la red"
+
+#: src/ui/networksBox.ui:34
+msgid "Manage Networks"
+msgstr "Gestionar redes"
+
+#: src/ui/networksBox.ui:35
+msgid "Manage your configured networks from here."
+msgstr "Gestiona tus redes configuradas desde aquí."
+
+#: src/ui/networksBox.ui:69
+msgid "Change Zone"
+msgstr "Cambiar zona"
+
+#: src/ui/networksBox.ui:80
+msgid "Change"
+msgstr "Cambiar"
+
+#: src/ui/networksBox.ui:89
+msgid "Forget Zone Choice"
+msgstr "Olvidar elección de zona"
+
+#: src/ui/networksBox.ui:90
+msgid ""
+"Forget this network. You will be prompted to choose the firewall zone for "
+"this network the next time you connect to it."
+msgstr ""
+"Olvida esta red. Se te pedirá que elijas la zona de cortafuegos para esta "
+"red la próxima vez que te conectes a ella."
+
+#: src/ui/networksBox.ui:95
+msgid "Forget"
+msgstr "Olvidar"
