@@ -454,6 +454,7 @@ export const BouncerApplication = GObject.registerClass(
                 activeConnectionSettings
             );
             const chooseZoneWindow = new BouncerWindow(this, chooseZoneBox);
+            chooseZoneWindow.title = connectionName;
             prompt.window = chooseZoneWindow;
             chooseZoneWindow.connect('destroy', () => {
                 if (this.#chooseZonePrompts.get(connectionUuid) === prompt)
@@ -546,7 +547,7 @@ export const BouncerApplication = GObject.registerClass(
                         'Whenever you connect to this network in the future, the firewall zone will automatically ' +
                         'be changed to ') + zone + _('.')
                     );
-                this.send_notification('main-zone-chosen', notification);
+                this.send_notification(`main-zone-chosen-${connectionUuid}`, notification);
             } catch (e) {
                 console.error('Error generating notification setting about the zone for connection.');
                 console.error(e.message);
