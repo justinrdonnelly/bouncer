@@ -305,7 +305,7 @@ export const BouncerApplication = GObject.registerClass(
             this.send_notification('first-run-setup-complete', notification);
         }
 
-        async #handleConnectionChangedSignal(
+        #handleConnectionChangedSignal(
             // eslint-disable-next-line no-unused-vars
             emittingObject,
             activeConnection,
@@ -320,11 +320,11 @@ export const BouncerApplication = GObject.registerClass(
                 return;
             }
 
-            try {
-                await this.#connectionActivated(
-                    activeConnection, connectionUuid, connectionName, activeConnectionSettings
-                );
-            } catch (e) {
+            // GObject signal handlers do not await returned promises. Attach error handling directly to this
+            // asynchronous work instead of returning a promise from the signal handler.
+            this.#connectionActivated(
+                activeConnection, connectionUuid, connectionName, activeConnectionSettings
+            ).catch((e) => {
                 // We've hit an exception in the callback where we'd consider opening the window. Bail out and
                 // hope for better luck next time (unlikely).
                 console.error('Error while trying to prompt. This is likely related to getting zone ' +
@@ -337,7 +337,7 @@ export const BouncerApplication = GObject.registerClass(
                     _('There was a problem getting information to prompt for the firewall zone. Please see logs for ' +
                         'more information.')
                 );
-            }
+            });
         }
 
         async #connectionActivated(
