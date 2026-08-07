@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Bouncer 49\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-01 15:02+0000\n"
+"POT-Creation-Date: 2026-08-06 01:15+0000\n"
 "PO-Revision-Date: 2025-09-22 18:34+0300\n"
 "Last-Translator: Vlad Lee <vladleegit@proton.me>\n"
 "Language-Team: Russian\n"
@@ -140,130 +140,139 @@ msgid "Clean up dashboard dependency tab"
 msgstr ""
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:64
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:77
+msgid "Prompt for multiple new networks at the same time"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:65
+#, fuzzy
+msgid "Added Spanish translations"
+msgstr "Добавлен перевод на Голландский язык"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:66
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:79
 #, fuzzy
 msgid "Update Occitan translations"
 msgstr "Добавлен перевод на Голландский язык"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:65
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:67
 #, fuzzy
 msgid "Update Danish translations"
 msgstr "Добавлен перевод на Голландский язык"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:66
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:68
 msgid "Update JavaScript development tooling"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:73
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:75
 msgid "Include a networks tab on the dashboard"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:74
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:76
 msgid "UI cleanup"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:75
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:77
 msgid "Improve accessibility for dependency item status"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:76
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:78
 #, fuzzy
 msgid "Track connections by NetworkManager UUID"
 msgstr "NetworkManager не найден"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:78
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:80
 #, fuzzy
 msgid "Update Italian translations"
 msgstr "Добавлен перевод на Голландский язык"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:79
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:81
 #, fuzzy
 msgid "Include Danish translations"
 msgstr "Добавлен перевод на Голландский язык"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:86
-msgid "Correctly show autostart status on dashboard"
-msgstr ""
-
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:87
-#, fuzzy
-msgid "Include Italian translation"
-msgstr "Добавлен перевод на Голландский язык"
-
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:88
-msgid "Track connection IDs seen per machine"
+msgid "Correctly show autostart status on dashboard"
 msgstr ""
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:89
 #, fuzzy
-msgid "Include Polish translation"
+msgid "Include Italian translation"
 msgstr "Добавлен перевод на Голландский язык"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:90
-msgid "Use GNOME 50 runtime"
+msgid "Track connection IDs seen per machine"
 msgstr ""
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:91
 #, fuzzy
+msgid "Include Polish translation"
+msgstr "Добавлен перевод на Голландский язык"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:92
+msgid "Use GNOME 50 runtime"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:93
+#, fuzzy
 msgid "Handle NetworkManager restarts"
 msgstr "NetworkManager не найден"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:98
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:100
 msgid "Include dashboard"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:105
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:107
 msgid "Include additional desktop categories"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:106
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:108
 msgid "Support command line arguments"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:113
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:115
 msgid "Added Russian translation"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:114
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:116
 #, fuzzy
 msgid "Fixed metainfo formatting"
 msgstr "Получить дополнительную информацию."
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:121
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:123
 msgid "Added Occitan translation"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:122
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:124
 msgid "Added Simplified Chinese translation"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:123
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:125
 msgid "Fixed multiple instance support"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:124
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:126
 msgid "Use GNOME 49 runtime"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:131
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:133
 msgid "Critical bug fix for non-English language users"
 msgstr ""
 "Исправлена критическая ошибка для пользователей, не использующих английскую "
 "локализацию"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:132
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:134
 msgid "Added Dutch translation"
 msgstr "Добавлен перевод на Голландский язык"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:133
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:135
 msgid "Documentation cleanups"
 msgstr "Подчищена документация"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:139
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:141
 msgid "Include a notification for first run success"
 msgstr "Добавлено уведомление при первом успешном запуске"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:144
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:146
 msgid "Initial release"
 msgstr "Первичный релиз"
 
@@ -392,15 +401,15 @@ msgstr ""
 "NetworkManager. Bouncer может работать неправильно. Обратитесь к логам, "
 "чтобы получить дополнительную информацию."
 
-#: src/main.js:63
+#: src/main.js:66
 msgid "Monitor Wi-Fi connections in the background"
 msgstr ""
 
-#: src/main.js:128
+#: src/main.js:131
 msgid "Unknown error"
 msgstr "Неизвестная ошибка"
 
-#: src/main.js:129
+#: src/main.js:132
 msgid ""
 "An unknown error occurred. Bouncer may not function correctly. Please see "
 "logs for more information."
@@ -408,11 +417,11 @@ msgstr ""
 "Произошла неизвестная ошибка. Bouncer может работать некорректно. Обратитесь "
 "к логам, чтобы получить дополнительную информацию."
 
-#: src/main.js:197
+#: src/main.js:200
 msgid "Can't find previously seen connections"
 msgstr "Не удалось найти установленные ранее подключения"
 
-#: src/main.js:198
+#: src/main.js:201
 msgid ""
 "There was a problem determining which connections have already been seen. "
 "Please see logs for more information."
@@ -420,11 +429,11 @@ msgstr ""
 "Возникла проблема с определением установленных ранее подключений. Обратитесь "
 "к логам, чтобы получить дополнительную информацию."
 
-#: src/main.js:221
+#: src/main.js:224
 msgid "Can't determine network state"
 msgstr "Не удалось определить состояние сети"
 
-#: src/main.js:222
+#: src/main.js:225
 msgid ""
 "There was a problem tracking network connection changes. Please see logs for "
 "more information."
@@ -433,7 +442,7 @@ msgstr ""
 "к логам, чтобы получить дополнительную информацию."
 
 #. details
-#: src/main.js:243
+#: src/main.js:246
 msgid ""
 "Bouncer is an application to help you choose the correct firewall zone for "
 "wireless connections. When you connect to a new network, Bouncer will open a "
@@ -449,19 +458,19 @@ msgstr ""
 
 #. Translators: Replace 'translator-credits' with your name/username, and optionally an email or
 #. URL.
-#: src/main.js:255
+#: src/main.js:258
 msgid "translator-credits"
 msgstr "Vladislav Lishchenko <vladleegit@proton.me>"
 
-#: src/main.js:285
+#: src/main.js:288
 msgid " Bouncer is shutting down. You will need to restart manually."
 msgstr "Bouncer завершил работу. Вам потребуется перезапустить его вручную."
 
-#: src/main.js:298
+#: src/main.js:301
 msgid "First run setup complete!"
 msgstr "Первичная настройка завершена!"
 
-#: src/main.js:299
+#: src/main.js:302
 msgid ""
 "Your system is correctly configured for Bouncer. Bouncer will autostart on "
 "each login and will open when you connect to a new Wi-Fi network."
@@ -469,11 +478,11 @@ msgstr ""
 "Ваша система корректно настроена. Bouncer будет автоматически запускаться с "
 "каждым входом в систему и появляться при подключении к новой сети Wi-Fi."
 
-#: src/main.js:342
+#: src/main.js:336
 msgid "Can't prompt for firewall zone"
 msgstr "Невозможно выбрать зону брандмауэра"
 
-#: src/main.js:343
+#: src/main.js:337
 msgid ""
 "There was a problem getting information to prompt for the firewall zone. "
 "Please see logs for more information."
@@ -481,11 +490,11 @@ msgstr ""
 "Возникла проблема с получением информации для выбора зоны брандмауэра. "
 "Обратитесь к логам, чтобы получить дополнительную информацию."
 
-#: src/main.js:394
+#: src/main.js:493
 msgid "Can't add connection to seen connections"
 msgstr "Не удалось добавить подключение в список известных подключений"
 
-#: src/main.js:395
+#: src/main.js:494
 msgid ""
 "There was a problem adding the connection to the list of seen connections. "
 "The firewall zone will not be set for this connection. Please see logs for "
@@ -495,11 +504,11 @@ msgstr ""
 "Зона брандмауэра не будет установлена. Обратитесь к логам, чтобы получить "
 "дополнительную информацию."
 
-#: src/main.js:413
+#: src/main.js:512
 msgid "Can't set firewall zone for connection"
 msgstr "Не удалось установить зону брандмауэра для подключения"
 
-#: src/main.js:414
+#: src/main.js:513
 msgid ""
 "There was a problem setting the firewall zone for the connection. Please see "
 "logs for more information."
@@ -507,11 +516,11 @@ msgstr ""
 "Возникла проблема с установкой зоны брандмауэра для подключения. Обратитесь "
 "к логам, чтобы получить дополнительную информацию."
 
-#: src/main.js:429
+#: src/main.js:528
 msgid "Can't save connection to seen connections"
 msgstr "Не удалось сохранить подключение в список известных подключений"
 
-#: src/main.js:430
+#: src/main.js:529
 msgid ""
 "The zone has been set for the connection, but there was a problem saving the "
 "updated list of seen connections to disk. Once you restart Bouncer, you will "
@@ -523,12 +532,12 @@ msgstr ""
 "снова нужно будет выбрать зону брандмауэра для этого подключения. Обратитесь "
 "к логам, чтобы получить дополнительную информацию."
 
-#: src/main.js:440
+#: src/main.js:539
 msgid "Firewall zone set for connection: "
 msgstr "Зона брандмауэра установлена для подключения:"
 
 #. this is the default zone
-#: src/main.js:442
+#: src/main.js:541
 msgid ""
 "Firewall zone for this connection has been set to the default zone "
 "(currently "
@@ -536,7 +545,7 @@ msgstr ""
 "Зона брандмауэра для этого подключения была установлена в качестве зоны по "
 "умолчанию (на данный момент"
 
-#: src/main.js:443
+#: src/main.js:542
 msgid ""
 "). Whenever you connect to this network in the future, the firewall zone "
 "will automatically be changed to the default zone."
@@ -544,11 +553,11 @@ msgstr ""
 "). В будущем при подключении к данной сети, зона брандмауэра будет "
 "автоматически изменена на зону по умолчанию."
 
-#: src/main.js:447
+#: src/main.js:546
 msgid "Firewall zone for this connection has been set to "
 msgstr "Для данного подключения была установлена зона:"
 
-#: src/main.js:447
+#: src/main.js:546
 msgid ""
 ". Whenever you connect to this network in the future, the firewall zone will "
 "automatically be changed to "
@@ -556,15 +565,15 @@ msgstr ""
 ". В будущем при подключении к данной сети, зона брандмауэра будет "
 "автоматически изменена на "
 
-#: src/main.js:449
+#: src/main.js:548
 msgid "."
 msgstr "."
 
-#: src/networkState.js:125
+#: src/networkState.js:137
 msgid "Error determining network state"
 msgstr "Ошибка определения состояния сети"
 
-#: src/networkState.js:126
+#: src/networkState.js:138
 msgid ""
 "Bouncer ran into an error determining network state. This is required for "
 "the application to work correctly. Please see logs for more information."
