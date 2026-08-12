@@ -21,6 +21,13 @@
           <object class="GtkBox" id="networkManagement">
             <property name="orientation">vertical</property>
             <child>
+              <object class="AdwBanner" id="lookupFailureBanner">
+                <property name="button-label" translatable="yes">Retry</property>
+                <property name="title" translatable="yes">Some saved networks could not be loaded</property>
+                <signal name="button-clicked" handler="retryButtonClicked"/>
+              </object>
+            </child>
+            <child>
               <object class="AdwClamp">
                 <property name="maximum-size">450</property>
                 <property name="halign">GTK_ALIGN_START</property>

@@ -24,7 +24,7 @@ export const NetworksBox = GObject.registerClass(
         Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/networksBox.ui',
         InternalChildren: [
             'changeZoneButton', 'comboRow', 'contentStack', 'currentZone', 'emptyStatusPage', 'errorStatusPage',
-            'forgetButton', 'networkManagement', 'networks', 'zoneDropDown', 'zoneList',
+            'forgetButton', 'lookupFailureBanner', 'networkManagement', 'networks', 'zoneDropDown', 'zoneList',
         ],
         Properties: {
             'connection-ids-seen': GObject.ParamSpec.jsobject(
@@ -155,6 +155,9 @@ export const NetworksBox = GObject.registerClass(
                 this._comboRow.set_selected(selected === -1 ? 0 : selected);
             }
             this.#handleNetworkSelected();
+            this._lookupFailureBanner.revealed =
+                this.#networkLookupFailures > 0 &&
+                this.#networkLookupFailures < this.#connectionUuidsSeen.length;
             if (this.#connectionUuidsSeen.length === 0)
                 this._contentStack.set_visible_child(this._emptyStatusPage);
             else if (this.#networkLookupFailures === this.#connectionUuidsSeen.length)
