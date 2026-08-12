@@ -23,7 +23,8 @@ export const NetworksBox = GObject.registerClass(
         GTypeName: 'NetworksBox',
         Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/networksBox.ui',
         InternalChildren: [
-            'changeZoneButton', 'comboRow', 'currentZone', 'forgetButton', 'networks', 'zoneDropDown', 'zoneList',
+            'changeZoneButton', 'comboRow', 'contentStack', 'currentZone', 'emptyStatusPage', 'forgetButton',
+            'networkManagement', 'networks', 'zoneDropDown', 'zoneList',
         ],
         Properties: {
             'connection-ids-seen': GObject.ParamSpec.jsobject(
@@ -145,6 +146,9 @@ export const NetworksBox = GObject.registerClass(
                 this._comboRow.set_selected(selected === -1 ? 0 : selected);
             }
             this.#handleNetworkSelected();
+            this._contentStack.set_visible_child(
+                this.#connectionUuidsSeen.length === 0 ? this._emptyStatusPage : this._networkManagement
+            );
         }
 
         // Return the network object of the selected network.

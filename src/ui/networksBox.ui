@@ -13,98 +13,115 @@
   <requires lib="gtk" version="4.0"/>
   <template class="NetworksBox" parent="GtkBox">
     <property name="orientation">vertical</property>
-    <property name="margin-start">12</property>
-    <property name="margin-end">12</property>
 
     <child>
-      <object class="AdwClamp">
-        <property name="maximum-size">450</property>
-        <property name="halign">GTK_ALIGN_START</property>
-        <property name="orientation">horizontal</property>
-        <property name="child">
-          <object class="GtkBox">
+      <object class="GtkStack" id="contentStack">
+        <property name="vexpand">True</property>
+        <child>
+          <object class="GtkBox" id="networkManagement">
             <property name="orientation">vertical</property>
-            <property name="margin-top">24</property>
-            <property name="margin-bottom">12</property>
-
-            <!-- Network management -->
             <child>
-              <object class="AdwPreferencesGroup">
-                <property name="margin-bottom">12</property>
-                <property name="title" translatable="yes">Manage Networks</property>
-                <property name="description" translatable="yes">Manage your configured networks from here.</property>
-                <child>
-                  <object class="AdwComboRow" id="comboRow">
-                    <property name="title" translatable="yes">Networks</property>
-                    <property name="enable-search">True</property>
-                    <property name="search-match-mode">GTK_STRING_FILTER_MATCH_MODE_SUBSTRING</property>
-                    <property name="model">
-                      <object class="GtkStringList" id="networks">
-                        <items/>
-                      </object>
-                    </property>
-                    <property name="expression">
-                      <lookup type="GtkStringObject" name="string"/>
-                    </property>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwActionRow" id="currentZone">
-                    <property name="title" translatable="yes">Current Zone</property>
-                    <property name="subtitle-selectable">True</property>
-                    <style>
-                      <class name="property"/>
-                    </style>
-                  </object>
-                </child>
-              </object>
-            </child>
+              <object class="AdwClamp">
+                <property name="maximum-size">450</property>
+                <property name="halign">GTK_ALIGN_START</property>
+                <property name="margin-start">12</property>
+                <property name="margin-end">12</property>
+                <property name="orientation">horizontal</property>
+                <property name="child">
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <property name="margin-top">24</property>
+                    <property name="margin-bottom">12</property>
 
-            <!-- Actions -->
-            <child>
-              <object class="AdwPreferencesGroup">
-                <!-- Change zone action -->
-                <child>
-                  <object class="AdwComboRow" id="zoneDropDown">
-                    <property name="title" translatable="yes">Change Zone</property>
-                    <property name="subtitle-lines">0</property>
-                    <property name="sensitive">False</property>
-                    <property name="model">
-                      <object class="GtkStringList" id="zoneList"/>
-                    </property>
-                    <child type="suffix">
-                      <object class="GtkButton" id="changeZoneButton">
-                        <property name="margin-start">12</property> <!-- This forces the zone dropdown a little to the left away from the 'Change' button. -->
-                        <property name="valign">center</property>
-                        <property name="sensitive">False</property>
-                        <property name="label" translatable="yes">Change</property>
-                        <signal name="clicked" handler="changeZoneButtonClicked"/>
+                    <!-- Network management -->
+                    <child>
+                      <object class="AdwPreferencesGroup">
+                        <property name="margin-bottom">12</property>
+                        <property name="title" translatable="yes">Manage Networks</property>
+                        <property name="description" translatable="yes">Manage your configured networks from here.</property>
+                        <child>
+                          <object class="AdwComboRow" id="comboRow">
+                            <property name="title" translatable="yes">Networks</property>
+                            <property name="enable-search">True</property>
+                            <property name="search-match-mode">GTK_STRING_FILTER_MATCH_MODE_SUBSTRING</property>
+                            <property name="model">
+                              <object class="GtkStringList" id="networks">
+                                <items/>
+                              </object>
+                            </property>
+                            <property name="expression">
+                              <lookup type="GtkStringObject" name="string"/>
+                            </property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwActionRow" id="currentZone">
+                            <property name="title" translatable="yes">Current Zone</property>
+                            <property name="subtitle-selectable">True</property>
+                            <style>
+                              <class name="property"/>
+                            </style>
+                          </object>
+                        </child>
                       </object>
                     </child>
-                  </object> <!-- end AdwComboRow -->
-                </child>
-                <!-- Forget action -->
-                <child>
-                  <object class="AdwActionRow">
-                    <property name="title" translatable="yes">Forget Zone Choice</property>
-                    <property name="subtitle" translatable="yes">Forget this network. You will be prompted to choose the firewall zone for this network the next time you connect to it.</property>
-                    <property name="subtitle-lines">0</property>
-                    <child type="suffix">
-                      <object class="GtkButton" id="forgetButton">
-                        <property name="valign">center</property>
-                        <property name="label" translatable="yes">Forget</property>
-                        <style>
-                          <class name="destructive-action"/>
-                        </style>
-                        <signal name="clicked" handler="forgetButtonClicked"/>
+
+                    <!-- Actions -->
+                    <child>
+                      <object class="AdwPreferencesGroup">
+                        <!-- Change zone action -->
+                        <child>
+                          <object class="AdwComboRow" id="zoneDropDown">
+                            <property name="title" translatable="yes">Change Zone</property>
+                            <property name="subtitle-lines">0</property>
+                            <property name="sensitive">False</property>
+                            <property name="model">
+                              <object class="GtkStringList" id="zoneList"/>
+                            </property>
+                            <child type="suffix">
+                              <object class="GtkButton" id="changeZoneButton">
+                                <property name="margin-start">12</property> <!-- This forces the zone dropdown a little to the left away from the 'Change' button. -->
+                                <property name="valign">center</property>
+                                <property name="sensitive">False</property>
+                                <property name="label" translatable="yes">Change</property>
+                                <signal name="clicked" handler="changeZoneButtonClicked"/>
+                              </object>
+                            </child>
+                          </object> <!-- end AdwComboRow -->
+                        </child>
+                        <!-- Forget action -->
+                        <child>
+                          <object class="AdwActionRow">
+                            <property name="title" translatable="yes">Forget Zone Choice</property>
+                            <property name="subtitle" translatable="yes">Forget this network. You will be prompted to choose the firewall zone for this network the next time you connect to it.</property>
+                            <property name="subtitle-lines">0</property>
+                            <child type="suffix">
+                              <object class="GtkButton" id="forgetButton">
+                                <property name="valign">center</property>
+                                <property name="label" translatable="yes">Forget</property>
+                                <style>
+                                  <class name="destructive-action"/>
+                                </style>
+                                <signal name="clicked" handler="forgetButtonClicked"/>
+                              </object>
+                            </child>
+                          </object> <!-- end AdwActionRow -->
+                        </child>
                       </object>
                     </child>
-                  </object> <!-- end AdwActionRow -->
-                </child>
+                  </object>
+                </property>
               </object>
             </child>
           </object>
-        </property>
+        </child>
+        <child>
+          <object class="AdwStatusPage" id="emptyStatusPage">
+            <property name="description" translatable="yes">Networks will appear here after Bouncer prompts you to choose a firewall zone.</property>
+            <property name="icon-name">network-wireless-symbolic</property>
+            <property name="title" translatable="yes">No Saved Networks</property>
+          </object>
+        </child>
       </object>
     </child>
   </template>
