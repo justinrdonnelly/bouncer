@@ -122,6 +122,24 @@
             <property name="title" translatable="yes">No Saved Networks</property>
           </object>
         </child>
+        <child>
+          <object class="AdwStatusPage" id="errorStatusPage">
+            <property name="description" translatable="yes">Bouncer could not load your saved networks. Try again or see the logs for more information.</property>
+            <property name="icon-name">network-error-symbolic</property>
+            <property name="title" translatable="yes">Saved Networks Unavailable</property>
+            <property name="child">
+              <object class="GtkButton">
+                <property name="halign">center</property>
+                <property name="label" translatable="yes">Retry</property>
+                <signal name="clicked" handler="retryButtonClicked"/>
+                <style>
+                  <class name="suggested-action"/>
+                  <class name="pill"/>
+                </style>
+              </object>
+            </property>
+          </object>
+        </child>
       </object>
     </child>
   </template>

@@ -23,8 +23,8 @@ export const NetworksBox = GObject.registerClass(
         GTypeName: 'NetworksBox',
         Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/networksBox.ui',
         InternalChildren: [
-            'changeZoneButton', 'comboRow', 'contentStack', 'currentZone', 'emptyStatusPage', 'forgetButton',
-            'networkManagement', 'networks', 'zoneDropDown', 'zoneList',
+            'changeZoneButton', 'comboRow', 'contentStack', 'currentZone', 'emptyStatusPage', 'errorStatusPage',
+            'forgetButton', 'networkManagement', 'networks', 'zoneDropDown', 'zoneList',
         ],
         Properties: {
             'connection-ids-seen': GObject.ParamSpec.jsobject(
@@ -48,6 +48,7 @@ export const NetworksBox = GObject.registerClass(
         #allZones = []; // Array of zones from firewalld.
         #defaultZone = null; // This will later be the default zone (eg public).
         #zoneInfoLoaded = false; // This will become true once #allZones and #defaultZone are populated.
+        #networkLookupFailures = 0; // Number of saved networks that could not be looked up in NetworkManager.
         #refreshNetworksSequence = 0; // Used to ignore stale refresh results that finish out of order.
         #networkActionQueue = Promise.resolve(); // Tail of the network action queue.
         #networkActionsPending = 0; // Number of queued or running network actions.
@@ -89,13 +90,16 @@ export const NetworksBox = GObject.registerClass(
         // Refresh the networks dropdown.
         async #refreshNetworks() {
             const refreshNetworksSequence = ++this.#refreshNetworksSequence;
+            // Keep this refresh's lookups and results associated with the same UUIDs if the bound property changes
+            // while the NetworkManager lookups are pending.
+            const connectionUuids = [...this.#connectionUuidsSeen];
             // We're going to remove everything from the dropdown. We need to know what was selected, so we can select
             // it again after we repopulate.
             const selectedNetwork = this.#getSelectedNetwork();
             const selectedUuid = selectedNetwork?.uuid ?? null;
             // Look up connection IDs and zones for all the networks.
             const networkResults = await Promise.allSettled(
-                this.#connectionUuidsSeen.map(async (uuid) => {
+                connectionUuids.map(async (uuid) => {
                     const { objectPath, settings } = await getNetworkManagerConnectionByUuid(uuid);
                     const connection = settings.connection;
                     const id = connection?.id;
@@ -120,7 +124,7 @@ export const NetworksBox = GObject.registerClass(
 
                 console.warn(`Unable to get NetworkManager settings for connection ` +
                     // eslint-disable-next-line security/detect-object-injection
-                    `${this.#connectionUuidsSeen[index]}: ${result.reason}`);
+                    `${connectionUuids[index]}: ${result.reason}`);
                 return [];
             });
 
@@ -131,6 +135,7 @@ export const NetworksBox = GObject.registerClass(
             // Sort the displayed networks without changing the stored UUID order.
             networks.sort((first, second) => first.id.localeCompare(second.id));
             this.#networks = networks;
+            this.#networkLookupFailures = networkResults.filter((result) => result.status === 'rejected').length;
             // Now that we have all the info, use it to repopulate the networks dropdown.
             this.#updateNetworkList(selectedUuid);
         }
@@ -150,9 +155,16 @@ export const NetworksBox = GObject.registerClass(
                 this._comboRow.set_selected(selected === -1 ? 0 : selected);
             }
             this.#handleNetworkSelected();
-            this._contentStack.set_visible_child(
-                this.#connectionUuidsSeen.length === 0 ? this._emptyStatusPage : this._networkManagement
-            );
+            if (this.#connectionUuidsSeen.length === 0)
+                this._contentStack.set_visible_child(this._emptyStatusPage);
+            else if (this.#networkLookupFailures === this.#connectionUuidsSeen.length)
+                this._contentStack.set_visible_child(this._errorStatusPage);
+            else
+                this._contentStack.set_visible_child(this._networkManagement);
+        }
+
+        retryButtonClicked() {
+            this.#refreshNetworksAndCatch();
         }
 
         // Return the network object of the selected network.
