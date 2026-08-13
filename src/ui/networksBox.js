@@ -76,6 +76,10 @@ export const NetworksBox = GObject.registerClass(
         set connectionIdsSeen(connectionIdsSeen) {
             // Copy (via spread) connectionIdsSeen so we only get changes via property change signals.
             this.#connectionUuidsSeen = [...(connectionIdsSeen ?? [])];
+            this.#refreshNetworksAndCatch();
+        }
+
+        #refreshNetworksAndCatch() {
             this.#refreshNetworks().catch((e) => {
                 console.error('Unable to refresh networks list.');
                 console.error(e.message);
