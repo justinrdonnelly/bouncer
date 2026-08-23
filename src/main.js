@@ -158,7 +158,7 @@ export const BouncerApplication = GObject.registerClass(
 
                 const dependencyBox = new DependencyBox(this.#dependencyCheck, this.#monitoring);
                 dependencyBox.connect('monitor-network', this.monitorNetworkAndCatch.bind(this));
-                // If networksBox is null, the normal 'Networks' tab contents will be replaced with an error message.
+                // If networksBox is null, the normal 'Networks' tab contents will be replaced with an error page.
                 this.#dashboardWindow = new Dashboard(this, dependencyBox, networksBox);
                 this.#dashboardWindow.connect('destroy', this.#handleDashboardWindowDestroyed.bind(this));
                 this.#dashboardWindow.present();

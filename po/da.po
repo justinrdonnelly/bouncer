@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Bouncer 50.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-06 01:15+0000\n"
+"POT-Creation-Date: 2026-08-23 00:29+0000\n"
 "PO-Revision-Date: 2026-07-09 22:50+0200\n"
 "Last-Translator: Filip Kemuel <https://github.com/filipkemuel>\n"
 "Language-Team: Danish\n"
@@ -603,7 +603,7 @@ msgstr "Netværk\t"
 msgid "Default Zone"
 msgstr "Standardzone"
 
-#: src/ui/chooseZoneBox.ui:58 src/ui/networksBox.ui:53
+#: src/ui/chooseZoneBox.ui:58 src/ui/networksBox.ui:66
 msgid "Current Zone"
 msgstr "Nuværende zone"
 
@@ -666,12 +666,18 @@ msgstr ""
 msgid "Choose"
 msgstr "Vælg"
 
-#: src/ui/dashboard.js:54
+#: src/ui/dashboard.js:45
+#, fuzzy
 msgid ""
-"Saved networks could not be loaded. Please see logs for more information."
+"Bouncer could not load your saved networks. Please see the logs for more "
+"information."
 msgstr ""
 "De gemte netværk kunne ikke indlæses. Se logfilerne for yderligere "
 "oplysninger."
+
+#: src/ui/dashboard.js:47 src/ui/networksBox.ui:136
+msgid "Saved Networks Unavailable"
+msgstr ""
 
 #: src/ui/dashboard.ui:29
 msgid "Dashboard"
@@ -681,7 +687,7 @@ msgstr "Dashboard"
 msgid "Dependencies"
 msgstr "Afhængigheder"
 
-#: src/ui/dashboard.ui:108 src/ui/networksBox.ui:38
+#: src/ui/dashboard.ui:108 src/ui/networksBox.ui:51
 msgid "Networks"
 msgstr "Netværk"
 
@@ -805,67 +811,76 @@ msgstr ""
 "\n"
 "Du kan læse mere om Bouncer <a href=\"%4$s\">her</a>."
 
-#: src/ui/networksBox.js:201
+#: src/ui/networksBox.js:224
 msgid "Firewall zone information could not be loaded."
 msgstr "Firewall-zone information kunne ikke indlæses."
 
-#: src/ui/networksBox.js:259
+#: src/ui/networksBox.js:282
 msgid "Zone could not be changed"
 msgstr ""
 
 #. Translators: %s is the name of a firewall zone.
-#: src/ui/networksBox.js:280
+#: src/ui/networksBox.js:303
 #, javascript-format
 msgid "Zone changed to %s"
 msgstr ""
 
-#: src/ui/networksBox.js:281 src/ui/networksBox.js:338
+#: src/ui/networksBox.js:304 src/ui/networksBox.js:361
 msgid "_Undo"
 msgstr ""
 
-#: src/ui/networksBox.js:304
+#: src/ui/networksBox.js:327
 msgid "Unable to undo because the zone changed again"
 msgstr ""
 
-#: src/ui/networksBox.js:313
+#: src/ui/networksBox.js:336
 msgid "Zone change could not be undone"
 msgstr ""
 
-#: src/ui/networksBox.js:331
+#: src/ui/networksBox.js:354
 msgid "Network could not be forgotten"
 msgstr ""
 
 #. Translators: %s is the NetworkManager connection name.
-#: src/ui/networksBox.js:337
+#: src/ui/networksBox.js:360
 #, javascript-format
 msgid "Network forgotten: %s"
 msgstr ""
 
-#: src/ui/networksBox.js:354
+#: src/ui/networksBox.js:377
 msgid "Network could not be restored"
 msgstr ""
 
-#: src/ui/networksBox.ui:34
+#: src/ui/networksBox.ui:25 src/ui/networksBox.ui:140
+msgid "Retry"
+msgstr ""
+
+#: src/ui/networksBox.ui:26
+#, fuzzy
+msgid "Some saved networks could not be loaded"
+msgstr "Firewall-zone information kunne ikke indlæses."
+
+#: src/ui/networksBox.ui:47
 msgid "Manage Networks"
 msgstr "Håndter netværk"
 
-#: src/ui/networksBox.ui:35
+#: src/ui/networksBox.ui:48
 msgid "Manage your configured networks from here."
 msgstr "Håndter dine konfigurerede netværk herfra."
 
-#: src/ui/networksBox.ui:69
+#: src/ui/networksBox.ui:82
 msgid "Change Zone"
 msgstr "Skift zone"
 
-#: src/ui/networksBox.ui:80
+#: src/ui/networksBox.ui:93
 msgid "Change"
 msgstr "Skift"
 
-#: src/ui/networksBox.ui:89
+#: src/ui/networksBox.ui:102
 msgid "Forget Zone Choice"
 msgstr ""
 
-#: src/ui/networksBox.ui:90
+#: src/ui/networksBox.ui:103
 msgid ""
 "Forget this network. You will be prompted to choose the firewall zone for "
 "this network the next time you connect to it."
@@ -873,9 +888,29 @@ msgstr ""
 "Glem dette netværk. Næste gang du opretter forbindelse til det, bliver du "
 "bedt om at vælge en firewall-zone for dette netværk."
 
-#: src/ui/networksBox.ui:95
+#: src/ui/networksBox.ui:108
 msgid "Forget"
 msgstr "Glem"
+
+#: src/ui/networksBox.ui:127
+msgid ""
+"Networks will appear here after Bouncer prompts you to choose a firewall "
+"zone."
+msgstr ""
+
+#: src/ui/networksBox.ui:129
+#, fuzzy
+msgid "No Saved Networks"
+msgstr "Håndter netværk"
+
+#: src/ui/networksBox.ui:134
+#, fuzzy
+msgid ""
+"Bouncer could not load your saved networks. Try again or see the logs for "
+"more information."
+msgstr ""
+"De gemte netværk kunne ikke indlæses. Se logfilerne for yderligere "
+"oplysninger."
 
 #~ msgid "Help"
 #~ msgstr "Hjælp"

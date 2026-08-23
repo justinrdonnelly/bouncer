@@ -11,7 +11,6 @@
 
 import Adw from 'gi://Adw?version=1';
 import GObject from 'gi://GObject';
-import Gtk from 'gi://Gtk?version=4.0';
 
 export const Dashboard = GObject.registerClass(
     {
@@ -32,7 +31,7 @@ export const Dashboard = GObject.registerClass(
                 networksBox.connect('toast-requested', this.#showToast.bind(this));
                 this._networksBox.append(networksBox);
             } else
-                this._networksBox.append(this.#createNetworksUnavailableBox());
+                this._networksBox.append(this.#createNetworksUnavailablePage());
             this.#setContentTitle();
         }
 
@@ -41,22 +40,13 @@ export const Dashboard = GObject.registerClass(
             this._toastOverlay.add_toast(toast);
         }
 
-        // Create and return a GTK box with a label indicating there has been a problem.
-        #createNetworksUnavailableBox() {
-            const box = new Gtk.Box({
-                orientation: Gtk.Orientation.VERTICAL,
-                margin_start: 12,
-                margin_end: 12,
-                margin_top: 24,
+        #createNetworksUnavailablePage() {
+            return new Adw.StatusPage({
+                description: _('Bouncer could not load your saved networks. Please see the logs for more information.'),
+                icon_name: 'network-error-symbolic',
+                title: _('Saved Networks Unavailable'),
+                vexpand: true,
             });
-
-            const label = new Gtk.Label({
-                label: _('Saved networks could not be loaded. Please see logs for more information.'),
-                wrap: true,
-                xalign: 0,
-            });
-            box.append(label);
-            return box;
         }
 
         // set content title to match the selected page

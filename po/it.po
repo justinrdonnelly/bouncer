@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Bouncer 49.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-06 01:15+0000\n"
+"POT-Creation-Date: 2026-08-23 00:29+0000\n"
 "PO-Revision-Date: 2026-03-29 22:02+0200\n"
 "Last-Translator:Albano Battistella <albanobattistella@gmail.com>\n"
 "Language-Team: Italian <LL@li.org>\n"
@@ -617,7 +617,7 @@ msgstr "Rete"
 msgid "Default Zone"
 msgstr "Zona predefinita"
 
-#: src/ui/chooseZoneBox.ui:58 src/ui/networksBox.ui:53
+#: src/ui/chooseZoneBox.ui:58 src/ui/networksBox.ui:66
 msgid "Current Zone"
 msgstr "Zona attuale"
 
@@ -679,13 +679,18 @@ msgstr ""
 msgid "Choose"
 msgstr "Scegli"
 
-#: src/ui/dashboard.js:54
+#: src/ui/dashboard.js:45
 #, fuzzy
 msgid ""
-"Saved networks could not be loaded. Please see logs for more information."
+"Bouncer could not load your saved networks. Please see the logs for more "
+"information."
 msgstr ""
 "Si è verificato un problema nel tracciare le modifiche alla connessione di "
 "rete. Consulta i log per maggiori informazioni."
+
+#: src/ui/dashboard.js:47 src/ui/networksBox.ui:136
+msgid "Saved Networks Unavailable"
+msgstr ""
 
 #: src/ui/dashboard.ui:29
 #, fuzzy
@@ -696,7 +701,7 @@ msgstr "Includi dashboard"
 msgid "Dependencies"
 msgstr ""
 
-#: src/ui/dashboard.ui:108 src/ui/networksBox.ui:38
+#: src/ui/dashboard.ui:108 src/ui/networksBox.ui:51
 #, fuzzy
 msgid "Networks"
 msgstr "Rete"
@@ -820,70 +825,79 @@ msgstr ""
 "\n"
 "Puoi leggere di più su Bouncer <a href=\"%4$s\">qui</a>."
 
-#: src/ui/networksBox.js:201
+#: src/ui/networksBox.js:224
 #, fuzzy
 msgid "Firewall zone information could not be loaded."
 msgstr "La zona firewall per questa connessione è stata impostata su "
 
-#: src/ui/networksBox.js:259
+#: src/ui/networksBox.js:282
 msgid "Zone could not be changed"
 msgstr ""
 
 #. Translators: %s is the name of a firewall zone.
-#: src/ui/networksBox.js:280
+#: src/ui/networksBox.js:303
 #, javascript-format
 msgid "Zone changed to %s"
 msgstr ""
 
-#: src/ui/networksBox.js:281 src/ui/networksBox.js:338
+#: src/ui/networksBox.js:304 src/ui/networksBox.js:361
 msgid "_Undo"
 msgstr ""
 
-#: src/ui/networksBox.js:304
+#: src/ui/networksBox.js:327
 msgid "Unable to undo because the zone changed again"
 msgstr ""
 
-#: src/ui/networksBox.js:313
+#: src/ui/networksBox.js:336
 msgid "Zone change could not be undone"
 msgstr ""
 
-#: src/ui/networksBox.js:331
+#: src/ui/networksBox.js:354
 msgid "Network could not be forgotten"
 msgstr ""
 
 #. Translators: %s is the NetworkManager connection name.
-#: src/ui/networksBox.js:337
+#: src/ui/networksBox.js:360
 #, javascript-format
 msgid "Network forgotten: %s"
 msgstr ""
 
-#: src/ui/networksBox.js:354
+#: src/ui/networksBox.js:377
 msgid "Network could not be restored"
 msgstr ""
 
-#: src/ui/networksBox.ui:34
+#: src/ui/networksBox.ui:25 src/ui/networksBox.ui:140
+msgid "Retry"
+msgstr ""
+
+#: src/ui/networksBox.ui:26
+#, fuzzy
+msgid "Some saved networks could not be loaded"
+msgstr "La zona firewall per questa connessione è stata impostata su "
+
+#: src/ui/networksBox.ui:47
 #, fuzzy
 msgid "Manage Networks"
 msgstr "Rete"
 
-#: src/ui/networksBox.ui:35
+#: src/ui/networksBox.ui:48
 msgid "Manage your configured networks from here."
 msgstr ""
 
-#: src/ui/networksBox.ui:69
+#: src/ui/networksBox.ui:82
 #, fuzzy
 msgid "Change Zone"
 msgstr "Zona attuale"
 
-#: src/ui/networksBox.ui:80
+#: src/ui/networksBox.ui:93
 msgid "Change"
 msgstr ""
 
-#: src/ui/networksBox.ui:89
+#: src/ui/networksBox.ui:102
 msgid "Forget Zone Choice"
 msgstr ""
 
-#: src/ui/networksBox.ui:90
+#: src/ui/networksBox.ui:103
 #, fuzzy
 msgid ""
 "Forget this network. You will be prompted to choose the firewall zone for "
@@ -892,9 +906,29 @@ msgstr ""
 "Nessuna modifica verrà apportata. Vedrai di nuovo questa finestra la "
 "prossima volta che ti connetterai a questa rete."
 
-#: src/ui/networksBox.ui:95
+#: src/ui/networksBox.ui:108
 msgid "Forget"
 msgstr ""
+
+#: src/ui/networksBox.ui:127
+msgid ""
+"Networks will appear here after Bouncer prompts you to choose a firewall "
+"zone."
+msgstr ""
+
+#: src/ui/networksBox.ui:129
+#, fuzzy
+msgid "No Saved Networks"
+msgstr "Rete"
+
+#: src/ui/networksBox.ui:134
+#, fuzzy
+msgid ""
+"Bouncer could not load your saved networks. Try again or see the logs for "
+"more information."
+msgstr ""
+"Si è verificato un problema nel tracciare le modifiche alla connessione di "
+"rete. Consulta i log per maggiori informazioni."
 
 #~ msgid "Help"
 #~ msgstr "Aiuto"
