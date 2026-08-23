@@ -28,6 +28,13 @@
               </object>
             </child>
             <child>
+              <object class="AdwBanner" id="zoneInfoFailureBanner">
+                <property name="button-label" translatable="yes">Retry</property>
+                <property name="title" translatable="yes">Firewall zone information is unavailable</property>
+                <signal name="button-clicked" handler="retryZoneInfoButtonClicked"/>
+              </object>
+            </child>
+            <child>
               <object class="AdwClamp">
                 <property name="maximum-size">450</property>
                 <property name="halign">GTK_ALIGN_START</property>

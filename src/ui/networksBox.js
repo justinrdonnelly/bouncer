@@ -10,6 +10,7 @@
  */
 
 import Adw from 'gi://Adw?version=1';
+import Gio from 'gi://Gio';
 import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk?version=4.0';
 
@@ -24,7 +25,8 @@ export const NetworksBox = GObject.registerClass(
         Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/networksBox.ui',
         InternalChildren: [
             'changeZoneButton', 'comboRow', 'contentStack', 'currentZone', 'emptyStatusPage', 'errorStatusPage',
-            'forgetButton', 'lookupFailureBanner', 'networkManagement', 'networks', 'zoneDropDown', 'zoneList',
+            'forgetButton', 'lookupFailureBanner', 'networkManagement', 'networks', 'zoneDropDown',
+            'zoneInfoFailureBanner', 'zoneList',
         ],
         Properties: {
             'connection-ids-seen': GObject.ParamSpec.jsobject(
@@ -48,6 +50,9 @@ export const NetworksBox = GObject.registerClass(
         #allZones = []; // Array of zones from firewalld.
         #defaultZone = null; // This will later be the default zone (eg public).
         #zoneInfoLoaded = false; // This will become true once #allZones and #defaultZone are populated.
+        #firewalldBusWatchId;
+        #destroyed = false; // Guard against race condition around closing the window.
+        #refreshZoneInfoSequence = 0; // Used to ignore stale refresh results that finish out of order.
         #networkLookupFailures = 0; // Number of saved networks that could not be looked up in NetworkManager.
         #refreshNetworksSequence = 0; // Used to ignore stale refresh results that finish out of order.
         #networkActionQueue = Promise.resolve(); // Tail of the network action queue.
@@ -59,17 +64,24 @@ export const NetworksBox = GObject.registerClass(
             this.#connectionIdsSeen = connectionIdsSeen;
             this._comboRow.connect('notify::selected', this.#handleNetworkSelected.bind(this));
             this._zoneDropDown.connect('notify::selected', this.#handleZoneSelectionChanged.bind(this));
+            // SYNC_CREATE initializes connectionIdsSeen through the setter below.
             connectionIdsSeen.bind_property(
                 'connection-ids-seen',
                 this,
                 'connection-ids-seen',
                 GObject.BindingFlags.SYNC_CREATE,
             );
-            // The binding will call `set` below
-            this.#refreshZoneInfo().catch((e) => {
-                console.error('Unable to get firewall zone information.');
-                console.error(e.message);
-                this.#handleZoneInfoUnavailable();
+            this.#firewalldBusWatchId = Gio.bus_watch_name(
+                Gio.BusType.SYSTEM,
+                'org.fedoraproject.FirewallD1',
+                Gio.BusNameWatcherFlags.NONE,
+                () => this.#refreshZoneInfoAndCatch(),
+                () => this.#handleZoneInfoUnavailable()
+            );
+            this.connect('destroy', () => {
+                this.#destroyed = true;
+                this.#refreshZoneInfoSequence++; // invalidate any in-flight zone queries
+                Gio.bus_unwatch_name(this.#firewalldBusWatchId);
             });
         }
 
@@ -212,17 +224,49 @@ export const NetworksBox = GObject.registerClass(
             this.#updateZoneDropDown(network);
         }
 
+        #refreshZoneInfoAndCatch() {
+            if (this.#destroyed)
+                return;
+            const refreshZoneInfoSequence = ++this.#refreshZoneInfoSequence;
+            this.#refreshZoneInfo(refreshZoneInfoSequence).catch((e) => {
+                if (refreshZoneInfoSequence !== this.#refreshZoneInfoSequence)
+                    return;
+                console.error('Unable to get firewall zone information.');
+                console.error(e.message);
+                this.#handleZoneInfoUnavailable();
+            });
+        }
+
         // Populate zone info variables and use them to update the zone dropdown.
-        async #refreshZoneInfo() {
-            [this.#allZones, this.#defaultZone] = await Promise.all([ZoneInfo.getZones(), ZoneInfo.getDefaultZone()]);
+        async #refreshZoneInfo(refreshZoneInfoSequence) {
+            const [allZones, defaultZone] =
+                await Promise.all([ZoneInfo.getZones(), ZoneInfo.getDefaultZone()]);
+            if (refreshZoneInfoSequence !== this.#refreshZoneInfoSequence)
+                return;
+
+            this.#allZones = allZones;
+            this.#defaultZone = defaultZone;
             this.#zoneInfoLoaded = true;
+            this._zoneDropDown.subtitle = '';
+            this._zoneInfoFailureBanner.revealed = false;
             this.#updateZoneDropDown(this.#getSelectedNetwork());
         }
 
         // Explain why the zone-changing controls are disabled.
         #handleZoneInfoUnavailable() {
+            if (this.#destroyed)
+                return;
+            this.#refreshZoneInfoSequence++;
+            this.#allZones = [];
+            this.#defaultZone = null;
+            this.#zoneInfoLoaded = false;
             this._zoneDropDown.subtitle = _('Firewall zone information could not be loaded.');
-            // this._zoneDropDown and this._changeZoneButton are already not sensitive.
+            this._zoneInfoFailureBanner.revealed = true;
+            this.#updateZoneDropDown(this.#getSelectedNetwork());
+        }
+
+        retryZoneInfoButtonClicked() {
+            this.#refreshZoneInfoAndCatch();
         }
 
         // Update the zone dropdown based on the currently selected network.

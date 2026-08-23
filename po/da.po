@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Bouncer 50.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-23 00:29+0000\n"
+"POT-Creation-Date: 2026-08-23 22:50+0000\n"
 "PO-Revision-Date: 2026-07-09 22:50+0200\n"
 "Last-Translator: Filip Kemuel <https://github.com/filipkemuel>\n"
 "Language-Team: Danish\n"
@@ -396,15 +396,15 @@ msgstr ""
 "NetworkManager. Bouncer fungerer muligvis ikke korrekt. Se logfilerne for "
 "yderligere oplysninger."
 
-#: src/main.js:66
+#: src/main.js:67
 msgid "Monitor Wi-Fi connections in the background"
 msgstr "Overvåg Wifi-forbindelser i baggunden"
 
-#: src/main.js:131
+#: src/main.js:132
 msgid "Unknown error"
 msgstr "Ukendt fejl"
 
-#: src/main.js:132
+#: src/main.js:133
 msgid ""
 "An unknown error occurred. Bouncer may not function correctly. Please see "
 "logs for more information."
@@ -412,11 +412,11 @@ msgstr ""
 "Der opstod en ukendt fejl. Bouncer fungerer muligvis ikke korrekt. Se "
 "logfilerne for yderligere oplysninger."
 
-#: src/main.js:200
+#: src/main.js:201
 msgid "Can't find previously seen connections"
 msgstr "Kan ikke finde tidligere fundne forbindelser"
 
-#: src/main.js:201
+#: src/main.js:202
 msgid ""
 "There was a problem determining which connections have already been seen. "
 "Please see logs for more information."
@@ -424,11 +424,11 @@ msgstr ""
 "Der opstod et problem med at fastslå, hvilke forbindelser der allerede er "
 "blevet registreret. Se logfilerne for yderligere oplysninger."
 
-#: src/main.js:224
+#: src/main.js:225
 msgid "Can't determine network state"
 msgstr "Det er ikke muligt at fastslå netværkets tilstand"
 
-#: src/main.js:225
+#: src/main.js:226
 msgid ""
 "There was a problem tracking network connection changes. Please see logs for "
 "more information."
@@ -437,7 +437,7 @@ msgstr ""
 "logfilerne for yderligere oplysninger."
 
 #. details
-#: src/main.js:246
+#: src/main.js:247
 msgid ""
 "Bouncer is an application to help you choose the correct firewall zone for "
 "wireless connections. When you connect to a new network, Bouncer will open a "
@@ -454,19 +454,19 @@ msgstr ""
 
 #. Translators: Replace 'translator-credits' with your name/username, and optionally an email or
 #. URL.
-#: src/main.js:258
+#: src/main.js:259
 msgid "translator-credits"
 msgstr "Filip Kemuel <https://github.com/filipkemuel>"
 
-#: src/main.js:288
+#: src/main.js:289
 msgid " Bouncer is shutting down. You will need to restart manually."
 msgstr " Bouncer lukker ned. Du skal genstarte manuelt."
 
-#: src/main.js:301
+#: src/main.js:302
 msgid "First run setup complete!"
 msgstr "Første opsætning er afsluttet!"
 
-#: src/main.js:302
+#: src/main.js:303
 msgid ""
 "Your system is correctly configured for Bouncer. Bouncer will autostart on "
 "each login and will open when you connect to a new Wi-Fi network."
@@ -474,11 +474,11 @@ msgstr ""
 "Dit system er korrekt konfigureret til Bouncer. Bouncer starter automatisk "
 "ved hver login og åbnes, når du opretter forbindelse til et nyt Wifi-netværk."
 
-#: src/main.js:336
+#: src/main.js:337
 msgid "Can't prompt for firewall zone"
 msgstr "Kan ikke anmode om valg af firewall-zone"
 
-#: src/main.js:337
+#: src/main.js:338
 msgid ""
 "There was a problem getting information to prompt for the firewall zone. "
 "Please see logs for more information."
@@ -486,11 +486,11 @@ msgstr ""
 "Der opstod et problem med at hente oplysninger til valg af firewall-zone. Se "
 "logfilerne for yderligere oplysninger."
 
-#: src/main.js:493
+#: src/main.js:494
 msgid "Can't add connection to seen connections"
 msgstr "Kan ikke tilføje forbindelse til de fundne forbindelser"
 
-#: src/main.js:494
+#: src/main.js:495
 msgid ""
 "There was a problem adding the connection to the list of seen connections. "
 "The firewall zone will not be set for this connection. Please see logs for "
@@ -500,11 +500,11 @@ msgstr ""
 "forbindelser. Der vil ikke blive oprettet en firewallzone for denne "
 "forbindelse. Se logfilerne for yderligere oplysninger."
 
-#: src/main.js:512
+#: src/main.js:513
 msgid "Can't set firewall zone for connection"
 msgstr "Det er ikke muligt at angive en firewall-zone for forbindelsen"
 
-#: src/main.js:513
+#: src/main.js:514
 msgid ""
 "There was a problem setting the firewall zone for the connection. Please see "
 "logs for more information."
@@ -512,11 +512,11 @@ msgstr ""
 "Der opstod et problem ved indstillingen af firewallzonen for forbindelsen. "
 "Se logfilerne for yderligere oplysninger."
 
-#: src/main.js:528
+#: src/main.js:529
 msgid "Can't save connection to seen connections"
 msgstr "Kan ikke gemme forbindelsen til de fundne forbindelser"
 
-#: src/main.js:529
+#: src/main.js:530
 msgid ""
 "The zone has been set for the connection, but there was a problem saving the "
 "updated list of seen connections to disk. Once you restart Bouncer, you will "
@@ -528,12 +528,12 @@ msgstr ""
 "Når du genstarter Bouncer, bliver du igen bedt om at vælge en firewall-zone "
 "til denne forbindelse. Se logfilerne for yderligere oplysninger."
 
-#: src/main.js:539
+#: src/main.js:540
 msgid "Firewall zone set for connection: "
 msgstr "Indstillet firewallzone for forbindelsen: "
 
 #. this is the default zone
-#: src/main.js:541
+#: src/main.js:542
 msgid ""
 "Firewall zone for this connection has been set to the default zone "
 "(currently "
@@ -541,7 +541,7 @@ msgstr ""
 "Firewall-zonen for denne forbindelse er indstillet til standardzonen (i "
 "øjeblikket "
 
-#: src/main.js:542
+#: src/main.js:543
 msgid ""
 "). Whenever you connect to this network in the future, the firewall zone "
 "will automatically be changed to the default zone."
@@ -549,11 +549,11 @@ msgstr ""
 "). Når du fremover opretter forbindelse til dette netværk, ændres "
 "firewallzonen automatisk til standardzonen."
 
-#: src/main.js:546
+#: src/main.js:547
 msgid "Firewall zone for this connection has been set to "
 msgstr "Firewall-zonen for denne forbindelse er indstillet til "
 
-#: src/main.js:546
+#: src/main.js:547
 msgid ""
 ". Whenever you connect to this network in the future, the firewall zone will "
 "automatically be changed to "
@@ -561,7 +561,7 @@ msgstr ""
 ". Hver gang du fremover opretter forbindelse til dette netværk, ændres "
 "firewall-zonen automatisk til "
 
-#: src/main.js:548
+#: src/main.js:549
 msgid "."
 msgstr "."
 
@@ -603,7 +603,7 @@ msgstr "Netværk\t"
 msgid "Default Zone"
 msgstr "Standardzone"
 
-#: src/ui/chooseZoneBox.ui:58 src/ui/networksBox.ui:66
+#: src/ui/chooseZoneBox.ui:58 src/ui/networksBox.ui:73
 msgid "Current Zone"
 msgstr "Nuværende zone"
 
@@ -675,7 +675,7 @@ msgstr ""
 "De gemte netværk kunne ikke indlæses. Se logfilerne for yderligere "
 "oplysninger."
 
-#: src/ui/dashboard.js:47 src/ui/networksBox.ui:136
+#: src/ui/dashboard.js:47 src/ui/networksBox.ui:143
 msgid "Saved Networks Unavailable"
 msgstr ""
 
@@ -687,7 +687,7 @@ msgstr "Dashboard"
 msgid "Dependencies"
 msgstr "Afhængigheder"
 
-#: src/ui/dashboard.ui:108 src/ui/networksBox.ui:51
+#: src/ui/dashboard.ui:108 src/ui/networksBox.ui:58
 msgid "Networks"
 msgstr "Netværk"
 
@@ -811,47 +811,47 @@ msgstr ""
 "\n"
 "Du kan læse mere om Bouncer <a href=\"%4$s\">her</a>."
 
-#: src/ui/networksBox.js:224
+#: src/ui/networksBox.js:263
 msgid "Firewall zone information could not be loaded."
 msgstr "Firewall-zone information kunne ikke indlæses."
 
-#: src/ui/networksBox.js:282
+#: src/ui/networksBox.js:326
 msgid "Zone could not be changed"
 msgstr ""
 
 #. Translators: %s is the name of a firewall zone.
-#: src/ui/networksBox.js:303
+#: src/ui/networksBox.js:347
 #, javascript-format
 msgid "Zone changed to %s"
 msgstr ""
 
-#: src/ui/networksBox.js:304 src/ui/networksBox.js:361
+#: src/ui/networksBox.js:348 src/ui/networksBox.js:405
 msgid "_Undo"
 msgstr ""
 
-#: src/ui/networksBox.js:327
+#: src/ui/networksBox.js:371
 msgid "Unable to undo because the zone changed again"
 msgstr ""
 
-#: src/ui/networksBox.js:336
+#: src/ui/networksBox.js:380
 msgid "Zone change could not be undone"
 msgstr ""
 
-#: src/ui/networksBox.js:354
+#: src/ui/networksBox.js:398
 msgid "Network could not be forgotten"
 msgstr ""
 
 #. Translators: %s is the NetworkManager connection name.
-#: src/ui/networksBox.js:360
+#: src/ui/networksBox.js:404
 #, javascript-format
 msgid "Network forgotten: %s"
 msgstr ""
 
-#: src/ui/networksBox.js:377
+#: src/ui/networksBox.js:421
 msgid "Network could not be restored"
 msgstr ""
 
-#: src/ui/networksBox.ui:25 src/ui/networksBox.ui:140
+#: src/ui/networksBox.ui:25 src/ui/networksBox.ui:32 src/ui/networksBox.ui:147
 msgid "Retry"
 msgstr ""
 
@@ -860,27 +860,32 @@ msgstr ""
 msgid "Some saved networks could not be loaded"
 msgstr "Firewall-zone information kunne ikke indlæses."
 
-#: src/ui/networksBox.ui:47
+#: src/ui/networksBox.ui:33
+#, fuzzy
+msgid "Firewall zone information is unavailable"
+msgstr "Firewall-zone information kunne ikke indlæses."
+
+#: src/ui/networksBox.ui:54
 msgid "Manage Networks"
 msgstr "Håndter netværk"
 
-#: src/ui/networksBox.ui:48
+#: src/ui/networksBox.ui:55
 msgid "Manage your configured networks from here."
 msgstr "Håndter dine konfigurerede netværk herfra."
 
-#: src/ui/networksBox.ui:82
+#: src/ui/networksBox.ui:89
 msgid "Change Zone"
 msgstr "Skift zone"
 
-#: src/ui/networksBox.ui:93
+#: src/ui/networksBox.ui:100
 msgid "Change"
 msgstr "Skift"
 
-#: src/ui/networksBox.ui:102
+#: src/ui/networksBox.ui:109
 msgid "Forget Zone Choice"
 msgstr ""
 
-#: src/ui/networksBox.ui:103
+#: src/ui/networksBox.ui:110
 msgid ""
 "Forget this network. You will be prompted to choose the firewall zone for "
 "this network the next time you connect to it."
@@ -888,22 +893,22 @@ msgstr ""
 "Glem dette netværk. Næste gang du opretter forbindelse til det, bliver du "
 "bedt om at vælge en firewall-zone for dette netværk."
 
-#: src/ui/networksBox.ui:108
+#: src/ui/networksBox.ui:115
 msgid "Forget"
 msgstr "Glem"
 
-#: src/ui/networksBox.ui:127
+#: src/ui/networksBox.ui:134
 msgid ""
 "Networks will appear here after Bouncer prompts you to choose a firewall "
 "zone."
 msgstr ""
 
-#: src/ui/networksBox.ui:129
+#: src/ui/networksBox.ui:136
 #, fuzzy
 msgid "No Saved Networks"
 msgstr "Håndter netværk"
 
-#: src/ui/networksBox.ui:134
+#: src/ui/networksBox.ui:141
 #, fuzzy
 msgid ""
 "Bouncer could not load your saved networks. Try again or see the logs for "
