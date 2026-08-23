@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bouncer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-06 01:15+0000\n"
+"POT-Creation-Date: 2026-08-23 00:29+0000\n"
 "PO-Revision-Date: 2026-07-10 17:27+0200\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: \n"
@@ -608,7 +608,7 @@ msgstr "Ret"
 msgid "Default Zone"
 msgstr "Zòna per defaut"
 
-#: src/ui/chooseZoneBox.ui:58 src/ui/networksBox.ui:53
+#: src/ui/chooseZoneBox.ui:58 src/ui/networksBox.ui:66
 msgid "Current Zone"
 msgstr "Zòna actuala"
 
@@ -670,12 +670,18 @@ msgstr ""
 msgid "Choose"
 msgstr "Causir"
 
-#: src/ui/dashboard.js:54
+#: src/ui/dashboard.js:45
+#, fuzzy
 msgid ""
-"Saved networks could not be loaded. Please see logs for more information."
+"Bouncer could not load your saved networks. Please see the logs for more "
+"information."
 msgstr ""
 "Se podiá pas cargar las rets enregistradas. Consultatz los jornals per mai "
 "d'informacions."
+
+#: src/ui/dashboard.js:47 src/ui/networksBox.ui:136
+msgid "Saved Networks Unavailable"
+msgstr ""
 
 #: src/ui/dashboard.ui:29
 msgid "Dashboard"
@@ -685,7 +691,7 @@ msgstr "Tablèu de bòrd"
 msgid "Dependencies"
 msgstr "Dependéncias"
 
-#: src/ui/dashboard.ui:108 src/ui/networksBox.ui:38
+#: src/ui/dashboard.ui:108 src/ui/networksBox.ui:51
 msgid "Networks"
 msgstr "Rets"
 
@@ -809,67 +815,76 @@ msgstr ""
 "\n"
 "Ne podètz legir mai tocant Bouncer <a href=\"%4$s\">aicí</a>."
 
-#: src/ui/networksBox.js:201
+#: src/ui/networksBox.js:224
 msgid "Firewall zone information could not be loaded."
 msgstr "Las informacions sus la zòna de proteccion se podiá pas cargar."
 
-#: src/ui/networksBox.js:259
+#: src/ui/networksBox.js:282
 msgid "Zone could not be changed"
 msgstr ""
 
 #. Translators: %s is the name of a firewall zone.
-#: src/ui/networksBox.js:280
+#: src/ui/networksBox.js:303
 #, javascript-format
 msgid "Zone changed to %s"
 msgstr ""
 
-#: src/ui/networksBox.js:281 src/ui/networksBox.js:338
+#: src/ui/networksBox.js:304 src/ui/networksBox.js:361
 msgid "_Undo"
 msgstr ""
 
-#: src/ui/networksBox.js:304
+#: src/ui/networksBox.js:327
 msgid "Unable to undo because the zone changed again"
 msgstr ""
 
-#: src/ui/networksBox.js:313
+#: src/ui/networksBox.js:336
 msgid "Zone change could not be undone"
 msgstr ""
 
-#: src/ui/networksBox.js:331
+#: src/ui/networksBox.js:354
 msgid "Network could not be forgotten"
 msgstr ""
 
 #. Translators: %s is the NetworkManager connection name.
-#: src/ui/networksBox.js:337
+#: src/ui/networksBox.js:360
 #, javascript-format
 msgid "Network forgotten: %s"
 msgstr ""
 
-#: src/ui/networksBox.js:354
+#: src/ui/networksBox.js:377
 msgid "Network could not be restored"
 msgstr ""
 
-#: src/ui/networksBox.ui:34
+#: src/ui/networksBox.ui:25 src/ui/networksBox.ui:140
+msgid "Retry"
+msgstr ""
+
+#: src/ui/networksBox.ui:26
+#, fuzzy
+msgid "Some saved networks could not be loaded"
+msgstr "Las informacions sus la zòna de proteccion se podiá pas cargar."
+
+#: src/ui/networksBox.ui:47
 msgid "Manage Networks"
 msgstr "Gerir las rets"
 
-#: src/ui/networksBox.ui:35
+#: src/ui/networksBox.ui:48
 msgid "Manage your configured networks from here."
 msgstr "Gerissètz vòstras rets configuradas d’aicí estant."
 
-#: src/ui/networksBox.ui:69
+#: src/ui/networksBox.ui:82
 msgid "Change Zone"
 msgstr "Cambiar la zòna"
 
-#: src/ui/networksBox.ui:80
+#: src/ui/networksBox.ui:93
 msgid "Change"
 msgstr "Cambiar"
 
-#: src/ui/networksBox.ui:89
+#: src/ui/networksBox.ui:102
 msgid "Forget Zone Choice"
 msgstr ""
 
-#: src/ui/networksBox.ui:90
+#: src/ui/networksBox.ui:103
 msgid ""
 "Forget this network. You will be prompted to choose the firewall zone for "
 "this network the next time you connect to it."
@@ -877,9 +892,29 @@ msgstr ""
 "Oblidar aquesta ret. Veiretz tornamai aquesta fenèstra lo còp que ven que "
 "vos connectaretz a aquesta ret."
 
-#: src/ui/networksBox.ui:95
+#: src/ui/networksBox.ui:108
 msgid "Forget"
 msgstr "Oblidar"
+
+#: src/ui/networksBox.ui:127
+msgid ""
+"Networks will appear here after Bouncer prompts you to choose a firewall "
+"zone."
+msgstr ""
+
+#: src/ui/networksBox.ui:129
+#, fuzzy
+msgid "No Saved Networks"
+msgstr "Gerir las rets"
+
+#: src/ui/networksBox.ui:134
+#, fuzzy
+msgid ""
+"Bouncer could not load your saved networks. Try again or see the logs for "
+"more information."
+msgstr ""
+"Se podiá pas cargar las rets enregistradas. Consultatz los jornals per mai "
+"d'informacions."
 
 #~ msgid "Help"
 #~ msgstr "Ajuda"

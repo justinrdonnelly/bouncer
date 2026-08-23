@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Bouncer 48\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-06 01:15+0000\n"
+"POT-Creation-Date: 2026-08-23 00:29+0000\n"
 "PO-Revision-Date: 2025-07-09 19:10-0400\n"
 "Last-Translator: Ariel Wang <ariel@netc.fr>\n"
 "Language-Team: \n"
@@ -565,7 +565,7 @@ msgstr "网络"
 msgid "Default Zone"
 msgstr "默认区域"
 
-#: src/ui/chooseZoneBox.ui:58 src/ui/networksBox.ui:53
+#: src/ui/chooseZoneBox.ui:58 src/ui/networksBox.ui:66
 msgid "Current Zone"
 msgstr "当前区域"
 
@@ -623,11 +623,16 @@ msgstr "每次您连接到此网络时，将使用所选的防火墙区域。"
 msgid "Choose"
 msgstr "选择"
 
-#: src/ui/dashboard.js:54
+#: src/ui/dashboard.js:45
 #, fuzzy
 msgid ""
-"Saved networks could not be loaded. Please see logs for more information."
+"Bouncer could not load your saved networks. Please see the logs for more "
+"information."
 msgstr "跟踪网络连接变化时出现了问题。请查看日志以获取更多信息。"
+
+#: src/ui/dashboard.js:47 src/ui/networksBox.ui:136
+msgid "Saved Networks Unavailable"
+msgstr ""
 
 #: src/ui/dashboard.ui:29
 msgid "Dashboard"
@@ -637,7 +642,7 @@ msgstr ""
 msgid "Dependencies"
 msgstr ""
 
-#: src/ui/dashboard.ui:108 src/ui/networksBox.ui:38
+#: src/ui/dashboard.ui:108 src/ui/networksBox.ui:51
 #, fuzzy
 msgid "Networks"
 msgstr "网络"
@@ -750,79 +755,106 @@ msgstr ""
 "\n"
 "您可以在 <a href=\"%4$s\">这里</a> 阅读更多关于 Bouncer 的信息。"
 
-#: src/ui/networksBox.js:201
+#: src/ui/networksBox.js:224
 #, fuzzy
 msgid "Firewall zone information could not be loaded."
 msgstr "此连接的防火墙区域已设置为 "
 
-#: src/ui/networksBox.js:259
+#: src/ui/networksBox.js:282
 msgid "Zone could not be changed"
 msgstr ""
 
 #. Translators: %s is the name of a firewall zone.
-#: src/ui/networksBox.js:280
+#: src/ui/networksBox.js:303
 #, javascript-format
 msgid "Zone changed to %s"
 msgstr ""
 
-#: src/ui/networksBox.js:281 src/ui/networksBox.js:338
+#: src/ui/networksBox.js:304 src/ui/networksBox.js:361
 msgid "_Undo"
 msgstr ""
 
-#: src/ui/networksBox.js:304
+#: src/ui/networksBox.js:327
 msgid "Unable to undo because the zone changed again"
 msgstr ""
 
-#: src/ui/networksBox.js:313
+#: src/ui/networksBox.js:336
 msgid "Zone change could not be undone"
 msgstr ""
 
-#: src/ui/networksBox.js:331
+#: src/ui/networksBox.js:354
 msgid "Network could not be forgotten"
 msgstr ""
 
 #. Translators: %s is the NetworkManager connection name.
-#: src/ui/networksBox.js:337
+#: src/ui/networksBox.js:360
 #, javascript-format
 msgid "Network forgotten: %s"
 msgstr ""
 
-#: src/ui/networksBox.js:354
+#: src/ui/networksBox.js:377
 msgid "Network could not be restored"
 msgstr ""
 
-#: src/ui/networksBox.ui:34
+#: src/ui/networksBox.ui:25 src/ui/networksBox.ui:140
+msgid "Retry"
+msgstr ""
+
+#: src/ui/networksBox.ui:26
+#, fuzzy
+msgid "Some saved networks could not be loaded"
+msgstr "此连接的防火墙区域已设置为 "
+
+#: src/ui/networksBox.ui:47
 #, fuzzy
 msgid "Manage Networks"
 msgstr "网络"
 
-#: src/ui/networksBox.ui:35
+#: src/ui/networksBox.ui:48
 msgid "Manage your configured networks from here."
 msgstr ""
 
-#: src/ui/networksBox.ui:69
+#: src/ui/networksBox.ui:82
 #, fuzzy
 msgid "Change Zone"
 msgstr "当前区域"
 
-#: src/ui/networksBox.ui:80
+#: src/ui/networksBox.ui:93
 msgid "Change"
 msgstr ""
 
-#: src/ui/networksBox.ui:89
+#: src/ui/networksBox.ui:102
 msgid "Forget Zone Choice"
 msgstr ""
 
-#: src/ui/networksBox.ui:90
+#: src/ui/networksBox.ui:103
 #, fuzzy
 msgid ""
 "Forget this network. You will be prompted to choose the firewall zone for "
 "this network the next time you connect to it."
 msgstr "不会进行任何更改。下次您连接到此网络时，将再次看到此窗口。"
 
-#: src/ui/networksBox.ui:95
+#: src/ui/networksBox.ui:108
 msgid "Forget"
 msgstr ""
+
+#: src/ui/networksBox.ui:127
+msgid ""
+"Networks will appear here after Bouncer prompts you to choose a firewall "
+"zone."
+msgstr ""
+
+#: src/ui/networksBox.ui:129
+#, fuzzy
+msgid "No Saved Networks"
+msgstr "网络"
+
+#: src/ui/networksBox.ui:134
+#, fuzzy
+msgid ""
+"Bouncer could not load your saved networks. Try again or see the logs for "
+"more information."
+msgstr "跟踪网络连接变化时出现了问题。请查看日志以获取更多信息。"
 
 #~ msgid "Help"
 #~ msgstr "帮助"
