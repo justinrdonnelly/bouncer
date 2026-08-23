@@ -122,11 +122,6 @@ export default [
                     message: 'Use template strings',
                 },
                 {
-                    object: 'pkg',
-                    property: 'initFormat',
-                    message: 'Use template strings',
-                },
-                {
                     object: 'Lang',
                     property: 'copyProperties',
                     message: 'Use Object.assign()',
