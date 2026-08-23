@@ -59,18 +59,14 @@ export const NetworksBox = GObject.registerClass(
             this.#connectionIdsSeen = connectionIdsSeen;
             this._comboRow.connect('notify::selected', this.#handleNetworkSelected.bind(this));
             this._zoneDropDown.connect('notify::selected', this.#handleZoneSelectionChanged.bind(this));
+            // SYNC_CREATE initializes connectionIdsSeen through the setter below.
             connectionIdsSeen.bind_property(
                 'connection-ids-seen',
                 this,
                 'connection-ids-seen',
                 GObject.BindingFlags.SYNC_CREATE,
             );
-            // The binding will call `set` below
-            this.#refreshZoneInfo().catch((e) => {
-                console.error('Unable to get firewall zone information.');
-                console.error(e.message);
-                this.#handleZoneInfoUnavailable();
-            });
+            this.#refreshZoneInfoAndCatch();
         }
 
         // setter for the bound connection-ids-seen property
@@ -210,6 +206,14 @@ export const NetworksBox = GObject.registerClass(
 
             this._currentZone.subtitle = getZoneDisplayName(network.zone);
             this.#updateZoneDropDown(network);
+        }
+
+        #refreshZoneInfoAndCatch() {
+            this.#refreshZoneInfo().catch((e) => {
+                console.error('Unable to get firewall zone information.');
+                console.error(e.message);
+                this.#handleZoneInfoUnavailable();
+            });
         }
 
         // Populate zone info variables and use them to update the zone dropdown.
