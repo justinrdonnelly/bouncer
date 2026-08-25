@@ -56,7 +56,7 @@
     <color type="primary" scheme_preference="dark">#9586b9</color>
   </branding>
   <releases>
-    <release version="" date="">
+    <release version="50.2.0" date="2026-08-25">
       <description>
         <ul>
           <li>UI/UX enhancements</li>
