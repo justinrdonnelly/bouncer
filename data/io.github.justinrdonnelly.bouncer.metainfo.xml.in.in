@@ -39,15 +39,15 @@
   <url type="vcs-browser">https://github.com/justinrdonnelly/bouncer</url>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/justinrdonnelly/bouncer/fa42ff1a6790ddfc5ce5db5caf94566cfc570894/screenshots/bouncer-choose-zone-light.png</image>
+      <image>https://raw.githubusercontent.com/justinrdonnelly/bouncer/5c553ad97300fc9f363db7ddd0b3e1547783f664/screenshots/bouncer-choose-zone-light.png</image>
       <caption>Bouncer prompting for the type of network</caption>
     </screenshot>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/justinrdonnelly/bouncer/fa42ff1a6790ddfc5ce5db5caf94566cfc570894/screenshots/bouncer-dependencies-light.png</image>
+      <image>https://raw.githubusercontent.com/justinrdonnelly/bouncer/5c553ad97300fc9f363db7ddd0b3e1547783f664/screenshots/bouncer-dependencies-light.png</image>
       <caption>Bouncer dashboard showing configuration status</caption>
     </screenshot>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/justinrdonnelly/bouncer/fa42ff1a6790ddfc5ce5db5caf94566cfc570894/screenshots/bouncer-networks-light.png</image>
+      <image>https://raw.githubusercontent.com/justinrdonnelly/bouncer/5c553ad97300fc9f363db7ddd0b3e1547783f664/screenshots/bouncer-networks-light.png</image>
       <caption>Bouncer dashboard showing network and zone information</caption>
     </screenshot>
   </screenshots>
@@ -56,6 +56,19 @@
     <color type="primary" scheme_preference="dark">#9586b9</color>
   </branding>
   <releases>
+    <release version="50.2.0" date="2026-08-25">
+      <description>
+        <ul>
+          <li>UI/UX enhancements</li>
+          <li>Clean up dashboard dependency tab</li>
+          <li>Prompt for multiple new networks at the same time</li>
+          <li>Added Spanish translations</li>
+          <li>Update Occitan translations</li>
+          <li>Update Danish translations</li>
+          <li>Update JavaScript development tooling</li>
+        </ul>
+      </description>
+    </release>
     <release version="50.1.0" date="2026-06-24">
       <description>
         <ul>

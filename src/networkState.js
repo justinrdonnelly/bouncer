@@ -36,6 +36,7 @@ const NetworkStateSignals = GObject.registerClass(
         Signals: {
             'connection-changed': {
                 param_types: [
+                    GObject.TYPE_STRING, // active connection object path
                     GObject.TYPE_STRING, // connection UUID
                     GObject.TYPE_STRING, // connection name (human-friendly)
                     GObject.TYPE_STRING, // settings object path (eg /org/freedesktop/NetworkManager/Settings/2)
@@ -43,9 +44,12 @@ const NetworkStateSignals = GObject.registerClass(
             },
         },
     },
+    // eslint-disable-next-line no-shadow
     class NetworkStateSignals extends ErrorSignal {
-        emitConnectionChanged(connectionUuid, connectionName, activeConnectionSettings) {
-            super.emit('connection-changed', connectionUuid, connectionName, activeConnectionSettings);
+        emitConnectionChanged(activeConnection, connectionUuid, connectionName, activeConnectionSettings) {
+            super.emit(
+                'connection-changed', activeConnection, connectionUuid, connectionName, activeConnectionSettings
+            );
         }
     }
 );
@@ -53,6 +57,7 @@ const NetworkStateSignals = GObject.registerClass(
 // An abstract class to hold a dbus proxy object. We will make multiple dbus calls based on the results of earlier
 // calls, building a hierarchy.
 const NetworkManagerStateItem = GObject.registerClass(
+    // eslint-disable-next-line no-shadow
     class NetworkManagerStateItem extends NetworkStateSignals {
         // conceptually, the static variables below are 'protected'
         static _wellKnownName = 'org.freedesktop.NetworkManager';
@@ -62,6 +67,7 @@ const NetworkManagerStateItem = GObject.registerClass(
 
         // conceptually, the variables below are 'protected'
         _proxyObj = null;
+        _destroyed = false;
         // map of object path to object for each related child NetworkManagerStateItem
         _childNetworkManagerStateItems = new Map();
         _handlerId;
@@ -99,10 +105,18 @@ const NetworkManagerStateItem = GObject.registerClass(
 
         #relaySignalConnectionChanged(child) {
             child.connect(
-                // eslint-disable-next-line no-unused-vars
-                'connection-changed', (emittingObject, connectionUuid, connectionName, activeConnectionSettings) => {
+                'connection-changed', (
+                    // eslint-disable-next-line no-unused-vars
+                    emittingObject,
+                    activeConnection,
+                    connectionUuid,
+                    connectionName,
+                    activeConnectionSettings
+                ) => {
                     console.debug('relaying connection-changed signal from deeper down in NetworkState.');
-                    this.emitConnectionChanged(connectionUuid, connectionName, activeConnectionSettings);
+                    this.emitConnectionChanged(
+                        activeConnection, connectionUuid, connectionName, activeConnectionSettings
+                    );
                 }
             );
         }
@@ -111,8 +125,8 @@ const NetworkManagerStateItem = GObject.registerClass(
             console.debug(`debug 1 - Destroying ${this.constructor.name} with object path: ${this.objectPath}`);
             this._proxyObj = null;
             // handle children
-            Array.from(this._childNetworkManagerStateItems.values()).forEach((child) => {
-                this._destroyChild(child);
+            Array.from(this._childNetworkManagerStateItems.keys()).forEach((childObjectPath) => {
+                this._destroyChild(childObjectPath);
             });
         }
 
@@ -131,6 +145,7 @@ const NetworkManagerStateItem = GObject.registerClass(
 
 
 const NetworkManagerConnectionActive = GObject.registerClass(
+    // eslint-disable-next-line no-shadow
     class NetworkManagerConnectionActive extends NetworkManagerStateItem {
         constructor(objectPath) {
             // example objectPath: /org/freedesktop/NetworkManager/ActiveConnection/1
@@ -139,7 +154,9 @@ const NetworkManagerConnectionActive = GObject.registerClass(
         }
 
         #connectionChanged() {
-            this.emitConnectionChanged(this._proxyObj.Uuid, this._proxyObj.Id, this._proxyObj.Connection);
+            this.emitConnectionChanged(
+                this.objectPath, this._proxyObj.Uuid, this._proxyObj.Id, this._proxyObj.Connection
+            );
         }
 
         /**
@@ -155,6 +172,8 @@ const NetworkManagerConnectionActive = GObject.registerClass(
                 NetworkManagerStateItem._wellKnownName,
                 this.objectPath,
                 (sourceObj, error) => {
+                    if (this._destroyed)
+                        return;
                     if (error !== null) {
                         // error is [GLib.Error](https://docs.gtk.org/glib/struct.Error.html)
                         if (error instanceof Gio.DBusError)
@@ -165,7 +184,7 @@ const NetworkManagerConnectionActive = GObject.registerClass(
                         return;
                     }
                     this._proxyObj = sourceObj;
-                    console.debug(`Wireless connection ID: ${this._proxyObj.Id}`); // e.g. Wired Connection 1
+                    console.debug(`Network connection ID: ${this._proxyObj.Id}`); // e.g. Wired Connection 1
                     // e.g. /org/freedesktop/NetworkManager/Settings/5
                     console.debug(`Settings object path: ${this._proxyObj.Connection}`);
 
@@ -178,8 +197,9 @@ const NetworkManagerConnectionActive = GObject.registerClass(
             );
         }
 
-        // eslint-disable-next-line no-unused-vars
         #proxyUpdated(proxy, changed, invalidated) {
+            if (this._destroyed || proxy !== this._proxyObj)
+                return;
             console.debug('debug 1 - Proxy updated - NetworkManagerConnectionActive');
             // The only property I care about has a getter that accesses the proxy directly. No need to do anything here
             // besides signal if necessary. There are no children to worry about either.
@@ -206,15 +226,21 @@ const NetworkManagerConnectionActive = GObject.registerClass(
                 }
             }
         }
+
+        destroy() {
+            this._destroyed = true;
+            super.destroy();
+        }
     }
 );
 
 const NetworkManagerDevice = GObject.registerClass(
+    // eslint-disable-next-line no-shadow
     class NetworkManagerDevice extends NetworkManagerStateItem {
-        // from https://developer-old.gnome.org/NetworkManager/stable/nm-dbus-types.html#NMDeviceType
+        // from https://networkmanager.dev/docs/api/latest/nm-dbus-types.html#NMDeviceType
         static #NM_DEVICE_TYPE_WIFI = 2;
         #activeConnection;
-        isWifiDevice = false;
+        isSupportedDevice = false;
 
         static #isConnectionActive(connectionValue) {
             return !(connectionValue === undefined || connectionValue === null || connectionValue === '/');
@@ -244,6 +270,8 @@ const NetworkManagerDevice = GObject.registerClass(
                 NetworkManagerStateItem._wellKnownName,
                 this.objectPath,
                 (proxy, error) => {
+                    if (this._destroyed)
+                        return;
                     if (error !== null) {
                         // error is [GLib.Error](https://docs.gtk.org/glib/struct.Error.html)
                         if (error instanceof Gio.DBusError)
@@ -253,10 +281,9 @@ const NetworkManagerDevice = GObject.registerClass(
                         this._error();
                         return;
                     }
-                    // Use DeviceType to decide whether to continue. We will only track wireless devices. For wireless,
-                    // the device type is NM_DEVICE_TYPE_WIFI (2).
+                    // Use DeviceType to decide whether to continue. We currently track Wi-Fi devices.
                     if (proxy.DeviceType === NetworkManagerDevice.#NM_DEVICE_TYPE_WIFI) {
-                        this.isWifiDevice = true;
+                        this.isSupportedDevice = true;
                         this._proxyObj = proxy;
                         this.#addConnectionInfo();
                         // monitor for property changes
@@ -271,8 +298,9 @@ const NetworkManagerDevice = GObject.registerClass(
             );
         }
 
-        // eslint-disable-next-line no-unused-vars
         #proxyUpdated(proxy, changed, invalidated) {
+            if (this._destroyed || proxy !== this._proxyObj)
+                return;
             console.debug('debug 1 - Proxy updated - NetworkManagerDevice');
             // NetworkManagerDevice doesn't have any state of its own. Just see if there are new children to add, or old
             // children to remove.
@@ -296,7 +324,7 @@ const NetworkManagerDevice = GObject.registerClass(
                         this.#addConnectionInfo(); // this will add the child ('/' in this case)
                         // Emit here because we won't have a child that can emit. It has been destroyed. Use empty
                         // string to indicate no connection.
-                        this.emitConnectionChanged('', '', '')
+                        this.emitConnectionChanged(oldValue, '', '', '')
                     } else if (!NetworkManagerDevice.#isConnectionActive(oldValue) &&
                         NetworkManagerDevice.#isConnectionActive(value)) {
                         // connection has toggled from inactive to active
@@ -313,6 +341,7 @@ const NetworkManagerDevice = GObject.registerClass(
                         console.debug(`debug 2 - connection changed from one active connection (${oldValue}) to ` +
                             `another (${value})`);
                         this.#deleteConnection(oldValue); // destroy old child
+                        this.emitConnectionChanged(oldValue, '', '', '');
                         this.#addConnectionInfo(); // this will add the child
                     } else {
                         console.debug(`debug 2 - connection changed from one inactive connection (${oldValue}) to ` +
@@ -356,12 +385,21 @@ const NetworkManagerDevice = GObject.registerClass(
                 this._addChild(this.#activeConnection, networkManagerConnectionActive);
             }
         }
+
+        destroy() {
+            this._destroyed = true;
+            if (NetworkManagerDevice.#isConnectionActive(this.#activeConnection))
+                this.emitConnectionChanged(this.#activeConnection, '', '', '');
+            super.destroy();
+        }
     }
 );
 
 const NetworkManager = GObject.registerClass(
+    // eslint-disable-next-line no-shadow
     class NetworkManager extends NetworkManagerStateItem {
         #busWatchId;
+        #proxyGeneration = 0;
 
         constructor(objectPath) {
             // example objectPath: /org/freedesktop/NetworkManager (this is always what it is)
@@ -375,20 +413,26 @@ const NetworkManager = GObject.registerClass(
                 // This functionality is all in `super.destroy`. DO NOT CALL `this.destroy` because we want to continue
                 // watching the bus.
                 () => {
-                    // no connection, so be sure the choose zone window is closed
-                    this.emitConnectionChanged('', '', '');
+                    this.#proxyGeneration++;
+                    if (this._destroyed)
+                        return;
+                    // No connections remain, so close all Choose Zone windows.
+                    this.emitConnectionChanged('', '', '', '');
                     super.destroy();
                 }
             );
         }
 
         destroy() {
+            this._destroyed = true;
+            this.#proxyGeneration++;
             this.#unwatchBus();
             super.destroy();
         }
 
         get networkDevices() {
-            return Array.from(this._childNetworkManagerStateItems.values()).filter((device) => device.isWifiDevice);
+            return Array.from(this._childNetworkManagerStateItems.values())
+                .filter((device) => device.isSupportedDevice);
         }
 
         #unwatchBus() {
@@ -403,11 +447,16 @@ const NetworkManager = GObject.registerClass(
          * networkManagerProxy as a property, but... see point #1.
          */
         #getDbusProxyObject() {
+            if (this._destroyed)
+                return;
+            const proxyGeneration = ++this.#proxyGeneration;
             NetworkManagerProxy(
                 Gio.DBus.system,
                 NetworkManagerStateItem._wellKnownName,
                 this.objectPath,
                 (proxy, error) => {
+                    if (this._destroyed || proxyGeneration !== this.#proxyGeneration)
+                        return;
                     if (error !== null) {
                         // error is [GLib.Error](https://docs.gtk.org/glib/struct.Error.html)
                         if (error instanceof Gio.DBusError)
@@ -427,8 +476,9 @@ const NetworkManager = GObject.registerClass(
             );
         }
 
-        // eslint-disable-next-line no-unused-vars
         #proxyUpdated(proxy, changed, invalidated) {
+            if (this._destroyed || proxy !== this._proxyObj)
+                return;
             console.debug('debug 1 - Proxy updated - NetworkManager');
             // NetworkManager doesn't have any state of its own. Just see if there are new children to add, or old
             // children to remove.
@@ -497,6 +547,7 @@ const NetworkManager = GObject.registerClass(
 );
 
 export const NetworkState = GObject.registerClass(
+    // eslint-disable-next-line no-shadow
     class NetworkState extends NetworkStateSignals {
         #networkManager;
 
@@ -514,9 +565,11 @@ export const NetworkState = GObject.registerClass(
             this.#networkManager.connect(
                 'connection-changed',
                 // eslint-disable-next-line no-unused-vars
-                (emittingObject, connectionUuid, connectionName, activeConnectionSettings) => {
-                    console.debug('relaying error signal from deeper down in NetworkState.');
-                    this.emitConnectionChanged(connectionUuid, connectionName, activeConnectionSettings);
+                (emittingObject, activeConnection, connectionUuid, connectionName, activeConnectionSettings) => {
+                    console.debug('relaying connection-changed signal from deeper down in NetworkState.');
+                    this.emitConnectionChanged(
+                        activeConnection, connectionUuid, connectionName, activeConnectionSettings
+                    );
                 }
             );
         }

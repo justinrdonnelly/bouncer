@@ -17,7 +17,7 @@ import Xdp from 'gi://Xdp';
 import { config } from './config.js';
 import { Data } from './data.js';
 import { ErrorSignal } from './errorSignal.js';
-import { ZoneInfo } from './zoneInfo.js';
+import * as ZoneInfo from './zoneInfo.js';
 
 export const DependencyCheck = GObject.registerClass(
     {
@@ -70,6 +70,24 @@ export const DependencyCheck = GObject.registerClass(
                 3,
                 0,
             ),
+            // All dependencies except `#statusStartup`. These must be ready before autostart can be enabled.
+            'dependencies-ready': GObject.ParamSpec.boolean(
+                'dependencies-ready',
+                'dependencies ready',
+                'Whether dependencies required before configuring startup are ready',
+                GObject.ParamFlags.READWRITE,
+                false,
+            ),
+            // Autostart can be enabled only when its prerequisites are ready and it is not already configured.
+            'can-enable-startup': GObject.ParamSpec.boolean(
+                'can-enable-startup',
+                'can enable startup',
+                'Whether startup can currently be enabled',
+                GObject.ParamFlags.READWRITE,
+                false,
+            ),
+            // All dependencies (including `#statusStartup`). We'll use this to determine whether monitoring can be
+            // enabled.
             'status-overall': GObject.ParamSpec.boolean(
                 'status-overall',
                 'status overall',
@@ -79,6 +97,7 @@ export const DependencyCheck = GObject.registerClass(
             ),
         },
     },
+    // eslint-disable-next-line no-shadow
     class DependencyCheck extends ErrorSignal {
         static #fileName = 'first-run-complete';
 
@@ -131,6 +150,9 @@ export const DependencyCheck = GObject.registerClass(
                 return;
             this.#statusNetworkManagerRunning = status;
             this.notify('status-network-manager-running');
+            // If NetworkManager isn't running, set the permissions to 'Unknown'.
+            if (!this.checkComponentStatus(status))
+                this.statusNetworkManagerPermissions = 0;
             this.checkOverallStatus();
         }
 
@@ -159,11 +181,18 @@ export const DependencyCheck = GObject.registerClass(
         }
 
         checkOverallStatus() {
-            this.statusOverall = (
+            this.dependenciesReady = (
                 this.checkComponentStatus(this.#statusDbus) &&
                 this.checkComponentStatus(this.#statusFirewalldRunning) &&
                 this.checkComponentStatus(this.#statusNetworkManagerRunning) &&
-                this.checkComponentStatus(this.#statusNetworkManagerPermissions) &&
+                this.checkComponentStatus(this.#statusNetworkManagerPermissions)
+            );
+            this.canEnableStartup = (
+                this.dependenciesReady &&
+                !this.checkComponentStatus(this.#statusStartup)
+            );
+            this.statusOverall = (
+                this.dependenciesReady &&
                 this.checkComponentStatus(this.#statusStartup)
             );
         }
@@ -206,12 +235,12 @@ export const DependencyCheck = GObject.registerClass(
                     // All these methods must throw an error if they don't want first-run-setup-complete signal to be
                     // emitted (and the corresponding notification generated).
                     this.#data.getData(), // this will return null on the first run, true otherwise
-                    this.runOnStartup(emit),
                     this.checkListNames(emit),
                     this.checkFirewalld(emit),
-                    this.checkNetworkManagerRunning(emit),
-                    this.checkNetworkManagerPermissions(emit),
+                    this.#checkNetworkManager(emit),
                 ]);
+                // Don't configure autostart unless all other dependency checks completed successfully.
+                await this.runOnStartup(emit);
                 if (firstRunData === null) {
                     this.emit('first-run-setup-complete');
                     // set a value so we don't do this again
@@ -222,8 +251,17 @@ export const DependencyCheck = GObject.registerClass(
                     }
                 }
             } catch {
+                this.statusStartup = 3; // Something went wrong. Make 'Run on Startup' red/'Not Ready'.
                 console.error('Error in dependency checks. Not performing first run logic.');
             }
+        }
+
+        // Don't check NetworkManager permissions unless NetworkManager is running.
+        async #checkNetworkManager(emit) {
+            await this.checkNetworkManagerRunning(emit);
+            if (this.checkComponentStatus(this.#statusNetworkManagerRunning))
+                await this.checkNetworkManagerPermissions(emit);
+            // If NetworkManager isn't running, leave NetworkManager Permissions unknown.
         }
 
         // This is not really a dependency. But we need to run on startup to actually be useful.
@@ -254,7 +292,7 @@ export const DependencyCheck = GObject.registerClass(
                         false,
                         'dependency-error-autostart',
                         _('Can\'t configure autostart'),
-                        _('Please make sure the portal is available from inside the flatpak sandbox. Please see logs ' +
+                        _('Please make sure the portal is available from inside the Flatpak sandbox. Please see logs ' +
                             'for more information.')
                     );
                 }
@@ -279,7 +317,7 @@ export const DependencyCheck = GObject.registerClass(
                         true,
                         'dependency-error-names',
                         _('Can\'t find D-Bus names'),
-                        _('Please make sure D-Bus is installed, running, and available inside the flatpak sandbox. ' +
+                        _('Please make sure D-Bus is installed, running, and available inside the Flatpak sandbox. ' +
                             'Please see logs for more information.')
                     );
                 }
@@ -310,7 +348,7 @@ export const DependencyCheck = GObject.registerClass(
                         true,
                         'dependency-error-firewalld',
                         _('Can\'t find firewalld'),
-                        _('Please make sure firewalld is installed, running, and available inside the flatpak ' +
+                        _('Please make sure firewalld is installed, running, and available inside the Flatpak ' +
                             'sandbox. Please see logs for more information.')
                     );
                 }
@@ -331,7 +369,7 @@ export const DependencyCheck = GObject.registerClass(
                         'dependency-error-firewalld',
                         _('Can\'t get firewalld zones'),
                         _('Unable to get firewalld zones. Please make sure firewalld permissions are correct, and ' +
-                            'are not restricted inside the flatpak sandbox. Please see logs for more information.')
+                            'are not restricted inside the Flatpak sandbox. Please see logs for more information.')
                     );
                 }
                 throw e;
@@ -348,7 +386,7 @@ export const DependencyCheck = GObject.registerClass(
                         'dependency-error-firewalld',
                         _('Can\'t get firewalld default zone'),
                         _('Unable to get firewalld default zone. Please make sure firewalld permissions are correct, ' +
-                            'and are not restricted inside the flatpak sandbox. Please see logs for more information.')
+                            'and are not restricted inside the Flatpak sandbox. Please see logs for more information.')
                     );
                 }
                 throw e;
@@ -378,7 +416,7 @@ export const DependencyCheck = GObject.registerClass(
                         true,
                         'dependency-error-networkmanager',
                         _('Can\'t find NetworkManager'),
-                        _('Please make sure NetworkManager is installed, running, and available inside the flatpak ' +
+                        _('Please make sure NetworkManager is installed, running, and available inside the Flatpak ' +
                             'sandbox. Please see logs for more information.')
                     );
                 }
@@ -415,7 +453,14 @@ export const DependencyCheck = GObject.registerClass(
             });
             // GetSettings doesn't require any permissions. Update requires
             // 'org.freedesktop.NetworkManager.settings.modify.system'.
-            const modifyPermission = (await permissions)['org.freedesktop.NetworkManager.settings.modify.system'];
+            let permissionResults;
+            try {
+                permissionResults = await permissions;
+            } catch (e) {
+                this.statusNetworkManagerPermissions = 0;
+                throw e;
+            }
+            const modifyPermission = permissionResults['org.freedesktop.NetworkManager.settings.modify.system'];
             console.log(`NetworkManager modify permission: ${modifyPermission}`);
             switch (modifyPermission) {
                 case 'yes': // authorized, without requiring authentication

@@ -10,23 +10,21 @@
      SPDX-License-Identifier: MPL-2.0
 -->
 <interface>
-  <requires lib="Adw" version="1.0"/>
   <requires lib="gtk" version="4.0"/>
   <template class="DependencyItem" parent="AdwActionRow">
     <child type="suffix">
-      <object class="GtkLabel" id="status">
+      <object class="GtkImage" id="status">
         <property name="margin-start">12</property>
         <property name="margin-end">6</property>
-        <property name="label">⚪</property> <!-- default value will be "unknown" status -->
+        <property name="valign">center</property>
+        <property name="pixel-size">16</property>
+        <property name="icon-name">dialog-question-symbolic</property> <!-- default value will be "unknown" status -->
         <property name="has-tooltip">true</property>
         <property name="tooltip-text" translatable="yes">Unknown</property>
       </object>
     </child>
     <child type="suffix">
       <object class="GtkButton" id="button">
-        <style>
-          <class name="pill"/>
-        </style>
         <property name="margin-start">6</property>
         <property name="margin-end">12</property>
         <property name="valign">center</property>

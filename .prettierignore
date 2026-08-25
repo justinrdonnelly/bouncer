@@ -1,5 +1,9 @@
+# package.json
+package.json
+# build directories
+build/
 builddir/
+# eslint related
 .eslintrc.yml
 .github/workflows/eslint.yml
 eslint.config.js
-package.json

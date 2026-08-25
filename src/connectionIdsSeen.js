@@ -28,6 +28,7 @@ export const ConnectionIdsSeen = GObject.registerClass(
             ),
         },
     },
+    // eslint-disable-next-line no-shadow
     class ConnectionIdsSeen extends GObject.Object {
     static #fileName = 'connection-ids-seen.json';
     #allConnectionIdsSeen; // map of machine ID to array of connection UUIDs for the machine
@@ -109,6 +110,27 @@ export const ConnectionIdsSeen = GObject.registerClass(
         } catch (e) {
             // The save failed. Restore the in-memory representation.
             this.connectionIdsSeen.splice(0, this.connectionIdsSeen.length, ...previousConnectionIdsSeen);
+            throw e;
+        }
+    }
+
+    // undo a `forgetConnection`
+    async restoreConnection(connectionUuid) {
+        if (this.connectionIdsSeen.includes(connectionUuid))
+            return;
+
+        console.log(`Restoring ${connectionUuid} to ${ConnectionIdsSeen.#fileName}.`);
+        this.connectionIdsSeen.push(connectionUuid);
+        try {
+            await this.save();
+            // Since we're changing this.connectionIdsSeen (not using a property setter), we need to call notify
+            // explicitly.
+            this.notify('connection-ids-seen');
+        } catch (e) {
+            // The save failed. Remove the restored connection from the in-memory representation.
+            const restoredConnectionIndex = this.connectionIdsSeen.indexOf(connectionUuid);
+            if (restoredConnectionIndex !== -1)
+                this.connectionIdsSeen.splice(restoredConnectionIndex, 1);
             throw e;
         }
     }

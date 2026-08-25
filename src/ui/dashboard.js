@@ -9,16 +9,16 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-import Adw from 'gi://Adw';
+import Adw from 'gi://Adw?version=1';
 import GObject from 'gi://GObject';
-import Gtk from 'gi://Gtk';
 
 export const Dashboard = GObject.registerClass(
     {
         GTypeName: 'Dashboard',
         Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/dashboard.ui',
-        InternalChildren: ['content', 'dependencyBox', 'networksBox', 'splitView', 'stack'],
+        InternalChildren: ['content', 'dependencyBox', 'networksBox', 'splitView', 'stack', 'toastOverlay'],
     },
+    // eslint-disable-next-line no-shadow
     class Dashboard extends Adw.ApplicationWindow {
         dependencyBox = null;
 
@@ -27,29 +27,26 @@ export const Dashboard = GObject.registerClass(
             console.debug('Building dashboard window.');
             this.dependencyBox = dependencyBox;
             this._dependencyBox.append(dependencyBox);
-            if (networksBox)
+            if (networksBox) {
+                networksBox.connect('toast-requested', this.#showToast.bind(this));
                 this._networksBox.append(networksBox);
-            else
-                this._networksBox.append(this.#createNetworksUnavailableBox());
+            } else
+                this._networksBox.append(this.#createNetworksUnavailablePage());
             this.#setContentTitle();
         }
 
-        // Create and return a GTK box with a label indicating there has been a problem.
-        #createNetworksUnavailableBox() {
-            const box = new Gtk.Box({
-                orientation: Gtk.Orientation.VERTICAL,
-                margin_start: 12,
-                margin_end: 12,
-                margin_top: 24,
-            });
+        // eslint-disable-next-line no-unused-vars
+        #showToast(_networksBox, toast) {
+            this._toastOverlay.add_toast(toast);
+        }
 
-            const label = new Gtk.Label({
-                label: _('Saved networks could not be loaded. Please see logs for more information.'),
-                wrap: true,
-                xalign: 0,
+        #createNetworksUnavailablePage() {
+            return new Adw.StatusPage({
+                description: _('Bouncer could not load your saved networks. Please see the logs for more information.'),
+                icon_name: 'network-error-symbolic',
+                title: _('Saved Networks Unavailable'),
+                vexpand: true,
             });
-            box.append(label);
-            return box;
         }
 
         // set content title to match the selected page

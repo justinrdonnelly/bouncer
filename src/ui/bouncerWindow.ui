@@ -11,11 +11,10 @@
 -->
 <interface>
   <requires lib="gtk" version="4.0"/>
-  <requires lib="Adw" version="1.0"/>
   <template class="BouncerWindow" parent="AdwApplicationWindow">
     <property name="title">Bouncer</property>
     <property name="default-width">600</property>
-    <property name="default-height">400</property>
+    <property name="default-height">625</property>
     <property name="content">
       <object class="AdwToolbarView">
         <child type="top">
@@ -31,19 +30,25 @@
           </object>
         </child>
         <property name="content">
-          <object class="GtkBox" id="contentBox"> <!-- append content to this GtkBox -->
-            <property name="orientation">horizontal</property>
-            <!-- icon -->
-            <child>
-              <object class="GtkImage">
-                <property name="valign">GTK_ALIGN_START</property>
-                <property name="margin-start">12</property>
-                <property name="margin-end">12</property>
-                <property name="icon-name">io.github.justinrdonnelly.bouncer</property>
-                <property name="pixel-size">64</property>
-              </object>
-            </child> <!-- end icon -->
-          </object> <!-- end horizontal GtkBox -->
+          <object class="GtkScrolledWindow">
+            <property name="hscrollbar-policy">never</property>
+            <property name="vscrollbar-policy">automatic</property>
+            <property name="child">
+              <object class="GtkBox" id="contentBox"> <!-- append content to this GtkBox -->
+                <property name="orientation">horizontal</property>
+                <!-- icon -->
+                <child>
+                  <object class="GtkImage">
+                    <property name="valign">GTK_ALIGN_START</property>
+                    <property name="margin-start">12</property>
+                    <property name="margin-end">12</property>
+                    <property name="icon-name">io.github.justinrdonnelly.bouncer</property>
+                    <property name="pixel-size">64</property>
+                  </object>
+                </child> <!-- end icon -->
+              </object> <!-- end horizontal GtkBox -->
+            </property>
+          </object>
         </property>
       </object>
     </property>

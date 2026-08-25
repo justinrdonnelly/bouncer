@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-import Adw from 'gi://Adw';
+import Adw from 'gi://Adw?version=1';
 import GObject from 'gi://GObject';
 
 export const BouncerWindow = GObject.registerClass(
@@ -18,12 +18,13 @@ export const BouncerWindow = GObject.registerClass(
         Template: 'resource:///io/github/justinrdonnelly/bouncer/ui/bouncerWindow.ui',
         InternalChildren: ['contentBox'],
     },
+    // eslint-disable-next-line no-shadow
     class BouncerWindow extends Adw.ApplicationWindow {
         content = null;
 
         constructor(application, content) {
             super({ application });
-            console.debug('Building window.');
+            console.debug('Building bouncer window.');
             console.debug(`application: ${application}`);
             this.content = content;
             this._contentBox.append(content);

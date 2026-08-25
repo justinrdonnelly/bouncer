@@ -10,7 +10,7 @@
  */
 
 import GObject from 'gi://GObject';
-import Gtk from 'gi://Gtk';
+import Gtk from 'gi://Gtk?version=4.0';
 
 import { MoreInfoDialog } from './moreInfo.js';
 import { getSelectedZone, getZoneDisplayName, populateZoneList } from '../zoneSelection.js';
@@ -32,16 +32,16 @@ export const ChooseZoneBox = GObject.registerClass(
             },
         },
     },
+    // eslint-disable-next-line no-shadow
     class ChooseZoneBox extends Gtk.Box {
         #connectionUuid;
         #connectionName;
         #defaultZone;
         #activeConnectionSettings;
-        window;
 
         constructor(connectionUuid, connectionName, defaultZone, currentZone, allZones, activeConnectionSettings) {
             super();
-            console.debug('Building window.');
+            console.debug('Building choose zone box.');
             console.debug(`connectionUuid: ${connectionUuid}`);
             console.debug(`connectionName: ${connectionName}`);
             console.debug(`allZones: ${allZones}`);
@@ -72,7 +72,7 @@ export const ChooseZoneBox = GObject.registerClass(
                 selectedZone,
                 this.#defaultZone
             );
-            this.window.close();
+            this.get_root().close();
         }
 
         // eslint-disable-next-line no-unused-vars
@@ -84,7 +84,7 @@ export const ChooseZoneBox = GObject.registerClass(
         // eslint-disable-next-line no-unused-vars
         exitButtonClicked(_button) {
             console.log('Exiting without selecting a zone.');
-            this.window.close();
+            this.get_root().close();
         }
     }
 );

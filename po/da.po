@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Bouncer 50.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-24 15:50-0400\n"
-"PO-Revision-Date: 2026-06-14 08:04+0200\n"
+"POT-Creation-Date: 2026-08-23 22:50+0000\n"
+"PO-Revision-Date: 2026-07-09 22:50+0200\n"
 "Last-Translator: Filip Kemuel <https://github.com/filipkemuel>\n"
 "Language-Team: Danish\n"
 "Language: da\n"
@@ -136,212 +136,229 @@ msgid "Bouncer dashboard showing configuration status"
 msgstr "Bouncer-dashboard, der viser konfigurationsstatus"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:51
-#, fuzzy
 msgid "Bouncer dashboard showing network and zone information"
-msgstr "Bouncer-dashboard, der viser konfigurationsstatus"
+msgstr "Bouncer-dashboard, der viser netværk og zone information"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:62
-#, fuzzy
-msgid "Include a networks tab on the dashboard"
-msgstr "Inkluder dashboard"
-
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:63
-msgid "UI cleanup"
+msgid "UI/UX enhancements"
 msgstr ""
 
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:63
+msgid "Clean up dashboard dependency tab"
+msgstr "Rens dashboard afhængigheds-fane"
+
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:64
-msgid "Improve accessibility for dependency item status"
+msgid "Prompt for multiple new networks at the same time"
 msgstr ""
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:65
 #, fuzzy
-msgid "Track connections by NetworkManager UUID"
-msgstr "Kan ikke finde NetworkManager"
+msgid "Added Spanish translations"
+msgstr "Dansk oversættelse tilføjet"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:66
-#, fuzzy
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:79
 msgid "Update Occitan translations"
-msgstr "Okcitansk oversættelse tilføjet"
+msgstr "Okcitansk oversættelse opdateret"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:67
 #, fuzzy
-msgid "Update Italian translations"
-msgstr "Russisk oversættelse tilføjet"
+msgid "Update Danish translations"
+msgstr "Dansk oversættelse tilføjet"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:68
-#, fuzzy
-msgid "Include Danish translations"
-msgstr "Hollandsk oversættelse tilføjet"
+msgid "Update JavaScript development tooling"
+msgstr "Javaskript udviklingsværktøj opdateret"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:75
-msgid "Correctly show autostart status on dashboard"
-msgstr ""
+msgid "Include a networks tab on the dashboard"
+msgstr "Inkluder en netværks fane på dashboard'et"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:76
-#, fuzzy
-msgid "Include Italian translation"
-msgstr "Russisk oversættelse tilføjet"
+msgid "UI cleanup"
+msgstr "UI oprydning"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:77
-msgid "Track connection IDs seen per machine"
-msgstr ""
+msgid "Improve accessibility for dependency item status"
+msgstr "Forbedring af tilgængeligheden for status på afhængige elementer"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:78
-#, fuzzy
-msgid "Include Polish translation"
-msgstr "Hollandsk oversættelse tilføjet"
-
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:79
-#, fuzzy
-msgid "Use GNOME 50 runtime"
-msgstr "Brug GNOME 49 runtime"
+msgid "Track connections by NetworkManager UUID"
+msgstr "Spor forbindelser via NetworkManager-UUID"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:80
-#, fuzzy
-msgid "Handle NetworkManager restarts"
-msgstr "Kan ikke finde NetworkManager"
+msgid "Update Italian translations"
+msgstr "Italiensk oversættelse opdateret"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:87
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:81
+msgid "Include Danish translations"
+msgstr "Dansk oversættelse tilføjet"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:88
+msgid "Correctly show autostart status on dashboard"
+msgstr "Vis autostart-status korrekt på instrumentbrættet"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:89
+msgid "Include Italian translation"
+msgstr "Itaiensk oversættelse tilføjet"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:90
+msgid "Track connection IDs seen per machine"
+msgstr "Spor forbindelses-ID’er, registreret pr. maskine"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:91
+msgid "Include Polish translation"
+msgstr "Polsk oversættelse tilføjet"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:92
+msgid "Use GNOME 50 runtime"
+msgstr "Brug GNOME 50 runtime"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:93
+msgid "Handle NetworkManager restarts"
+msgstr "Håndter NetworkManager genstarter"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:100
 msgid "Include dashboard"
 msgstr "Inkluder dashboard"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:94
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:107
 msgid "Include additional desktop categories"
 msgstr "Tilføj yderligere skrivebordskategorier"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:95
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:108
 msgid "Support command line arguments"
 msgstr "Understøtter kommandolinjeargumenter"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:102
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:115
 msgid "Added Russian translation"
 msgstr "Russisk oversættelse tilføjet"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:103
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:116
 msgid "Fixed metainfo formatting"
 msgstr "Fixede metainfo formatering"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:110
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:123
 msgid "Added Occitan translation"
 msgstr "Okcitansk oversættelse tilføjet"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:111
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:124
 msgid "Added Simplified Chinese translation"
 msgstr "Forenklet kinesisk oversættelse tilføjet"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:112
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:125
 msgid "Fixed multiple instance support"
 msgstr "Fixed multiple instance support"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:113
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:126
 msgid "Use GNOME 49 runtime"
 msgstr "Brug GNOME 49 runtime"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:120
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:133
 msgid "Critical bug fix for non-English language users"
 msgstr "Vigtig fejlrettelse til brugere, der ikke taler engelsk"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:121
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:134
 msgid "Added Dutch translation"
 msgstr "Hollandsk oversættelse tilføjet"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:122
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:135
 msgid "Documentation cleanups"
 msgstr "Oprydning i dokumentationen"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:128
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:141
 msgid "Include a notification for first run success"
 msgstr "Indsæt en meddelelse om, at første kørsel er lykkedes"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:133
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:146
 msgid "Initial release"
 msgstr "Første udgave"
 
-#: src/dependencyCheck.js:237
+#: src/dependencyCheck.js:275
 msgid "Bouncer must start on login"
 msgstr "Bouncer skal starte ved login"
 
-#: src/dependencyCheck.js:256
+#: src/dependencyCheck.js:294
 msgid "Can't configure autostart"
 msgstr "Kan ikke konfigurere autostart"
 
-#: src/dependencyCheck.js:257
+#: src/dependencyCheck.js:295
 msgid ""
-"Please make sure the portal is available from inside the flatpak sandbox. "
+"Please make sure the portal is available from inside the Flatpak sandbox. "
 "Please see logs for more information."
 msgstr ""
 "Sørg for, at portalen er tilgængelig inde fra Flatpak-sandkassen. Se "
 "logfilerne for yderligere oplysninger."
 
-#: src/dependencyCheck.js:281
+#: src/dependencyCheck.js:319
 msgid "Can't find D-Bus names"
 msgstr "Kan ikke finde D-Bus-navne"
 
-#: src/dependencyCheck.js:282
+#: src/dependencyCheck.js:320
 msgid ""
 "Please make sure D-Bus is installed, running, and available inside the "
-"flatpak sandbox. Please see logs for more information."
+"Flatpak sandbox. Please see logs for more information."
 msgstr ""
 "Sørg for, at D-Bus er installeret, kører og er tilgængeligt i Flatpak-"
 "sandkassen. Se logfilerne for yderligere oplysninger."
 
-#: src/dependencyCheck.js:312
+#: src/dependencyCheck.js:350
 msgid "Can't find firewalld"
 msgstr "Kan ikke finde firewalld"
 
-#: src/dependencyCheck.js:313
+#: src/dependencyCheck.js:351
 msgid ""
 "Please make sure firewalld is installed, running, and available inside the "
-"flatpak sandbox. Please see logs for more information."
+"Flatpak sandbox. Please see logs for more information."
 msgstr ""
 "Sørg for, at firewalld er installeret, kører og er tilgængeligt inden for "
 "Flatpak-sandkassen. Se logfilerne for yderligere oplysninger."
 
-#: src/dependencyCheck.js:332
+#: src/dependencyCheck.js:370
 msgid "Can't get firewalld zones"
 msgstr "Kan ikke hente firewalld-zoner"
 
-#: src/dependencyCheck.js:333
+#: src/dependencyCheck.js:371
 msgid ""
 "Unable to get firewalld zones. Please make sure firewalld permissions are "
-"correct, and are not restricted inside the flatpak sandbox. Please see logs "
+"correct, and are not restricted inside the Flatpak sandbox. Please see logs "
 "for more information."
 msgstr ""
 "Det er ikke muligt at hente firewalld-zoner. Sørg for, at firewalld-"
 "rettighederne er korrekte, og at de ikke er begrænset inden for Flatpak-"
 "sandkassen. Se logfilerne for yderligere oplysninger."
 
-#: src/dependencyCheck.js:349
+#: src/dependencyCheck.js:387
 msgid "Can't get firewalld default zone"
 msgstr "Kan ikke få fat i firewallds standardzone"
 
-#: src/dependencyCheck.js:350
+#: src/dependencyCheck.js:388
 msgid ""
 "Unable to get firewalld default zone. Please make sure firewalld permissions "
-"are correct, and are not restricted inside the flatpak sandbox. Please see "
+"are correct, and are not restricted inside the Flatpak sandbox. Please see "
 "logs for more information."
 msgstr ""
 "Det er ikke muligt at hente firewallds standardzone. Sørg for, at firewallds "
 "tilladelser er korrekte og ikke er begrænset inden for Flatpak-sandkassen. "
 "Se logfilerne for yderligere oplysninger."
 
-#: src/dependencyCheck.js:380
+#: src/dependencyCheck.js:418
 msgid "Can't find NetworkManager"
 msgstr "Kan ikke finde NetworkManager"
 
-#: src/dependencyCheck.js:381
+#: src/dependencyCheck.js:419
 msgid ""
 "Please make sure NetworkManager is installed, running, and available inside "
-"the flatpak sandbox. Please see logs for more information."
+"the Flatpak sandbox. Please see logs for more information."
 msgstr ""
 "Sørg for, at NetworkManager er installeret, kører og er tilgængeligt i "
 "Flatpak-sandkassen. Se logfilerne for yderligere oplysninger."
 
-#: src/dependencyCheck.js:432
+#: src/dependencyCheck.js:477
 msgid "Authentication required to change NetworkManager connection zone"
 msgstr "Der kræves godkendelse for at ændre NetworkManager-forbindelseszonen"
 
-#: src/dependencyCheck.js:433
+#: src/dependencyCheck.js:478
 msgid ""
 "You are authorized to change the connection zone in NetworkManager, but will "
 "be required to authenticate. This will work, but may be annoying. Please see "
@@ -351,11 +368,11 @@ msgstr ""
 "bliver bedt om at logge ind. Det vil fungere, men kan være irriterende. Se "
 "logfilerne for yderligere oplysninger."
 
-#: src/dependencyCheck.js:446
+#: src/dependencyCheck.js:491
 msgid "Not authorized to change NetworkManager connection zone"
 msgstr "Har ikke tilladelse til at ændre NetworkManager-forbindelseszonen"
 
-#: src/dependencyCheck.js:447
+#: src/dependencyCheck.js:492
 msgid ""
 "You are not authorized to change the connection zone in NetworkManager. This "
 "is required for Bouncer to function properly. Please see logs for more "
@@ -365,11 +382,11 @@ msgstr ""
 "Dette er nødvendigt for, at Bouncer kan fungere korrekt. Se logfilerne for "
 "yderligere oplysninger."
 
-#: src/dependencyCheck.js:459
+#: src/dependencyCheck.js:504
 msgid "Unexpected result from NetworkManager GetSettings: "
 msgstr "Uventet resultat fra NetworkManager GetSettings: "
 
-#: src/dependencyCheck.js:460
+#: src/dependencyCheck.js:505
 msgid ""
 "Unable to determine whether you are authorized to change the connection zone "
 "in NetworkManager. Bouncer may not function properly. Please see logs for "
@@ -379,15 +396,15 @@ msgstr ""
 "NetworkManager. Bouncer fungerer muligvis ikke korrekt. Se logfilerne for "
 "yderligere oplysninger."
 
-#: src/main.js:62
+#: src/main.js:67
 msgid "Monitor Wi-Fi connections in the background"
 msgstr "Overvåg Wifi-forbindelser i baggunden"
 
-#: src/main.js:117
+#: src/main.js:132
 msgid "Unknown error"
 msgstr "Ukendt fejl"
 
-#: src/main.js:118
+#: src/main.js:133
 msgid ""
 "An unknown error occurred. Bouncer may not function correctly. Please see "
 "logs for more information."
@@ -395,11 +412,11 @@ msgstr ""
 "Der opstod en ukendt fejl. Bouncer fungerer muligvis ikke korrekt. Se "
 "logfilerne for yderligere oplysninger."
 
-#: src/main.js:185
+#: src/main.js:201
 msgid "Can't find previously seen connections"
 msgstr "Kan ikke finde tidligere fundne forbindelser"
 
-#: src/main.js:186
+#: src/main.js:202
 msgid ""
 "There was a problem determining which connections have already been seen. "
 "Please see logs for more information."
@@ -407,11 +424,11 @@ msgstr ""
 "Der opstod et problem med at fastslå, hvilke forbindelser der allerede er "
 "blevet registreret. Se logfilerne for yderligere oplysninger."
 
-#: src/main.js:209
+#: src/main.js:225
 msgid "Can't determine network state"
 msgstr "Det er ikke muligt at fastslå netværkets tilstand"
 
-#: src/main.js:210
+#: src/main.js:226
 msgid ""
 "There was a problem tracking network connection changes. Please see logs for "
 "more information."
@@ -420,7 +437,7 @@ msgstr ""
 "logfilerne for yderligere oplysninger."
 
 #. details
-#: src/main.js:231
+#: src/main.js:247
 msgid ""
 "Bouncer is an application to help you choose the correct firewall zone for "
 "wireless connections. When you connect to a new network, Bouncer will open a "
@@ -437,19 +454,19 @@ msgstr ""
 
 #. Translators: Replace 'translator-credits' with your name/username, and optionally an email or
 #. URL.
-#: src/main.js:243
+#: src/main.js:259
 msgid "translator-credits"
 msgstr "Filip Kemuel <https://github.com/filipkemuel>"
 
-#: src/main.js:272
+#: src/main.js:289
 msgid " Bouncer is shutting down. You will need to restart manually."
 msgstr " Bouncer lukker ned. Du skal genstarte manuelt."
 
-#: src/main.js:285
+#: src/main.js:302
 msgid "First run setup complete!"
 msgstr "Første opsætning er afsluttet!"
 
-#: src/main.js:286
+#: src/main.js:303
 msgid ""
 "Your system is correctly configured for Bouncer. Bouncer will autostart on "
 "each login and will open when you connect to a new Wi-Fi network."
@@ -457,11 +474,11 @@ msgstr ""
 "Dit system er korrekt konfigureret til Bouncer. Bouncer starter automatisk "
 "ved hver login og åbnes, når du opretter forbindelse til et nyt Wifi-netværk."
 
-#: src/main.js:329
+#: src/main.js:337
 msgid "Can't prompt for firewall zone"
 msgstr "Kan ikke anmode om valg af firewall-zone"
 
-#: src/main.js:330
+#: src/main.js:338
 msgid ""
 "There was a problem getting information to prompt for the firewall zone. "
 "Please see logs for more information."
@@ -469,11 +486,11 @@ msgstr ""
 "Der opstod et problem med at hente oplysninger til valg af firewall-zone. Se "
 "logfilerne for yderligere oplysninger."
 
-#: src/main.js:382
+#: src/main.js:494
 msgid "Can't add connection to seen connections"
 msgstr "Kan ikke tilføje forbindelse til de fundne forbindelser"
 
-#: src/main.js:383
+#: src/main.js:495
 msgid ""
 "There was a problem adding the connection to the list of seen connections. "
 "The firewall zone will not be set for this connection. Please see logs for "
@@ -483,11 +500,11 @@ msgstr ""
 "forbindelser. Der vil ikke blive oprettet en firewallzone for denne "
 "forbindelse. Se logfilerne for yderligere oplysninger."
 
-#: src/main.js:398
+#: src/main.js:513
 msgid "Can't set firewall zone for connection"
 msgstr "Det er ikke muligt at angive en firewall-zone for forbindelsen"
 
-#: src/main.js:399
+#: src/main.js:514
 msgid ""
 "There was a problem setting the firewall zone for the connection. Please see "
 "logs for more information."
@@ -495,11 +512,11 @@ msgstr ""
 "Der opstod et problem ved indstillingen af firewallzonen for forbindelsen. "
 "Se logfilerne for yderligere oplysninger."
 
-#: src/main.js:414
+#: src/main.js:529
 msgid "Can't save connection to seen connections"
 msgstr "Kan ikke gemme forbindelsen til de fundne forbindelser"
 
-#: src/main.js:415
+#: src/main.js:530
 msgid ""
 "The zone has been set for the connection, but there was a problem saving the "
 "updated list of seen connections to disk. Once you restart Bouncer, you will "
@@ -511,12 +528,12 @@ msgstr ""
 "Når du genstarter Bouncer, bliver du igen bedt om at vælge en firewall-zone "
 "til denne forbindelse. Se logfilerne for yderligere oplysninger."
 
-#: src/main.js:425
+#: src/main.js:540
 msgid "Firewall zone set for connection: "
 msgstr "Indstillet firewallzone for forbindelsen: "
 
 #. this is the default zone
-#: src/main.js:427
+#: src/main.js:542
 msgid ""
 "Firewall zone for this connection has been set to the default zone "
 "(currently "
@@ -524,7 +541,7 @@ msgstr ""
 "Firewall-zonen for denne forbindelse er indstillet til standardzonen (i "
 "øjeblikket "
 
-#: src/main.js:428
+#: src/main.js:543
 msgid ""
 "). Whenever you connect to this network in the future, the firewall zone "
 "will automatically be changed to the default zone."
@@ -532,11 +549,11 @@ msgstr ""
 "). Når du fremover opretter forbindelse til dette netværk, ændres "
 "firewallzonen automatisk til standardzonen."
 
-#: src/main.js:432
+#: src/main.js:547
 msgid "Firewall zone for this connection has been set to "
 msgstr "Firewall-zonen for denne forbindelse er indstillet til "
 
-#: src/main.js:432
+#: src/main.js:547
 msgid ""
 ". Whenever you connect to this network in the future, the firewall zone will "
 "automatically be changed to "
@@ -544,15 +561,15 @@ msgstr ""
 ". Hver gang du fremover opretter forbindelse til dette netværk, ændres "
 "firewall-zonen automatisk til "
 
-#: src/main.js:434
+#: src/main.js:549
 msgid "."
 msgstr "."
 
-#: src/networkState.js:123
+#: src/networkState.js:137
 msgid "Error determining network state"
 msgstr "Der opstod en fejl ved fastlæggelsen af netværksstatus"
 
-#: src/networkState.js:124
+#: src/networkState.js:138
 msgid ""
 "Bouncer ran into an error determining network state. This is required for "
 "the application to work correctly. Please see logs for more information."
@@ -562,15 +579,15 @@ msgstr ""
 "yderligere oplysninger."
 
 # This is the same in danish
-#: src/ui/bouncerWindow.ui:27 src/ui/dashboard.ui:39
+#: src/ui/bouncerWindow.ui:26 src/ui/dashboard.ui:38
 msgid "Menu"
 msgstr ""
 
-#: src/ui/bouncerWindow.ui:54 src/ui/dashboard.ui:118
+#: src/ui/bouncerWindow.ui:59 src/ui/dashboard.ui:137
 msgid "_About Bouncer"
 msgstr "_Om Bouncer"
 
-#: src/ui/chooseZoneBox.ui:25
+#: src/ui/chooseZoneBox.ui:24
 msgid ""
 "You have connected to a new Wi-Fi network. Please choose a firewall zone. "
 "What type of network is this?"
@@ -578,49 +595,49 @@ msgstr ""
 "Du har oprettet forbindelse til et nyt Wifi-netværk. Vælg en firewall-zone. "
 "Hvilken type netværk er dette?"
 
-#: src/ui/chooseZoneBox.ui:41
+#: src/ui/chooseZoneBox.ui:40
 msgid "Network"
 msgstr "Netværk\t"
 
-#: src/ui/chooseZoneBox.ui:50
+#: src/ui/chooseZoneBox.ui:49
 msgid "Default Zone"
 msgstr "Standardzone"
 
-#: src/ui/chooseZoneBox.ui:59 src/ui/networksBox.ui:53
+#: src/ui/chooseZoneBox.ui:58 src/ui/networksBox.ui:73
 msgid "Current Zone"
 msgstr "Nuværende zone"
 
 #. make the dropdown not span the entire box
-#: src/ui/chooseZoneBox.ui:75
+#: src/ui/chooseZoneBox.ui:74
 msgid "Firewall Zone"
 msgstr "Firewall zone"
 
-#: src/ui/chooseZoneBox.ui:76
+#: src/ui/chooseZoneBox.ui:75
 msgid "Choose the firewall zone for this network."
 msgstr "Vælg firewallzone for dette netværk."
 
 # This is the same in danish
-#: src/ui/chooseZoneBox.ui:79
+#: src/ui/chooseZoneBox.ui:78
 msgid "Zone"
 msgstr ""
 
-#: src/ui/chooseZoneBox.ui:102 src/ui/moreInfo.ui:16
+#: src/ui/chooseZoneBox.ui:101 src/ui/moreInfo.ui:15
 msgid "More Information"
 msgstr "Mere information"
 
-#: src/ui/chooseZoneBox.ui:103
+#: src/ui/chooseZoneBox.ui:102
 msgid "Get more information."
 msgstr "Få mere information"
 
-#: src/ui/chooseZoneBox.ui:112
-msgid "Help"
-msgstr "Hjælp"
-
-#: src/ui/chooseZoneBox.ui:121
-msgid "Skip for Now"
+#: src/ui/chooseZoneBox.ui:107
+msgid "Learn More"
 msgstr ""
 
-#: src/ui/chooseZoneBox.ui:122
+#: src/ui/chooseZoneBox.ui:116
+msgid "Skip for Now"
+msgstr "Spring over indtil videre"
+
+#: src/ui/chooseZoneBox.ui:117
 msgid ""
 "No change will be made. You will see this window again the next time you "
 "connect to this network."
@@ -628,15 +645,16 @@ msgstr ""
 "Der foretages ingen ændringer. Du vil se dette vindue igen, næste gang du "
 "opretter forbindelse til dette netværk."
 
-#: src/ui/chooseZoneBox.ui:131
-msgid "Exit"
-msgstr "Afslut"
-
-#: src/ui/chooseZoneBox.ui:140
-msgid "Save Zone"
+#: src/ui/chooseZoneBox.ui:122
+msgid "Skip"
 msgstr ""
 
-#: src/ui/chooseZoneBox.ui:141
+#: src/ui/chooseZoneBox.ui:131
+#, fuzzy
+msgid "Choose Zone"
+msgstr "Skift zone"
+
+#: src/ui/chooseZoneBox.ui:132
 msgid ""
 "The selected firewall zone will be used every time you connect to this "
 "network."
@@ -644,58 +662,65 @@ msgstr ""
 "Den valgte firewallzone vil blive anvendt, hver gang du opretter forbindelse "
 "til dette netværk."
 
-#: src/ui/chooseZoneBox.ui:147
+#: src/ui/chooseZoneBox.ui:137
 msgid "Choose"
 msgstr "Vælg"
 
-#: src/ui/dashboard.js:47
+#: src/ui/dashboard.js:45
 #, fuzzy
 msgid ""
-"Saved networks could not be loaded. Please see logs for more information."
+"Bouncer could not load your saved networks. Please see the logs for more "
+"information."
 msgstr ""
-"Der opstod et problem med at registrere ændringer i netværksforbindelsen. Se "
-"logfilerne for yderligere oplysninger."
+"De gemte netværk kunne ikke indlæses. Se logfilerne for yderligere "
+"oplysninger."
 
-#: src/ui/dashboard.ui:30
-#, fuzzy
+#: src/ui/dashboard.js:47 src/ui/networksBox.ui:143
+msgid "Saved Networks Unavailable"
+msgstr ""
+
+#: src/ui/dashboard.ui:29
 msgid "Dashboard"
-msgstr "Inkluder dashboard"
+msgstr "Dashboard"
 
-#: src/ui/dashboard.ui:90
+#: src/ui/dashboard.ui:91
 msgid "Dependencies"
-msgstr ""
+msgstr "Afhængigheder"
 
-#: src/ui/dashboard.ui:99 src/ui/networksBox.ui:38
-#, fuzzy
+#: src/ui/dashboard.ui:108 src/ui/networksBox.ui:58
 msgid "Networks"
-msgstr "Netværk\t"
+msgstr "Netværk"
 
-#: src/ui/dependencyBox.js:52
+#: src/ui/dependencyBox.js:61
 msgid "firewalld Running"
 msgstr "firewalld kører"
 
-#: src/ui/dependencyBox.js:68
+#: src/ui/dependencyBox.js:80
 msgid "NetworkManager Running"
 msgstr "NetworkManager kører"
 
-#: src/ui/dependencyBox.js:84
+#: src/ui/dependencyBox.js:99
 msgid "NetworkManager Permissions"
 msgstr "NetworkManager tilladelser"
 
-#: src/ui/dependencyBox.js:93
+#: src/ui/dependencyBox.js:113
 msgid "Run on Startup"
 msgstr "Kør ved opstart"
 
-#: src/ui/dependencyBox.js:119
+#: src/ui/dependencyBox.js:118
+msgid "Enable"
+msgstr ""
+
+#: src/ui/dependencyBox.js:149
 msgid "Bouncer is monitoring your Wi-Fi!"
 msgstr "Bouncer overvåger dit Wifi!"
 
 #. We're not monitoring. Show the correct text.
-#: src/ui/dependencyBox.js:123 src/ui/dependencyBox.ui:56
+#: src/ui/dependencyBox.js:153 src/ui/dependencyBox.ui:64
 msgid "Once everything is ready, click to begin using Bouncer."
 msgstr "Når alt er klar, skal du klikke for at komme i gang med Bouncer."
 
-#: src/ui/dependencyBox.ui:24
+#: src/ui/dependencyBox.ui:33
 msgid ""
 "In order to function properly, Bouncer depends on multiple other system "
 "components and configurations. To help facilitate the correct setup, this "
@@ -706,76 +731,74 @@ msgstr ""
 "den korrekte opsætning viser denne side status for de pågældende nødvendige "
 "komponenter og konfigurationer."
 
-#: src/ui/dependencyBox.ui:32
+#: src/ui/dependencyBox.ui:41
 msgid ""
 "You can close this window at any time without affecting network monitoring."
 msgstr ""
 "Du kan til enhver tid lukke dette vindue uden at det påvirker "
 "netværksovervågningen."
 
-#: src/ui/dependencyBox.ui:55
-#, fuzzy
+#: src/ui/dependencyBox.ui:63
 msgid "Network Monitoring"
-msgstr "NetworkManager kører"
+msgstr "Netværksovervågning"
 
-#: src/ui/dependencyBox.ui:62
+#: src/ui/dependencyBox.ui:70
 msgid "Monitor"
 msgstr "Overvåg"
 
-#: src/ui/dependencyItem.js:60 src/ui/dependencyItem.js:69
-#: src/ui/dependencyItem.ui:22
+#: src/ui/dependencyItem.js:101 src/ui/dependencyItem.js:110
+#: src/ui/dependencyItem.ui:23
 msgid "Unknown"
 msgstr "Ukendt"
 
-#: src/ui/dependencyItem.js:62
+#: src/ui/dependencyItem.js:103
 msgid "Ready"
 msgstr "Klar"
 
-#: src/ui/dependencyItem.js:64
+#: src/ui/dependencyItem.js:105
 msgid "Suboptimal"
 msgstr "Ikke optimal"
 
-#: src/ui/dependencyItem.js:66
+#: src/ui/dependencyItem.js:107
 msgid "Not Ready"
 msgstr "Ikke klar"
 
-#: src/ui/dependencyItem.ui:33
+#: src/ui/dependencyItem.ui:31
 msgid "Check"
-msgstr ""
+msgstr "Tjek"
 
-#. Ignore the ugly formatting. New lines are literal.
-#: src/ui/moreInfo.ui:34
+#. Translators: Do not translate or modify %1$s, %2$s, %3$s, or %4$s. They are replaced with the
+#. firewalld, NetworkManager, firewalld connection documentation, and Bouncer URLs, respectively.
+#: src/ui/moreInfo.js:32
+#, fuzzy, javascript-format
 msgid ""
-"You're using <a href=\"https://firewalld.org/\">firewalld</a> as your "
-"firewall. One of the nice features about firewalld is that it supports "
-"different zones (sets of firewall rules). You may have a firewall zone "
-"configured for home use, and a different zone for public networks.\n"
+"You're using <a href=\"%1$s\">firewalld</a> as your firewall. One of the "
+"nice features about firewalld is that it supports different zones (sets of "
+"firewall rules). You may have a firewall zone configured for home use, and a "
+"different zone for public networks.\n"
 "\n"
-"You're using <a href=\"https://networkmanager.dev/\">NetworkManager</a> for "
-"network configuration. NetworkManager integrates well with firewalld and can "
-"<a href=\"https://firewalld.org/documentation/zone/connections-interfaces-"
-"and-sources.html\">set the firewalld zone for an interface based on the "
-"connection</a>. This means your firewall rules can automatically change "
-"depending on your network connection.\n"
+"You're using <a href=\"%2$s\">NetworkManager</a> for network configuration. "
+"NetworkManager integrates well with firewalld and can <a href=\"%3$s\">set "
+"the firewalld zone for an interface based on the connection</a>. This means "
+"your firewall rules can automatically change depending on your network "
+"connection.\n"
 "\n"
 "Bouncer is designed to make this easier for you. It opens a window when you "
 "connect to a new network, allowing you to choose the appropriate firewall "
 "zone. If you're not sure what to choose, you should probably choose the "
 "option that matches where you are. The safest option is usually 'public'. If "
-"you don't want to change anything, click 'Exit'.\n"
+"you don't want to change anything, click 'Skip'.\n"
 "\n"
-"You can read more about Bouncer <a href=\"https://github.com/justinrdonnelly/"
-"bouncer\">here</a>."
+"You can read more about Bouncer <a href=\"%4$s\">here</a>."
 msgstr ""
-"Du bruger <a href=\"https://firewalld.org/\">firewalld</a> som din firewall. "
-"En af de gode ting ved firewalld er, at den understøtter forskellige zoner "
-"(sæt af firewall-regler). Du har måske konfigureret en firewall-zone til "
-"brug derhjemme og en anden zone til offentlige netværk.\n"
+"Du bruger <a href=\"%1$s\">firewalld</a> som din firewall. En af de gode "
+"ting ved firewalld er, at den understøtter forskellige zoner (sæt af "
+"firewall-regler). Du har måske konfigureret en firewall-zone til brug "
+"derhjemme og en anden zone til offentlige netværk.\n"
 "\n"
-"Du bruger <a href=\"https://networkmanager.dev/\">NetworkManager</a> til "
-"netværkskonfiguration. NetworkManager integreres godt med firewalld og kan "
-"<a href=\"https://firewalld.org/documentation/zone/connections-interfaces-"
-"and-sources.html\">indstille firewalld-zonen for en grænseflade baseret på "
+"Du bruger <a href=\"%2$s\">NetworkManager</a> til netværkskonfiguration. "
+"NetworkManager integreres godt med firewalld og kan <a "
+"href=\"%3$s\">indstille firewalld-zonen for en grænseflade baseret på "
 "forbindelsen</a>. Det betyder, at dine firewall-regler automatisk kan ændres "
 "afhængigt af din netværksforbindelse.\n"
 "\n"
@@ -786,49 +809,125 @@ msgstr ""
 "Den sikreste indstilling er normalt ›offentlig‹. Hvis du ikke ønsker at "
 "ændre noget, skal du klikke på ›Afslut‹.\n"
 "\n"
-"Du kan læse mere om Bouncer <a href=\"https://github.com/justinrdonnelly/"
-"bouncer\">her</a>."
+"Du kan læse mere om Bouncer <a href=\"%4$s\">her</a>."
 
-#: src/ui/networksBox.js:172
-#, fuzzy
+#: src/ui/networksBox.js:263
 msgid "Firewall zone information could not be loaded."
-msgstr "Firewall-zonen for denne forbindelse er indstillet til "
+msgstr "Firewall-zone information kunne ikke indlæses."
 
-#: src/ui/networksBox.ui:34
+#: src/ui/networksBox.js:326
+msgid "Zone could not be changed"
+msgstr ""
+
+#. Translators: %s is the name of a firewall zone.
+#: src/ui/networksBox.js:347
+#, javascript-format
+msgid "Zone changed to %s"
+msgstr ""
+
+#: src/ui/networksBox.js:348 src/ui/networksBox.js:405
+msgid "_Undo"
+msgstr ""
+
+#: src/ui/networksBox.js:371
+msgid "Unable to undo because the zone changed again"
+msgstr ""
+
+#: src/ui/networksBox.js:380
+msgid "Zone change could not be undone"
+msgstr ""
+
+#: src/ui/networksBox.js:398
+msgid "Network could not be forgotten"
+msgstr ""
+
+#. Translators: %s is the NetworkManager connection name.
+#: src/ui/networksBox.js:404
+#, javascript-format
+msgid "Network forgotten: %s"
+msgstr ""
+
+#: src/ui/networksBox.js:421
+msgid "Network could not be restored"
+msgstr ""
+
+#: src/ui/networksBox.ui:25 src/ui/networksBox.ui:32 src/ui/networksBox.ui:147
+msgid "Retry"
+msgstr ""
+
+#: src/ui/networksBox.ui:26
 #, fuzzy
+msgid "Some saved networks could not be loaded"
+msgstr "Firewall-zone information kunne ikke indlæses."
+
+#: src/ui/networksBox.ui:33
+#, fuzzy
+msgid "Firewall zone information is unavailable"
+msgstr "Firewall-zone information kunne ikke indlæses."
+
+#: src/ui/networksBox.ui:54
 msgid "Manage Networks"
-msgstr "Netværk\t"
+msgstr "Håndter netværk"
 
-#: src/ui/networksBox.ui:35
+#: src/ui/networksBox.ui:55
 msgid "Manage your configured networks from here."
-msgstr ""
+msgstr "Håndter dine konfigurerede netværk herfra."
 
-#: src/ui/networksBox.ui:70
-#, fuzzy
+#: src/ui/networksBox.ui:89
 msgid "Change Zone"
-msgstr "Nuværende zone"
+msgstr "Skift zone"
 
-#: src/ui/networksBox.ui:82
+#: src/ui/networksBox.ui:100
 msgid "Change"
+msgstr "Skift"
+
+#: src/ui/networksBox.ui:109
+msgid "Forget Zone Choice"
 msgstr ""
 
-#: src/ui/networksBox.ui:95
-#, fuzzy
-msgid "Forget Network"
-msgstr "Netværk\t"
-
-#: src/ui/networksBox.ui:96
-#, fuzzy
+#: src/ui/networksBox.ui:110
 msgid ""
 "Forget this network. You will be prompted to choose the firewall zone for "
 "this network the next time you connect to it."
 msgstr ""
-"Der foretages ingen ændringer. Du vil se dette vindue igen, næste gang du "
-"opretter forbindelse til dette netværk."
+"Glem dette netværk. Næste gang du opretter forbindelse til det, bliver du "
+"bedt om at vælge en firewall-zone for dette netværk."
 
-#: src/ui/networksBox.ui:102
+#: src/ui/networksBox.ui:115
 msgid "Forget"
+msgstr "Glem"
+
+#: src/ui/networksBox.ui:134
+msgid ""
+"Networks will appear here after Bouncer prompts you to choose a firewall "
+"zone."
 msgstr ""
+
+#: src/ui/networksBox.ui:136
+#, fuzzy
+msgid "No Saved Networks"
+msgstr "Håndter netværk"
+
+#: src/ui/networksBox.ui:141
+#, fuzzy
+msgid ""
+"Bouncer could not load your saved networks. Try again or see the logs for "
+"more information."
+msgstr ""
+"De gemte netværk kunne ikke indlæses. Se logfilerne for yderligere "
+"oplysninger."
+
+#~ msgid "Help"
+#~ msgstr "Hjælp"
+
+#~ msgid "Exit"
+#~ msgstr "Afslut"
+
+#~ msgid "Save Zone"
+#~ msgstr "Gem Zone"
+
+#~ msgid "Forget Network"
+#~ msgstr "Glem Netværk"
 
 #~ msgid "Check Status"
 #~ msgstr "Tjek status"

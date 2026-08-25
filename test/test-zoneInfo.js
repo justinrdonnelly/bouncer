@@ -11,7 +11,7 @@
 
 import GLib from 'gi://GLib';
 
-import { ZoneInfo } from '../src/zoneInfo.js';
+import * as ZoneInfo from '../src/zoneInfo.js';
 
 async function getZoneInformation() {
     try {
