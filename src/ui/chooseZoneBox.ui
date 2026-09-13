@@ -39,6 +39,7 @@
           <object class="AdwActionRow" id="connectionName">
             <property name="title" translatable="yes">Network</property>
             <property name="subtitle-selectable">True</property>
+            <property name="use-markup">False</property>
             <style>
               <class name="property"/>
             </style>

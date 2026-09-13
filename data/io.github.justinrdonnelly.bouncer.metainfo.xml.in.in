@@ -56,6 +56,13 @@
     <color type="primary" scheme_preference="dark">#9586b9</color>
   </branding>
   <releases>
+    <release version="" date="">
+      <description>
+        <ul>
+          <li>Display network names containing special characters correctly</li>
+        </ul>
+      </description>
+    </release>
     <release version="51.0.0" date="2026-10-11">
       <description>
         <ul>
