@@ -59,11 +59,6 @@ When evaluating, proposing, implementing, or reviewing UI changes:
   `meson setup build`. Then run `meson compile -C build`.
 - Run `meson test -C build` for desktop file, AppStream metadata, and
   GSettings schema validation.
-- Prettier is not a required formatter or verification step. Do not run it
-  routinely.
-- Prettier may be run selectively on new files or files with substantial new
-  code as a source of suggestions. Do not retain its output wholesale;
-  evaluate each change against the existing project style.
 - The scripts under `test/` are manual smoke tests and may modify the host
   system. Inspect them and obtain approval before running them.
 
