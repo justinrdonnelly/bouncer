@@ -1,6 +1,5 @@
 {
   "name": "bouncer",
-  "main": "src/main.js",
   "type": "module",
   "author": "Justin Donnelly",
   "license": "MPL-2.0",
