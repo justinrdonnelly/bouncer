@@ -17,6 +17,7 @@
     "prettier": "3.9.10"
   },
   "scripts": {
+    "lint": "eslint .",
     "prepare": "husky"
   }
 }
