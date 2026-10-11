@@ -19,6 +19,7 @@
       <object class="AdwBreakpoint">
         <condition>max-width: 550sp</condition>
         <setter object="splitView" property="collapsed">True</setter>
+        <setter object="sidebar" property="mode">page</setter>
       </object>
     </child>
     <property name="content">
@@ -42,7 +43,7 @@
                   </object>
                 </child>
                 <property name="content">
-                  <object class="AdwViewSwitcherSidebar">
+                  <object class="AdwViewSwitcherSidebar" id="sidebar">
                     <property name="stack">stack</property>
                     <property name="prefix">
                       <object class="GtkImage">
