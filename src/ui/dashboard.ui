@@ -42,32 +42,20 @@
                   </object>
                 </child>
                 <property name="content">
-                  <object class="GtkBox">
-                    <property name="orientation">vertical</property>
-                    <!-- Bouncer icon -->
-                    <child>
-                      <object class="GtkBox">
-                        <property name="orientation">horizontal</property>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="margin-top">12</property>
-                            <property name="margin-start">12</property>
-                            <property name="margin-end">12</property>
-                            <property name="icon-name">io.github.justinrdonnelly.bouncer</property>
-                            <property name="pixel-size">64</property>
-                          </object>
-                        </child>
+                  <object class="AdwViewSwitcherSidebar">
+                    <property name="stack">stack</property>
+                    <property name="prefix">
+                      <object class="GtkImage">
+                        <property name="halign">start</property>
+                        <property name="margin-top">6</property>
+                        <property name="margin-start">6</property>
+                        <property name="margin-end">6</property>
+                        <property name="icon-name">io.github.justinrdonnelly.bouncer</property>
+                        <property name="pixel-size">64</property>
                       </object>
-                    </child>
-                    <!-- end Bouncer icon -->
-                    <child>
-                      <object class="AdwViewSwitcherSidebar">
-                        <property name="stack">stack</property>
-                        <signal name="activated" handler="sidebarActivatedCallback"/>
-                      </object>
-                    </child>
+                    </property>
+                    <signal name="activated" handler="sidebarActivatedCallback"/>
                   </object>
-                  <!-- end box -->
                 </property>
               </object>
             </property>
