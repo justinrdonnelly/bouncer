@@ -45,15 +45,18 @@ export const DependencyItem = GObject.registerClass(
                 null
             );
 
-            dependencyCheck.bind_property_full(
-                property,
-                this._status,
-                'css-classes',
-                GObject.BindingFlags.SYNC_CREATE,
-                // eslint-disable-next-line no-unused-vars
-                (binding, value) => [true, [this.#convertStatusToCssClass(value)]],
-                null
-            );
+            for (const cssClass of ['dimmed', 'success', 'warning', 'error']) {
+                Adw.bind_property_to_css_class_full(
+                    dependencyCheck,
+                    property,
+                    this._status,
+                    cssClass,
+                    GObject.BindingFlags.SYNC_CREATE,
+                    // eslint-disable-next-line no-unused-vars
+                    (binding, value) => this.#convertStatusToCssClass(value) === cssClass,
+                    null
+                );
+            }
 
             dependencyCheck.bind_property_full(
                 property,
