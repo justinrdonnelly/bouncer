@@ -56,6 +56,14 @@
     <color type="primary" scheme_preference="dark">#9586b9</color>
   </branding>
   <releases>
+    <release version="51.0.0" date="2026-10-11">
+      <description>
+        <ul>
+          <li>Use GNOME 51</li>
+          <li>Improve dashboard navigation in narrow windows</li>
+        </ul>
+      </description>
+    </release>
     <release version="50.2.0" date="2026-08-25">
       <description>
         <ul>
