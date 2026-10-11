@@ -167,7 +167,7 @@ const NetworkManagerConnectionActive = GObject.registerClass(
          * networkManagerProxy as a property, but... see point #1.
          */
         #getDbusProxyObject() {
-            NetworkManagerConnectionActiveProxy(
+            new NetworkManagerConnectionActiveProxy(
                 Gio.DBus.system,
                 NetworkManagerStateItem._wellKnownName,
                 this.objectPath,
@@ -265,7 +265,7 @@ const NetworkManagerDevice = GObject.registerClass(
          * networkManagerProxy as a property, but... see point #1.
          */
         #getDbusProxyObject() {
-            NetworkManagerDeviceProxy(
+            new NetworkManagerDeviceProxy(
                 Gio.DBus.system,
                 NetworkManagerStateItem._wellKnownName,
                 this.objectPath,
@@ -450,7 +450,7 @@ const NetworkManager = GObject.registerClass(
             if (this._destroyed)
                 return;
             const proxyGeneration = ++this.#proxyGeneration;
-            NetworkManagerProxy(
+            new NetworkManagerProxy(
                 Gio.DBus.system,
                 NetworkManagerStateItem._wellKnownName,
                 this.objectPath,
