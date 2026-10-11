@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bouncer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-23 22:50+0000\n"
+"POT-Creation-Date: 2026-10-11 15:12+0000\n"
 "PO-Revision-Date: 2026-08-01 20:09-0006\n"
 "Last-Translator: GUILLERMO THEMSEL <themselg@tuta.io>\n"
 "Language-Team: \n"
@@ -138,137 +138,146 @@ msgid "Bouncer dashboard showing network and zone information"
 msgstr "Panel de Bouncer mostrando información de redes y zonas"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:62
+#, fuzzy
+msgid "Use GNOME 51"
+msgstr "Uso del runtime de GNOME 50"
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:63
+msgid "Improve dashboard navigation in narrow windows"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:70
 msgid "UI/UX enhancements"
 msgstr "Mejoras de UI/UX"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:63
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:71
 msgid "Clean up dashboard dependency tab"
 msgstr "Limpieza de la pestaña de dependencias del panel"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:64
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:72
 msgid "Prompt for multiple new networks at the same time"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:65
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:73
 #, fuzzy
 msgid "Added Spanish translations"
 msgstr "Actualización de las traducciones al danés"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:66
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:79
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:74
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:87
 msgid "Update Occitan translations"
 msgstr "Actualización de las traducciones al occitano"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:67
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:75
 msgid "Update Danish translations"
 msgstr "Actualización de las traducciones al danés"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:68
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:76
 msgid "Update JavaScript development tooling"
 msgstr "Actualización de las herramientas de desarrollo de JavaScript"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:75
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:83
 msgid "Include a networks tab on the dashboard"
 msgstr "Se incluyó una pestaña de redes en el panel"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:76
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:84
 msgid "UI cleanup"
 msgstr "Limpieza de la interfaz"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:77
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:85
 msgid "Improve accessibility for dependency item status"
 msgstr "Mejora de la accesibilidad del estado de los elementos de dependencia"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:78
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:86
 msgid "Track connections by NetworkManager UUID"
 msgstr "Seguimiento de conexiones por UUID de NetworkManager"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:80
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:88
 msgid "Update Italian translations"
 msgstr "Actualización de las traducciones al italiano"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:81
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:89
 msgid "Include Danish translations"
 msgstr "Se incluyeron las traducciones al danés"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:88
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:96
 msgid "Correctly show autostart status on dashboard"
 msgstr ""
 "Se corrigió la visualización del estado de inicio automático en el panel"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:89
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:97
 msgid "Include Italian translation"
 msgstr "Se incluyó la traducción al italiano"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:90
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:98
 msgid "Track connection IDs seen per machine"
 msgstr "Seguimiento de los ID de conexión vistos por equipo"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:91
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:99
 msgid "Include Polish translation"
 msgstr "Se incluyó la traducción al polaco"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:92
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:100
 msgid "Use GNOME 50 runtime"
 msgstr "Uso del runtime de GNOME 50"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:93
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:101
 msgid "Handle NetworkManager restarts"
 msgstr "Gestión de los reinicios de NetworkManager"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:100
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:108
 msgid "Include dashboard"
 msgstr "Se incluyó el panel"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:107
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:115
 msgid "Include additional desktop categories"
 msgstr "Se incluyeron categorías de escritorio adicionales"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:108
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:116
 msgid "Support command line arguments"
 msgstr "Compatibilidad con argumentos de línea de comandos"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:115
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:123
 msgid "Added Russian translation"
 msgstr "Se añadió la traducción al ruso"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:116
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:124
 msgid "Fixed metainfo formatting"
 msgstr "Se corrigió el formato del metainfo"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:123
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:131
 msgid "Added Occitan translation"
 msgstr "Se añadió la traducción al occitano"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:124
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:132
 msgid "Added Simplified Chinese translation"
 msgstr "Se añadió la traducción al chino simplificado"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:125
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:133
 msgid "Fixed multiple instance support"
 msgstr "Se corrigió la compatibilidad con múltiples instancias"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:126
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:134
 msgid "Use GNOME 49 runtime"
 msgstr "Uso del runtime de GNOME 49"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:133
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:141
 msgid "Critical bug fix for non-English language users"
 msgstr "Corrección crítica para usuarios de idiomas distintos al inglés"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:134
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:142
 msgid "Added Dutch translation"
 msgstr "Se añadió la traducción al neerlandés"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:135
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:143
 msgid "Documentation cleanups"
 msgstr "Limpieza de la documentación"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:141
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:149
 msgid "Include a notification for first run success"
 msgstr "Se incluyó una notificación de éxito en la primera ejecución"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:146
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:154
 msgid "Initial release"
 msgstr "Versión inicial"
 
@@ -577,11 +586,11 @@ msgstr ""
 "necesario para que la aplicación funcione correctamente. Consulta los "
 "registros para más información."
 
-#: src/ui/bouncerWindow.ui:26 src/ui/dashboard.ui:38
+#: src/ui/bouncerWindow.ui:26 src/ui/dashboard.ui:39
 msgid "Menu"
 msgstr "Menú"
 
-#: src/ui/bouncerWindow.ui:59 src/ui/dashboard.ui:137
+#: src/ui/bouncerWindow.ui:59 src/ui/dashboard.ui:126
 msgid "_About Bouncer"
 msgstr "_Acerca de Bouncer"
 
@@ -675,15 +684,15 @@ msgstr ""
 msgid "Saved Networks Unavailable"
 msgstr ""
 
-#: src/ui/dashboard.ui:29
+#: src/ui/dashboard.ui:30
 msgid "Dashboard"
 msgstr "Panel"
 
-#: src/ui/dashboard.ui:91
+#: src/ui/dashboard.ui:80
 msgid "Dependencies"
 msgstr "Dependencias"
 
-#: src/ui/dashboard.ui:108 src/ui/networksBox.ui:58
+#: src/ui/dashboard.ui:97 src/ui/networksBox.ui:58
 msgid "Networks"
 msgstr "Redes"
 
@@ -741,20 +750,20 @@ msgstr "Monitoreo de red"
 msgid "Monitor"
 msgstr "Monitorear"
 
-#: src/ui/dependencyItem.js:101 src/ui/dependencyItem.js:110
+#: src/ui/dependencyItem.js:104 src/ui/dependencyItem.js:113
 #: src/ui/dependencyItem.ui:23
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: src/ui/dependencyItem.js:103
+#: src/ui/dependencyItem.js:106
 msgid "Ready"
 msgstr "Listo"
 
-#: src/ui/dependencyItem.js:105
+#: src/ui/dependencyItem.js:108
 msgid "Suboptimal"
 msgstr "No óptimo"
 
-#: src/ui/dependencyItem.js:107
+#: src/ui/dependencyItem.js:110
 msgid "Not Ready"
 msgstr "No listo"
 
