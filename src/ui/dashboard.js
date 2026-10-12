@@ -21,6 +21,8 @@ export const Dashboard = GObject.registerClass(
     // eslint-disable-next-line no-shadow
     class Dashboard extends Adw.ApplicationWindow {
         dependencyBox = null;
+        #networksBox = null;
+        #toastRequestedHandlerId = 0;
 
         constructor(application, dependencyBox, networksBox) {
             super({ application });
@@ -28,11 +30,25 @@ export const Dashboard = GObject.registerClass(
             this.dependencyBox = dependencyBox;
             this._dependencyBox.append(dependencyBox);
             if (networksBox) {
-                networksBox.connect('toast-requested', this.#showToast.bind(this));
+                this.#networksBox = networksBox;
+                this.#toastRequestedHandlerId = networksBox.connect('toast-requested', this.#showToast.bind(this));
                 this._networksBox.append(networksBox);
             } else
                 this._networksBox.append(this.#createNetworksUnavailablePage());
             this.#setContentTitle();
+        }
+
+        // The application calls this on window removal, before widgets are finalized.
+        cleanup() {
+            this.dependencyBox?.cleanup();
+            this.dependencyBox = null;
+            if (this.#networksBox !== null) {
+                this.#networksBox.disconnect(this.#toastRequestedHandlerId);
+                this.#toastRequestedHandlerId = 0;
+                this._toastOverlay.dismiss_all();
+                this.#networksBox.cleanup();
+                this.#networksBox = null;
+            }
         }
 
         // eslint-disable-next-line no-unused-vars

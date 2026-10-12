@@ -45,12 +45,13 @@ export const NetworksBox = GObject.registerClass(
     // eslint-disable-next-line no-shadow
     class NetworksBox extends Gtk.Box {
         #connectionIdsSeen; // ConnectionIdsSeen instance.
+        #connectionIdsSeenBinding = null;
         #connectionUuidsSeen = []; // Local copy of the bound connection UUIDs.
         #networks = []; // Array of objects containing uuid, id, zone.
         #allZones = []; // Array of zones from firewalld.
         #defaultZone = null; // This will later be the default zone (eg public).
         #zoneInfoLoaded = false; // This will become true once #allZones and #defaultZone are populated.
-        #firewalldBusWatchId;
+        #firewalldBusWatchId = 0;
         #destroyed = false; // Guard against race condition around closing the window.
         #refreshZoneInfoSequence = 0; // Used to ignore stale refresh results that finish out of order.
         #networkLookupFailures = 0; // Number of saved networks that could not be looked up in NetworkManager.
@@ -65,7 +66,7 @@ export const NetworksBox = GObject.registerClass(
             this._comboRow.connect('notify::selected', this.#handleNetworkSelected.bind(this));
             this._zoneDropDown.connect('notify::selected', this.#handleZoneSelectionChanged.bind(this));
             // SYNC_CREATE initializes connectionIdsSeen through the setter below.
-            connectionIdsSeen.bind_property(
+            this.#connectionIdsSeenBinding = connectionIdsSeen.bind_property(
                 'connection-ids-seen',
                 this,
                 'connection-ids-seen',
@@ -78,11 +79,20 @@ export const NetworksBox = GObject.registerClass(
                 () => this.#refreshZoneInfoAndCatch(),
                 () => this.#handleZoneInfoUnavailable()
             );
-            this.connect('destroy', () => {
-                this.#destroyed = true;
-                this.#refreshZoneInfoSequence++; // invalidate any in-flight zone queries
-                Gio.bus_unwatch_name(this.#firewalldBusWatchId);
-            });
+        }
+
+        cleanup() {
+            if (this.#destroyed)
+                return;
+            this.#destroyed = true;
+            this.#refreshZoneInfoSequence++; // invalidate any in-flight zone queries
+            this.#refreshNetworksSequence++; // invalidate any in-flight network queries
+            Gio.bus_unwatch_name(this.#firewalldBusWatchId);
+            this.#firewalldBusWatchId = 0;
+            this.#connectionIdsSeenBinding.unbind();
+            this.#connectionIdsSeenBinding = null;
+            this.#zoneChangeToast?.dismiss();
+            this.#zoneChangeToast = null;
         }
 
         // setter for the bound connection-ids-seen property
@@ -93,6 +103,8 @@ export const NetworksBox = GObject.registerClass(
         }
 
         #refreshNetworksAndCatch() {
+            if (this.#destroyed)
+                return;
             this.#refreshNetworks().catch((e) => {
                 console.error('Unable to refresh networks list.');
                 console.error(e.message);
@@ -190,6 +202,8 @@ export const NetworksBox = GObject.registerClass(
 
         // Update control sensitivity based on the currently available network and zone information.
         #updateControlSensitivity() {
+            if (this.#destroyed)
+                return;
             const network = this.#getSelectedNetwork();
             const hasNetworks = this.#networks.length > 0;
             const networkActionPending = this.#networkActionsPending > 0;
@@ -212,6 +226,8 @@ export const NetworksBox = GObject.registerClass(
 
         // Update the displayed zone info when the selected connection changes.
         #handleNetworkSelected() {
+            if (this.#destroyed)
+                return;
             const network = this.#getSelectedNetwork();
             if (network === undefined || network === null) {
                 this._currentZone.subtitle = '';
@@ -341,6 +357,8 @@ export const NetworksBox = GObject.registerClass(
         }
 
         #showZoneChangeToast(connectionUuid, previousZone, selectedZone) {
+            if (this.#destroyed)
+                return;
             this.#zoneChangeToast?.dismiss();
 
             const toast = new Adw.Toast({
@@ -400,6 +418,8 @@ export const NetworksBox = GObject.registerClass(
                     return;
                 }
 
+                if (this.#destroyed)
+                    return;
                 const toast = new Adw.Toast({
                     // Translators: %s is the NetworkManager connection name.
                     title: _('Network forgotten: %s').format(network.id),
@@ -424,6 +444,8 @@ export const NetworksBox = GObject.registerClass(
         }
 
         #requestErrorToast(title) {
+            if (this.#destroyed)
+                return;
             this.emit('toast-requested', new Adw.Toast({
                 title,
                 priority: Adw.ToastPriority.HIGH,

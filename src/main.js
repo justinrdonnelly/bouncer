@@ -111,8 +111,10 @@ export const BouncerApplication = GObject.registerClass(
 
         vfunc_window_removed(window) {
             // Closing drops GTK's window reference before retained widgets emit destroy.
-            if (window === this.#dashboardWindow)
+            if (window === this.#dashboardWindow) {
                 this.#dashboardWindow = null;
+                window.cleanup();
+            }
             super.vfunc_window_removed(window);
         }
 

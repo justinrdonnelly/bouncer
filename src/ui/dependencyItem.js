@@ -20,6 +20,8 @@ export const DependencyItem = GObject.registerClass(
     },
     // eslint-disable-next-line no-shadow
     class DependencyItem extends Adw.ActionRow {
+        #bindings = [];
+
         constructor(
             title,
             dependencyCheck,
@@ -35,7 +37,7 @@ export const DependencyItem = GObject.registerClass(
             super();
             this.title = title;
 
-            dependencyCheck.bind_property_full(
+            this.#bindings.push(dependencyCheck.bind_property_full(
                 property,
                 this._status,
                 'icon-name',
@@ -43,10 +45,10 @@ export const DependencyItem = GObject.registerClass(
                 // eslint-disable-next-line no-unused-vars
                 (binding, value) => [true, this.#convertStatusToIcon(value)],
                 null
-            );
+            ));
 
             for (const cssClass of ['dimmed', 'success', 'warning', 'error']) {
-                Adw.bind_property_to_css_class_full(
+                this.#bindings.push(Adw.bind_property_to_css_class_full(
                     dependencyCheck,
                     property,
                     this._status,
@@ -55,10 +57,10 @@ export const DependencyItem = GObject.registerClass(
                     // eslint-disable-next-line no-unused-vars
                     (binding, value) => this.#convertStatusToCssClass(value) === cssClass,
                     null
-                );
+                ));
             }
 
-            dependencyCheck.bind_property_full(
+            this.#bindings.push(dependencyCheck.bind_property_full(
                 property,
                 this._status,
                 'tooltip-text',
@@ -66,9 +68,9 @@ export const DependencyItem = GObject.registerClass(
                 // eslint-disable-next-line no-unused-vars
                 (binding, value) => [true, this.#convertStatusToText(value)],
                 null
-            );
+            ));
 
-            dependencyCheck.bind_property_full(
+            this.#bindings.push(dependencyCheck.bind_property_full(
                 property,
                 this,
                 'subtitle',
@@ -76,14 +78,14 @@ export const DependencyItem = GObject.registerClass(
                 // eslint-disable-next-line no-unused-vars
                 (binding, value) => [true, this.#convertStatusToText(value)],
                 null
-            );
+            ));
 
             if (buttonLabel !== null)
                 this._button.label = buttonLabel;
             buttonSizeGroup?.add_widget(this._button);
             this._button.connect('clicked', callbackFunction);
             if (buttonSensitiveProperty !== null) {
-                dependencyCheck.bind_property_full(
+                this.#bindings.push(dependencyCheck.bind_property_full(
                     buttonSensitiveProperty,
                     this._button,
                     'sensitive',
@@ -94,8 +96,13 @@ export const DependencyItem = GObject.registerClass(
                         buttonSensitiveTransformFunction === null ? value : buttonSensitiveTransformFunction(value),
                     ],
                     null
-                );
+                ));
             }
+        }
+
+        cleanup() {
+            this.#bindings.forEach(binding => binding.unbind());
+            this.#bindings = [];
         }
 
         #convertStatusToText(status) {

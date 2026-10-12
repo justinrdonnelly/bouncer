@@ -27,9 +27,12 @@ export const DependencyBox = GObject.registerClass(
     class DependencyBox extends Gtk.Box {
         #monitoring;
         #statusOverall;
+        #dependencyCheck = null;
+        #statusOverallHandlerId = 0;
 
         constructor(dependencyCheck, monitoring) {
             super();
+            this.#dependencyCheck = dependencyCheck;
             this.#monitoring = monitoring;
             let count = 0;
             let dependencyItem;
@@ -125,7 +128,7 @@ export const DependencyBox = GObject.registerClass(
             this._listBox.insert(dependencyItem, count++);
 
             // when the dependencyCheck status-overall property changes, update the "monitor" portion
-            const statusOverallHandlerId = dependencyCheck.connect(
+            this.#statusOverallHandlerId = dependencyCheck.connect(
                 'notify::status-overall',
                 // eslint-disable-next-line no-unused-vars
                 (object, _pspec) => {
@@ -135,12 +138,22 @@ export const DependencyBox = GObject.registerClass(
                     this.#handleMonitoringRow();
                 }
             );
-            this.connect('destroy', () => {
-                dependencyCheck.disconnect(statusOverallHandlerId);
-            });
             this.#statusOverall = dependencyCheck['status-overall'];
             this.#handleMonitoringRow();
         } // end constructor
+
+        cleanup() {
+            if (this.#dependencyCheck === null)
+                return;
+            this.#dependencyCheck.disconnect(this.#statusOverallHandlerId);
+            this.#statusOverallHandlerId = 0;
+            this.#dependencyCheck = null;
+            let item = this._listBox.get_first_child();
+            while (item !== null) {
+                item.cleanup();
+                item = item.get_next_sibling();
+            }
+        }
 
         #handleMonitoringRow() {
             console.log('Updating dashboard monitoring row');
