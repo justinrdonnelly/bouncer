@@ -61,6 +61,7 @@
         <ul>
           <li>Display network names containing special characters correctly</li>
           <li>Keep prompting for networks whose firewall zone could not be set</li>
+          <li>Change the correct network's firewall zone after NetworkManager restarts</li>
         </ul>
       </description>
     </release>

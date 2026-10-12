@@ -46,7 +46,7 @@ export const NetworksBox = GObject.registerClass(
     class NetworksBox extends Gtk.Box {
         #connectionIdsSeen; // ConnectionIdsSeen instance.
         #connectionUuidsSeen = []; // Local copy of the bound connection UUIDs.
-        #networks = []; // Array of objects containing uuid, id, objectPath, zone.
+        #networks = []; // Array of objects containing uuid, id, zone.
         #allZones = []; // Array of zones from firewalld.
         #defaultZone = null; // This will later be the default zone (eg public).
         #zoneInfoLoaded = false; // This will become true once #allZones and #defaultZone are populated.
@@ -112,7 +112,7 @@ export const NetworksBox = GObject.registerClass(
             // Look up connection IDs and zones for all the networks.
             const networkResults = await Promise.allSettled(
                 connectionUuids.map(async (uuid) => {
-                    const { objectPath, settings } = await getNetworkManagerConnectionByUuid(uuid);
+                    const { settings } = await getNetworkManagerConnectionByUuid(uuid);
                     const connection = settings.connection;
                     const id = connection?.id;
                     if (!id) {
@@ -122,7 +122,6 @@ export const NetworksBox = GObject.registerClass(
                     return {
                         uuid,
                         id,
-                        objectPath,
                         zone: connection?.zone ?? null,
                     };
                 })
@@ -318,7 +317,9 @@ export const NetworksBox = GObject.registerClass(
 
             await this.#queueNetworkAction(async () => {
                 try {
-                    await ZoneForConnection.setZone(network.objectPath, selectedZone);
+                    // NetworkManager may have restarted and reassigned object paths since the list was loaded.
+                    const { objectPath } = await getNetworkManagerConnectionByUuid(network.uuid);
+                    await ZoneForConnection.setZone(objectPath, selectedZone);
                 } catch (e) {
                     console.error(`Unable to set zone for NetworkManager connection ${network.uuid}.`);
                     console.error(e.message);
