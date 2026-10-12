@@ -109,9 +109,11 @@ export const BouncerApplication = GObject.registerClass(
             super.vfunc_shutdown();
         }
 
-        // eslint-disable-next-line no-unused-vars
-        #handleDashboardWindowDestroyed(emittingObject) {
-            this.#dashboardWindow = null;
+        vfunc_window_removed(window) {
+            // Closing drops GTK's window reference before retained widgets emit destroy.
+            if (window === this.#dashboardWindow)
+                this.#dashboardWindow = null;
+            super.vfunc_window_removed(window);
         }
 
         #instantiateDependencyCheck() {
@@ -161,7 +163,6 @@ export const BouncerApplication = GObject.registerClass(
                 dependencyBox.connect('monitor-network', this.monitorNetworkAndCatch.bind(this));
                 // If networksBox is null, the normal 'Networks' tab contents will be replaced with an error page.
                 this.#dashboardWindow = new Dashboard(this, dependencyBox, networksBox);
-                this.#dashboardWindow.connect('destroy', this.#handleDashboardWindowDestroyed.bind(this));
                 this.#dashboardWindow.present();
             } finally {
                 this.release();
