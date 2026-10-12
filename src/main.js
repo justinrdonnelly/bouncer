@@ -476,34 +476,9 @@ export const BouncerApplication = GObject.registerClass(
         ) {
             console.log(`For connection ID ${connectionUuid} (${connectionName}), setting zone to ` +
                 `${zone ?? defaultZoneLabel}`);
-            // Update the in-memory representation of seen connections before updating the zone. If the connection ID
-            // hasn't been added to the list of seen connections when the zone is changed, the window will open again!
-            // But don't sync to disk until after the zone for the connection is set. That way, if there's an error in
-            // setting the zone, the connection ID won't be added to the file.
-
-            // Update the in-memory representation of seen connections
-            try {
-                this.#connectionIdsSeen.addConnectionIdToSeen(connectionUuid);
-            } catch (e) {
-                console.error('Error adding connection to seen connections. Not attempting to set zone for the ' +
-                    'connection.');
-                console.error(e.message);
-                this.#handleError(
-                    false,
-                    'main-connection-id-save',
-                    _('Can\'t add connection to seen connections'),
-                    _('There was a problem adding the connection to the list of seen connections. The firewall zone ' +
-                        'will not be set for this connection. Please see logs for more information.')
-                );
-                return; // this is not fatal, but we will not continue with this attempt to set the zone
-            }
-
-            // Set the zone for the connection
+            // Set the zone before marking the connection as seen so failed updates can be prompted for again.
             try {
                 await ZoneForConnection.setZone(activeConnectionSettings, zone);
-                // The connection-ids-seen notification was emitted before NetworkManager's settings were updated.
-                // Notify again so consumers refresh using the newly selected zone.
-                this.#connectionIdsSeen.notify('connection-ids-seen');
             } catch (e) {
                 console.error('Error setting zone for connection.');
                 console.error(e.message);
@@ -517,7 +492,24 @@ export const BouncerApplication = GObject.registerClass(
                 return; // this is not fatal, but we will not continue with this attempt to set the zone
             }
 
-            // Save the the in-memory representation of seen connections to disk
+            // Update the in-memory representation of seen connections
+            try {
+                this.#connectionIdsSeen.addConnectionIdToSeen(connectionUuid);
+            } catch (e) {
+                console.error('Error adding connection to seen connections.');
+                console.error(e.message);
+                this.#handleError(
+                    false,
+                    'main-connection-id-save',
+                    _('Can\'t add connection to seen connections'),
+                    _('The zone has been set for the connection, but there was a problem adding it to the list of ' +
+                        'seen connections. You may be prompted to choose a firewall zone for this connection again. ' +
+                        'Please see logs for more information.')
+                );
+                return; // this is not fatal, and the zone has been set, but we won't save or send a notification
+            }
+
+            // Save the in-memory representation of seen connections to disk
             try {
                 await this.#connectionIdsSeen.save();
             } catch (e) {
