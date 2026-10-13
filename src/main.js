@@ -208,6 +208,8 @@ export const BouncerApplication = GObject.registerClass(
                 // clean up
                 this.release();
                 this.#monitoring = false;
+                this.#dashboardWindow?.dependencyBox.resetMonitoring();
+                return;
             }
 
             try {
@@ -233,6 +235,7 @@ export const BouncerApplication = GObject.registerClass(
                 this.#networkState = null
                 this.release();
                 this.#monitoring = false;
+                this.#dashboardWindow?.dependencyBox.resetMonitoring();
             }
         } // end monitorNetwork
 

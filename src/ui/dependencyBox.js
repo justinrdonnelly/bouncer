@@ -177,6 +177,12 @@ export const DependencyBox = GObject.registerClass(
             this.#handleMonitoringRow();
         }
 
+        resetMonitoring() {
+            console.log('Dashboard now knows Bouncer is not monitoring');
+            this.#monitoring = false;
+            this.#handleMonitoringRow();
+        }
+
         // eslint-disable-next-line no-unused-vars
         async monitorButtonClicked(_button) {
             console.log('Beginning monitoring from dashboard');

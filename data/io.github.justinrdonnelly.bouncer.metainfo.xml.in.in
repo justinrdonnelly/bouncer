@@ -65,6 +65,7 @@
           <li>Allow the dashboard to reopen after it is closed while monitoring</li>
           <li>Avoid increasing memory use when reopening the dashboard</li>
           <li>Keep remembered networks consistent when saving changes at the same time</li>
+          <li>Stop monitoring startup and reset dashboard status if remembered networks cannot be loaded</li>
         </ul>
       </description>
     </release>
