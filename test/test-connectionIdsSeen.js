@@ -29,7 +29,7 @@ async function test() {
         let connectionIdIsNew = connectionIdsSeen.isConnectionNew(connectionName);
         console.log(`new: ${connectionIdIsNew}`);
         console.log(`adding connectionName: ${connectionName}`);
-        connectionIdsSeen.addConnectionIdToSeen(connectionName);
+        await connectionIdsSeen.addConnectionIdToSeen(connectionName);
         connectionIdIsNew = connectionIdsSeen.isConnectionNew(connectionName);
         console.log(`new: ${connectionIdIsNew}`);
     } catch (e) {

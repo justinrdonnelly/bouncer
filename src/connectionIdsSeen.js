@@ -34,6 +34,7 @@ export const ConnectionIdsSeen = GObject.registerClass(
     #allConnectionIdsSeen; // map of machine ID to array of connection UUIDs for the machine
     #data;
     #initialized = false; // whether `init` has been called
+    #operationQueue = Promise.resolve(); // Serialize mutations, saves, and any rollback.
 
     constructor(constructProperties = {}) {
         super(constructProperties);
@@ -42,32 +43,34 @@ export const ConnectionIdsSeen = GObject.registerClass(
 
     // Always call init immediately after constructor.
     async init() {
-        if (this.#initialized) {
-            return;
-        }
-        console.log('Initializing ConnectionIdsSeen');
-        // Don't try/catch here. Allow errors to propagate.
-        const [data, machineId] = await Promise.all([this.#data.getData(), this.getMachineId()]);
-
-        if (data === null) {
-            this.connectionIdsSeen = [];
-            this.#allConnectionIdsSeen = new Map([['version', 3], [machineId, this.connectionIdsSeen]]);
-        } else {
-            const parsedData = JSON.parse(data);
-            const migratedData = await migrateDataIfNecessary(parsedData, machineId);
-            this.#allConnectionIdsSeen = new Map(Object.entries(migratedData));
-
-            if (migratedData !== parsedData) {
-                await this.save();
+        return this.#queueOperation(async () => {
+            if (this.#initialized) {
+                return;
             }
+            console.log('Initializing ConnectionIdsSeen');
+            // Don't try/catch here. Allow errors to propagate.
+            const [data, machineId] = await Promise.all([this.#data.getData(), this.getMachineId()]);
 
-            const newMachine = !this.#allConnectionIdsSeen.has(machineId);
-            if (newMachine) {
-                this.#allConnectionIdsSeen.set(machineId, []);
+            if (data === null) {
+                this.connectionIdsSeen = [];
+                this.#allConnectionIdsSeen = new Map([['version', 3], [machineId, this.connectionIdsSeen]]);
+            } else {
+                const parsedData = JSON.parse(data);
+                const migratedData = await migrateDataIfNecessary(parsedData, machineId);
+                this.#allConnectionIdsSeen = new Map(Object.entries(migratedData));
+
+                if (migratedData !== parsedData) {
+                    await this.#save();
+                }
+
+                const newMachine = !this.#allConnectionIdsSeen.has(machineId);
+                if (newMachine) {
+                    this.#allConnectionIdsSeen.set(machineId, []);
+                }
+                this.connectionIdsSeen = this.#allConnectionIdsSeen.get(machineId);
             }
-            this.connectionIdsSeen = this.#allConnectionIdsSeen.get(machineId);
-        }
-        this.#initialized = true;
+            this.#initialized = true;
+        });
     }
 
     isConnectionNew(connectionUuid) {
@@ -78,64 +81,77 @@ export const ConnectionIdsSeen = GObject.registerClass(
     }
 
     addConnectionIdToSeen(connectionUuid) {
-        if (this.connectionIdsSeen.includes(connectionUuid))
-            return;
-
-        console.log(`Adding ${connectionUuid} to ${ConnectionIdsSeen.#fileName}.`);
-        this.connectionIdsSeen.push(connectionUuid);
-        // Since we're changing this.connectionIdsSeen (not using a property setter), we need to call notify.
-        this.notify('connection-ids-seen');
+        return this.#queueOperation(async () => {
+            if (!this.connectionIdsSeen.includes(connectionUuid)) {
+                console.log(`Adding ${connectionUuid} to ${ConnectionIdsSeen.#fileName}.`);
+                this.connectionIdsSeen.push(connectionUuid);
+                // Since we're changing this.connectionIdsSeen (not using a property setter), we need to call notify.
+                this.notify('connection-ids-seen');
+            }
+            // Save even if already seen, so a failed save can be retried.
+            await this.#save();
+        });
     }
 
     async forgetConnection(connectionUuid) {
-        console.log(`Removing ${connectionUuid} from ${ConnectionIdsSeen.#fileName}.`);
-        // Copy (via spread) the previous version. This is used to determine whether we actually removed anything, and
-        // to restore the previous version in case the save fails.
-        const previousConnectionIdsSeen = [...this.connectionIdsSeen];
-        const updatedConnectionIdsSeen = this.connectionIdsSeen.filter((uuid) => uuid !== connectionUuid);
+        return this.#queueOperation(async () => {
+            console.log(`Removing ${connectionUuid} from ${ConnectionIdsSeen.#fileName}.`);
+            // Copy (via spread) the previous version. This is used to determine whether we actually removed anything,
+            // and to restore the previous version in case the save fails.
+            const previousConnectionIdsSeen = [...this.connectionIdsSeen];
+            const updatedConnectionIdsSeen = this.connectionIdsSeen.filter((uuid) => uuid !== connectionUuid);
 
-        if (updatedConnectionIdsSeen.length === this.connectionIdsSeen.length) {
-            console.warn(`Connection ${connectionUuid} was not in ${ConnectionIdsSeen.#fileName}.`);
-            return;
-        }
+            if (updatedConnectionIdsSeen.length === this.connectionIdsSeen.length) {
+                console.warn(`Connection ${connectionUuid} was not in ${ConnectionIdsSeen.#fileName}.`);
+                return;
+            }
 
-        // Don't just replace `this.connectionIdsSeen`. `this.#allConnectionIdsSeen` wouldn't be updated. It would also
-        // fire update notifications (via the `set` method) that we don't want yet.
-        this.connectionIdsSeen.splice(0, this.connectionIdsSeen.length, ...updatedConnectionIdsSeen);
-        try {
-            await this.save();
-            // Since we're changing this.connectionIdsSeen (not using a property setter), we need to call notify
-            // explicitly.
-            this.notify('connection-ids-seen');
-        } catch (e) {
-            // The save failed. Restore the in-memory representation.
-            this.connectionIdsSeen.splice(0, this.connectionIdsSeen.length, ...previousConnectionIdsSeen);
-            throw e;
-        }
+            // Don't just replace `this.connectionIdsSeen`. `this.#allConnectionIdsSeen` wouldn't be updated. It would
+            // also fire update notifications (via the `set` method) that we don't want yet.
+            this.connectionIdsSeen.splice(0, this.connectionIdsSeen.length, ...updatedConnectionIdsSeen);
+            try {
+                await this.#save();
+                // Since we're changing this.connectionIdsSeen (not using a property setter), call notify explicitly.
+                this.notify('connection-ids-seen');
+            } catch (e) {
+                // The save failed. Restore the in-memory representation before the next queued operation runs.
+                this.connectionIdsSeen.splice(0, this.connectionIdsSeen.length, ...previousConnectionIdsSeen);
+                throw e;
+            }
+        });
     }
 
     // undo a `forgetConnection`
     async restoreConnection(connectionUuid) {
-        if (this.connectionIdsSeen.includes(connectionUuid))
-            return;
+        return this.#queueOperation(async () => {
+            if (this.connectionIdsSeen.includes(connectionUuid))
+                return;
 
-        console.log(`Restoring ${connectionUuid} to ${ConnectionIdsSeen.#fileName}.`);
-        this.connectionIdsSeen.push(connectionUuid);
-        try {
-            await this.save();
-            // Since we're changing this.connectionIdsSeen (not using a property setter), we need to call notify
-            // explicitly.
-            this.notify('connection-ids-seen');
-        } catch (e) {
-            // The save failed. Remove the restored connection from the in-memory representation.
-            const restoredConnectionIndex = this.connectionIdsSeen.indexOf(connectionUuid);
-            if (restoredConnectionIndex !== -1)
-                this.connectionIdsSeen.splice(restoredConnectionIndex, 1);
-            throw e;
-        }
+            console.log(`Restoring ${connectionUuid} to ${ConnectionIdsSeen.#fileName}.`);
+            this.connectionIdsSeen.push(connectionUuid);
+            try {
+                await this.#save();
+                // Since we're changing this.connectionIdsSeen (not using a property setter), call notify explicitly.
+                this.notify('connection-ids-seen');
+            } catch (e) {
+                // The save failed. Remove the restored connection from the in-memory representation.
+                const restoredConnectionIndex = this.connectionIdsSeen.indexOf(connectionUuid);
+                if (restoredConnectionIndex !== -1)
+                    this.connectionIdsSeen.splice(restoredConnectionIndex, 1);
+                throw e;
+            }
+        });
     }
 
-    async save() {
+    #queueOperation(operation) {
+        const queuedOperation = this.#operationQueue.then(operation);
+        // Keep the queue usable after a failure while still returning the error to the caller.
+        this.#operationQueue = queuedOperation.catch(() => {});
+        return queuedOperation;
+    }
+
+    // Only call from a queued operation, so snapshots cannot race with mutations or rollback.
+    async #save() {
         // Don't try/catch here. Allow errors to propagate.
         const dataJSON = JSON.stringify(Object.fromEntries(this.#allConnectionIdsSeen));
         await this.#data.saveData(dataJSON);

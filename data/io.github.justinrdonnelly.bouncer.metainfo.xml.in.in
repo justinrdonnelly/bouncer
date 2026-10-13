@@ -64,6 +64,7 @@
           <li>Change the correct network's firewall zone after NetworkManager restarts</li>
           <li>Allow the dashboard to reopen after it is closed while monitoring</li>
           <li>Avoid increasing memory use when reopening the dashboard</li>
+          <li>Keep remembered networks consistent when saving changes at the same time</li>
         </ul>
       </description>
     </release>

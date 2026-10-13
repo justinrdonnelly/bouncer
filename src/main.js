@@ -495,26 +495,9 @@ export const BouncerApplication = GObject.registerClass(
                 return; // this is not fatal, but we will not continue with this attempt to set the zone
             }
 
-            // Update the in-memory representation of seen connections
+            // Record and save the connection as one queued operation.
             try {
-                this.#connectionIdsSeen.addConnectionIdToSeen(connectionUuid);
-            } catch (e) {
-                console.error('Error adding connection to seen connections.');
-                console.error(e.message);
-                this.#handleError(
-                    false,
-                    'main-connection-id-save',
-                    _('Can\'t add connection to seen connections'),
-                    _('The zone has been set for the connection, but there was a problem adding it to the list of ' +
-                        'seen connections. You may be prompted to choose a firewall zone for this connection again. ' +
-                        'Please see logs for more information.')
-                );
-                return; // this is not fatal, and the zone has been set, but we won't save or send a notification
-            }
-
-            // Save the in-memory representation of seen connections to disk
-            try {
-                await this.#connectionIdsSeen.save();
+                await this.#connectionIdsSeen.addConnectionIdToSeen(connectionUuid);
             } catch (e) {
                 console.error('Error saving connection to seen connections.');
                 console.error(e.message);
