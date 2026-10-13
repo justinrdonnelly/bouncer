@@ -53,6 +53,7 @@ export const BouncerApplication = GObject.registerClass(
         #chooseZonePrompts = new Map(); // UUID to prompt state
         #dependencyCheck = null
         #dashboardWindow = null
+        #dashboardLaunching = false;
 
         constructor() {
             super({
@@ -146,6 +147,10 @@ export const BouncerApplication = GObject.registerClass(
                 this.#dashboardWindow.present();
                 return;
             }
+            if (this.#dashboardLaunching)
+                return;
+            // Reserve dashboard creation before initialization yields to another activation.
+            this.#dashboardLaunching = true;
             // If we `await` anything without either showing the window or `hold`ing, the application will exit. We'll
             // call `hold` until we show the window, then we'll call `release`.
             this.hold();
@@ -167,6 +172,7 @@ export const BouncerApplication = GObject.registerClass(
                 this.#dashboardWindow = new Dashboard(this, dependencyBox, networksBox);
                 this.#dashboardWindow.present();
             } finally {
+                this.#dashboardLaunching = false;
                 this.release();
             }
 
