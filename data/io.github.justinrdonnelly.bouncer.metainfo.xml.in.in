@@ -67,6 +67,7 @@
           <li>Keep remembered networks consistent when saving changes at the same time</li>
           <li>Stop monitoring startup and reset dashboard status if remembered networks cannot be loaded</li>
           <li>Prevent duplicate dashboards when opening Bouncer repeatedly during startup</li>
+          <li>Keep startup and monitoring unavailable when required firewalld queries fail</li>
         </ul>
       </description>
     </release>

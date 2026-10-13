@@ -326,19 +326,19 @@ export const DependencyCheck = GObject.registerClass(
         }
 
         async checkFirewalld(emit) {
+            // Clear any previous success until all required firewalld queries complete.
+            this.statusFirewalldRunning = 0;
             // We have already handled any errors with #dbusNames. So we'll swallow those errors here. We wouldn't be
             // able to continue, so we'll just return.
             try {
                 await this.#dbusNames;
             } catch {
-                this.statusFirewalldRunning = 0; // we don't know the status
                 console.log('Skipping check for firewalld on D-Bus due to previous ListNames error.');
                 return;
             }
 
             // confirm firewalld is running
             if ((await this.#dbusNames).includes('org.fedoraproject.FirewallD1')) {
-                this.statusFirewalldRunning = 1;
                 console.log('Found firewalld on D-Bus.');
             } else {
                 this.statusFirewalldRunning = 3;
@@ -361,6 +361,7 @@ export const DependencyCheck = GObject.registerClass(
                 await ZoneInfo.getZones();
                 console.log('Got firewalld zones.');
             } catch (e) {
+                this.statusFirewalldRunning = 3;
                 console.error('Can\'t get firewalld zones.');
                 console.error(e.message);
                 if (emit) {
@@ -378,6 +379,7 @@ export const DependencyCheck = GObject.registerClass(
                 await ZoneInfo.getDefaultZone();
                 console.log('Got firewalld default zone.');
             } catch (e) {
+                this.statusFirewalldRunning = 3;
                 console.error('Can\'t get firewalld default zone.');
                 console.error(e.message);
                 if (emit) {
@@ -391,6 +393,7 @@ export const DependencyCheck = GObject.registerClass(
                 }
                 throw e;
             }
+            this.statusFirewalldRunning = 1;
         }
 
         async checkNetworkManagerRunning(emit) {
