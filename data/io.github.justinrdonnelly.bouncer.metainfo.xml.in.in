@@ -32,7 +32,7 @@
     </ol>
   </description>
   <launchable type="desktop-id">@APP_ID@.desktop</launchable>
-  <translation type="gettext">@APP_ID@</translation>
+  <translation type="gettext">bouncer</translation>
   <content_rating type="oars-1.1"/>
   <url type="homepage">https://github.com/justinrdonnelly/bouncer</url>
   <url type="bugtracker">https://github.com/justinrdonnelly/bouncer/issues</url>
@@ -69,6 +69,7 @@
           <li>Prevent duplicate dashboards when opening Bouncer repeatedly during startup</li>
           <li>Keep startup and monitoring unavailable when required firewalld queries fail</li>
           <li>Avoid duplicate firewall zones in zone selection lists</li>
+          <li>Report supported languages correctly in software catalogs</li>
         </ul>
       </description>
     </release>
