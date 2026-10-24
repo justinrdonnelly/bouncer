@@ -376,9 +376,11 @@ msgstr ""
 "您无权限更改 NetworkManager 中的连接区域。这是 Bouncer 正常运行所需的。请查看"
 "日志以获取更多信息。"
 
-#: src/dependencyCheck.js:504
-msgid "Unexpected result from NetworkManager GetSettings: "
-msgstr "NetworkManager GetSettings 返回意外结果："
+#. Translators: %s is the unexpected permission value returned by NetworkManager.
+#: src/dependencyCheck.js:508
+#, javascript-format
+msgid "Unexpected result from NetworkManager GetSettings: %s"
+msgstr "NetworkManager GetSettings 返回意外结果：%s"
 
 #: src/dependencyCheck.js:505
 msgid ""
@@ -443,9 +445,11 @@ msgstr ""
 msgid "translator-credits"
 msgstr "Ariel Wang <ariel@netc.fr>"
 
-#: src/main.js:289
-msgid " Bouncer is shutting down. You will need to restart manually."
-msgstr " Bouncer 正在关闭。您需要手动重启。"
+#. Translators: %s is the error message explaining why Bouncer is shutting down.
+#: src/main.js:302
+#, javascript-format
+msgid "%s Bouncer is shutting down. You will need to restart manually."
+msgstr "%s Bouncer 正在关闭。您需要手动重启。"
 
 #: src/main.js:302
 msgid "First run setup complete!"
@@ -507,36 +511,30 @@ msgstr ""
 "您重启 Bouncer，您将再次被提示为该连接选择防火墙区域。请查看日志以获取更多信"
 "息。"
 
-#: src/main.js:540
-msgid "Firewall zone set for connection: "
-msgstr "为连接设置的防火墙区域："
+#. Translators: %s is the NetworkManager connection name.
+#: src/main.js:530
+#, javascript-format
+msgid "Firewall zone set for connection: %s"
+msgstr "为连接设置的防火墙区域：%s"
 
 #. this is the default zone
-#: src/main.js:542
+#. Translators: %s is the name of the current default firewall zone.
+#: src/main.js:533
+#, javascript-format
 msgid ""
 "Firewall zone for this connection has been set to the default zone "
-"(currently "
-msgstr "此连接的防火墙区域已设置为默认区域（当前为 "
+"(currently %s). Whenever you connect to this network in the future, the "
+"firewall zone will automatically be changed to the default zone."
+msgstr "此连接的防火墙区域已设置为默认区域（当前为 %s）。未来每次您连接到此网络时，防火墙区域将自动更改为默认区域。"
 
-#: src/main.js:543
+#. Translators: %1$s is the firewall zone name, used twice in this message.
+#: src/main.js:539
+#, javascript-format
 msgid ""
-"). Whenever you connect to this network in the future, the firewall zone "
-"will automatically be changed to the default zone."
-msgstr "）。未来每次您连接到此网络时，防火墙区域将自动更改为默认区域。"
-
-#: src/main.js:547
-msgid "Firewall zone for this connection has been set to "
-msgstr "此连接的防火墙区域已设置为 "
-
-#: src/main.js:547
-msgid ""
-". Whenever you connect to this network in the future, the firewall zone will "
-"automatically be changed to "
-msgstr "。未来每次您连接到此网络时，防火墙区域将自动更改为 "
-
-#: src/main.js:549
-msgid "."
-msgstr "。"
+"Firewall zone for this connection has been set to %1$s. Whenever you connect "
+"to this network in the future, the firewall zone will automatically be "
+"changed to %1$s."
+msgstr "此连接的防火墙区域已设置为 %1$s。未来每次您连接到此网络时，防火墙区域将自动更改为 %1$s。"
 
 #: src/networkState.js:137
 msgid "Error determining network state"

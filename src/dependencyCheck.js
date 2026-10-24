@@ -504,7 +504,8 @@ export const DependencyCheck = GObject.registerClass(
                         this.emitError(
                             false,
                             'dependency-error-networkmanager',
-                            _('Unexpected result from NetworkManager GetSettings: ') + modifyPermission,
+                            // Translators: %s is the unexpected permission value returned by NetworkManager.
+                            _('Unexpected result from NetworkManager GetSettings: %s').format(modifyPermission),
                             _('Unable to determine whether you are authorized to change the connection zone in ' +
                                 'NetworkManager. Bouncer may not function properly. Please see logs for more ' +
                                 'information.')

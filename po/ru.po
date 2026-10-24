@@ -395,9 +395,11 @@ msgstr ""
 "для корректной работы Bouncer. Обратитесь к логам, чтобы получить "
 "дополнительную информацию."
 
-#: src/dependencyCheck.js:504
-msgid "Unexpected result from NetworkManager GetSettings: "
-msgstr "NetworkManager GetSettings вернул неожиданный результат:"
+#. Translators: %s is the unexpected permission value returned by NetworkManager.
+#: src/dependencyCheck.js:508
+#, javascript-format
+msgid "Unexpected result from NetworkManager GetSettings: %s"
+msgstr "NetworkManager GetSettings вернул неожиданный результат:%s"
 
 #: src/dependencyCheck.js:505
 msgid ""
@@ -470,9 +472,11 @@ msgstr ""
 msgid "translator-credits"
 msgstr "Vladislav Lishchenko <vladleegit@proton.me>"
 
-#: src/main.js:289
-msgid " Bouncer is shutting down. You will need to restart manually."
-msgstr "Bouncer завершил работу. Вам потребуется перезапустить его вручную."
+#. Translators: %s is the error message explaining why Bouncer is shutting down.
+#: src/main.js:302
+#, javascript-format
+msgid "%s Bouncer is shutting down. You will need to restart manually."
+msgstr "%sBouncer завершил работу. Вам потребуется перезапустить его вручную."
 
 #: src/main.js:302
 msgid "First run setup complete!"
@@ -540,42 +544,36 @@ msgstr ""
 "снова нужно будет выбрать зону брандмауэра для этого подключения. Обратитесь "
 "к логам, чтобы получить дополнительную информацию."
 
-#: src/main.js:540
-msgid "Firewall zone set for connection: "
-msgstr "Зона брандмауэра установлена для подключения:"
+#. Translators: %s is the NetworkManager connection name.
+#: src/main.js:530
+#, javascript-format
+msgid "Firewall zone set for connection: %s"
+msgstr "Зона брандмауэра установлена для подключения:%s"
 
 #. this is the default zone
-#: src/main.js:542
+#. Translators: %s is the name of the current default firewall zone.
+#: src/main.js:533
+#, javascript-format
 msgid ""
 "Firewall zone for this connection has been set to the default zone "
-"(currently "
+"(currently %s). Whenever you connect to this network in the future, the "
+"firewall zone will automatically be changed to the default zone."
 msgstr ""
 "Зона брандмауэра для этого подключения была установлена в качестве зоны по "
-"умолчанию (на данный момент"
+"умолчанию (на данный момент%s). В будущем при подключении к данной сети, "
+"зона брандмауэра будет автоматически изменена на зону по умолчанию."
 
-#: src/main.js:543
+#. Translators: %1$s is the firewall zone name, used twice in this message.
+#: src/main.js:539
+#, javascript-format
 msgid ""
-"). Whenever you connect to this network in the future, the firewall zone "
-"will automatically be changed to the default zone."
+"Firewall zone for this connection has been set to %1$s. Whenever you connect "
+"to this network in the future, the firewall zone will automatically be "
+"changed to %1$s."
 msgstr ""
-"). В будущем при подключении к данной сети, зона брандмауэра будет "
-"автоматически изменена на зону по умолчанию."
-
-#: src/main.js:547
-msgid "Firewall zone for this connection has been set to "
-msgstr "Для данного подключения была установлена зона:"
-
-#: src/main.js:547
-msgid ""
-". Whenever you connect to this network in the future, the firewall zone will "
-"automatically be changed to "
-msgstr ""
-". В будущем при подключении к данной сети, зона брандмауэра будет "
-"автоматически изменена на "
-
-#: src/main.js:549
-msgid "."
-msgstr "."
+"Для данного подключения была установлена зона:%1$s. В будущем при "
+"подключении к данной сети, зона брандмауэра будет автоматически изменена на "
+"%1$s."
 
 #: src/networkState.js:137
 msgid "Error determining network state"

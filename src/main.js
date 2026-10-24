@@ -297,8 +297,10 @@ export const BouncerApplication = GObject.registerClass(
         }
 
         #handleError(fatal, id, title, message) {
-            if (fatal)
-                message += _(' Bouncer is shutting down. You will need to restart manually.');
+            if (fatal) {
+                // Translators: %s is the error message explaining why Bouncer is shutting down.
+                message = _('%s Bouncer is shutting down. You will need to restart manually.').format(message);
+            }
             const notification = new Gio.Notification();
             notification.set_title(title);
             notification.set_body(message);
@@ -524,17 +526,21 @@ export const BouncerApplication = GObject.registerClass(
             // Everything worked. Generate a notification indicating what's happened.
             try {
                 const notification = new Gio.Notification();
-                notification.set_title(_('Firewall zone set for connection: ') + connectionName);
-                if (zone === null) // this is the default zone
+                // Translators: %s is the NetworkManager connection name.
+                notification.set_title(_('Firewall zone set for connection: %s').format(connectionName));
+                if (zone === null) { // this is the default zone
+                    // Translators: %s is the name of the current default firewall zone.
                     notification.set_body(_('Firewall zone for this connection has been set to the default zone ' +
-                        '(currently ') + defaultZone + _('). Whenever you connect to this network in the future, the ' +
-                        'firewall zone will automatically be changed to the default zone.')
+                        '(currently %s). Whenever you connect to this network in the future, the firewall zone ' +
+                        'will automatically be changed to the default zone.').format(defaultZone)
                     );
-                else
-                    notification.set_body(_('Firewall zone for this connection has been set to ') + zone + _('. ' +
+                } else {
+                    // Translators: %1$s is the firewall zone name, used twice in this message.
+                    notification.set_body(_('Firewall zone for this connection has been set to %1$s. ' +
                         'Whenever you connect to this network in the future, the firewall zone will automatically ' +
-                        'be changed to ') + zone + _('.')
+                        'be changed to %1$s.').format(zone)
                     );
+                }
                 this.send_notification(`main-zone-chosen-${connectionUuid}`, notification);
             } catch (e) {
                 console.error('Error generating notification setting about the zone for connection.');

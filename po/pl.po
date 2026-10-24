@@ -399,9 +399,11 @@ msgstr ""
 "wymagane do poprawnego działania Bouncer'a. Sprawdź logi po więcej "
 "informacji."
 
-#: src/dependencyCheck.js:504
-msgid "Unexpected result from NetworkManager GetSettings: "
-msgstr "Niespodziewana odpowiedź od NetworkManager GetSettings: "
+#. Translators: %s is the unexpected permission value returned by NetworkManager.
+#: src/dependencyCheck.js:508
+#, javascript-format
+msgid "Unexpected result from NetworkManager GetSettings: %s"
+msgstr "Niespodziewana odpowiedź od NetworkManager GetSettings: %s"
 
 #: src/dependencyCheck.js:505
 msgid ""
@@ -474,9 +476,11 @@ msgstr ""
 msgid "translator-credits"
 msgstr "dawkagaming <https://github.com/dawkagaming>"
 
-#: src/main.js:289
-msgid " Bouncer is shutting down. You will need to restart manually."
-msgstr " Bouncer się wyłącza. Będziesz musiał sam uruchomić go ponownie."
+#. Translators: %s is the error message explaining why Bouncer is shutting down.
+#: src/main.js:302
+#, javascript-format
+msgid "%s Bouncer is shutting down. You will need to restart manually."
+msgstr "%s Bouncer się wyłącza. Będziesz musiał sam uruchomić go ponownie."
 
 #: src/main.js:302
 msgid "First run setup complete!"
@@ -544,41 +548,36 @@ msgstr ""
 "Bouncer'a, zostaniesz ponownie zapytany o wybranie strefy dla tego "
 "połączenia. Sprawdź logi po więcej informacji."
 
-#: src/main.js:540
-msgid "Firewall zone set for connection: "
-msgstr "Strefa ustawiona dla połączenia: "
+#. Translators: %s is the NetworkManager connection name.
+#: src/main.js:530
+#, javascript-format
+msgid "Firewall zone set for connection: %s"
+msgstr "Strefa ustawiona dla połączenia: %s"
 
 #. this is the default zone
-#: src/main.js:542
+#. Translators: %s is the name of the current default firewall zone.
+#: src/main.js:533
+#, javascript-format
 msgid ""
 "Firewall zone for this connection has been set to the default zone "
-"(currently "
+"(currently %s). Whenever you connect to this network in the future, the "
+"firewall zone will automatically be changed to the default zone."
 msgstr ""
 "Strefa dla tego połączenia została ustawiona na domyślną strefę (obecnie "
+"%s). Jeśli podłączysz się do tej sieci w przyszłości, strefa zapory "
+"zostanie automatycznie ustawiona na domyślną strefę."
 
-#: src/main.js:543
+#. Translators: %1$s is the firewall zone name, used twice in this message.
+#: src/main.js:539
+#, javascript-format
 msgid ""
-"). Whenever you connect to this network in the future, the firewall zone "
-"will automatically be changed to the default zone."
+"Firewall zone for this connection has been set to %1$s. Whenever you connect "
+"to this network in the future, the firewall zone will automatically be "
+"changed to %1$s."
 msgstr ""
-"). Jeśli podłączysz się do tej sieci w przyszłości, strefa zapory zostanie "
-"automatycznie ustawiona na domyślną strefę."
-
-#: src/main.js:547
-msgid "Firewall zone for this connection has been set to "
-msgstr "Strefa zapory dla tego połączenia została ustawiona na "
-
-#: src/main.js:547
-msgid ""
-". Whenever you connect to this network in the future, the firewall zone will "
-"automatically be changed to "
-msgstr ""
-". Jeśli podłączysz się do tej sieci w przyszłości, strefa zapory zostanie "
-"automatycznie ustawiona na "
-
-#: src/main.js:549
-msgid "."
-msgstr ""
+"Strefa zapory dla tego połączenia została ustawiona na %1$s. Jeśli "
+"podłączysz się do tej sieci w przyszłości, strefa zapory zostanie "
+"automatycznie ustawiona na %1$s."
 
 #: src/networkState.js:137
 msgid "Error determining network state"

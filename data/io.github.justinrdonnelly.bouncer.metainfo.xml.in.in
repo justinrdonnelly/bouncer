@@ -70,6 +70,7 @@
           <li>Keep startup and monitoring unavailable when required firewalld queries fail</li>
           <li>Avoid duplicate firewall zones in zone selection lists</li>
           <li>Report supported languages correctly in software catalogs</li>
+          <li>Allow firewall zone and error notifications to be translated as complete messages</li>
         </ul>
       </description>
     </release>

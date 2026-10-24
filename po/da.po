@@ -391,9 +391,11 @@ msgstr ""
 "Dette er nødvendigt for, at Bouncer kan fungere korrekt. Se logfilerne for "
 "yderligere oplysninger."
 
-#: src/dependencyCheck.js:504
-msgid "Unexpected result from NetworkManager GetSettings: "
-msgstr "Uventet resultat fra NetworkManager GetSettings: "
+#. Translators: %s is the unexpected permission value returned by NetworkManager.
+#: src/dependencyCheck.js:508
+#, javascript-format
+msgid "Unexpected result from NetworkManager GetSettings: %s"
+msgstr "Uventet resultat fra NetworkManager GetSettings: %s"
 
 #: src/dependencyCheck.js:505
 msgid ""
@@ -467,9 +469,11 @@ msgstr ""
 msgid "translator-credits"
 msgstr "Filip Kemuel <https://github.com/filipkemuel>"
 
-#: src/main.js:289
-msgid " Bouncer is shutting down. You will need to restart manually."
-msgstr " Bouncer lukker ned. Du skal genstarte manuelt."
+#. Translators: %s is the error message explaining why Bouncer is shutting down.
+#: src/main.js:302
+#, javascript-format
+msgid "%s Bouncer is shutting down. You will need to restart manually."
+msgstr "%s Bouncer lukker ned. Du skal genstarte manuelt."
 
 #: src/main.js:302
 msgid "First run setup complete!"
@@ -537,42 +541,36 @@ msgstr ""
 "Når du genstarter Bouncer, bliver du igen bedt om at vælge en firewall-zone "
 "til denne forbindelse. Se logfilerne for yderligere oplysninger."
 
-#: src/main.js:540
-msgid "Firewall zone set for connection: "
-msgstr "Indstillet firewallzone for forbindelsen: "
+#. Translators: %s is the NetworkManager connection name.
+#: src/main.js:530
+#, javascript-format
+msgid "Firewall zone set for connection: %s"
+msgstr "Indstillet firewallzone for forbindelsen: %s"
 
 #. this is the default zone
-#: src/main.js:542
+#. Translators: %s is the name of the current default firewall zone.
+#: src/main.js:533
+#, javascript-format
 msgid ""
 "Firewall zone for this connection has been set to the default zone "
-"(currently "
+"(currently %s). Whenever you connect to this network in the future, the "
+"firewall zone will automatically be changed to the default zone."
 msgstr ""
 "Firewall-zonen for denne forbindelse er indstillet til standardzonen (i "
-"øjeblikket "
+"øjeblikket %s). Når du fremover opretter forbindelse til dette netværk, "
+"ændres firewallzonen automatisk til standardzonen."
 
-#: src/main.js:543
+#. Translators: %1$s is the firewall zone name, used twice in this message.
+#: src/main.js:539
+#, javascript-format
 msgid ""
-"). Whenever you connect to this network in the future, the firewall zone "
-"will automatically be changed to the default zone."
+"Firewall zone for this connection has been set to %1$s. Whenever you connect "
+"to this network in the future, the firewall zone will automatically be "
+"changed to %1$s."
 msgstr ""
-"). Når du fremover opretter forbindelse til dette netværk, ændres "
-"firewallzonen automatisk til standardzonen."
-
-#: src/main.js:547
-msgid "Firewall zone for this connection has been set to "
-msgstr "Firewall-zonen for denne forbindelse er indstillet til "
-
-#: src/main.js:547
-msgid ""
-". Whenever you connect to this network in the future, the firewall zone will "
-"automatically be changed to "
-msgstr ""
-". Hver gang du fremover opretter forbindelse til dette netværk, ændres "
-"firewall-zonen automatisk til "
-
-#: src/main.js:549
-msgid "."
-msgstr "."
+"Firewall-zonen for denne forbindelse er indstillet til %1$s. Hver gang du "
+"fremover opretter forbindelse til dette netværk, ændres firewall-zonen "
+"automatisk til %1$s."
 
 #: src/networkState.js:137
 msgid "Error determining network state"
