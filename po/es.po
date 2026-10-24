@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bouncer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-11 15:12+0000\n"
+"POT-Creation-Date: 2026-10-24 15:54+0000\n"
 "PO-Revision-Date: 2026-08-01 20:09-0006\n"
 "Last-Translator: GUILLERMO THEMSEL <themselg@tuta.io>\n"
 "Language-Team: \n"
@@ -138,146 +138,202 @@ msgid "Bouncer dashboard showing network and zone information"
 msgstr "Panel de Bouncer mostrando información de redes y zonas"
 
 #: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:62
+msgid "Display network names containing special characters correctly"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:63
+msgid "Keep prompting for networks whose firewall zone could not be set"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:64
+msgid ""
+"Change the correct network's firewall zone after NetworkManager restarts"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:65
+msgid "Allow the dashboard to reopen after it is closed while monitoring"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:66
+msgid "Avoid increasing memory use when reopening the dashboard"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:67
+msgid ""
+"Keep remembered networks consistent when saving changes at the same time"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:68
+msgid ""
+"Stop monitoring startup and reset dashboard status if remembered networks "
+"cannot be loaded"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:69
+msgid ""
+"Prevent duplicate dashboards when opening Bouncer repeatedly during startup"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:70
+msgid ""
+"Keep startup and monitoring unavailable when required firewalld queries fail"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:71
+msgid "Avoid duplicate firewall zones in zone selection lists"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:72
+msgid "Report supported languages correctly in software catalogs"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:73
+msgid ""
+"Allow firewall zone and error notifications to be translated as complete "
+"messages"
+msgstr ""
+
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:80
 #, fuzzy
 msgid "Use GNOME 51"
 msgstr "Uso del runtime de GNOME 50"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:63
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:81
 msgid "Improve dashboard navigation in narrow windows"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:70
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:88
 msgid "UI/UX enhancements"
 msgstr "Mejoras de UI/UX"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:71
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:89
 msgid "Clean up dashboard dependency tab"
 msgstr "Limpieza de la pestaña de dependencias del panel"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:72
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:90
 msgid "Prompt for multiple new networks at the same time"
 msgstr ""
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:73
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:91
 #, fuzzy
 msgid "Added Spanish translations"
 msgstr "Actualización de las traducciones al danés"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:74
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:87
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:92
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:105
 msgid "Update Occitan translations"
 msgstr "Actualización de las traducciones al occitano"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:75
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:93
 msgid "Update Danish translations"
 msgstr "Actualización de las traducciones al danés"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:76
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:94
 msgid "Update JavaScript development tooling"
 msgstr "Actualización de las herramientas de desarrollo de JavaScript"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:83
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:101
 msgid "Include a networks tab on the dashboard"
 msgstr "Se incluyó una pestaña de redes en el panel"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:84
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:102
 msgid "UI cleanup"
 msgstr "Limpieza de la interfaz"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:85
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:103
 msgid "Improve accessibility for dependency item status"
 msgstr "Mejora de la accesibilidad del estado de los elementos de dependencia"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:86
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:104
 msgid "Track connections by NetworkManager UUID"
 msgstr "Seguimiento de conexiones por UUID de NetworkManager"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:88
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:106
 msgid "Update Italian translations"
 msgstr "Actualización de las traducciones al italiano"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:89
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:107
 msgid "Include Danish translations"
 msgstr "Se incluyeron las traducciones al danés"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:96
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:114
 msgid "Correctly show autostart status on dashboard"
 msgstr ""
 "Se corrigió la visualización del estado de inicio automático en el panel"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:97
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:115
 msgid "Include Italian translation"
 msgstr "Se incluyó la traducción al italiano"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:98
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:116
 msgid "Track connection IDs seen per machine"
 msgstr "Seguimiento de los ID de conexión vistos por equipo"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:99
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:117
 msgid "Include Polish translation"
 msgstr "Se incluyó la traducción al polaco"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:100
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:118
 msgid "Use GNOME 50 runtime"
 msgstr "Uso del runtime de GNOME 50"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:101
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:119
 msgid "Handle NetworkManager restarts"
 msgstr "Gestión de los reinicios de NetworkManager"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:108
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:126
 msgid "Include dashboard"
 msgstr "Se incluyó el panel"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:115
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:133
 msgid "Include additional desktop categories"
 msgstr "Se incluyeron categorías de escritorio adicionales"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:116
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:134
 msgid "Support command line arguments"
 msgstr "Compatibilidad con argumentos de línea de comandos"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:123
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:141
 msgid "Added Russian translation"
 msgstr "Se añadió la traducción al ruso"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:124
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:142
 msgid "Fixed metainfo formatting"
 msgstr "Se corrigió el formato del metainfo"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:131
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:149
 msgid "Added Occitan translation"
 msgstr "Se añadió la traducción al occitano"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:132
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:150
 msgid "Added Simplified Chinese translation"
 msgstr "Se añadió la traducción al chino simplificado"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:133
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:151
 msgid "Fixed multiple instance support"
 msgstr "Se corrigió la compatibilidad con múltiples instancias"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:134
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:152
 msgid "Use GNOME 49 runtime"
 msgstr "Uso del runtime de GNOME 49"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:141
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:159
 msgid "Critical bug fix for non-English language users"
 msgstr "Corrección crítica para usuarios de idiomas distintos al inglés"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:142
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:160
 msgid "Added Dutch translation"
 msgstr "Se añadió la traducción al neerlandés"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:143
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:161
 msgid "Documentation cleanups"
 msgstr "Limpieza de la documentación"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:149
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:167
 msgid "Include a notification for first run success"
 msgstr "Se incluyó una notificación de éxito en la primera ejecución"
 
-#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:154
+#: data/io.github.justinrdonnelly.bouncer.metainfo.xml.in.in:172
 msgid "Initial release"
 msgstr "Versión inicial"
 
@@ -321,11 +377,11 @@ msgstr ""
 "Asegúrate de que firewalld esté instalado, en ejecución y disponible dentro "
 "del sandbox de Flatpak. Consulta los registros para más información."
 
-#: src/dependencyCheck.js:370
+#: src/dependencyCheck.js:371
 msgid "Can't get firewalld zones"
 msgstr "No se pueden obtener las zonas de firewalld"
 
-#: src/dependencyCheck.js:371
+#: src/dependencyCheck.js:372
 msgid ""
 "Unable to get firewalld zones. Please make sure firewalld permissions are "
 "correct, and are not restricted inside the Flatpak sandbox. Please see logs "
@@ -335,11 +391,11 @@ msgstr ""
 "de firewalld sean correctos y no estén restringidos dentro del sandbox de "
 "Flatpak. Consulta los registros para más información."
 
-#: src/dependencyCheck.js:387
+#: src/dependencyCheck.js:389
 msgid "Can't get firewalld default zone"
 msgstr "No se puede obtener la zona predeterminada de firewalld"
 
-#: src/dependencyCheck.js:388
+#: src/dependencyCheck.js:390
 msgid ""
 "Unable to get firewalld default zone. Please make sure firewalld permissions "
 "are correct, and are not restricted inside the Flatpak sandbox. Please see "
@@ -349,11 +405,11 @@ msgstr ""
 "permisos de firewalld sean correctos y no estén restringidos dentro del "
 "sandbox de Flatpak. Consulta los registros para más información."
 
-#: src/dependencyCheck.js:418
+#: src/dependencyCheck.js:421
 msgid "Can't find NetworkManager"
 msgstr "No se puede encontrar NetworkManager"
 
-#: src/dependencyCheck.js:419
+#: src/dependencyCheck.js:422
 msgid ""
 "Please make sure NetworkManager is installed, running, and available inside "
 "the Flatpak sandbox. Please see logs for more information."
@@ -361,12 +417,12 @@ msgstr ""
 "Asegúrate de que NetworkManager esté instalado, en ejecución y disponible "
 "dentro del sandbox de Flatpak. Consulta los registros para más información."
 
-#: src/dependencyCheck.js:477
+#: src/dependencyCheck.js:480
 msgid "Authentication required to change NetworkManager connection zone"
 msgstr ""
 "Se requiere autenticación para cambiar la zona de conexión de NetworkManager"
 
-#: src/dependencyCheck.js:478
+#: src/dependencyCheck.js:481
 msgid ""
 "You are authorized to change the connection zone in NetworkManager, but will "
 "be required to authenticate. This will work, but may be annoying. Please see "
@@ -376,11 +432,11 @@ msgstr ""
 "te pedirá que te autentiques. Esto funcionará, pero puede resultar molesto. "
 "Consulta los registros para más información."
 
-#: src/dependencyCheck.js:491
+#: src/dependencyCheck.js:494
 msgid "Not authorized to change NetworkManager connection zone"
 msgstr "No autorizado para cambiar la zona de conexión de NetworkManager"
 
-#: src/dependencyCheck.js:492
+#: src/dependencyCheck.js:495
 msgid ""
 "You are not authorized to change the connection zone in NetworkManager. This "
 "is required for Bouncer to function properly. Please see logs for more "
@@ -396,7 +452,7 @@ msgstr ""
 msgid "Unexpected result from NetworkManager GetSettings: %s"
 msgstr "Resultado inesperado de GetSettings de NetworkManager: %s"
 
-#: src/dependencyCheck.js:505
+#: src/dependencyCheck.js:509
 msgid ""
 "Unable to determine whether you are authorized to change the connection zone "
 "in NetworkManager. Bouncer may not function properly. Please see logs for "
@@ -406,15 +462,15 @@ msgstr ""
 "en NetworkManager. Es posible que Bouncer no funcione correctamente. "
 "Consulta los registros para más información."
 
-#: src/main.js:67
+#: src/main.js:68
 msgid "Monitor Wi-Fi connections in the background"
 msgstr "Monitorear las conexiones Wi-Fi en segundo plano"
 
-#: src/main.js:132
+#: src/main.js:137
 msgid "Unknown error"
 msgstr "Error desconocido"
 
-#: src/main.js:133
+#: src/main.js:138
 msgid ""
 "An unknown error occurred. Bouncer may not function correctly. Please see "
 "logs for more information."
@@ -422,11 +478,11 @@ msgstr ""
 "Ocurrió un error desconocido. Es posible que Bouncer no funcione "
 "correctamente. Consulta los registros para más información."
 
-#: src/main.js:201
+#: src/main.js:210
 msgid "Can't find previously seen connections"
 msgstr "No se pueden encontrar las conexiones vistas anteriormente"
 
-#: src/main.js:202
+#: src/main.js:211
 msgid ""
 "There was a problem determining which connections have already been seen. "
 "Please see logs for more information."
@@ -434,11 +490,11 @@ msgstr ""
 "Hubo un problema al determinar qué conexiones ya se habían visto. Consulta "
 "los registros para más información."
 
-#: src/main.js:225
+#: src/main.js:236
 msgid "Can't determine network state"
 msgstr "No se puede determinar el estado de la red"
 
-#: src/main.js:226
+#: src/main.js:237
 msgid ""
 "There was a problem tracking network connection changes. Please see logs for "
 "more information."
@@ -447,7 +503,7 @@ msgstr ""
 "los registros para más información."
 
 #. details
-#: src/main.js:247
+#: src/main.js:259
 msgid ""
 "Bouncer is an application to help you choose the correct firewall zone for "
 "wireless connections. When you connect to a new network, Bouncer will open a "
@@ -463,7 +519,7 @@ msgstr ""
 
 #. Translators: Replace 'translator-credits' with your name/username, and optionally an email or
 #. URL.
-#: src/main.js:259
+#: src/main.js:271
 msgid "translator-credits"
 msgstr "Guillermo Themsel <themselg@tuta.io>"
 
@@ -473,11 +529,11 @@ msgstr "Guillermo Themsel <themselg@tuta.io>"
 msgid "%s Bouncer is shutting down. You will need to restart manually."
 msgstr "%s Bouncer se está cerrando. Deberás reiniciarlo manualmente."
 
-#: src/main.js:302
+#: src/main.js:316
 msgid "First run setup complete!"
 msgstr "¡Configuración inicial completa!"
 
-#: src/main.js:303
+#: src/main.js:317
 msgid ""
 "Your system is correctly configured for Bouncer. Bouncer will autostart on "
 "each login and will open when you connect to a new Wi-Fi network."
@@ -486,11 +542,11 @@ msgstr ""
 "automáticamente en cada inicio de sesión y se abrirá cuando te conectes a "
 "una red Wi-Fi nueva."
 
-#: src/main.js:337
+#: src/main.js:351
 msgid "Can't prompt for firewall zone"
 msgstr "No se puede solicitar la zona de cortafuegos"
 
-#: src/main.js:338
+#: src/main.js:352
 msgid ""
 "There was a problem getting information to prompt for the firewall zone. "
 "Please see logs for more information."
@@ -498,25 +554,11 @@ msgstr ""
 "Hubo un problema al obtener la información para solicitar la zona de "
 "cortafuegos. Consulta los registros para más información."
 
-#: src/main.js:494
-msgid "Can't add connection to seen connections"
-msgstr "No se puede añadir la conexión a las conexiones vistas"
-
-#: src/main.js:495
-msgid ""
-"There was a problem adding the connection to the list of seen connections. "
-"The firewall zone will not be set for this connection. Please see logs for "
-"more information."
-msgstr ""
-"Hubo un problema al añadir la conexión a la lista de conexiones vistas. No "
-"se establecerá la zona de cortafuegos para esta conexión. Consulta los "
-"registros para más información."
-
-#: src/main.js:513
+#: src/main.js:502
 msgid "Can't set firewall zone for connection"
 msgstr "No se puede establecer la zona de cortafuegos para la conexión"
 
-#: src/main.js:514
+#: src/main.js:503
 msgid ""
 "There was a problem setting the firewall zone for the connection. Please see "
 "logs for more information."
@@ -524,11 +566,11 @@ msgstr ""
 "Hubo un problema al establecer la zona de cortafuegos para la conexión. "
 "Consulta los registros para más información."
 
-#: src/main.js:529
+#: src/main.js:518
 msgid "Can't save connection to seen connections"
 msgstr "No se puede guardar la conexión en las conexiones vistas"
 
-#: src/main.js:530
+#: src/main.js:519
 msgid ""
 "The zone has been set for the connection, but there was a problem saving the "
 "updated list of seen connections to disk. Once you restart Bouncer, you will "
@@ -605,44 +647,44 @@ msgstr ""
 msgid "Network"
 msgstr "Red"
 
-#: src/ui/chooseZoneBox.ui:49
+#: src/ui/chooseZoneBox.ui:50
 msgid "Default Zone"
 msgstr "Zona predeterminada"
 
-#: src/ui/chooseZoneBox.ui:58 src/ui/networksBox.ui:73
+#: src/ui/chooseZoneBox.ui:59 src/ui/networksBox.ui:73
 msgid "Current Zone"
 msgstr "Zona actual"
 
 #. make the dropdown not span the entire box
-#: src/ui/chooseZoneBox.ui:74
+#: src/ui/chooseZoneBox.ui:75
 msgid "Firewall Zone"
 msgstr "Zona de cortafuegos"
 
-#: src/ui/chooseZoneBox.ui:75
+#: src/ui/chooseZoneBox.ui:76
 msgid "Choose the firewall zone for this network."
 msgstr "Elige la zona de cortafuegos para esta red."
 
-#: src/ui/chooseZoneBox.ui:78
+#: src/ui/chooseZoneBox.ui:79
 msgid "Zone"
 msgstr "Zona"
 
-#: src/ui/chooseZoneBox.ui:101 src/ui/moreInfo.ui:15
+#: src/ui/chooseZoneBox.ui:102 src/ui/moreInfo.ui:15
 msgid "More Information"
 msgstr "Más información"
 
-#: src/ui/chooseZoneBox.ui:102
+#: src/ui/chooseZoneBox.ui:103
 msgid "Get more information."
 msgstr "Obtén más información."
 
-#: src/ui/chooseZoneBox.ui:107
+#: src/ui/chooseZoneBox.ui:108
 msgid "Learn More"
 msgstr "Saber más"
 
-#: src/ui/chooseZoneBox.ui:116
+#: src/ui/chooseZoneBox.ui:117
 msgid "Skip for Now"
 msgstr "Omitir por ahora"
 
-#: src/ui/chooseZoneBox.ui:117
+#: src/ui/chooseZoneBox.ui:118
 msgid ""
 "No change will be made. You will see this window again the next time you "
 "connect to this network."
@@ -650,15 +692,15 @@ msgstr ""
 "No se hará ningún cambio. Verás esta ventana de nuevo la próxima vez que te "
 "conectes a esta red."
 
-#: src/ui/chooseZoneBox.ui:122
+#: src/ui/chooseZoneBox.ui:123
 msgid "Skip"
 msgstr "Omitir"
 
-#: src/ui/chooseZoneBox.ui:131
+#: src/ui/chooseZoneBox.ui:132
 msgid "Choose Zone"
 msgstr "Elegir zona"
 
-#: src/ui/chooseZoneBox.ui:132
+#: src/ui/chooseZoneBox.ui:133
 msgid ""
 "The selected firewall zone will be used every time you connect to this "
 "network."
@@ -666,11 +708,11 @@ msgstr ""
 "La zona de cortafuegos seleccionada se usará cada vez que te conectes a esta "
 "red."
 
-#: src/ui/chooseZoneBox.ui:137
+#: src/ui/chooseZoneBox.ui:138
 msgid "Choose"
 msgstr "Elegir"
 
-#: src/ui/dashboard.js:45
+#: src/ui/dashboard.js:61
 #, fuzzy
 msgid ""
 "Bouncer could not load your saved networks. Please see the logs for more "
@@ -679,7 +721,7 @@ msgstr ""
 "No se pudieron cargar las redes guardadas. Consulta los registros para más "
 "información."
 
-#: src/ui/dashboard.js:47 src/ui/networksBox.ui:143
+#: src/ui/dashboard.js:63 src/ui/networksBox.ui:143
 msgid "Saved Networks Unavailable"
 msgstr ""
 
@@ -695,32 +737,32 @@ msgstr "Dependencias"
 msgid "Networks"
 msgstr "Redes"
 
-#: src/ui/dependencyBox.js:61
+#: src/ui/dependencyBox.js:64
 msgid "firewalld Running"
 msgstr "firewalld en ejecución"
 
-#: src/ui/dependencyBox.js:80
+#: src/ui/dependencyBox.js:83
 msgid "NetworkManager Running"
 msgstr "NetworkManager en ejecución"
 
-#: src/ui/dependencyBox.js:99
+#: src/ui/dependencyBox.js:102
 msgid "NetworkManager Permissions"
 msgstr "Permisos de NetworkManager"
 
-#: src/ui/dependencyBox.js:113
+#: src/ui/dependencyBox.js:116
 msgid "Run on Startup"
 msgstr "Ejecutar al iniciar el sistema"
 
-#: src/ui/dependencyBox.js:118
+#: src/ui/dependencyBox.js:121
 msgid "Enable"
 msgstr "Habilitar"
 
-#: src/ui/dependencyBox.js:149
+#: src/ui/dependencyBox.js:162
 msgid "Bouncer is monitoring your Wi-Fi!"
 msgstr "¡Bouncer está monitoreando tu Wi-Fi!"
 
 #. We're not monitoring. Show the correct text.
-#: src/ui/dependencyBox.js:153 src/ui/dependencyBox.ui:64
+#: src/ui/dependencyBox.js:166 src/ui/dependencyBox.ui:64
 msgid "Once everything is ready, click to begin using Bouncer."
 msgstr "Cuando todo esté listo, haz clic para empezar a usar Bouncer."
 
@@ -749,20 +791,20 @@ msgstr "Monitoreo de red"
 msgid "Monitor"
 msgstr "Monitorear"
 
-#: src/ui/dependencyItem.js:104 src/ui/dependencyItem.js:113
+#: src/ui/dependencyItem.js:111 src/ui/dependencyItem.js:120
 #: src/ui/dependencyItem.ui:23
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: src/ui/dependencyItem.js:106
+#: src/ui/dependencyItem.js:113
 msgid "Ready"
 msgstr "Listo"
 
-#: src/ui/dependencyItem.js:108
+#: src/ui/dependencyItem.js:115
 msgid "Suboptimal"
 msgstr "No óptimo"
 
-#: src/ui/dependencyItem.js:110
+#: src/ui/dependencyItem.js:117
 msgid "Not Ready"
 msgstr "No listo"
 
@@ -813,43 +855,43 @@ msgstr ""
 "\n"
 "Puedes leer más sobre Bouncer <a href=\"%4$s\">aquí</a>."
 
-#: src/ui/networksBox.js:263
+#: src/ui/networksBox.js:278
 msgid "Firewall zone information could not be loaded."
 msgstr "No se pudo cargar la información de la zona de cortafuegos."
 
-#: src/ui/networksBox.js:326
+#: src/ui/networksBox.js:343
 msgid "Zone could not be changed"
 msgstr "No se pudo cambiar la zona"
 
 #. Translators: %s is the name of a firewall zone.
-#: src/ui/networksBox.js:347
+#: src/ui/networksBox.js:366
 #, javascript-format
 msgid "Zone changed to %s"
 msgstr "Zona cambiada a %s"
 
-#: src/ui/networksBox.js:348 src/ui/networksBox.js:405
+#: src/ui/networksBox.js:367 src/ui/networksBox.js:426
 msgid "_Undo"
 msgstr "_Deshacer"
 
-#: src/ui/networksBox.js:371
+#: src/ui/networksBox.js:390
 msgid "Unable to undo because the zone changed again"
 msgstr "No se puede deshacer porque la zona volvió a cambiar"
 
-#: src/ui/networksBox.js:380
+#: src/ui/networksBox.js:399
 msgid "Zone change could not be undone"
 msgstr "No se pudo deshacer el cambio de zona"
 
-#: src/ui/networksBox.js:398
+#: src/ui/networksBox.js:417
 msgid "Network could not be forgotten"
 msgstr "No se pudo olvidar la red"
 
 #. Translators: %s is the NetworkManager connection name.
-#: src/ui/networksBox.js:404
+#: src/ui/networksBox.js:425
 #, javascript-format
 msgid "Network forgotten: %s"
 msgstr "Red olvidada: %s"
 
-#: src/ui/networksBox.js:421
+#: src/ui/networksBox.js:442
 msgid "Network could not be restored"
 msgstr "No se pudo restaurar la red"
 
@@ -918,3 +960,15 @@ msgid ""
 msgstr ""
 "No se pudieron cargar las redes guardadas. Consulta los registros para más "
 "información."
+
+#~ msgid "Can't add connection to seen connections"
+#~ msgstr "No se puede añadir la conexión a las conexiones vistas"
+
+#~ msgid ""
+#~ "There was a problem adding the connection to the list of seen "
+#~ "connections. The firewall zone will not be set for this connection. "
+#~ "Please see logs for more information."
+#~ msgstr ""
+#~ "Hubo un problema al añadir la conexión a la lista de conexiones vistas. "
+#~ "No se establecerá la zona de cortafuegos para esta conexión. Consulta los "
+#~ "registros para más información."
