@@ -14,17 +14,30 @@ Additional setup is required after installation. See the applicable section for 
 
 ## Setup
 
-Unlike most Flatpak applications, Bouncer needs to start when you log in. So autostart needs to be configured. Bouncer can do this for you, so just start it manually the first time. After that, it will start automatically when you log in. This must be done for each user on the system.
+Unlike most Flatpak applications, Bouncer needs to start when you log in. So autostart needs to be configured. Bouncer can do this for you once its dependencies and permissions are ready. Start it manually the first time and allow it to run in the background if prompted. After setup, it will start monitoring automatically when you log in. This must be done for each user on the system.
 
-If you want to enable autostart system-wide (ie for all users), you have to do that manually. Copy the `.desktop` file to the system-wide `autostart` directory. (e.g. `sudo cp /var/lib/flatpak/exports/share/applications/io.github.justinrdonnelly.bouncer.desktop /etc/xdg/autostart/`).
+Starting Bouncer manually opens its dashboard. The Dependencies page shows whether the required components and permissions are ready. Once they are, click Monitor to begin monitoring in the current session. You can then close the dashboard without stopping monitoring.
 
-Because Bouncer requires NetworkManager and firewalld, and changing firewall zones sometimes requires root (depending on polkit configuration), there may be additional setup required. The table below shows relevant information for various distributions.
+If you want to enable autostart system-wide (i.e. for all users), you have to do that manually. With Bouncer installed system-wide, create `/etc/xdg/autostart/io.github.justinrdonnelly.bouncer.desktop` with the following contents (requires administrator privileges):
+
+```ini
+[Desktop Entry]
+Type=Application
+Name=Bouncer
+Exec=flatpak run io.github.justinrdonnelly.bouncer --monitor
+```
+
+The `--monitor` option starts Wi-Fi monitoring in the background. Without it, Bouncer opens the dashboard.
+
+Because Bouncer requires NetworkManager and firewalld, and changing firewall zones sometimes requires root (depending on polkit configuration), there may be additional setup required. The table below summarizes defaults for the listed desktop distribution versions; other versions and custom installations may differ. The polkit columns indicate whether active local users can modify system connections without an authentication prompt.
 
 | Distribution | NetworkManager<br/>by default | firewalld<br/>by default | polkit OK for<br/>admin users<br/>by default | polkit OK for<br/>regular users<br/>by default |
 | ------------ | ----------------------------- | ------------------------ | -------------------------------------------- | ---------------------------------------------- |
 | Fedora 41    | &check;                       | &check;                  | &check;                                      | &check;                                        |
 | Ubuntu 24.10 | &check;                       | &cross;                  | &check;                                      | &cross;                                        |
-| Debian 12    | &check;                       | &cross;                  | &check;                                      | &check;                                        |
+| Debian 12    | &check;                       | &cross;                  | &check;                                      | &check;\*                                      |
+
+\* On Debian 12, the installer-created user belongs to `netdev` by default. Additional users may need to be added to this group; see the Debian section below.
 
 ### Fedora
 
@@ -34,13 +47,13 @@ For Fedora, everything just works! Just start Bouncer to confirm, and click the 
 
 1. Uninstall ufw: `sudo apt remove ufw`
 2. Install firewalld: `sudo apt install firewalld`
-3. By default, polkit is configured to not let regular users set the zone for a connection. The simplest way to change this is to add users to the `netdev` group (e.g. `usermod -a -G netdev justin`). Alternatively, you can create a custom polkit rule for the `org.freedesktop.NetworkManager.settings.modify.system` action (how to create custom polkit rules is beyond the scope of this document and is left as an exercise for the reader).
+3. Regular users outside the `netdev` group need root to modify system connections. To allow a user to set the zone without authentication, add them to `netdev` (e.g. `sudo usermod -a -G netdev justin`), then log out and back in. Alternatively, you can create a custom polkit rule for the `org.freedesktop.NetworkManager.settings.modify.system` action (how to create custom polkit rules is beyond the scope of this document and is left as an exercise for the reader).
 4. Start Bouncer and confirm your system is configured correctly. Then click the Monitor button to begin using Bouncer.
 
 ### Debian
 
 1. Install firewalld: `sudo apt install firewalld`
-2. By default, polkit is configured to not let regular users set the zone for a connection. The simplest way to change this is to add users to the `netdev` group (e.g. `usermod -a -G netdev justin`). Alternatively, you can create a custom polkit rule for the `org.freedesktop.NetworkManager.settings.modify.system` action (how to create custom polkit rules is beyond the scope of this document and is left as an exercise for the reader).
+2. Active local users in `sudo` or `netdev` can set the zone without authentication. As described in [Debian's NetworkManager documentation](https://wiki.debian.org/NetworkManager#Permissions), Debian 12's installer adds its first user to `netdev`, even if that user is not an administrator. Accounts created later with `adduser` do not automatically get this membership. If needed, add the user to `netdev` (e.g. `sudo usermod -a -G netdev justin`), then log out and back in. Alternatively, you can create a custom polkit rule for the `org.freedesktop.NetworkManager.settings.modify.system` action (how to create custom polkit rules is beyond the scope of this document and is left as an exercise for the reader).
 3. Start Bouncer and confirm your system is configured correctly. Then click the Monitor button to begin using Bouncer.
 
 ## How It Works
@@ -49,12 +62,16 @@ Did you know that NetworkManager has a feature to automatically change your fire
 
 Bouncer integrates with NetworkManager and firewalld using [D-Bus](https://www.freedesktop.org/wiki/Software/dbus/). At a high level, it does the following:
 
-1. Listen for D-Bus signals from NetworkManager that a Wi-Fi device has changed to a new connection.
+1. Monitor Wi-Fi connections through NetworkManager's D-Bus API, including connections already active when monitoring starts.
 2. If the connection has already been seen and configured, nothing happens. But if it hasn't, we continue.
-3. Use D-Bus to prompt firewalld for a list of zones. This generally large list is pared down to a few basics.
+3. Use D-Bus to ask firewalld for a list of zones. When the standard `home`, `public`, and `work` zones are available, the list is pared down to those zones plus the current and default zones. Otherwise, all zones are shown.
 4. A window opens to explain what is happening, allowing the user to choose a firewall zone for the network.
-5. If the user clicks Exit, or closes the window, no changes are made. If the user chooses a zone, we continue.
-6. Use D-Bus to set the connection zone in NetworkManager. NetworkManager will automatically change the firewall zone to this value on subsequent connections to this network.
+5. If the user clicks Skip, or closes the window, no zone changes are made. Bouncer keeps monitoring and will prompt again the next time the user connects to that network. If the user selects a zone and clicks Choose, we continue.
+6. Use D-Bus to set the connection zone in NetworkManager. After a successful update, Bouncer remembers the connection so it will not prompt for it again. NetworkManager will automatically change the firewall zone to this value on subsequent connections to this network.
+
+The `[DEFAULT]` option uses firewalld's default zone rather than assigning a specific named zone. If the default zone changes later, connections using `[DEFAULT]` follow that change.
+
+You can reopen Bouncer's dashboard at any time to manage saved zone choices on the Networks page. Select a network, choose a zone, and click Change to update it. Click Forget to have Bouncer prompt again the next time you connect to that network; this leaves its existing zone and NetworkManager connection profile unchanged. Both actions offer Undo.
 
 ## License
 
