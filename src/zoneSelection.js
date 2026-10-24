@@ -45,11 +45,9 @@ export function getSelectableZones(allZones, defaultZone, currentZone) {
         return allZones;
 
     const zones = [...simpleZoneList];
-    const defaultZoneSimple = simpleZoneList.includes(defaultZone);
-    const currentZoneSimple = simpleZoneList.includes(currentZone);
-    if (!defaultZoneSimple)
+    if (!zones.includes(defaultZone))
         zones.push(defaultZone);
-    if (currentZone && !currentZoneSimple)
+    if (currentZone && !zones.includes(currentZone))
         zones.push(currentZone);
     return zones.sort();
 }
